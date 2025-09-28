@@ -132,3 +132,46 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+@layer components {
+  .kpi-box {
+    @apply flex flex-col justify-start items-start p-4 rounded-lg border-2 border-border;
+  }
+  .kpi-box .kpi-header {
+    @apply flex justify-between items-center w-full;
+  }
+  .kpi-box .kpi-header span {
+    @apply font-medium text-[14px];
+  }
+  .kpi-box .kpi-header span svg {
+    @apply h-[18px];
+  }
+  .kpi-box p {
+    @apply text-xl font-bold mt-5;
+  }
+  .kpi-subtext {
+    @apply text-[13px] text-muted-foreground;
+  }
+}
+
+
+@layer utilities {
+
+    .main-container {
+        @apply p-6 w-full;
+    }
+
+    .page-title {
+        @apply text-2xl font-bold my-5;
+    }
+
+    .section-title {
+        @apply text-xl font-bold my-5;
+    }
+
+    .coming-soon-text {
+        @apply text-red-400 text-[17px] text-center font-bold;
+    }
+
+}

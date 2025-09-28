@@ -1,3 +1,8 @@
+"use client"
+
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+
 import {
   LayoutDashboardIcon,
   GraduationCapIcon,
@@ -18,42 +23,45 @@ import {
 const utilItems = [
   {
     title: "Dashboard",
-    url: "#",
+    url: "/instructor/dashboard",
     icon: LayoutDashboardIcon,
   },
   {
     title: "Courses",
-    url: "#",
+    url: "/instructor/dashboard/courses",
     icon: GraduationCapIcon,
   },
   {
     title: "Students",
-    url: "#",
+    url: "/instructor/dashboard/students",
     icon: UsersIcon,
   },
   {
     title: "Analytics",
-    url: "#",
+    url: "/instructor/dashboard/analytics",
     icon: ChartAreaIcon,
   },
 ];
 
 export function SiderbarMenuContent() {
+  const pathname = usePathname();
   return (
     <>
         <SidebarGroup>
             <SidebarGroupContent>
                 <SidebarMenu>
-                {utilItems.map((item) => (
+                {utilItems.map((item) => {
+                  const isActive = pathname === item.url;
+                  return (
                     <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild>
-                        <a href={item.url}>
+                        <Link href={item.url}  className={isActive ? "bg-teal-500 text-white hover:bg-teal-500 hover:text-white" : ""}>
                         <item.icon />
                         <span>{item.title}</span>
-                        </a>
+                        </Link>
                     </SidebarMenuButton>
                     </SidebarMenuItem>
-                ))}
+                )})}
                 </SidebarMenu>
             </SidebarGroupContent>
         </SidebarGroup>

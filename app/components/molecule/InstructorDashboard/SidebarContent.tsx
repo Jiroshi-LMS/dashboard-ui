@@ -1,7 +1,7 @@
 // 'use client'
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-
+import Link from "next/link"
 // import { useEffect, useState } from "react"
 // import { Sun, Moon, User } from "lucide-react"
 import Image from "next/image"
@@ -9,8 +9,10 @@ import Image from "next/image"
 export const SidebarHeaderContent = () => {
   return (
     <header>
-      <h3 className="text-md font-bold p-3">
-        Jiroshi Dashboard
+      <h3 className="text-md font-bold p-3 text-teal-600">
+        <Link href="/instructor/dashboard">
+          Jiroshi Dashboard
+        </Link>
       </h3>
     </header>
   )
