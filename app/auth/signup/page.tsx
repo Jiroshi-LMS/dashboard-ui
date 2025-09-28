@@ -1,0 +1,174 @@
+"use client"
+
+import Head from "next/head"
+import Link from "next/link"
+import { z } from "zod"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+
+import { Button } from "@/components/ui/button"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+
+
+const formSchema = z.object({
+  fullName: z.string().min(2, "Full name must be at least 2 characters."),
+  username: z.string().min(3, "Username must be at least 3 characters."),
+  email: z.email().refine((val) => !!val, {
+    message: "Enter a valid email address.",
+  }),
+  password: z.string().min(6, "Password must be at least 6 characters."),
+  phoneNumber: z.string().regex(/^\d{10}$/, "Enter a valid 10-digit phone number."),
+})
+
+const RegisterPage = () => {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      fullName: "",
+      username: "",
+      email: "",
+      password: "",
+      phoneNumber: "",
+    },
+  })
+
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    console.log("Form Submitted:", values)
+  }
+
+  return (
+    <>
+      <Head>
+        <title>Register | Jiroshi</title>
+        <meta name="description" content="Register" />
+      </Head>
+      <main className="flex w-screen min-h-screen">
+        {/* Left Aside */}
+        <aside className="w-[40%] flex flex-col items-start justify-center bg-teal-700 text-white p-10">
+          <h2 className="text-3xl font-bold mb-4">What is Jiroshi?</h2>
+          <p className="text-lg leading-relaxed text-left">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum exercitationem earum sequi
+            dicta atque deleniti, aliquid nesciunt suscipit consectetur fuga beatae magnam!
+          </p>
+        </aside>
+
+        {/* Right Section */}
+        <section className="w-[60%] flex flex-col items-center justify-center h-full p-10">
+          <div className="w-full max-w-md space-y-8">
+            <h1 className="text-3xl font-semibold text-center">Register as an Instructor</h1>
+            
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                {/* Full Name */}
+                <FormField
+                  control={form.control}
+                  name="fullName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Full Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="John Doe" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Username */}
+                <FormField
+                  control={form.control}
+                  name="username"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Username</FormLabel>
+                      <FormControl>
+                        <Input placeholder="jiroshi_instructor" {...field} />
+                      </FormControl>
+                      <FormDescription>This will be your public display name.</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Email */}
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input type="email" placeholder="you@example.com" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Password */}
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input type="password" placeholder="••••••••" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Phone */}
+                <div className="flex gap-2">
+                  {/* Country Code (Locked) */}
+                  <div className="w-20">
+                    <FormItem>
+                      <FormLabel>Code</FormLabel>
+                      <FormControl>
+                        <Input value="+91" disabled className="bg-gray-100 text-gray-600" />
+                      </FormControl>
+                    </FormItem>
+                  </div>
+
+                  {/* Phone Number */}
+                  <FormField
+                    control={form.control}
+                    name="phoneNumber"
+                    render={({ field }) => (
+                      <FormItem className="flex-1">
+                        <FormLabel>Phone Number</FormLabel>
+                        <FormControl>
+                          <Input type="tel" placeholder="9876543210" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                {/* Submit */}
+                <Button type="submit" className="w-full bg-teal-600 hover:bg-teal-700 cursor-pointer text-white">
+                  Register
+                </Button>
+                <p className="text-sm text-gray-500">Already have an account? <Link href="/auth/login" className="text-primary">Sign In</Link></p>
+              </form>
+            </Form>
+          </div>
+        </section>
+      </main>
+    </>
+  )
+}
+
+export default RegisterPage
