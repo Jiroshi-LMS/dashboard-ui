@@ -8,6 +8,7 @@ import {
   GraduationCapIcon,
   UsersIcon,
   ChartAreaIcon,
+  NetworkIcon,
 } from "lucide-react";
 
 import {
@@ -41,6 +42,12 @@ const utilItems = [
     url: "/instructor/dashboard/analytics",
     icon: ChartAreaIcon,
   },
+  {
+    title: "APIs",
+    url: "/docs/apis",
+    icon: NetworkIcon,
+    target: "_blank",
+  }
 ];
 
 export function SiderbarMenuContent() {
@@ -55,7 +62,7 @@ export function SiderbarMenuContent() {
                   return (
                     <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild>
-                        <Link href={item.url}  className={isActive ? "bg-teal-500 text-white hover:bg-teal-500 hover:text-white" : ""}>
+                        <Link href={item.url}  className={isActive ? "bg-teal-500 text-white hover:bg-teal-500 hover:text-white" : ""} {...(item.target && { target: "_blank" })}>
                         <item.icon />
                         <span>{item.title}</span>
                         </Link>

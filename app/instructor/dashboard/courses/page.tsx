@@ -37,70 +37,70 @@ const static_table_data = [
   {
     "courseId": 'course-1',
     "course_name": "Course 1",
-    "status": "Active",
+    "status": "active",
     "enrolled_students": 10,
     "created_at": "2023-05-01"
   },
   {
     "courseId": 'course-2',
     "course_name": "Course 2",
-    "status": "Inactive",
+    "status": "inactive",
     "enrolled_students": 20,
     "created_at": "2023-05-02"
   },
   {
     "courseId": 'course-3',
     "course_name": "Course 3",
-    "status": "Draft",
+    "status": "draft",
     "enrolled_students": 30,
     "created_at": "2023-05-03"
   },
   {
     "courseId": 'course-4',
     "course_name": "Course 4",
-    "status": "Active",
+    "status": "active",
     "enrolled_students": 40,
     "created_at": "2023-05-04"
   },
   {
     "courseId": 'course-5',
     "course_name": "Course 5",
-    "status": "Inactive",
+    "status": "inactive",
     "enrolled_students": 50,
     "created_at": "2023-05-05"
   },
   {
     "courseId": 'course-6',
     "course_name": "Course 6",
-    "status": "Draft",
+    "status": "draft",
     "enrolled_students": 60,
     "created_at": "2023-05-06"
   },
   {
     "courseId": 'course-7',
     "course_name": "Course 7",
-    "status": "Draft",
+    "status": "draft",
     "enrolled_students": 30,
     "created_at": "2023-05-03"
   },
   {
     "courseId": 'course-8',
     "course_name": "Course 8",
-    "status": "Active",
+    "status": "active",
     "enrolled_students": 40,
     "created_at": "2023-05-04"
   },
   {
     "courseId": 'course-9',
     "course_name": "Course 9",
-    "status": "Inactive",
+    "status": "inactive",
     "enrolled_students": 50,
     "created_at": "2023-05-05"
   },
   {
     "courseId": 'course-10',
     "course_name": "Course 10",
-    "status": "Draft",
+    "status": "draft",
     "enrolled_students": 60,
     "created_at": "2023-05-06"
   },
@@ -153,9 +153,9 @@ const courseManagementPage = () => {
             {
               static_table_data.map((data, index) => {
                 let badge_color = 'bg-primary text-white'
-                if (data.status === 'Inactive') {
+                if (data.status === 'inactive') {
                   badge_color = 'bg-red-400 text-white'
-                } else if (data.status === 'Draft') {
+                } else if (data.status === 'draft') {
                   badge_color = 'bg-blue-400 text-white'
                 }
                 return (
@@ -166,7 +166,7 @@ const courseManagementPage = () => {
                     </Link>
                   </TableCell>
                   <TableCell className='text-center'>
-                    <Badge className={badge_color}>{data.status}</Badge></TableCell>
+                    <Badge className={`${badge_color} uppercase`}>{data.status}</Badge></TableCell>
                   <TableCell className='text-center'>{data.enrolled_students}</TableCell>
                   <TableCell className='text-center'>{data.created_at}</TableCell>
                   <TableCell className='text-center'><button>...</button></TableCell>
