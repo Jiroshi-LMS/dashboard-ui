@@ -178,4 +178,8 @@
       @apply text-red-400 text-[17px] text-center font-bold;
     }
 
+    .link-button-primary {
+      @apply bg-primary text-white hover:bg-teal-600 hover:text-white cursor-pointer py-2 rounded-md w-full;
+    }
+
 }

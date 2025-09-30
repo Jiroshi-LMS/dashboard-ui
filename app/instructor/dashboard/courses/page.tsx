@@ -133,7 +133,11 @@ const courseManagementPage = () => {
           </form>
         </div>
         <div>
-          <Button className='bg-primary text-white hover:bg-teal-600 hover:text-white cursor-pointer'><PlusIcon /> Add new course</Button>
+            <Link href="/instructor/dashboard/courses/add-course">
+              <Button className='bg-primary text-white hover:bg-teal-600 hover:text-white cursor-pointer'>
+                  <PlusIcon /> Add new course
+              </Button>
+            </Link>
         </div>
       </section>
 
@@ -146,7 +150,6 @@ const courseManagementPage = () => {
               <TableHead className='text-center'>Status</TableHead>
               <TableHead className='text-center'>Enrolled Students</TableHead>
               <TableHead className='text-center'>Created At</TableHead>
-              <TableHead className='text-center'>Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -161,7 +164,7 @@ const courseManagementPage = () => {
                 return (
                 <TableRow key={index}>
                   <TableCell className='font-semibold'>
-                    <Link href={`/instructor/dashboard/courses/${data.courseId}`}>
+                    <Link href={`/instructor/dashboard/courses/${data.courseId}`} className='hover:text-teal-500'>
                       {data.course_name}
                     </Link>
                   </TableCell>
@@ -169,7 +172,6 @@ const courseManagementPage = () => {
                     <Badge className={`${badge_color} uppercase`}>{data.status}</Badge></TableCell>
                   <TableCell className='text-center'>{data.enrolled_students}</TableCell>
                   <TableCell className='text-center'>{data.created_at}</TableCell>
-                  <TableCell className='text-center'><button>...</button></TableCell>
                 </TableRow>
               )})
             }

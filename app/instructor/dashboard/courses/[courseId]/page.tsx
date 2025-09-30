@@ -21,6 +21,17 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -116,7 +127,7 @@ const courseDetailsPage = async ({params}: CourseDetailsPageProps) => {
 
       <div className="relative flex flex-col justify-start items-start w-full min-h-screen">
 
-        <aside className="flex justify-center items-start bg-gray-50 w-full p-4">
+        <aside className="flex justify-center items-start bg-gray-50 w-full p-2">
           <div className="w-full"> 
             <Image 
             src="https://img.freepik.com/free-photo/serious-young-caucasian-geometry-teacher-wearing-glasses-sitting-desk-with-school-tools-classroom-holding-hourglass-vertically-looking-it_141793-105472.jpg" 
@@ -126,7 +137,7 @@ const courseDetailsPage = async ({params}: CourseDetailsPageProps) => {
             alt="course thumbnail" 
             />
           </div>
-          <div className="flex flex-col justify-between items-start w-full h-full px-3">
+          <div className="flex flex-col justify-between items-start w-full h-full px-4">
             <h2 className="content-title">Back-End Development with Django</h2>
             <div className="flex justify-between items-center w-full my-1">
               <span className="flex items-center text-gray-400 text-[14px]"><Clock10Icon className="h-3 w-3 mr-1"/> 25 hours</span>
@@ -152,8 +163,12 @@ const courseDetailsPage = async ({params}: CourseDetailsPageProps) => {
         </aside>
 
         <div className="flex justify-end items-center w-full my-3 gap-3">
-          <Button className='bg-primary text-white hover:bg-teal-600 hover:text-white cursor-pointer'><PlusIcon /> Add new course</Button>
-          <Button className='bg-primary text-white hover:bg-teal-600 hover:text-white cursor-pointer'><PencilIcon /> Edit Course</Button>
+          <Link href="/instructor/dashboard/courses/add-course">
+            <Button className='bg-blue-400 text-white hover:bg-blue-500 hover:text-white cursor-pointer'><PlusIcon /> Add another course</Button>
+          </Link>
+          <Link href={`/instructor/dashboard/courses/${courseId}/edit`}>
+            <Button className='bg-primary text-white hover:bg-teal-600 hover:text-white cursor-pointer'><PencilIcon /> Edit Course</Button>
+          </Link>
         </div>
 
         <section className="h-full w-full">
@@ -180,7 +195,9 @@ const courseDetailsPage = async ({params}: CourseDetailsPageProps) => {
               </form>
             </div>
             <div>
-              <Button className='bg-primary text-white hover:bg-teal-600 hover:text-white cursor-pointer'><PlusIcon /> Add new lesson</Button>
+              <Link href="/instructor/dashboard/courses/lessons/add-lesson">
+                <Button className='bg-primary text-white hover:bg-teal-600 hover:text-white cursor-pointer'><PlusIcon /> Add new lesson</Button>
+              </Link>
             </div>
           </section>
 
@@ -196,7 +213,7 @@ const courseDetailsPage = async ({params}: CourseDetailsPageProps) => {
                 <div key={index} className="flex flex-col justify-center items-start w-full p-3 nth-[2n]:bg-gray-100 border-[1px] border-gray-200 rounded-sm my-1">
                   <div className="flex justify-between items-center w-full">
                     <h4 className="font-bold text-gray-600 my-3">
-                      <Link href={`/instructor/dashboard/courses/lessons/${data.lessonId}`}>{data.lesson_name}</Link>
+                      <Link href={`/instructor/dashboard/courses/lessons/${data.lessonId}`} className="hover:text-teal-500">{data.lesson_name}</Link>
                     </h4>
                     <span className="ml-2"><Badge className={`${lessonBadgeColor} uppercase`}>{data.status}</Badge></span>
                   </div>
@@ -231,8 +248,27 @@ const courseDetailsPage = async ({params}: CourseDetailsPageProps) => {
           </Pagination>
         </section>
       </div>
+      {/* <div className="flex justify-end items-center w-full">
+          <Button className="bg-red-400 hover:bg-red-500 cursor-pointer"></Button>
+      </div> */}
       <div className="flex justify-end items-center w-full">
-          <Button className="bg-red-400 hover:bg-red-500 cursor-pointer"> <TrashIcon /> Delete Course</Button>
+        <AlertDialog>
+          <AlertDialogTrigger className="flex justify-center items-center gap-2 bg-red-400 hover:bg-red-500 cursor-pointer
+          text-white px-2 py-2 font-semibold text-[13px] rounded-md"> <TrashIcon className="w-4" /> Delete Course</AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete your course
+                and remove your data from our servers.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction className="bg-red-400 hover:bg-red-500 cursor-pointer text-white">Continue</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </main>
   )

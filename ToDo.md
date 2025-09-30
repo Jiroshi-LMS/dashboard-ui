@@ -1,9 +1,3 @@
-# Courses
-
-- Add course page
-- Edit Course page
-- Delete Course Prompt
-
 # Lessons
 
 - Add Lesson page
