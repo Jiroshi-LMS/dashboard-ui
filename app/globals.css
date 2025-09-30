@@ -167,11 +167,15 @@
     }
 
     .section-title {
-        @apply text-xl font-bold my-5;
+      @apply text-xl font-bold my-5;
+    }
+
+    .content-title {
+      @apply font-bold text-2xl text-teal-700 my-5 text-start;
     }
 
     .coming-soon-text {
-        @apply text-red-400 text-[17px] text-center font-bold;
+      @apply text-red-400 text-[17px] text-center font-bold;
     }
 
 }
