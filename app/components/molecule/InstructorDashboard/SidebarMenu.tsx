@@ -9,6 +9,8 @@ import {
   UsersIcon,
   ChartAreaIcon,
   NetworkIcon,
+  KeyIcon,
+  BookOpenIcon,
 } from "lucide-react";
 
 import {
@@ -43,9 +45,14 @@ const utilItems = [
     icon: ChartAreaIcon,
   },
   {
-    title: "APIs",
-    url: "/docs/apis",
+    title: "Manage API Keys",
+    url: "/instructor/dashboard/api-keys",
     icon: NetworkIcon,
+  },
+  {
+    title: "Documentation",
+    url: "/documentation-view/apis",
+    icon: BookOpenIcon,
     target: "_blank",
   }
 ];

@@ -1,16 +1,3 @@
-# Lessons
-
-- Edit Lesson page
-- Delete Lesson Prompt
-
-# Profile
-
-- Edit Profile page
-
-# Settings
-
-- Edit Instructor Information page
-
 # Students
 
 - Student List Page

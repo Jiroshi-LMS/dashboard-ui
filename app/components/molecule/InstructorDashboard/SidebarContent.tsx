@@ -23,13 +23,15 @@ export const SidebarFooterContent = () => {
   return (
     <footer className="flex justify-end items-center p-3">
       <p className="font-semibold text-[13px] ">Hey, Instructor</p>
-      <Avatar className="ml-2">
-        <AvatarImage
-          src="https://github.com/evilrabbit.png"
-          alt="@evilrabbit"
-        />
-        <AvatarFallback>ER</AvatarFallback>
-      </Avatar>
+      <Link href={`/instructor/dashboard/profile`}>
+        <Avatar className="ml-2">
+          <AvatarImage
+            src="https://img.freepik.com/free-photo/bohemian-man-with-his-arms-crossed_1368-3542.jpg"
+            alt="@evilrabbit"
+          />
+          <AvatarFallback>ER</AvatarFallback>
+        </Avatar>
+      </Link>
     </footer>
   )
 }

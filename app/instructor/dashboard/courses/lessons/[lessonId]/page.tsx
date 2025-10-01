@@ -3,6 +3,17 @@ import { ActivityIcon, Calendar1Icon, Clock10Icon, DownloadIcon, PencilIcon, Tra
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Link from "next/link"
 import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 interface LessonDetailsPageProps {
   params: Promise<{ lessonId: string }>;
@@ -89,7 +100,9 @@ const lessonDetailsPage = async ({params}: LessonDetailsPageProps) => {
               <span className="flex items-center text-gray-400 text-[14px]"><Calendar1Icon className="h-3 w-3 mr-1"/> 2025-05-01</span>
             </div>
             <div className="flex justify-end items-center w-full my-3 gap-3">
-                <Button className='bg-primary text-white hover:bg-teal-600 hover:text-white cursor-pointer'><PencilIcon /> Edit Lesson</Button>
+                <Link href={`/instructor/dashboard/courses/lessons/${lessonId}/edit`}>
+                    <Button className='bg-primary text-white hover:bg-teal-600 hover:text-white cursor-pointer'><PencilIcon /> Edit Lesson</Button>
+                </Link>
             </div>
             <div className="bg-gray-100 rounded-md p-4 my-4">
                 <h4 className="font-bold text-gray-600">Course Description</h4>
@@ -166,8 +179,24 @@ const lessonDetailsPage = async ({params}: LessonDetailsPageProps) => {
                 </TabsContent>
             </Tabs>
         </section>
-        <div className="flex justify-end items-center w-full my-3 gap-3">
-            <Button className='bg-red-400 text-white hover:bg-red-500 cursor-pointer'><TrashIcon /> Delete Lesson</Button>
+        <div className="flex justify-end items-center w-full">
+            <AlertDialog>
+            <AlertDialogTrigger className="flex justify-center items-center gap-2 bg-red-400 hover:bg-red-500 cursor-pointer
+            text-white px-2 py-2 font-semibold text-[13px] rounded-md"> <TrashIcon className="w-4" /> Delete Course</AlertDialogTrigger>
+            <AlertDialogContent>
+                <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete your lesson
+                    and remove your data from our servers.
+                </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction className="bg-red-400 hover:bg-red-500 cursor-pointer text-white">Continue</AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+            </AlertDialog>
         </div>
       </section>
 
