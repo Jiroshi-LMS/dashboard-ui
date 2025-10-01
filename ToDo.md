@@ -1,6 +1,5 @@
 # Lessons
 
-- Add Lesson page
 - Edit Lesson page
 - Delete Lesson Prompt
 

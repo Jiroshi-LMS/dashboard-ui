@@ -2,6 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import Stepper from "@/app/components/organism/InstructorDashboard/DashboardStepper"
+import VideoDetailsStep from "@/app/components/stepper-content/lesson-upload/VideoDetailsStep";
+import VideoResourcesStep from "@/app/components/stepper-content/lesson-upload/VideoResourcesStep";
+import VideoUploadStep from "@/app/components/stepper-content/lesson-upload/VideoUploadStep";
 
 const addLessonPage = () => {
     const router = useRouter();
@@ -11,14 +14,21 @@ const addLessonPage = () => {
         <Stepper
             steps={[
                 {
-                    label: "Video Details",
+                    label: "Lesson Details",
                     content: <VideoDetailsStep />,
                     onNext: async () => {
                         return true;
                     },
                 },
                 {
-                    label: "Video Upload",
+                    label: "Lesson Extra Resources",
+                    content: <VideoResourcesStep />,
+                    onNext: async () => {
+                        return true;
+                    },
+                },
+                {
+                    label: "Lesson Video",
                     content: <VideoUploadStep />,
                     onNext: async () => {
                         return true;
@@ -34,18 +44,6 @@ const addLessonPage = () => {
 
     </main>
   )
-}
-
-const VideoDetailsStep = () => {
-    return (
-        <div>videoDetailsStep</div>
-    )
-}
-
-const VideoUploadStep = () => {
-    return (
-        <div>videoUploadStep</div>
-    )
 }
 
 export default addLessonPage
