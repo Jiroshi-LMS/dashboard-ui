@@ -1,13 +1,11 @@
 "use client"
-
 import Head from "next/head"
 import Link from "next/link"
-import { z } from "zod"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import api from "@/lib/api/axios"
 import { useRouter } from "next/navigation"
+import { useState, useEffect } from "react"
+import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
+import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -21,23 +19,41 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
+import api from "@/lib/api/axios"
+import { page, route } from "@/lib/constants/apiRoutes"
+import { countryCodes } from "@/lib/constants/common"
+import { standardErrors } from "@/lib/constants/errors"
+import { profile_completion } from "@/lib/constants/instructorConstants"
+import { instructorRegistrationSchema } from "@/lib/schemas/instructorSchemas"
+import { zodResolver } from "@hookform/resolvers/zod"
 
-const formSchema = z.object({
-  fullName: z.string().min(2, "Full name must be at least 2 characters."),
-  username: z.string().min(3, "Username must be at least 3 characters."),
-  email: z.email().refine((val) => !!val, {
-    message: "Enter a valid email address.",
-  }),
-  password: z.string().min(6, "Password must be at least 6 characters."),
-  phoneNumber: z.string().regex(/^(\d{10})?$/, "Enter a valid 10-digit phone number.").optional(),
-})
+
 
 const RegisterPage = () => {
-
   const router = useRouter()
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const try_and_fetch_user = async () => {
+    try {
+      const resp = await api.get(route.ME)
+      const data: StandardResponse = resp.data
+      if (data.status) {
+        if (data.response['profile_completion_status'] == profile_completion.PENDING) {
+          router.replace(page.SET_PROFILE)
+        } else {
+          router.replace(page.DASHBOARD_HOME)
+        }
+      }
+    } catch(err: any) {
+      return;
+    }
+  }
+
+  useEffect(() => {
+    try_and_fetch_user()
+  }, [])
+
+  const form = useForm<z.infer<typeof instructorRegistrationSchema>>({
+    resolver: zodResolver(instructorRegistrationSchema),
     defaultValues: {
       fullName: "",
       username: "",
@@ -47,8 +63,7 @@ const RegisterPage = () => {
     },
   })
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-
+  const onSubmit = async (values: z.infer<typeof instructorRegistrationSchema>) => {
     const submissionPayload :InstructorSignupSubmissionPayload = {
       full_name: values.fullName,
       username: values.username,
@@ -56,24 +71,24 @@ const RegisterPage = () => {
       password: values.password,
     }
     if (values.phoneNumber || values.phoneNumber?.length == 10) {
-      submissionPayload['country_code'] = "+91"
+      submissionPayload['country_code'] = countryCodes.IND
       submissionPayload['phone_number'] = values.phoneNumber
     }
 
     try {
-      const resp = await api.post('/instructor/', submissionPayload)
-      const data: InstructorSignupSubmissionResponse = resp.data
+      const resp = await api.post(route.INSTRUCTOR, submissionPayload)
+      const data: StandardResponse = resp.data
       if (data.status) {
         localStorage.setItem('access', data.response['access_token'])
-        router.replace('/auth/set-profile')
+        router.replace(page.SET_PROFILE)
       }
     }
     catch (err: any) {
-      const errData: InstructorSignupSubmissionResponse | undefined | null = err?.response?.data
+      const errData: StandardResponse | undefined | null = err?.response?.data
       if (errData){
         toast.error(errData.msg)
       } else {
-        toast.error("Something went wrong. Please try again later!")
+        toast.error(standardErrors.UNKNOWN)
       }
     }
 
@@ -110,7 +125,7 @@ const RegisterPage = () => {
                     <FormItem>
                       <FormLabel>Full Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="John Doe" {...field} />
+                        <Input placeholder="Jiroshi Instructor" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -125,7 +140,7 @@ const RegisterPage = () => {
                     <FormItem>
                       <FormLabel>Username</FormLabel>
                       <FormControl>
-                        <Input placeholder="jiroshi_instructor" {...field} />
+                        <Input placeholder="jiroshi.instructor" {...field} />
                       </FormControl>
                       <FormDescription>This will be your public display name.</FormDescription>
                       <FormMessage />

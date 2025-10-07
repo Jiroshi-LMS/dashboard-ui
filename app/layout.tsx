@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Toaster } from 'react-hot-toast'
+import RecoilProvider from "@/store/recoil-provider";
 
 export const metadata: Metadata = {
   title: "Jiroshi",
@@ -33,13 +34,15 @@ export default function RootLayout({
       <body
         className="antialiased"
       >
-        <Toaster
-          position="top-right"
-          reverseOrder={false}
-        />
-        <SidebarProvider>
-          {children}
-        </SidebarProvider>
+        <RecoilProvider>
+          <Toaster
+            position="top-right"
+            reverseOrder={false}
+          />
+          <SidebarProvider>
+            {children}
+          </SidebarProvider>
+        </RecoilProvider>
       </body>
     </html>
   );
