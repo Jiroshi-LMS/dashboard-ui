@@ -5,6 +5,9 @@ import Link from "next/link"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import api from "@/lib/api/axios"
+import { useRouter } from "next/navigation"
+import toast from "react-hot-toast"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -26,10 +29,13 @@ const formSchema = z.object({
     message: "Enter a valid email address.",
   }),
   password: z.string().min(6, "Password must be at least 6 characters."),
-  phoneNumber: z.string().regex(/^\d{10}$/, "Enter a valid 10-digit phone number."),
+  phoneNumber: z.string().regex(/^(\d{10})?$/, "Enter a valid 10-digit phone number.").optional(),
 })
 
 const RegisterPage = () => {
+
+  const router = useRouter()
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -41,8 +47,36 @@ const RegisterPage = () => {
     },
   })
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log("Form Submitted:", values)
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+
+    const submissionPayload :InstructorSignupSubmissionPayload = {
+      full_name: values.fullName,
+      username: values.username,
+      email: values.email,
+      password: values.password,
+    }
+    if (values.phoneNumber || values.phoneNumber?.length == 10) {
+      submissionPayload['country_code'] = "+91"
+      submissionPayload['phone_number'] = values.phoneNumber
+    }
+
+    try {
+      const resp = await api.post('/instructor/', submissionPayload)
+      const data: InstructorSignupSubmissionResponse = resp.data
+      if (data.status) {
+        localStorage.setItem('access', data.response['access_token'])
+        router.replace('/auth/set-profile')
+      }
+    }
+    catch (err: any) {
+      const errData: InstructorSignupSubmissionResponse | undefined | null = err?.response?.data
+      if (errData){
+        toast.error(errData.msg)
+      } else {
+        toast.error("Something went wrong. Please try again later!")
+      }
+    }
+
   }
 
   return (

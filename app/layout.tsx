@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { Toaster } from 'react-hot-toast'
 
 export const metadata: Metadata = {
   title: "Jiroshi",
@@ -32,6 +33,10 @@ export default function RootLayout({
       <body
         className="antialiased"
       >
+        <Toaster
+          position="top-right"
+          reverseOrder={false}
+        />
         <SidebarProvider>
           {children}
         </SidebarProvider>

@@ -73,7 +73,7 @@ const VideoResourcesStep = (props: any) => {
                             <Label htmlFor="reference-url" className="text-[14px]">Reference URL</Label>
                             <Input placeholder="Reference URL" className="w-full" name="reference-url" id="reference-url" />
                         </div>
-                        <Button className='bg-primary text-white hover:bg-teal-600 hover:text-white cursor-pointer'><PlusIcon /> Add Reference URL</Button>
+                        <Button className='bg-primary text-white hover:bg-teal-600 hover:text-white cursor-pointer'><PlusIcon /> Add Notes and URLs</Button>
                     </div>
                 </div>
 
