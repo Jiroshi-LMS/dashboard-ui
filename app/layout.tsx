@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Toaster } from 'react-hot-toast'
-import RecoilProvider from "@/store/recoil-provider";
+import { ReduxProvider } from '@/store/ReduxProvider';
 
 export const metadata: Metadata = {
   title: "Jiroshi",
@@ -34,7 +34,7 @@ export default function RootLayout({
       <body
         className="antialiased"
       >
-        <RecoilProvider>
+        <ReduxProvider>
           <Toaster
             position="top-right"
             reverseOrder={false}
@@ -42,7 +42,7 @@ export default function RootLayout({
           <SidebarProvider>
             {children}
           </SidebarProvider>
-        </RecoilProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

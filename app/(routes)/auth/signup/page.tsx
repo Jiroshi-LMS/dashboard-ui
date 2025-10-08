@@ -2,7 +2,8 @@
 import Head from "next/head"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
+import { useSelector } from 'react-redux';
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import { z } from "zod"
@@ -19,6 +20,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
+import { fetchInstructor } from "@/feature/instructor/instructorServices"
 import api from "@/lib/api/axios"
 import { page, route } from "@/lib/constants/apiRoutes"
 import { countryCodes } from "@/lib/constants/common"
@@ -26,30 +28,31 @@ import { standardErrors } from "@/lib/constants/errors"
 import { profile_completion } from "@/lib/constants/instructorConstants"
 import { instructorRegistrationSchema } from "@/lib/schemas/instructorSchemas"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { RootState } from '@/store';
+import { login, logout } from "@/store/slices/instructorSlice";
 
 
 
 const RegisterPage = () => {
   const router = useRouter()
+  const instructor = useSelector((state: RootState) => state.instructor);
 
-  const try_and_fetch_user = async () => {
-    try {
-      const resp = await api.get(route.ME)
-      const data: StandardResponse = resp.data
-      if (data.status) {
-        if (data.response['profile_completion_status'] == profile_completion.PENDING) {
-          router.replace(page.SET_PROFILE)
-        } else {
-          router.replace(page.DASHBOARD_HOME)
-        }
-      }
-    } catch(err: any) {
-      return;
+  const checkInstructorAndNavigate = async () => {
+    let instructorData = null;
+    if (instructor.loggedIn) instructorData = instructor.data
+    else{
+      const [instructorInstance, status, _] = await fetchInstructor()
+      if (status) instructorData = instructorInstance
+    }
+    if (instructorData) {
+      if (instructorData.profile_completion_status === profile_completion.PENDING) 
+        router.replace(page.SET_PROFILE);
+      router.replace(page.DASHBOARD_HOME)
     }
   }
 
   useEffect(() => {
-    try_and_fetch_user()
+    checkInstructorAndNavigate()
   }, [])
 
   const form = useForm<z.infer<typeof instructorRegistrationSchema>>({
@@ -78,6 +81,7 @@ const RegisterPage = () => {
     try {
       const resp = await api.post(route.INSTRUCTOR, submissionPayload)
       const data: StandardResponse = resp.data
+      console.log("Data", data)
       if (data.status) {
         localStorage.setItem('access', data.response['access_token'])
         router.replace(page.SET_PROFILE)
