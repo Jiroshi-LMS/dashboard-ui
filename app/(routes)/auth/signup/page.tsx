@@ -1,9 +1,8 @@
 "use client"
+
 import Head from "next/head"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useEffect } from "react"
-import { useSelector } from 'react-redux';
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import { z } from "zod"
@@ -20,40 +19,18 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-import { fetchInstructor } from "@/feature/instructor/instructorServices"
-import api from "@/lib/api/axios"
-import { page, route } from "@/lib/constants/apiRoutes"
-import { countryCodes } from "@/lib/constants/common"
+import { page } from "@/lib/constants/apiRoutes"
 import { standardErrors } from "@/lib/constants/errors"
-import { profile_completion } from "@/lib/constants/instructorConstants"
 import { instructorRegistrationSchema } from "@/lib/schemas/instructorSchemas"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { RootState } from '@/store';
-import { login, logout } from "@/store/slices/instructorSlice";
+import { useInstructorRedirect } from "@/feature/instructor/instructorHooks"
+import { registerInstructorService } from "@/feature/instructor/instructorServices"
 
 
 
 const RegisterPage = () => {
   const router = useRouter()
-  const instructor = useSelector((state: RootState) => state.instructor);
-
-  const checkInstructorAndNavigate = async () => {
-    let instructorData = null;
-    if (instructor.loggedIn) instructorData = instructor.data
-    else{
-      const [instructorInstance, status, _] = await fetchInstructor()
-      if (status) instructorData = instructorInstance
-    }
-    if (instructorData) {
-      if (instructorData.profile_completion_status === profile_completion.PENDING) 
-        router.replace(page.SET_PROFILE);
-      router.replace(page.DASHBOARD_HOME)
-    }
-  }
-
-  useEffect(() => {
-    checkInstructorAndNavigate()
-  }, [])
+  useInstructorRedirect()
 
   const form = useForm<z.infer<typeof instructorRegistrationSchema>>({
     resolver: zodResolver(instructorRegistrationSchema),
@@ -67,33 +44,17 @@ const RegisterPage = () => {
   })
 
   const onSubmit = async (values: z.infer<typeof instructorRegistrationSchema>) => {
-    const submissionPayload :InstructorSignupSubmissionPayload = {
-      full_name: values.fullName,
-      username: values.username,
-      email: values.email,
-      password: values.password,
-    }
-    if (values.phoneNumber || values.phoneNumber?.length == 10) {
-      submissionPayload['country_code'] = countryCodes.IND
-      submissionPayload['phone_number'] = values.phoneNumber
-    }
-
     try {
-      const resp = await api.post(route.INSTRUCTOR, submissionPayload)
-      const data: StandardResponse = resp.data
-      console.log("Data", data)
-      if (data.status) {
-        localStorage.setItem('access', data.response['access_token'])
+      const resp = await registerInstructorService(values)
+      if (resp?.status && resp.response['access_token']) {
+        localStorage.setItem('access', resp.response['access_token'])
         router.replace(page.SET_PROFILE)
+      } else {
+        toast.error(resp?.msg || "Something went wrong! We were unable to sign you up.")
       }
     }
     catch (err: any) {
-      const errData: StandardResponse | undefined | null = err?.response?.data
-      if (errData){
-        toast.error(errData.msg)
-      } else {
-        toast.error(standardErrors.UNKNOWN)
-      }
+      toast.error(err?.response?.data?.msg ?? standardErrors.UNKNOWN)
     }
 
   }

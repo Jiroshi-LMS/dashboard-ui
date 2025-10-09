@@ -3,4 +3,4 @@ type StandardResponse = {
     status: boolean;
     status_code: number;
     response: any;
-}
+} | null | undefined
