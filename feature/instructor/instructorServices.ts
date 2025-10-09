@@ -5,23 +5,15 @@ import { instructorRegistrationSchema } from "@/lib/schemas/instructorSchemas"
 import z from "zod"
 import { countryCodes } from "@/lib/constants/common"
 
-export const fetchInstructorService = async (): Promise<{
-    data: any, status: boolean, msg: string | null
-}> => {
-    try {
-      const resp = await api.get(route.ME)
-      const data: StandardResponse = resp.data
-      console.log("ME", data)
-      if (data?.status) return {data: data?.response, status: true, msg: null};
-      return {data: null, status: false, msg: "Couldn't fetch instructor data"};
-    } catch(err: any) {
-        // TODO: NEED TO REIMPLEMENT TO HANDLE ERRORS BETTER
-        return {data: err, status: false, msg: "Couldn't fetch instructor data"}
-    }
+export const fetchInstructorService = async (): Promise<StandardResponse> => {
+    const resp = await api.get(route.ME)
+    return resp.data as StandardResponse
 }
 
 
-export const registerInstructorService = async (values: z.infer<typeof instructorRegistrationSchema>) => {
+export const registerInstructorService = async (
+    values: z.infer<typeof instructorRegistrationSchema>
+): Promise<StandardResponse> => {
     const submissionPayload :InstructorSignupSubmissionPayload = {
       full_name: values.fullName,
       username: values.username,

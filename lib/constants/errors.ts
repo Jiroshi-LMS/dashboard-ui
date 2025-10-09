@@ -1,3 +1,4 @@
 export const standardErrors = {
-    UNKNOWN: "Something went wrong. Please try again later!"
+    UNKNOWN: "Something went wrong. Please try again later!",
+    UNABLE_TO_FETCH: "Unable to fetch"
 }

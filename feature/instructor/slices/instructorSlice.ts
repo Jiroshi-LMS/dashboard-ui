@@ -2,6 +2,7 @@ import { Instructor } from '@/feature/instructor/instructorTypes';
 import { fetchInstructorService } from '@/feature/instructor/instructorServices';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../../store';
+import { standardErrors } from '@/lib/constants/errors';
 
 
 interface InstructorState {
@@ -25,10 +26,10 @@ export const fetchInstructor = createAsyncThunk(
       const state = getState() as RootState;
       if (state.instructor.loggedIn) return state.instructor.data;
       const resp = await fetchInstructorService();
-      if (resp.status) return resp.data;
-      return rejectWithValue(resp.msg);
+      if (resp?.status) return resp?.response;
+      return rejectWithValue(resp?.msg ?? standardErrors.UNABLE_TO_FETCH + " instructor data");
     } catch (err: any) {
-      return rejectWithValue(err);
+      return rejectWithValue(err?.response?.data?.msg ?? standardErrors.UNABLE_TO_FETCH + " instructor data");
     }
   }
 );
