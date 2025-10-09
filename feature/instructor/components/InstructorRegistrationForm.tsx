@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { page } from "@/lib/constants/apiRoutes"
 import { standardErrors } from "@/lib/constants/errors"
-import { instructorRegistrationSchema } from "@/lib/schemas/instructorSchemas"
+import { instructorRegistrationSchema } from "@/feature/instructor/instructorSchemas"
 
 
 const InstructorRegistrationForm = () => {

@@ -1,7 +1,6 @@
 import api from "@/lib/api/axios"
 import { route } from "@/lib/constants/apiRoutes"
-import { Instructor } from "./instructorTypes"
-import { instructorRegistrationSchema } from "@/lib/schemas/instructorSchemas"
+import { instructorRegistrationSchema } from "@/feature/instructor/instructorSchemas"
 import z from "zod"
 import { countryCodes } from "@/lib/constants/common"
 
