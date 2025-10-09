@@ -1,70 +1,14 @@
 "use client"
 
-import Head from "next/head"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { useForm } from "react-hook-form"
-import toast from "react-hot-toast"
-import { z } from "zod"
-
-import { Button } from "@/components/ui/button"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-
 import { useInstructorRedirect } from "@/feature/instructor/instructorHooks"
-import { registerInstructorService } from "@/feature/instructor/instructorServices"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { page } from "@/lib/constants/apiRoutes"
-import { standardErrors } from "@/lib/constants/errors"
-import { instructorRegistrationSchema } from "@/lib/schemas/instructorSchemas"
-
+import InstructorRegistrationForm from "@/feature/instructor/components/InstructorRegistrationForm"
 
 
 const RegisterPage = () => {
-  const router = useRouter()
   useInstructorRedirect()
-
-  const form = useForm<z.infer<typeof instructorRegistrationSchema>>({
-    resolver: zodResolver(instructorRegistrationSchema),
-    defaultValues: {
-      fullName: "",
-      username: "",
-      email: "",
-      password: "",
-      phoneNumber: "",
-    },
-  })
-
-  const onSubmit = async (values: z.infer<typeof instructorRegistrationSchema>) => {
-    try {
-      const resp = await registerInstructorService(values)
-      if (resp?.status && resp.response['access_token']) {
-        localStorage.setItem('access', resp.response['access_token'])
-        router.replace(page.SET_PROFILE)
-      } else {
-        toast.error(resp?.msg || "Something went wrong! We were unable to sign you up.")
-      }
-    }
-    catch (err: any) {
-      toast.error(err?.response?.data?.msg ?? standardErrors.UNKNOWN)
-    }
-
-  }
 
   return (
     <>
-      <Head>
-        <title>Register | Jiroshi</title>
-        <meta name="description" content="Register" />
-      </Head>
       <main className="flex w-screen min-h-screen">
         {/* Left Aside */}
         <aside className="w-[40%] flex flex-col items-start justify-center bg-teal-700 text-white p-10">
@@ -79,105 +23,7 @@ const RegisterPage = () => {
         <section className="w-[60%] flex flex-col items-center justify-center h-full p-10">
           <div className="w-full max-w-md space-y-8">
             <h1 className="text-3xl font-semibold text-center">Register as an Instructor</h1>
-            
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                {/* Full Name */}
-                <FormField
-                  control={form.control}
-                  name="fullName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Full Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Jiroshi Instructor" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {/* Username */}
-                <FormField
-                  control={form.control}
-                  name="username"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Username</FormLabel>
-                      <FormControl>
-                        <Input placeholder="jiroshi.instructor" {...field} />
-                      </FormControl>
-                      <FormDescription>This will be your public display name.</FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {/* Email */}
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input type="email" placeholder="you@example.com" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {/* Password */}
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Password</FormLabel>
-                      <FormControl>
-                        <Input type="password" placeholder="••••••••" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {/* Phone */}
-                <div className="flex gap-2">
-                  {/* Country Code (Locked) */}
-                  <div className="w-20">
-                    <FormItem>
-                      <FormLabel>Code</FormLabel>
-                      <FormControl>
-                        <Input value="+91" disabled className="bg-gray-100 text-gray-600" />
-                      </FormControl>
-                    </FormItem>
-                  </div>
-
-                  {/* Phone Number */}
-                  <FormField
-                    control={form.control}
-                    name="phoneNumber"
-                    render={({ field }) => (
-                      <FormItem className="flex-1">
-                        <FormLabel>Phone Number</FormLabel>
-                        <FormControl>
-                          <Input type="tel" placeholder="9876543210" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                {/* Submit */}
-                <Button type="submit" className="w-full bg-teal-600 hover:bg-teal-700 cursor-pointer text-white">
-                  Register
-                </Button>
-                <p className="text-sm text-gray-500">Already have an account? <Link href="/auth/login" className="text-primary">Sign In</Link></p>
-              </form>
-            </Form>
+            <InstructorRegistrationForm />
           </div>
         </section>
       </main>
