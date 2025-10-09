@@ -19,12 +19,12 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
+import { useInstructorRedirect } from "@/feature/instructor/instructorHooks"
+import { registerInstructorService } from "@/feature/instructor/instructorServices"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { page } from "@/lib/constants/apiRoutes"
 import { standardErrors } from "@/lib/constants/errors"
 import { instructorRegistrationSchema } from "@/lib/schemas/instructorSchemas"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useInstructorRedirect } from "@/feature/instructor/instructorHooks"
-import { registerInstructorService } from "@/feature/instructor/instructorServices"
 
 
 

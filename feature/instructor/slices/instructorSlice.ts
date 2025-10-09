@@ -1,7 +1,7 @@
 import { Instructor } from '@/feature/instructor/instructorTypes';
 import { fetchInstructorService } from '@/feature/instructor/instructorServices';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { RootState } from '..';
+import { RootState } from '../../../store';
 
 
 interface InstructorState {

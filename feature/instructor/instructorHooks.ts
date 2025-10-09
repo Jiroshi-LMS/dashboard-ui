@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { page } from "@/lib/constants/apiRoutes";
 import { profile_completion } from "@/lib/constants/instructorConstants";
 import { RootState } from "@/store";
-import { fetchInstructor } from "@/store/slices/instructorSlice";
+import { fetchInstructor } from "@/feature/instructor/slices/instructorSlice";
 
 export const useInstructorRedirect = () => {
     const router = useRouter()
