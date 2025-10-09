@@ -1,4 +1,5 @@
 export const standardErrors = {
     UNKNOWN: "Something went wrong. Please try again later!",
-    UNABLE_TO_FETCH: "Unable to fetch"
+    UNABLE_TO_FETCH: "Unable to fetch",
+    SESSION_EXPIRED: "Session expired."
 }

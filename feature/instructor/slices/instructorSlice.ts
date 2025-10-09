@@ -29,6 +29,7 @@ export const fetchInstructor = createAsyncThunk(
       if (resp?.status) return resp?.response;
       return rejectWithValue(resp?.msg ?? standardErrors.UNABLE_TO_FETCH + " instructor data");
     } catch (err: any) {
+      if (err.message == "TOKEN_EXPIRED") return rejectWithValue(standardErrors.SESSION_EXPIRED)
       return rejectWithValue(err?.response?.data?.msg ?? standardErrors.UNABLE_TO_FETCH + " instructor data");
     }
   }
