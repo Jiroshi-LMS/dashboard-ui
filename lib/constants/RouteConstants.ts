@@ -1,7 +1,8 @@
 export const route = {
     INSTRUCTOR: "/instructor/",
     ME: "/instructor/me/",
-    LOGIN: "/instructor/login/"
+    LOGIN: "/instructor/login/",
+    REFRESH: "/instructor/token/refresh/"
 }
 
 
