@@ -1,4 +1,7 @@
 import axios, { AxiosError } from 'axios'
+import { authLiterals } from '../constants/common';
+import { standardErrors } from '../constants/errors';
+import { route } from '../constants/RouteConstants';
 
 const api = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
@@ -6,7 +9,7 @@ const api = axios.create({
 })
 
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("access");
+  const token = localStorage.getItem(authLiterals.ACCESS);
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -55,12 +58,12 @@ api.interceptors.response.use(
 
       try {
         const resp = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/instructor/token/refresh/`, {}, { withCredentials: true });
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}${route.REFRESH}`, {}, { withCredentials: true });
 
         const newAccessToken = resp?.data?.response?.access_token;
         console.log(resp.data)
-        if (newAccessToken) localStorage.setItem("access", newAccessToken);
-        else throw Error("Refresh Token Expired.")
+        if (newAccessToken) localStorage.setItem(authLiterals.ACCESS, newAccessToken);
+        else throw Error(standardErrors.SESSION_EXPIRED)
         // Update headers globally
         // api.defaults.headers.common["Authorization"] = `Bearer ${newAccessToken}`;
         processQueue(null, newAccessToken);
@@ -71,9 +74,9 @@ api.interceptors.response.use(
         processQueue(refreshError, null);
 
         // Instead of redirecting, we throw a standard error identifier
-        const tokenError = new Error("TOKEN_EXPIRED");
+        const tokenError = new Error(standardErrors.TOKEN_EXPIRED);
         (tokenError as any).cause = refreshError;
-        localStorage.removeItem('access');
+        localStorage.removeItem(authLiterals.ACCESS);
         throw tokenError;
       } finally {
         isRefreshing = false;

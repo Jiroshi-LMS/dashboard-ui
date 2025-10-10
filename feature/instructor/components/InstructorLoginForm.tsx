@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { authLiterals } from "@/lib/constants/common"
 import { profile_completion } from "@/lib/constants/instructorConstants"
 import { standardErrors } from "@/lib/constants/errors"
 import { page } from "@/lib/constants/RouteConstants"
@@ -33,7 +34,7 @@ const InstructorLoginForm = () => {
         const loginResp = await loginInstructorService(values)
         if (!loginResp?.status || !loginResp?.response['access_token'])
             return toast.error(loginResp?.msg || "Something went wrong! We were unable to log you in.");
-        localStorage.setItem('access', loginResp?.response['access_token'])
+        localStorage.setItem(authLiterals.ACCESS, loginResp?.response['access_token'])
 
         const fetchInstructorResp = await fetchInstructorService()
         if (!fetchInstructorResp?.status) 
@@ -44,7 +45,7 @@ const InstructorLoginForm = () => {
         else router.replace(page.DASHBOARD_HOME)
 
         } catch (err: any) {
-        if (err?.message && err?.message === 'TOKEN_EXPIRED')
+        if (err?.message && err?.message === standardErrors.TOKEN_EXPIRED)
             return toast.error(err.message)
         toast.error(err?.response?.data?.msg || standardErrors.UNKNOWN)
         }

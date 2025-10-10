@@ -10,9 +10,10 @@ import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { page } from "@/lib/constants/RouteConstants"
+import { authLiterals } from "@/lib/constants/common"
 import { standardErrors } from "@/lib/constants/errors"
 import { instructorRegistrationSchema } from "@/feature/instructor/instructorSchemas"
+import { page } from "@/lib/constants/RouteConstants"
 
 
 const InstructorRegistrationForm = () => {
@@ -32,7 +33,7 @@ const InstructorRegistrationForm = () => {
         try {
             const resp = await registerInstructorService(values)
             if (resp?.status && resp.response['access_token']) {
-                localStorage.setItem('access', resp.response['access_token'])
+                localStorage.setItem(authLiterals.ACCESS, resp.response['access_token'])
                 router.replace(page.SET_PROFILE)
             } else {
                 toast.error(resp?.msg || "Something went wrong! We were unable to sign you up.")
