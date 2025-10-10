@@ -7,7 +7,7 @@ import Loader from "@/app/components/atoms/Loader"
 
 
 const LoginPage = () => {
-  const {instructor, status: instructorFetchingStatus, loggedIn, fetchingError} = useRedirectForLoggedIn()
+  const {status: instructorFetchingStatus} = useRedirectForLoggedIn()
 
   return (
     <>
@@ -23,19 +23,15 @@ const LoginPage = () => {
 
         {/* Right Section */}
         <section className="w-[60%] flex flex-col items-center justify-center h-full p-10">
-          <div className="w-full max-w-md space-y-8 pt-[9rem]">
             {
               (instructorFetchingStatus === 'loading' || instructorFetchingStatus === 'succeeded') ?
-                <div className="h-[30vh]">
-                  <Loader />
-                </div> : 
+                <Loader /> : 
                 <>
                   <h1 className="text-3xl font-semibold text-center">Sign In</h1>
                   <InstructorLoginForm />
                 </>
                 
             }
-          </div>
         </section>
       </main>
     </>

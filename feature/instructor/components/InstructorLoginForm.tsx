@@ -51,45 +51,47 @@ const InstructorLoginForm = () => {
     }
 
   return (
-    <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        {/* Email */}
-        <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-            <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                <Input type="email" placeholder="you@example.com" {...field} />
-                </FormControl>
-                <FormMessage />
-            </FormItem>
-            )}
-        />
+    <div className="w-full max-w-md space-y-8 pt-[9rem]">
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            {/* Email */}
+            <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                    <Input type="email" placeholder="you@example.com" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                </FormItem>
+                )}
+            />
 
-        {/* Password */}
-        <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-            <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                <Input type="password" placeholder="••••••••" {...field} />
-                </FormControl>
-                <FormMessage />
-            </FormItem>
-            )}
-        />
+            {/* Password */}
+            <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                    <Input type="password" placeholder="••••••••" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                </FormItem>
+                )}
+            />
 
-        {/* Submit */}
-        <Button type="submit" className="w-full bg-teal-600 hover:bg-teal-700 cursor-pointer text-white">
-            Sign In
-        </Button>
-        <p className="text-sm text-gray-500">Don't have an account? <Link href="/auth/signup" className="text-primary">Register</Link></p>
-        </form>
-    </Form>
+            {/* Submit */}
+            <Button type="submit" className="w-full bg-teal-600 hover:bg-teal-700 cursor-pointer text-white">
+                Sign In
+            </Button>
+            <p className="text-sm text-gray-500">Don't have an account? <Link href="/auth/signup" className="text-primary">Register</Link></p>
+            </form>
+        </Form>
+    </div>
   )
 }
 
