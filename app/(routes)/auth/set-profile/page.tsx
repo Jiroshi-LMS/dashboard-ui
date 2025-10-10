@@ -21,6 +21,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { UploadIcon } from "lucide-react"
+import Loader from "@/app/components/atoms/Loader"
 
 const formSchema = z.object({
   fullName: z.string().min(2, "Full name must be at least 2 characters."),
@@ -59,6 +60,7 @@ const SetProfilePage = () => {
             dicta atque deleniti, aliquid nesciunt suscipit consectetur fuga beatae magnam!
           </p>
         </aside>
+
 
         {/* Right Section */}
         <section className="w-[60%] flex flex-col items-center justify-center h-full p-10">

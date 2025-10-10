@@ -54,13 +54,15 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const resp = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/instructor/token/refresh/`);
+        const resp = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/instructor/token/refresh/`, {}, { withCredentials: true });
 
-        const newAccessToken = resp.data.access;
-        localStorage.setItem("access", newAccessToken);
-
+        const newAccessToken = resp?.data?.response?.access_token;
+        console.log(resp.data)
+        if (newAccessToken) localStorage.setItem("access", newAccessToken);
+        else throw Error("Refresh Token Expired.")
         // Update headers globally
-        api.defaults.headers.common["Authorization"] = `Bearer ${newAccessToken}`;
+        // api.defaults.headers.common["Authorization"] = `Bearer ${newAccessToken}`;
         processQueue(null, newAccessToken);
 
         // Retry original
