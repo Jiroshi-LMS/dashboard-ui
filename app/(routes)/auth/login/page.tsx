@@ -6,7 +6,7 @@ import InstructorLoginForm from "@/feature/instructor/components/InstructorLogin
 
 
 const LoginPage = () => {
-  useRedirectForLoggedIn()
+  const {instructor, status, loggedIn, fetchingError} = useRedirectForLoggedIn()
 
   return (
     <>

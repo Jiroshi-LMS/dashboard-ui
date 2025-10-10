@@ -10,7 +10,7 @@ import { fetchInstructor } from "@/feature/instructor/slices/instructorSlice";
 export const useRedirectForLoggedIn = () => {
     const router = useRouter()
     const dispatch = useAppDispatch()
-    const {data: instructor, status, loggedIn} = useAppSelector((state: RootState) => state.instructor);
+    const {data: instructor, status, loggedIn, error:fetchingError} = useAppSelector((state: RootState) => state.instructor);
 
     useEffect(() => {
         if (!loggedIn && status === 'idle') dispatch(fetchInstructor());
@@ -26,4 +26,6 @@ export const useRedirectForLoggedIn = () => {
             router.replace(redirectTo)
         }
     }, [status, loggedIn, instructor, router])
+
+    return {instructor, status, loggedIn, fetchingError}
 }
