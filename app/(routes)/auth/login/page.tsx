@@ -1,6 +1,5 @@
 "use client"
 
-import Head from "next/head"
 import Link from "next/link"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
@@ -10,41 +9,60 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useRedirectForLoggedIn } from "@/feature/instructor/instructorHooks"
+import { loginFormSchema } from "@/feature/instructor/instructorSchemas"
+import { fetchInstructorService, loginInstructorService } from "@/feature/instructor/instructorServices"
+import { useRouter } from "next/navigation"
+import toast from "react-hot-toast"
+import { Instructor } from "@/feature/instructor/instructorTypes"
+import { profile_completion } from "@/lib/constants/instructorConstants"
+import { page } from "@/lib/constants/RouteConstants"
+import { standardErrors } from "@/lib/constants/errors"
 
 
-const formSchema = z.object({
-  email: z.email().refine((val) => !!val, {
-    message: "Enter a valid email address.",
-  }),
-  password: z.string()
-})
 
 const LoginPage = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const router = useRouter()
+  useRedirectForLoggedIn()
+
+  const form = useForm<z.infer<typeof loginFormSchema>>({
+    resolver: zodResolver(loginFormSchema),
     defaultValues: {
       email: "",
       password: ""
     },
   })
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log("Form Submitted:", values)
+  const onSubmit = async (values: z.infer<typeof loginFormSchema>) => {
+    try {
+      const loginResp = await loginInstructorService(values)
+      if (!loginResp?.status || !loginResp?.response['access_token'])
+        return toast.error(loginResp?.msg || "Something went wrong! We were unable to log you in.");
+      localStorage.setItem('access', loginResp?.response['access_token'])
+
+      const fetchInstructorResp = await fetchInstructorService()
+      if (!fetchInstructorResp?.status) 
+        return toast.error(fetchInstructorResp?.msg || "Something went wrong! Unable to fetch user after login.")
+      const instructorData: Instructor = fetchInstructorResp?.response
+      if (!instructorData) return toast.error(fetchInstructorResp?.msg || "Something went wrong! Unable to fetch user after login.")
+      if (instructorData.profile_completion_status === profile_completion.PENDING) router.replace(page.SET_PROFILE)
+      else router.replace(page.DASHBOARD_HOME)
+
+    } catch (err: any) {
+      if (err?.message && err?.message === 'TOKEN_EXPIRED')
+        return toast.error(err.message)
+      toast.error(err?.response?.data?.msg || standardErrors.UNKNOWN)
+    }
   }
 
   return (
     <>
-      <Head>
-        <title>Register | Jiroshi</title>
-        <meta name="description" content="Register" />
-      </Head>
       <main className="flex w-screen min-h-screen">
         {/* Left Aside */}
         <aside className="w-[40%] flex flex-col items-start justify-center bg-teal-700 text-white p-10">

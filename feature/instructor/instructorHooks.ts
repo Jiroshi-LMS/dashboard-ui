@@ -2,12 +2,12 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
-import { page } from "@/lib/constants/apiRoutes";
+import { page } from "@/lib/constants/RouteConstants";
 import { profile_completion } from "@/lib/constants/instructorConstants";
 import { RootState } from "@/store";
 import { fetchInstructor } from "@/feature/instructor/slices/instructorSlice";
 
-export const useInstructorRedirect = () => {
+export const useRedirectForLoggedIn = () => {
     const router = useRouter()
     const dispatch = useAppDispatch()
     const {data: instructor, status, loggedIn} = useAppSelector((state: RootState) => state.instructor);

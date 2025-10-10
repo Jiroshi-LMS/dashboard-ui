@@ -54,12 +54,7 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const refreshToken = localStorage.getItem("refresh");
-        if (!refreshToken) throw new Error("NO_REFRESH_TOKEN");
-
-        const resp = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/instructor/token/refresh/`, {
-          refresh: refreshToken,
-        });
+        const resp = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/instructor/token/refresh/`);
 
         const newAccessToken = resp.data.access;
         localStorage.setItem("access", newAccessToken);
@@ -76,6 +71,7 @@ api.interceptors.response.use(
         // Instead of redirecting, we throw a standard error identifier
         const tokenError = new Error("TOKEN_EXPIRED");
         (tokenError as any).cause = refreshError;
+        localStorage.removeItem('access');
         throw tokenError;
       } finally {
         isRefreshing = false;

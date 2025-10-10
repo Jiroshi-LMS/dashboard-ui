@@ -1,11 +1,11 @@
 "use client"
 
-import { useInstructorRedirect } from "@/feature/instructor/instructorHooks"
+import { useRedirectForLoggedIn } from "@/feature/instructor/instructorHooks"
 import InstructorRegistrationForm from "@/feature/instructor/components/InstructorRegistrationForm"
 
 
 const RegisterPage = () => {
-  useInstructorRedirect()
+  useRedirectForLoggedIn()
 
   return (
     <>
