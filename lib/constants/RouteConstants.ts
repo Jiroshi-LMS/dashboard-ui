@@ -8,5 +8,6 @@ export const route = {
 
 export const page = {
     SET_PROFILE: "/auth/set-profile",
-    DASHBOARD_HOME: "/instructor/dashboard"
+    DASHBOARD_HOME: "/instructor/dashboard",
+    LOGIN: "/auth/login"
 }

@@ -29,3 +29,23 @@ export const useRedirectForLoggedIn = () => {
 
     return {instructor, status, loggedIn, fetchingError}
 }
+
+
+export const useRedirectForLoggedOut = () => {
+    const router = useRouter();
+    const dispatch = useAppDispatch()
+    const {data: instructor, status, loggedIn, error:fetchingError} = useAppSelector((state: RootState) => state.instructor);
+
+    useEffect(() => {
+        if (!loggedIn && status === 'idle') dispatch(fetchInstructor());
+    }, [loggedIn, status, dispatch])
+
+    useEffect(() => {
+        const isInstructorNotReady = (
+            (status === 'failed' && !instructor) || (!loggedIn && !instructor)
+        )
+        if (isInstructorNotReady) router.replace(page.LOGIN)
+    }, [status, loggedIn, instructor, router])
+
+    return {instructor, status, loggedIn, fetchingError}
+}

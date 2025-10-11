@@ -3,8 +3,9 @@
 import Head from "next/head"
 import Link from "next/link"
 import Image from "next/image"
-import { z } from "zod"
+import { useRef, useState } from "react"
 import { useForm } from "react-hook-form"
+import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import { Button } from "@/components/ui/button"
@@ -22,30 +23,37 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { UploadIcon } from "lucide-react"
 import Loader from "@/app/components/atoms/Loader"
+import { useAppDispatch, useAppSelector } from "@/hooks/useRedux"
+import { useRedirectForLoggedOut } from "@/feature/instructor/instructorHooks"
 
-const formSchema = z.object({
-  fullName: z.string().min(2, "Full name must be at least 2 characters."),
-  username: z.string().min(3, "Username must be at least 3 characters."),
-  email: z.email().refine((val) => !!val, {
-    message: "Enter a valid email address.",
-  }),
-  password: z.string().min(6, "Password must be at least 6 characters."),
-  phoneNumber: z.string().regex(/^\d{10}$/, "Enter a valid 10-digit phone number."),
+const instructorProfileInfoSchema = z.object({
+  profileImg: z.string().optional(),
+  location: z.string().optional(),
+  bio: z.string().optional(),
 })
 
 const SetProfilePage = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const {instructor, status: instructorFetchingStatus} = useRedirectForLoggedOut()
+  const [profileImgURL, setProfileImgURL] = useState<File | null>(null)
+  const profileImageInput = useRef<HTMLInputElement | null>(null)
+
+  const form = useForm<z.infer<typeof instructorProfileInfoSchema>>({
+    resolver: zodResolver(instructorProfileInfoSchema),
     defaultValues: {
-      fullName: "",
-      username: "",
-      email: "",
-      password: "",
-      phoneNumber: "",
+      profileImg: undefined,
+      location: "",
+      bio: "",
     },
   })
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const profileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let profileState = form.getValues("profileImg")
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setProfileImgURL(file)
+  }
+
+  const onSubmit = (values: z.infer<typeof instructorProfileInfoSchema>) => {
     console.log("Form Submitted:", values)
   }
 
@@ -69,34 +77,69 @@ const SetProfilePage = () => {
             
             <div className="flex flex-col justify-center items-start w-[80%] mx-auto">
 
-                <div className="flex justify-between items-center w-full">
+                <div className="flex justify-between items-start w-full">
                     <div className="flex flex-col justify-start items-center my-2 gap-4">
+                        <input type="file" className="hidden" 
+                        ref={(el) => {profileImageInput.current = el;}}
+                        onChange={profileImageChange} />
                         <div className="flex flex-col justify-center items-center gap-4">
-                            <Image src="https://img.freepik.com/free-vector/illustration-user-avatar-icon_53876-5907.jpg" alt="instructor profile" height={150} width={150} className="rounded-full border-[2px] border-teal-700" />
+                            <Image 
+                              src={(profileImgURL) ? URL.createObjectURL(profileImgURL) : 
+                                "https://jiroshi-static-dev.s3.ap-south-1.amazonaws.com/defaults/profile-default.png"}
+                              alt="instructor profile" height={150} width={150} 
+                              className="rounded-full border-[2px] border-teal-700 object-cover object-center
+                              h-[10em] w-[10em]"
+                              onClick={() => {profileImageInput?.current?.click()}} />
                             <div className="flex flex-col justify-center items-center">
                                 <h4 className="font-bold text-black text-[14px]">Profile Picture</h4>
-                                <span className="font-medium text-gray-500 text-[12px]">PNG, JPEG under 15 MB</span>
+                                <span className="font-medium text-gray-500 text-[12px]">PNG, JPEG under 5 MB</span>
                             </div>
-                        </div>
-                        <div className="flex gap-2">
-                            <Button className='bg-primary text-white hover:bg-teal-600 hover:text-white cursor-pointer text-[12px]'><UploadIcon /> Upload</Button>
                         </div>
                     </div>
 
                     <div className="my-2 flex flex-col justify-center items-start gap-4 w-[50%]">
-                        <div className="flex flex-col gap-1 w-full">
-                            <Label htmlFor="url-title" className="text-[14px]">Location</Label>
-                            <Input placeholder="Location" className="w-full" name="url-title" id="url-title" />
-                        </div>
-                        <div className="flex flex-col gap-1 w-full">
-                            <Label htmlFor="reference-url" className="text-[14px]">Bio</Label>
-                            <Textarea placeholder="Bio" className="w-full h-[7em]" name="reference-url" id="reference-url"></Textarea>
-                        </div>
+                        <Form {...form}>
+                            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                              {/* Email */}
+                              <FormField
+                                  control={form.control}
+                                  name="location"
+                                  render={({ field }) => (
+                                  <FormItem>
+                                      <FormLabel>Location</FormLabel>
+                                      <FormControl>
+                                      <Input type="location" placeholder="location" {...field} />
+                                      </FormControl>
+                                      <FormMessage />
+                                  </FormItem>
+                                  )}
+                              />
+
+                              {/* Password */}
+                              <FormField
+                                  control={form.control}
+                                  name="bio"
+                                  render={({ field }) => (
+                                  <FormItem>
+                                      <FormLabel>Bio</FormLabel>
+                                      <FormControl>
+                                      <Textarea placeholder="Bio" {...field}></Textarea>
+                                      </FormControl>
+                                      <FormMessage />
+                                  </FormItem>
+                                  )}
+                              />
+                              <div className="flex justify-end items-center w-full my-6">
+                                  {/* <Button className='bg-gray-300 text-gray-500 hover:bg-gray-400 hover:text-white cursor-pointer my-4'>Skip</Button> */}
+                                  <Button className='bg-primary text-white hover:bg-teal-600 hover:text-white cursor-pointer my-4'>Set Profile</Button>
+                              </div>
+                            </form>
+                        </Form>
                     </div>
                 </div>
                 <div className="flex justify-end items-center w-full my-6">
                     {/* <Button className='bg-gray-300 text-gray-500 hover:bg-gray-400 hover:text-white cursor-pointer my-4'>Skip</Button> */}
-                    <Button className='bg-primary text-white hover:bg-teal-600 hover:text-white cursor-pointer my-4'>Next</Button>
+                    <Button className='bg-gray-200 text-gray-600 hover:bg-gray-300 cursor-pointer my-4'>Skip for now</Button>
                 </div>
             </div>
           </div>
