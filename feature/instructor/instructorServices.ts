@@ -1,6 +1,6 @@
 import api from "@/lib/api/axios"
 import { route } from "@/lib/constants/RouteConstants"
-import { instructorRegistrationSchema, loginFormSchema } from "@/feature/instructor/instructorSchemas"
+import { instructorProfileInfoSchema, instructorRegistrationSchema, loginFormSchema } from "@/feature/instructor/instructorSchemas"
 import z from "zod"
 import { countryCodes } from "@/lib/constants/common"
 
@@ -33,5 +33,13 @@ export const loginInstructorService = async (
   values: z.infer<typeof loginFormSchema>
 ): Promise<StandardResponse> => {
   const resp = await api.post(route.LOGIN, values)
+  return resp.data as StandardResponse
+}
+
+
+export const setInstructorProfileService = async (
+  values: z.infer<typeof instructorProfileInfoSchema>
+): Promise<StandardResponse> => {
+  const resp = await api.post(route.SET_INSTRUCTOR_PROFILE)
   return resp.data as StandardResponse
 }

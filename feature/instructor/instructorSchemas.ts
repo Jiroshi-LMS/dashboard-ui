@@ -17,3 +17,10 @@ export const loginFormSchema = z.object({
   }),
   password: z.string()
 })
+
+
+export const instructorProfileInfoSchema = z.object({
+  profileImg: z.string().optional(),
+  location: z.string().optional(),
+  bio: z.string().optional(),
+})

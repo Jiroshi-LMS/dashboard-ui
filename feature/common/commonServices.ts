@@ -5,6 +5,7 @@ import { route } from "@/lib/constants/RouteConstants"
 
 export const fetchPresignedUploadURL = async (
     filename: string,
+    contentType: string,
     prefix: string,
     uploadType: string | null,
     specificId: string | null
@@ -12,6 +13,7 @@ export const fetchPresignedUploadURL = async (
     const { data } = await api.post(route.GET_PRESIGNED_UPLOAD, {
         prefix,
         file_name: filename,
+        content_type: contentType,
         upload_type: uploadType,
         specific_id: specificId ?? null
     })

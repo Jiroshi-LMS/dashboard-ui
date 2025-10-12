@@ -3,7 +3,7 @@
 import Head from "next/head"
 import Link from "next/link"
 import Image from "next/image"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -23,37 +23,28 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import Loader from "@/app/components/atoms/Loader"
 import { useRedirectForLoggedOut } from "@/feature/instructor/instructorHooks"
-import { route } from "@/lib/constants/RouteConstants"
-import { constantFilenames, fileUploadPrefixes, PUBLIC_UPLOAD } from "@/lib/constants/FileConstants"
+import { page, route } from "@/lib/constants/RouteConstants"
+import { constantFilenames, fileContentTypes, fileUploadPrefixes, PUBLIC_UPLOAD } from "@/lib/constants/FileConstants"
 import toast from "react-hot-toast"
 import { usePresignedUpload } from "@/hooks/usePresignedUpload"
-
-const instructorProfileInfoSchema = z.object({
-  profileImg: z.string().optional(),
-  location: z.string().optional(),
-  bio: z.string().optional(),
-})
+import { instructorProfileInfoSchema } from "@/feature/instructor/instructorSchemas"
+import { setInstructorProfileService } from "@/feature/instructor/instructorServices"
+import { useRouter } from "next/navigation"
 
 
 
 const SetProfilePage = () => {
+  const router = useRouter()
   const {instructor, status: instructorFetchingStatus} = useRedirectForLoggedOut()
-
-  const [profileData, setProfileData] = useState<PresignedDataState>({
-    ImageFile: null,
-    presignedURL: null,
-    objectKey: null
-  })
-  const [profileUploadProgress, setProfileUploadProgress] = useState<number>(0)
-
   const { uploadFile } = usePresignedUpload(
     constantFilenames.PROFILE, 
-    fileUploadPrefixes.PROFILE, 
-    profileData, 
-    setProfileData, 
+    fileUploadPrefixes.PROFILE,
     PUBLIC_UPLOAD, 
     instructor?.uuid
   )
+
+  const [imageFile, setImageFile] = useState<File | null>(null)
+  const [profileUploadProgress, setProfileUploadProgress] = useState<number>(0)
 
   const profileImageInput = useRef<HTMLInputElement | null>(null)
 
@@ -66,21 +57,43 @@ const SetProfilePage = () => {
     },
   })
 
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault()
+      e.returnValue = "" // required for Chrome to trigger the prompt
+    }
+    window.addEventListener("beforeunload", handleBeforeUnload)
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (profileUploadProgress === 100) setProfileUploadProgress(0)
+  }, [profileUploadProgress, setProfileUploadProgress])
+
   const profileImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
-      // let profileState = form.getValues("profileImg")
       const file = e.target.files?.[0];
       if (!file) return;
-      const {objectKey} = await uploadFile(file, setProfileUploadProgress)
-      setProfileData({...profileData, ImageFile: file})
+      const contentType = file.type || fileContentTypes.OCTET_STREAM
+      const {objectKey} = await uploadFile(file, contentType, setProfileUploadProgress)
+      setImageFile(file)
       form.setValue("profileImg", objectKey)
     } catch (err: any) {
       toast.error(err?.message ?? "Something went wrong! Please try again later.")
     }
   }
 
-  const onSubmit = (values: z.infer<typeof instructorProfileInfoSchema>) => {
-    console.log("Form Submitted:", values)
+  const onSubmit = async (values: z.infer<typeof instructorProfileInfoSchema>) => {
+    try {
+      const resp = await setInstructorProfileService(values)
+      if (!resp?.status) return toast.error(resp?.msg ?? "Unable to update profile! Please try again later.");
+      // router.replace(page.DASHBOARD_HOME)
+    } catch (err: any) {
+      toast.error(err?.message || "Couldn't save your profile info! Please try again later.")
+    }
   }
 
   return (
@@ -107,21 +120,22 @@ const SetProfilePage = () => {
                     <div className="flex flex-col justify-start items-center my-2 gap-4">
                         <input type="file" className="hidden" 
                         ref={(el) => {profileImageInput.current = el;}}
-                        onChange={profileImageChange} />
+                        onChange={profileImageChange} accept=".png,.jpg,.jpeg" />
                         <div className="flex flex-col justify-center items-center gap-4">
                             <Image 
-                              src={(profileData.ImageFile) ? URL.createObjectURL(profileData.ImageFile) : 
+                              src={(imageFile) ? URL.createObjectURL(imageFile) : 
                                 "https://jiroshi-static-dev.s3.ap-south-1.amazonaws.com/defaults/profile-default.png"}
                               alt="instructor profile" height={150} width={150} 
                               className="rounded-full border-[2px] border-teal-700 object-cover object-center
                               h-[10em] w-[10em]"
-                              onClick={() => {profileImageInput?.current?.click()}} />
+                              onClick={() => {profileImageInput?.current?.click()}}
+                              priority />
                             <div className="flex flex-col justify-center items-center">
                                 {
                                   (profileUploadProgress !== 0) ? 
                                     <span>
-                                      <b>PROGRESS</b>
-                                      {profileUploadProgress}
+                                      <b>PROGRESS: </b>
+                                      {profileUploadProgress}%
                                     </span>
                                     : null
                                 }

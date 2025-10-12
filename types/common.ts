@@ -7,7 +7,6 @@ type StandardResponse = {
 
 
 type PresignedDataState = {
-  ImageFile: File | null,
   presignedURL: string | null,
   objectKey: string | null
 }

@@ -5,6 +5,7 @@ export const route = {
     REFRESH: "/instructor/token/refresh/",
     
     INSTRUCTOR: "/instructor/",
+    SET_INSTRUCTOR_PROFILE: "/instructor/profile/",
     
     // Common
     GET_PRESIGNED_UPLOAD: "/internals/generate-upload-presigned-url/"
