@@ -11,7 +11,6 @@ import { instructorProfileInfoSchema } from "../instructorSchemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import z from "zod"
 import toast from "react-hot-toast"
-import { Loader } from "lucide-react"
 import Image from "next/image"
 import { setInstructorProfileService } from "../instructorServices"
 import { fetchInstructorStrict } from "../instructorSlice"
@@ -22,6 +21,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { units } from "@/lib/constants/common"
+import Loader from "@/app/components/atoms/Loader"
 
 const InstructorSetupProfileForm = () => {
     const router = useRouter()
