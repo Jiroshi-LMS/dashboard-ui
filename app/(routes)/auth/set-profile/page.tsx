@@ -21,10 +21,12 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { UploadIcon } from "lucide-react"
 import Loader from "@/app/components/atoms/Loader"
-import { useAppDispatch, useAppSelector } from "@/hooks/useRedux"
 import { useRedirectForLoggedOut } from "@/feature/instructor/instructorHooks"
+import { route } from "@/lib/constants/RouteConstants"
+import { constantFilenames, fileUploadPrefixes, PUBLIC_UPLOAD } from "@/lib/constants/FileConstants"
+import toast from "react-hot-toast"
+import { usePresignedUpload } from "@/hooks/usePresignedUpload"
 
 const instructorProfileInfoSchema = z.object({
   profileImg: z.string().optional(),
@@ -32,9 +34,27 @@ const instructorProfileInfoSchema = z.object({
   bio: z.string().optional(),
 })
 
+
+
 const SetProfilePage = () => {
   const {instructor, status: instructorFetchingStatus} = useRedirectForLoggedOut()
-  const [profileImgURL, setProfileImgURL] = useState<File | null>(null)
+
+  const [profileData, setProfileData] = useState<PresignedDataState>({
+    ImageFile: null,
+    presignedURL: null,
+    objectKey: null
+  })
+  const [profileUploadProgress, setProfileUploadProgress] = useState<number>(0)
+
+  const { uploadFile } = usePresignedUpload(
+    constantFilenames.PROFILE, 
+    fileUploadPrefixes.PROFILE, 
+    profileData, 
+    setProfileData, 
+    PUBLIC_UPLOAD, 
+    instructor?.uuid
+  )
+
   const profileImageInput = useRef<HTMLInputElement | null>(null)
 
   const form = useForm<z.infer<typeof instructorProfileInfoSchema>>({
@@ -46,11 +66,17 @@ const SetProfilePage = () => {
     },
   })
 
-  const profileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let profileState = form.getValues("profileImg")
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setProfileImgURL(file)
+  const profileImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      // let profileState = form.getValues("profileImg")
+      const file = e.target.files?.[0];
+      if (!file) return;
+      const {objectKey} = await uploadFile(file, setProfileUploadProgress)
+      setProfileData({...profileData, ImageFile: file})
+      form.setValue("profileImg", objectKey)
+    } catch (err: any) {
+      toast.error(err?.message ?? "Something went wrong! Please try again later.")
+    }
   }
 
   const onSubmit = (values: z.infer<typeof instructorProfileInfoSchema>) => {
@@ -84,13 +110,21 @@ const SetProfilePage = () => {
                         onChange={profileImageChange} />
                         <div className="flex flex-col justify-center items-center gap-4">
                             <Image 
-                              src={(profileImgURL) ? URL.createObjectURL(profileImgURL) : 
+                              src={(profileData.ImageFile) ? URL.createObjectURL(profileData.ImageFile) : 
                                 "https://jiroshi-static-dev.s3.ap-south-1.amazonaws.com/defaults/profile-default.png"}
                               alt="instructor profile" height={150} width={150} 
                               className="rounded-full border-[2px] border-teal-700 object-cover object-center
                               h-[10em] w-[10em]"
                               onClick={() => {profileImageInput?.current?.click()}} />
                             <div className="flex flex-col justify-center items-center">
+                                {
+                                  (profileUploadProgress !== 0) ? 
+                                    <span>
+                                      <b>PROGRESS</b>
+                                      {profileUploadProgress}
+                                    </span>
+                                    : null
+                                }
                                 <h4 className="font-bold text-black text-[14px]">Profile Picture</h4>
                                 <span className="font-medium text-gray-500 text-[12px]">PNG, JPEG under 5 MB</span>
                             </div>

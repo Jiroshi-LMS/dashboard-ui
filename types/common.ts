@@ -4,3 +4,10 @@ type StandardResponse = {
     status_code: number;
     response: any;
 } | null | undefined
+
+
+type PresignedDataState = {
+  ImageFile: File | null,
+  presignedURL: string | null,
+  objectKey: string | null
+}

@@ -1,8 +1,13 @@
 export const route = {
-    INSTRUCTOR: "/instructor/",
+    // Auth
     ME: "/instructor/me/",
     LOGIN: "/instructor/login/",
-    REFRESH: "/instructor/token/refresh/"
+    REFRESH: "/instructor/token/refresh/",
+    
+    INSTRUCTOR: "/instructor/",
+    
+    // Common
+    GET_PRESIGNED_UPLOAD: "/internals/generate-upload-presigned-url/"
 }
 
 
