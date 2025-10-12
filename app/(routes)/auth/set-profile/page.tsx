@@ -28,13 +28,17 @@ import { constantFilenames, fileContentTypes, fileUploadPrefixes, PUBLIC_UPLOAD 
 import toast from "react-hot-toast"
 import { usePresignedUpload } from "@/hooks/usePresignedUpload"
 import { instructorProfileInfoSchema } from "@/feature/instructor/instructorSchemas"
-import { setInstructorProfileService } from "@/feature/instructor/instructorServices"
+import { fetchInstructorService, setInstructorProfileService } from "@/feature/instructor/instructorServices"
 import { useRouter } from "next/navigation"
+import { useAppDispatch } from "@/hooks/useRedux"
+import { fetchInstructorStrict } from "@/feature/instructor/instructorSlice"
+import { profile_completion } from "@/lib/constants/instructorConstants"
 
 
 
 const SetProfilePage = () => {
   const router = useRouter()
+  const dispatch = useAppDispatch()
   const {instructor, status: instructorFetchingStatus} = useRedirectForLoggedOut()
   const { uploadFile } = usePresignedUpload(
     constantFilenames.PROFILE, 
@@ -45,6 +49,7 @@ const SetProfilePage = () => {
 
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [profileUploadProgress, setProfileUploadProgress] = useState<number>(0)
+  const [isUpdatingProfile, setIsUpdatingProfile] = useState<boolean>(false)
 
   const profileImageInput = useRef<HTMLInputElement | null>(null)
 
@@ -59,11 +64,11 @@ const SetProfilePage = () => {
 
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (instructor?.profile_completion_status !== profile_completion.PENDING) return;
       e.preventDefault()
       e.returnValue = "" // required for Chrome to trigger the prompt
     }
     window.addEventListener("beforeunload", handleBeforeUnload)
-
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload)
     }
@@ -88,9 +93,12 @@ const SetProfilePage = () => {
 
   const onSubmit = async (values: z.infer<typeof instructorProfileInfoSchema>) => {
     try {
+      setIsUpdatingProfile(true);
       const resp = await setInstructorProfileService(values)
       if (!resp?.status) return toast.error(resp?.msg ?? "Unable to update profile! Please try again later.");
-      // router.replace(page.DASHBOARD_HOME)
+      dispatch(fetchInstructorStrict())
+      setIsUpdatingProfile(false);
+      router.replace(page.DASHBOARD_HOME)
     } catch (err: any) {
       toast.error(err?.message || "Couldn't save your profile info! Please try again later.")
     }
@@ -111,6 +119,8 @@ const SetProfilePage = () => {
 
         {/* Right Section */}
         <section className="w-[60%] flex flex-col items-center justify-center h-full p-10">
+          {
+            (isUpdatingProfile) ? <Loader className="h-full" /> : 
           <div className="w-full space-y-8">
             <h1 className="text-3xl font-semibold text-center">Setup Instructor Profile</h1>
             
@@ -187,10 +197,13 @@ const SetProfilePage = () => {
                 </div>
                 <div className="flex justify-end items-center w-full my-6">
                     {/* <Button className='bg-gray-300 text-gray-500 hover:bg-gray-400 hover:text-white cursor-pointer my-4'>Skip</Button> */}
-                    <Button className='bg-gray-200 text-gray-600 hover:bg-gray-300 cursor-pointer my-4'>Skip for now</Button>
+                    <Button 
+                    onClick={form.handleSubmit(onSubmit)}
+                    className='bg-gray-200 text-gray-600 hover:bg-gray-300 cursor-pointer my-4'>Skip for now</Button>
                 </div>
             </div>
           </div>
+        }
         </section>
       </main>
     </>

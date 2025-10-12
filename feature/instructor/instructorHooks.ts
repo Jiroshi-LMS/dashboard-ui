@@ -5,7 +5,9 @@ import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { page } from "@/lib/constants/RouteConstants";
 import { profile_completion } from "@/lib/constants/instructorConstants";
 import { RootState } from "@/store";
-import { fetchInstructor } from "@/feature/instructor/slices/instructorSlice";
+import { fetchInstructor } from "@/feature/instructor/instructorSlice";
+
+
 
 export const useRedirectForLoggedIn = () => {
     const router = useRouter()
