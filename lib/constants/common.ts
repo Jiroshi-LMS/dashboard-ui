@@ -5,3 +5,8 @@ export const countryCodes = {
 export const authLiterals = {
     ACCESS: 'access',
 }
+
+export const units = {
+    KB: 1024,
+    MB: 1024 * 1024
+}
