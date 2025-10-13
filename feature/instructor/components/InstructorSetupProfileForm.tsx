@@ -27,7 +27,7 @@ const InstructorSetupProfileForm = () => {
     const router = useRouter()
     const dispatch = useAppDispatch()
     const allowedFileSize = 5;
-    const {instructor} = useRedirectForLoggedOut()
+    const {instructor, status: instructorFetchingStatus} = useRedirectForLoggedOut()
     const { uploadFile } = usePresignedUpload(
         constantFilenames.PROFILE, 
         fileUploadPrefixes.PROFILE,
@@ -92,6 +92,7 @@ const InstructorSetupProfileForm = () => {
         setIsUpdatingProfile(false);
         router.replace(page.DASHBOARD_HOME)
         } catch (err: any) {
+        setIsUpdatingProfile(false);
         toast.error(err?.message || "Couldn't save your profile info! Please try again later.")
         }
     }
@@ -99,7 +100,7 @@ const InstructorSetupProfileForm = () => {
   return (
     <>
     {
-        (isUpdatingProfile) ? <Loader className="h-full" /> : 
+        (isUpdatingProfile || instructorFetchingStatus !== "succeeded") ? <Loader className="h-full" /> : 
         <div className="w-full space-y-8">
             <h1 className="text-3xl font-semibold text-center">Setup Instructor Profile</h1>
             

@@ -27,7 +27,6 @@ const LoginPage = () => {
               (instructorFetchingStatus === 'loading' || instructorFetchingStatus === 'succeeded') ?
                 <Loader /> : 
                 <>
-                  <h1 className="text-3xl font-semibold text-center">Sign In</h1>
                   <InstructorLoginForm />
                 </>
                 

@@ -44,7 +44,7 @@ export const useRedirectForLoggedOut = () => {
 
     useEffect(() => {
         const isInstructorNotReady = (
-            (status === 'failed' && !instructor) || (!loggedIn && !instructor)
+            (status === 'failed' && !instructor && !loggedIn)
         )
         if (isInstructorNotReady) router.replace(page.LOGIN)
     }, [status, loggedIn, instructor, router])
