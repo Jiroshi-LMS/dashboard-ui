@@ -6,6 +6,8 @@ export const route = {
     
     INSTRUCTOR: "/instructor/",
     SET_INSTRUCTOR_PROFILE: "/instructor/profile/",
+
+    LIST_COURSES: "/courses/views/",
     
     // Common
     GET_PRESIGNED_UPLOAD: "/internals/generate-upload-presigned-url/"

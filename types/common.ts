@@ -10,3 +10,13 @@ type PresignedDataState = {
   presignedURL: string | null,
   objectKey: string | null
 }
+
+
+type PaginatedResults = {
+  count: number;
+  current_page: number;
+  next: string | null;
+  previous: string | null;
+  results: [any];
+  total_pages: number;
+}
