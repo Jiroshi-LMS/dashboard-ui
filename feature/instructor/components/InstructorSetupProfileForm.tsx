@@ -119,8 +119,8 @@ const InstructorSetupProfileForm = () => {
                         onChange={profileImageChange} accept=".png,.jpg,.jpeg" />
                         <div className="flex flex-col justify-center items-center gap-4">
                             <Image 
-                            src={(imageFile) ? URL.createObjectURL(imageFile) : 
-                                "https://jiroshi-static-dev.s3.ap-south-1.amazonaws.com/defaults/profile-default.png"}
+                            src={(imageFile) ? URL.createObjectURL(imageFile) : ((instructor?.profile?.profile_picture_url) ? instructor?.profile?.profile_picture_url : 
+                                "https://jiroshi-static-dev.s3.ap-south-1.amazonaws.com/defaults/profile-default.png")}
                             alt="instructor profile" height={150} width={150} 
                             className="rounded-full border-[2px] border-teal-700 object-cover object-center
                             h-[10em] w-[10em]"
