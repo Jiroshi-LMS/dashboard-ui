@@ -5,6 +5,7 @@ import Link from "next/link"
 // import { useEffect, useState } from "react"
 // import { Sun, Moon, User } from "lucide-react"
 import Image from "next/image"
+import { Instructor } from "@/feature/instructor/instructorTypes"
 
 export const SidebarHeaderContent = () => {
   return (
@@ -18,7 +19,7 @@ export const SidebarHeaderContent = () => {
   )
 }
 
-export const SidebarFooterContent = () => {
+export const SidebarFooterContent = ({profile}: {profile: Instructor | null}) => {
 
   return (
     <footer className="flex justify-end items-center p-3">
@@ -26,10 +27,10 @@ export const SidebarFooterContent = () => {
       <Link href={`/instructor/dashboard/profile`}>
         <Avatar className="ml-2">
           <AvatarImage
-            src="https://img.freepik.com/free-photo/bohemian-man-with-his-arms-crossed_1368-3542.jpg"
-            alt="@evilrabbit"
+            src={profile?.profile?.profile_picture_url || ""}
+            alt={profile?.full_name || "Instructor"}
           />
-          <AvatarFallback>ER</AvatarFallback>
+          <AvatarFallback>{(profile?.full_name) ? profile?.full_name[0] : "I"}</AvatarFallback>
         </Avatar>
       </Link>
     </footer>
