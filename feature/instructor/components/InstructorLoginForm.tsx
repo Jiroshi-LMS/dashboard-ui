@@ -39,15 +39,10 @@ const InstructorLoginForm = () => {
             if (!loginResp?.status || !loginResp?.response['access_token'])
                 return toast.error(loginResp?.msg || "Something went wrong! We were unable to log you in.");
             localStorage.setItem(authLiterals.ACCESS, loginResp?.response['access_token'])
-
-            const fetchInstructorResp = await fetchInstructorService()
-            if (!fetchInstructorResp?.status) 
-                return toast.error(fetchInstructorResp?.msg || "Something went wrong! Unable to fetch user after login.")
-            const instructorData: Instructor = fetchInstructorResp?.response
-            if (!instructorData) return toast.error(fetchInstructorResp?.msg || "Something went wrong! Unable to fetch user after login.")
-            if (instructorData.profile_completion_status === profile_completion.PENDING) router.replace(page.SET_PROFILE)
-            else router.replace(page.DASHBOARD_HOME)
-            setIsLoading(false)
+            setTimeout(() => {
+                router.replace(page.DASHBOARD_HOME)
+                setIsLoading(false)
+            }, 100)
         } catch (err: any) {
             setIsLoading(false)
             if (err?.message && err?.message === standardErrors.TOKEN_EXPIRED)
@@ -56,10 +51,9 @@ const InstructorLoginForm = () => {
         }
     }
 
+    if (isLoading) return <Loader />
+
   return (
-    <>
-    {
-        (isLoading) ? <Loader /> :
     <>
     <div className="w-full max-w-md space-y-8 pt-[2rem]">
     <h1 className="text-3xl font-semibold text-center">Sign In</h1>
@@ -103,8 +97,6 @@ const InstructorLoginForm = () => {
             </form>
         </Form>
     </div>
-    </>
-    }
     </>
   )
 }

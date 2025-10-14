@@ -33,21 +33,10 @@ const fetchInstructorVendor = async () => {
 
 export const fetchInstructor = createAsyncThunk(
   'instructor/fetch',
-  async (_, { getState, rejectWithValue }) => {
+  async (strict: boolean | undefined = false, { getState, rejectWithValue }) => {
     try {
       const state = getState() as RootState;
-      if (state.instructor.loggedIn) return state.instructor.data;
-      return await fetchInstructorVendor();
-    } catch (err: any) {
-      return rejectWithValue(err?.message ?? standardErrors.UNABLE_TO_FETCH + " instructor data");
-    }
-  }
-);
-
-export const fetchInstructorStrict = createAsyncThunk(
-  'instructor/fetchStrict',
-  async (_, { rejectWithValue }) => {
-    try {
+      if (state.instructor.loggedIn && !strict) return state.instructor.data;
       return await fetchInstructorVendor();
     } catch (err: any) {
       return rejectWithValue(err?.message ?? standardErrors.UNABLE_TO_FETCH + " instructor data");
@@ -75,18 +64,6 @@ const instructorSlice = createSlice({
       state.loggedIn = true
     })
     .addCase(fetchInstructor.rejected, (state, action) => {
-      state.status = 'failed'
-      state.error = action.payload
-    })
-    .addCase(fetchInstructorStrict.pending, (state) => {
-      state.status = 'loading'
-    })
-    .addCase(fetchInstructorStrict.fulfilled, (state, action) => {
-      state.status = 'succeeded'
-      state.data = action.payload,
-      state.loggedIn = true
-    })
-    .addCase(fetchInstructorStrict.rejected, (state, action) => {
       state.status = 'failed'
       state.error = action.payload
     })
