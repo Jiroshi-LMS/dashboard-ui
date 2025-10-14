@@ -6,6 +6,7 @@ import { page } from "@/lib/constants/RouteConstants";
 import { profile_completion } from "@/lib/constants/instructorConstants";
 import { RootState } from "@/store";
 import { fetchInstructor } from "@/feature/instructor/instructorSlice";
+import { authLiterals } from "@/lib/constants/common";
 
 
 
@@ -46,7 +47,13 @@ export const useRedirectForLoggedOut = () => {
         const isInstructorNotReady = (
             (status === 'failed' && !instructor && !loggedIn)
         )
-        if (isInstructorNotReady) router.replace(page.LOGIN)
+        if (isInstructorNotReady) {
+            const timeout = setTimeout(() => {
+                const token = localStorage.getItem(authLiterals.ACCESS);
+                if (!token) router.replace(page.LOGIN);
+            }, 500);
+            return () => clearTimeout(timeout);
+        }
     }, [status, loggedIn, instructor, router])
 
     return {instructor, status, loggedIn, fetchingError}

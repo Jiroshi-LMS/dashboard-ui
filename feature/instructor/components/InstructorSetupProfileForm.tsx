@@ -53,12 +53,12 @@ const InstructorSetupProfileForm = () => {
     useEffect(() => {
         const handleBeforeUnload = (e: BeforeUnloadEvent) => {
         if (instructor?.profile_completion_status !== profile_completion.PENDING) return;
-        e.preventDefault()
-        e.returnValue = "" // required for Chrome to trigger the prompt
+            e.preventDefault()
+            e.returnValue = "" // required for Chrome to trigger the prompt
         }
         window.addEventListener("beforeunload", handleBeforeUnload)
         return () => {
-        window.removeEventListener("beforeunload", handleBeforeUnload)
+            window.removeEventListener("beforeunload", handleBeforeUnload)
         }
     }, [])
 
@@ -66,41 +66,47 @@ const InstructorSetupProfileForm = () => {
         if (profileUploadProgress === 100) setProfileUploadProgress(0)
     }, [profileUploadProgress, setProfileUploadProgress])
 
+    useEffect(() => {
+        if (instructor){
+            if (instructor.profile_completion_status !== profile_completion.PENDING) router.replace(page.DASHBOARD_HOME)
+        }
+    }, [instructor])
+
     const profileImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         try {
-        const file = e.target.files?.[0];
-        if (!file) return;
-        const contentType = file.type
-        if (file.type !== fileContentTypes.PNG && 
-            file.type !== fileContentTypes.JPG && 
-            file.size > allowedFileSize * units.MB) 
-            throw new Error("Please provide a valid file format.");
-        const {objectKey} = await uploadFile(file, contentType, setProfileUploadProgress)
-        setImageFile(file)
-        form.setValue("profileImg", objectKey)
+            const file = e.target.files?.[0];
+            if (!file) return;
+            const contentType = file.type
+            if (file.type !== fileContentTypes.PNG && 
+                file.type !== fileContentTypes.JPG && 
+                file.size > allowedFileSize * units.MB) 
+                throw new Error("Please provide a valid file format.");
+            const {objectKey} = await uploadFile(file, contentType, setProfileUploadProgress)
+            setImageFile(file)
+            form.setValue("profileImg", objectKey)
         } catch (err: any) {
-        toast.error(err?.message ?? "Something went wrong! Please try again later.")
+            toast.error(err?.message ?? "Something went wrong! Please try again later.")
         }
     }
 
     const onSubmit = async (values: z.infer<typeof instructorProfileInfoSchema>) => {
         try {
-        setIsUpdatingProfile(true);
-        const resp = await setInstructorProfileService(values)
-        if (!resp?.status) return toast.error(resp?.msg ?? "Unable to update profile! Please try again later.");
-        dispatch(fetchInstructorStrict())
-        setIsUpdatingProfile(false);
-        router.replace(page.DASHBOARD_HOME)
+            setIsUpdatingProfile(true);
+            const resp = await setInstructorProfileService(values)
+            if (!resp?.status) return toast.error(resp?.msg ?? "Unable to update profile! Please try again later.");
+            dispatch(fetchInstructorStrict())
+            setIsUpdatingProfile(false);
+            router.replace(page.DASHBOARD_HOME)
         } catch (err: any) {
-        setIsUpdatingProfile(false);
-        toast.error(err?.message || "Couldn't save your profile info! Please try again later.")
+            setIsUpdatingProfile(false);
+            toast.error(err?.message || "Couldn't save your profile info! Please try again later.")
         }
     }
 
   return (
     <>
     {
-        (isUpdatingProfile || instructorFetchingStatus !== "succeeded") ? <Loader className="h-full" /> : 
+        (isUpdatingProfile || instructorFetchingStatus === "loading") ? <Loader className="h-full" /> : 
         <div className="w-full space-y-8">
             <h1 className="text-3xl font-semibold text-center">Setup Instructor Profile</h1>
             
