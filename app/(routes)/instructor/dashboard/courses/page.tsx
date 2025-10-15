@@ -15,12 +15,13 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { PlusIcon } from 'lucide-react'
+import { ArrowUpDown, PlusIcon } from 'lucide-react'
 import { listCoursesService } from '@/feature/courses/courseServices'
 import toast from 'react-hot-toast'
 import { Course } from '@/feature/courses/courseTypes'
 import { CommonPaginationBar } from '@/app/components/organism/Paginator/CommonPaginationBar'
 import { TabularDataList } from '@/app/components/organism/DataSection/CommonDataSection'
+import SortButton from '@/app/components/atoms/FilterButtons'
 
 
 
@@ -83,9 +84,12 @@ const courseManagementPage = () => {
               </SelectContent>
             </Select>
           </div>
-          <form>
+          <div>
+            <Input type='date' placeholder='Select date range to filter'/>
+          </div>
+          <div>
             <Input type="search" placeholder="Search by course name" />
-          </form>
+          </div>
         </div>
         <div>
             <Link href="/instructor/dashboard/courses/add-course">
@@ -103,7 +107,7 @@ const courseManagementPage = () => {
         emptyMessage="Nothing to show. Try creating a course"
         columns={[
           {
-            header: "Course Name",
+            header: () => "Course Name",
             render: (course) => (
               <Link
                 href={`/instructor/dashboard/courses/${course.uuid}`}
@@ -114,7 +118,7 @@ const courseManagementPage = () => {
             ),
           },
           {
-            header: "Status",
+            header: () => "Status",
             align: "center",
             render: (course) => {
               let badgeColor = "bg-primary text-white";
@@ -124,12 +128,16 @@ const courseManagementPage = () => {
             },
           },
           {
-            header: "Enrolled Students",
+            header: () => {
+              return <>Enrolled Students <SortButton onClick={() => {}} /></>
+            },
             align: "center",
             render: (course) => course.enrollments,
           },
           {
-            header: "Created At",
+            header: () => {
+              return <>Created At <SortButton onClick={() => {}} /></>
+            },
             align: "center",
             render: (course) => course.created_at,
           },

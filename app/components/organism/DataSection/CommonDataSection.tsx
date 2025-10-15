@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import Loader from "@/app/components/atoms/Loader";
 
 interface Column<T> {
-  header: string;
+  header: () => React.ReactNode;
   render: (item: T) => React.ReactNode;
   align?: "left" | "center" | "right";
 }
@@ -43,7 +43,7 @@ export const TabularDataList = <T,>({
             <TableRow>
               {columns.map((col, index) => (
                 <TableHead key={index} className={col.align === "center" ? "text-center" : ""}>
-                  {col.header}
+                  {col.header()}
                 </TableHead>
               ))}
             </TableRow>
