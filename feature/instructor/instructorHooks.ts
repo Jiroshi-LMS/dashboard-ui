@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { page } from "@/lib/constants/RouteConstants";
 import { profile_completion } from "@/lib/constants/instructorConstants";
 import { RootState } from "@/store";
-import { fetchInstructor } from "@/feature/instructor/instructorSlice";
+import { fetchInstructor, logout} from "@/feature/instructor/instructorSlice";
 import { authLiterals } from "@/lib/constants/common";
 
 
@@ -39,22 +39,44 @@ export const useRedirectForLoggedOut = () => {
     const dispatch = useAppDispatch()
     const {data: instructor, status, loggedIn, error:fetchingError} = useAppSelector((state: RootState) => state.instructor);
 
-    useEffect(() => {
-        if (!loggedIn && status === 'idle') dispatch(fetchInstructor());
-    }, [loggedIn, status, dispatch])
-
-    useEffect(() => {
-        const isInstructorNotReady = (
-            (status === 'failed' && !instructor && !loggedIn)
-        )
-        if (isInstructorNotReady) {
-            const timeout = setTimeout(() => {
-                const token = localStorage.getItem(authLiterals.ACCESS);
-                if (!token) router.replace(page.LOGIN);
-            }, 500);
-            return () => clearTimeout(timeout);
+    useEffect(()=> {
+        const token = localStorage.getItem(authLiterals.ACCESS);
+        if (!token) {
+            dispatch(logout());
+            router.replace(page.LOGIN);
+            return;
         }
-    }, [status, loggedIn, instructor, router])
+
+        if (!loggedIn && status === 'idle') {
+            dispatch(fetchInstructor());
+        }
+
+        if (status === 'failed' && !instructor) {
+            dispatch(logout());
+            router.replace(page.LOGIN);
+        }
+
+    }, [loggedIn, status, dispatch, router])
+
+    // useEffect(() => {
+    //     if (!loggedIn && status === 'idle') dispatch(fetchInstructor());
+    // }, [loggedIn, status, dispatch])
+
+    // useEffect(() => {
+    //     const isInstructorNotReady = (
+    //         (status === 'failed' && !instructor && !loggedIn)
+    //     )
+    //     if (isInstructorNotReady) {
+    //         const timeout = setTimeout(() => {
+    //             const token = localStorage.getItem(authLiterals.ACCESS);
+    //             if (!token) {
+    //                 dispatch(logout())
+    //                 router.replace(page.LOGIN);
+    //             }
+    //         }, 500);
+    //         return () => clearTimeout(timeout);
+    //     }
+    // }, [status, loggedIn, instructor, router])
 
     return {instructor, status, loggedIn, fetchingError}
 }
