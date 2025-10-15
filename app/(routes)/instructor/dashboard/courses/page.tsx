@@ -54,7 +54,18 @@ const courseManagementPage = () => {
       const paginatedData: PaginatedResults | null = resp?.response
       if (paginatedData) {
         setPaginationData(paginatedData)
-        setCourseList(paginatedData.results)
+        const formattedCourseData = paginatedData?.results?.map((course: Course, idx) => {
+          const dateObject = new Date(course.created_at)
+          return {
+            ...course,
+            created_at: dateObject.toLocaleString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })
+          }
+        })
+        setCourseList(formattedCourseData)
       }
     } catch (err: any) {
       toast.error("Failed to fetch courses! Try again.")
