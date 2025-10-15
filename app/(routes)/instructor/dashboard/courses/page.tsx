@@ -20,30 +20,20 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select"
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { PlusIcon } from 'lucide-react'
-import { useAppSelector } from '@/hooks/useRedux'
 import { listCoursesService } from '@/feature/courses/courseServices'
 import toast from 'react-hot-toast'
 import { Course } from '@/feature/courses/courseTypes'
 import Loader from '@/app/components/atoms/Loader'
 import { route } from '@/lib/constants/RouteConstants'
+import { CommonPaginationBar } from '@/app/components/organism/paginator/CommonPaginationBar'
 
 
 
 const courseManagementPage = () => {
-  const {data: instructor} = useAppSelector((state) => state.instructor)
   const [courseList, setCourseList] = useState<Array<Course>|null>(null)
   const [paginationData, setPaginationData] = useState<PaginatedResults | null>(null)
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -79,34 +69,8 @@ const courseManagementPage = () => {
     fetchCourseData(currentPage)
   }, [currentPage])
 
-  // --- pagination logic ---
   const totalPages = paginationData?.total_pages || 1
-
-  const getPageNumbers = () => {
-    const visiblePages: number[] = []
-    const maxVisible = 5 // show max 5 numbers at once
-
-    if (totalPages <= maxVisible) {
-      for (let i = 1; i <= totalPages; i++) visiblePages.push(i)
-    } else {
-      if (currentPage <= 3) {
-        visiblePages.push(1, 2, 3, 4, totalPages)
-      } else if (currentPage >= totalPages - 2) {
-        visiblePages.push(1, totalPages - 3, totalPages - 2, totalPages - 1, totalPages)
-      } else {
-        visiblePages.push(1, currentPage - 1, currentPage, currentPage + 1, totalPages)
-      }
-    }
-    return visiblePages
-  }
-
-  const visiblePages = getPageNumbers()
-
-  const handlePageClick = (page: number) => {
-    if (page === currentPage) return
-    setCurrentPage(page)
-  }
-  
+    
   return (
     <main className='main-container'>
       <h1 className='page-title'>Instructor Dashboard</h1>
@@ -189,54 +153,11 @@ const courseManagementPage = () => {
 
       <section className="my-3">
         {paginationData && totalPages > 1 && (
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious
-                  className={`cursor-pointer ${
-                    currentPage === 1 ? "opacity-50 pointer-events-none" : ""
-                  }`}
-                  onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
-                />
-              </PaginationItem>
-
-              {visiblePages.map((page, idx) => {
-                const isEllipsis =
-                  idx > 0 && page - visiblePages[idx - 1] > 1
-
-                if (isEllipsis) {
-                  return (
-                    <PaginationItem key={`ellipsis-${idx}`}>
-                      <PaginationEllipsis />
-                    </PaginationItem>
-                  )
-                }
-
-                return (
-                  <PaginationItem key={page}>
-                    <PaginationLink
-                      isActive={page === currentPage}
-                      className="cursor-pointer"
-                      onClick={() => handlePageClick(page)}
-                    >
-                      {page}
-                    </PaginationLink>
-                  </PaginationItem>
-                )
-              })}
-
-              <PaginationItem>
-                <PaginationNext
-                  className={`cursor-pointer ${
-                    currentPage === totalPages ? "opacity-50 pointer-events-none" : ""
-                  }`}
-                  onClick={() =>
-                    currentPage < totalPages && setCurrentPage(currentPage + 1)
-                  }
-                />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
+          <CommonPaginationBar
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={(page) => setCurrentPage(page)}
+          />
         )}
       </section>
 
