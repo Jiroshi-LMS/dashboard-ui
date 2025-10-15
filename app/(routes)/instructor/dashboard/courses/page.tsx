@@ -4,14 +4,6 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-import {
   Select,
   SelectContent,
   SelectGroup,
@@ -27,9 +19,8 @@ import { PlusIcon } from 'lucide-react'
 import { listCoursesService } from '@/feature/courses/courseServices'
 import toast from 'react-hot-toast'
 import { Course } from '@/feature/courses/courseTypes'
-import Loader from '@/app/components/atoms/Loader'
-import { route } from '@/lib/constants/RouteConstants'
-import { CommonPaginationBar } from '@/app/components/organism/paginator/CommonPaginationBar'
+import { CommonPaginationBar } from '@/app/components/organism/Paginator/CommonPaginationBar'
+import { TabularDataList } from '@/app/components/organism/DataSection/CommonDataSection'
 
 
 
@@ -70,7 +61,7 @@ const courseManagementPage = () => {
   }, [currentPage])
 
   const totalPages = paginationData?.total_pages || 1
-    
+
   return (
     <main className='main-container'>
       <h1 className='page-title'>Instructor Dashboard</h1>
@@ -105,51 +96,45 @@ const courseManagementPage = () => {
         </div>
       </section>
 
-      <section className='mt-5'>
-        <h2 className='section-title'>All Courses</h2>
-        {
-          (!courseList) ? <Loader /> : 
-          <>
+      <TabularDataList
+        title="All Courses"
+        data={courseList}
+        loading={!courseList}
+        emptyMessage="Nothing to show. Try creating a course"
+        columns={[
           {
-            (courseList.length <= 0) ? <h1>Wow! Such Empty ...</h1> :
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Course Name</TableHead>
-                  <TableHead className='text-center'>Status</TableHead>
-                  <TableHead className='text-center'>Enrolled Students</TableHead>
-                  <TableHead className='text-center'>Created At</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {
-                  courseList?.map((data, index) => {
-                    let badge_color = 'bg-primary text-white'
-                    if (data.access_status === 'inactive') {
-                      badge_color = 'bg-red-400 text-white'
-                    } else if (data.access_status === 'draft') {
-                      badge_color = 'bg-blue-400 text-white'
-                    }
-                    return (
-                    <TableRow key={index}>
-                      <TableCell className='font-semibold'>
-                        <Link href={`/instructor/dashboard/courses/${data.uuid}`} className='hover:text-teal-500'>
-                          {data.title}
-                        </Link>
-                      </TableCell>
-                      <TableCell className='text-center'>
-                        <Badge className={`${badge_color} uppercase`}>{data.access_status}</Badge></TableCell>
-                      <TableCell className='text-center'>{data.enrollments}</TableCell>
-                      <TableCell className='text-center'>{data.created_at}</TableCell>
-                    </TableRow>
-                  )})
-                }
-              </TableBody>
-            </Table>
-          }
-          </>
-        }
-      </section>
+            header: "Course Name",
+            render: (course) => (
+              <Link
+                href={`/instructor/dashboard/courses/${course.uuid}`}
+                className="hover:text-teal-500 font-semibold"
+              >
+                {course.title}
+              </Link>
+            ),
+          },
+          {
+            header: "Status",
+            align: "center",
+            render: (course) => {
+              let badgeColor = "bg-primary text-white";
+              if (course.access_status === "inactive") badgeColor = "bg-red-400 text-white";
+              else if (course.access_status === "draft") badgeColor = "bg-blue-400 text-white";
+              return <Badge className={`${badgeColor} uppercase`}>{course.access_status}</Badge>;
+            },
+          },
+          {
+            header: "Enrolled Students",
+            align: "center",
+            render: (course) => course.enrollments,
+          },
+          {
+            header: "Created At",
+            align: "center",
+            render: (course) => course.created_at,
+          },
+        ]}
+      />
 
       <section className="my-3">
         {paginationData && totalPages > 1 && (
