@@ -14,9 +14,12 @@ import { authLiterals } from "@/lib/constants/common"
 import { standardErrors } from "@/lib/constants/errors"
 import { instructorRegistrationSchema } from "@/feature/instructor/instructorSchemas"
 import { page } from "@/lib/constants/RouteConstants"
+import { useAppDispatch } from "@/hooks/useRedux"
+import { fetchInstructor } from "../instructorSlice"
 
 
 const InstructorRegistrationForm = () => {
+    const dispatch = useAppDispatch()
     const router = useRouter()
     const form = useForm<z.infer<typeof instructorRegistrationSchema>>({
         resolver: zodResolver(instructorRegistrationSchema),
@@ -34,7 +37,10 @@ const InstructorRegistrationForm = () => {
             const resp = await registerInstructorService(values)
             if (resp?.status && resp.response['access_token']) {
                 localStorage.setItem(authLiterals.ACCESS, resp.response['access_token'])
-                router.replace(page.SET_PROFILE)
+                setTimeout(() => {
+                    dispatch(fetchInstructor(true))
+                    router.replace(page.SET_PROFILE)
+                }, 500)
             } else {
                 toast.error(resp?.msg || "Something went wrong! We were unable to sign you up.")
             }

@@ -51,6 +51,8 @@ const instructorSlice = createSlice({
     logout(state) {
       state.data = null;
       state.loggedIn = false;
+      state.error = null;
+      state.status = 'idle';
     },
   },
   extraReducers: (builder) => {

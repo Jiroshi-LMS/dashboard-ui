@@ -6,22 +6,23 @@ import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import z from "zod"
 import { loginFormSchema } from "../instructorSchemas"
-import { fetchInstructorService, loginInstructorService } from "../instructorServices"
-import { Instructor } from "../instructorTypes"
+import { loginInstructorService } from "../instructorServices"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { authLiterals } from "@/lib/constants/common"
-import { profile_completion } from "@/lib/constants/instructorConstants"
 import { standardErrors } from "@/lib/constants/errors"
 import { page } from "@/lib/constants/RouteConstants"
 import { useState } from "react"
 import Loader from "@/app/components/atoms/Loader"
+import { useAppDispatch } from "@/hooks/useRedux"
+import { fetchInstructor } from "../instructorSlice"
 
 
 const InstructorLoginForm = () => {
     const router = useRouter()
+    const dispatch = useAppDispatch()
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const form = useForm<z.infer<typeof loginFormSchema>>({
@@ -40,9 +41,10 @@ const InstructorLoginForm = () => {
                 return toast.error(loginResp?.msg || "Something went wrong! We were unable to log you in.");
             localStorage.setItem(authLiterals.ACCESS, loginResp?.response['access_token'])
             setTimeout(() => {
+                dispatch(fetchInstructor(true))
                 router.replace(page.DASHBOARD_HOME)
                 setIsLoading(false)
-            }, 100)
+            }, 500)
         } catch (err: any) {
             setIsLoading(false)
             if (err?.message && err?.message === standardErrors.TOKEN_EXPIRED)

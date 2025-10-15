@@ -1,9 +1,5 @@
 "use client"
-
-import { useRedirectForLoggedIn } from "@/feature/instructor/instructorHooks"
 import InstructorLoginForm from "@/feature/instructor/components/InstructorLoginForm"
-import Loader from "@/app/components/atoms/Loader"
-
 
 
 const LoginPage = () => {
