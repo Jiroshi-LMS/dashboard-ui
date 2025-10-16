@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 
 import {
@@ -15,7 +15,7 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { ArrowUpDown, PlusIcon } from 'lucide-react'
+import { PlusIcon } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { Course } from '@/feature/courses/courseTypes'
 import { CommonPaginationBar } from '@/app/components/organism/Paginator/CommonPaginationBar'
@@ -23,12 +23,17 @@ import { TabularDataList } from '@/app/components/organism/DataSection/CommonDat
 import SortButton from '@/app/components/atoms/FilterButtons'
 import { fetchListDataService } from '@/feature/common/commonServices'
 import { route } from '@/lib/constants/RouteConstants'
+import { useDebounce } from '@/hooks/useDebounced'
 
 
 
 const courseManagementPage = () => {
   const [courseList, setCourseList] = useState<Array<Course>|null>(null)
   const [paginationData, setPaginationData] = useState<PaginatedResults | null>(null)
+  const [search, setSearch] = useState<string>("")
+  const debouncedSearch = useDebounce(search, 500)
+  const [isInitial, setIsInitial] = useState(true)
+  const hasFetchedOnce = useRef(false)
   const [courseFilters, setCourseFilters] = useState<StandardFilters>({
     filters: {},
     ordering: null,
@@ -62,25 +67,35 @@ const courseManagementPage = () => {
   }
 
   useEffect(() => {
+    if (isInitial) {
+      setIsInitial(false)
+      return
+    }
+    handleFilterChange("search", debouncedSearch);
+  }, [debouncedSearch]);
+
+  useEffect(() => {
+    if (hasFetchedOnce.current && isInitial) return
+    hasFetchedOnce.current = true
     setPaginationData(null)
     setCourseList(null)
     fetchCourseData(courseFilters)
   }, [courseFilters])
 
   const handleFilterChange = (filter_key: string, filter_value: string | null) => {
-    if (filter_key !== 'search' && filter_key !== 'ordering')
-      setCourseFilters((prev) => ({
-        ...prev,
-        filters: {
-          ...courseFilters.filters,
-          [filter_key]: filter_value
-        }
-      }))
-    setCourseFilters((prev) => ({
-      ...prev,
-      [filter_key]: filter_value
-    }))
-  }
+    setCourseFilters((prev) => {
+      const updated = { ...prev };
+
+      if (filter_key === 'search' || filter_key === 'ordering') {
+        updated[filter_key] = filter_value;
+      } else {
+        updated.filters = { ...prev.filters, [filter_key]: filter_value };
+      }
+
+      updated.page = 1;
+      return updated;
+    });
+  };
 
   const totalPages = paginationData?.total_pages || 1
 
@@ -95,14 +110,15 @@ const courseManagementPage = () => {
             onValueChange={(statusValue: string) => {
               if (statusValue === 'all') handleFilterChange('status', null)
               else handleFilterChange('status', statusValue)
-            }}>
+            }}
+            defaultValue='all'>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="All Statuses" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Statuses</SelectLabel>
-                  <SelectItem value='all' className='hover:text-white'>All</SelectItem>
+                  <SelectItem value='all' className='hover:text-white'>All Statuses</SelectItem>
                   <SelectItem value="active" className='hover:text-white'>Active</SelectItem>
                   <SelectItem value="inactive" className='hover:text-white'>Inactive</SelectItem>
                   <SelectItem value="draft" className='hover:text-white'>Draft</SelectItem>
@@ -115,7 +131,7 @@ const courseManagementPage = () => {
           </div>
           <div>
             <Input type="search" name='search' placeholder="Search by course name" 
-            onChange={e => {handleFilterChange('search', e.target.value)}} />
+            onChange={e => setSearch(e.target.value)} />
           </div>
         </div>
         <div>
@@ -163,7 +179,11 @@ const courseManagementPage = () => {
           },
           {
             header: () => {
-              return <>Created At <SortButton onClick={() => {}} /></>
+              return <>Created At <SortButton 
+              onClick={() => {
+                const val = (courseFilters?.ordering === 'created_at') ? "-created_at" : "created_at";
+                handleFilterChange('ordering', val)
+              }} /></>
             },
             align: "center",
             render: (course) => course.created_at,

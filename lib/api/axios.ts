@@ -61,7 +61,6 @@ api.interceptors.response.use(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}${route.REFRESH}`, {}, { withCredentials: true });
 
         const newAccessToken = resp?.data?.response?.access_token;
-        console.log(resp.data)
         if (newAccessToken) localStorage.setItem(authLiterals.ACCESS, newAccessToken);
         else throw Error(standardErrors.SESSION_EXPIRED)
         // Update headers globally
