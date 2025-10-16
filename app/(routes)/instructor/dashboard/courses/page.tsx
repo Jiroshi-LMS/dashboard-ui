@@ -16,23 +16,29 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { ArrowUpDown, PlusIcon } from 'lucide-react'
-import { listCoursesService } from '@/feature/courses/courseServices'
 import toast from 'react-hot-toast'
 import { Course } from '@/feature/courses/courseTypes'
 import { CommonPaginationBar } from '@/app/components/organism/Paginator/CommonPaginationBar'
 import { TabularDataList } from '@/app/components/organism/DataSection/CommonDataSection'
 import SortButton from '@/app/components/atoms/FilterButtons'
+import { fetchListDataService } from '@/feature/common/commonServices'
+import { route } from '@/lib/constants/RouteConstants'
 
 
 
 const courseManagementPage = () => {
   const [courseList, setCourseList] = useState<Array<Course>|null>(null)
   const [paginationData, setPaginationData] = useState<PaginatedResults | null>(null)
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [courseFilters, setCourseFilters] = useState<StandardFilters>({
+    filters: {},
+    ordering: null,
+    search: null,
+    page: 1
+  })
 
-  const fetchCourseData = async (page: number) => {
+  const fetchCourseData = async (courseFilters: StandardFilters) => {
     try {
-      const resp = await listCoursesService(page)
+      const resp = await fetchListDataService(route.LIST_COURSES, courseFilters)
       const paginatedData: PaginatedResults | null = resp?.response
       if (paginatedData) {
         setPaginationData(paginatedData)
@@ -58,8 +64,23 @@ const courseManagementPage = () => {
   useEffect(() => {
     setPaginationData(null)
     setCourseList(null)
-    fetchCourseData(currentPage)
-  }, [currentPage])
+    fetchCourseData(courseFilters)
+  }, [courseFilters])
+
+  const handleFilterChange = (filter_key: string, filter_value: string | null) => {
+    if (filter_key !== 'search' && filter_key !== 'ordering')
+      setCourseFilters((prev) => ({
+        ...prev,
+        filters: {
+          ...courseFilters.filters,
+          [filter_key]: filter_value
+        }
+      }))
+    setCourseFilters((prev) => ({
+      ...prev,
+      [filter_key]: filter_value
+    }))
+  }
 
   const totalPages = paginationData?.total_pages || 1
 
@@ -70,13 +91,18 @@ const courseManagementPage = () => {
       <section className='flex justify-between items-center'>
         <div className='flex justify-start items-center gap-2'>
           <div>
-            <Select>
+            <Select 
+            onValueChange={(statusValue: string) => {
+              if (statusValue === 'all') handleFilterChange('status', null)
+              else handleFilterChange('status', statusValue)
+            }}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="All Statuses" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Statuses</SelectLabel>
+                  <SelectItem value='all' className='hover:text-white'>All</SelectItem>
                   <SelectItem value="active" className='hover:text-white'>Active</SelectItem>
                   <SelectItem value="inactive" className='hover:text-white'>Inactive</SelectItem>
                   <SelectItem value="draft" className='hover:text-white'>Draft</SelectItem>
@@ -88,7 +114,8 @@ const courseManagementPage = () => {
             <Input type='date' placeholder='Select date range to filter'/>
           </div>
           <div>
-            <Input type="search" placeholder="Search by course name" />
+            <Input type="search" name='search' placeholder="Search by course name" 
+            onChange={e => {handleFilterChange('search', e.target.value)}} />
           </div>
         </div>
         <div>
@@ -104,7 +131,7 @@ const courseManagementPage = () => {
         title="All Courses"
         data={courseList}
         loading={!courseList}
-        emptyMessage="Nothing to show. Try creating a course"
+        emptyMessage="Nothing to show! Try creating a course."
         columns={[
           {
             header: () => "Course Name",
@@ -147,9 +174,9 @@ const courseManagementPage = () => {
       <section className="my-3">
         {paginationData && totalPages > 1 && (
           <CommonPaginationBar
-            currentPage={currentPage}
+            currentPage={courseFilters.page}
             totalPages={totalPages}
-            onPageChange={(page) => setCurrentPage(page)}
+            onPageChange={(page: number) => setCourseFilters((prev) => ({...prev, page}))}
           />
         )}
       </section>

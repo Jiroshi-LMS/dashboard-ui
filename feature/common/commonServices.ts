@@ -2,7 +2,6 @@ import api from "@/lib/api/axios"
 import { route } from "@/lib/constants/RouteConstants"
 
 
-
 export const fetchPresignedUploadURL = async (
     filename: string,
     contentType: string,
@@ -23,4 +22,30 @@ export const fetchPresignedUploadURL = async (
     if (!url || !key) throw new Error(data?.msg || "Unable to generate upload URL")
 
     return { presignedURL: url, objectKey: key };
+}
+
+
+export const fetchListDataService = async (url: string, listingFilters: StandardFilters | null = null) => {
+    const params = new URLSearchParams();
+
+    if (listingFilters) {
+        if (listingFilters.filters)
+            Object.entries(listingFilters.filters).forEach(([key, value]) => {
+                if (value !== null && value !== undefined && value !== "")
+                params.append(key, String(value));
+            });
+
+        if (listingFilters.search)
+            params.append("search", listingFilters.search);
+
+        if (listingFilters.ordering)
+            params.append("ordering", listingFilters.ordering);
+
+        params.append("page", String(listingFilters.page));
+    }
+
+    const queryString = params.toString() ? `?${params.toString()}` : "";
+
+    const { data } = await api.get(url + queryString);
+    return data as StandardResponse;
 }

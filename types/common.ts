@@ -20,3 +20,11 @@ type PaginatedResults = {
   results: [any];
   total_pages: number;
 }
+
+
+type StandardFilters = {
+  filters: Object
+  ordering: string | null
+  search: string | null
+  page: number
+}
