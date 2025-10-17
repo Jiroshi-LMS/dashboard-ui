@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -18,40 +17,134 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-
-const formSchema = z.object({
-  courseTitle: z.string().min(2, "Full name must be at least 2 characters."),
-  courseDescription: z.string().optional(),
-})
+import { useRef, useState } from "react"
+import { usePresignedUpload } from "@/hooks/usePresignedUpload"
+import { constantFilenames, fileContentTypes, fileUploadPrefixes, PUBLIC_UPLOAD } from "@/lib/constants/FileConstants"
+import { useRouter } from "next/navigation"
+import { useAppSelector } from "@/hooks/useRedux"
+import { RootState } from "@/store"
+import { units } from "@/lib/constants/common"
+import toast from "react-hot-toast"
+import { courseCreationFormSchema } from "@/feature/courses/courseSchemas"
+import Image from "next/image"
+import Loader from "@/app/components/atoms/Loader"
+import { createCourseService } from "@/feature/courses/courseServices"
+import { page } from "@/lib/constants/RouteConstants"
 
 const addCoursePage = () => {
+  const router = useRouter()
+  const allowedFileSize = 5;
+  const {data: instructor} = useAppSelector((state: RootState) => state.instructor);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-      resolver: zodResolver(formSchema),
-      defaultValues: {
-        courseTitle: "",
-        courseDescription: "",
-      },
-    })
-  
-    const onSubmit = (values: z.infer<typeof formSchema>) => {
-      console.log("Form Submitted:", values)
+  const { uploadFile } = usePresignedUpload(
+      constantFilenames.COURSE_THUMBNAIL, 
+      fileUploadPrefixes.COURSE_THUMBNAIL,
+      PUBLIC_UPLOAD, 
+      instructor?.uuid
+  )
+
+  const [thumbnailFile, setThumbnailFile] = useState<File | null>(null)
+  const [thumbnailUploadProgress, setThumbnailUploadProgress] = useState<number>(0)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isDragging, setIsDragging] = useState(false)
+
+  const thumbnailUploadRef = useRef<HTMLInputElement | null>(null)
+
+  const form = useForm<z.infer<typeof courseCreationFormSchema>>({
+    resolver: zodResolver(courseCreationFormSchema),
+    defaultValues: {
+      thumbnail: "",
+      title: "",
+      description: "",
+    },
+  })
+
+  const thumbnailImageChange = async (file: File | undefined) => {
+    try {
+      if (!file) return;
+      const contentType = file.type
+      if (contentType !== fileContentTypes.PNG && 
+        contentType !== fileContentTypes.JPG && 
+        file.size > allowedFileSize * units.MB)
+          throw new Error("Please provide a valid file format.");
+        const {objectKey} = await uploadFile(file, contentType, setThumbnailUploadProgress)
+        setThumbnailFile(file)
+        form.setValue("thumbnail", objectKey)
+    } catch (err: any) {
+        toast.error(err?.message ?? "Something went wrong! Please try again later.")
     }
+  }
+  
+  const onSubmit = async (values: z.infer<typeof courseCreationFormSchema>) => {
+    try {
+      if (!values.thumbnail) return toast.error("Please upload a thumbnail!")
+      if (values.description === "") values.description = undefined
+      setIsLoading(true);
+      const resp = await createCourseService(values);
+      if (!resp?.status) return toast.error(resp?.msg ?? "Unable to create your course! Please try again later.");
+      toast.success("Course Created Successfully !")
+      setIsLoading(false);
+      if (resp?.response?.course_id)
+        router.replace(page.CREATE_LESSON(resp?.response?.course_id))
+      else
+        router.replace(page.LIST_LESSONS)
+    } catch (err: any) {
+      setIsLoading(false);
+      toast.error(err?.message || "Couldn't save your profile info! Please try again later.")
+    }
+  }
 
   return (
     <main className="main-container">
       <h1 className="page-title">Add New Course</h1>
-
-      <section>
-
+      <hr />
+      {
+        (isLoading) ? <Loader className="h-screen" /> :
+      <section className="w-[80%] mx-auto">
         <div>
-          <h2 className="section-title">Course Thumbnail</h2>
+          <h2 className="section-title">Course Thumbnail *</h2>
           <p className="text-gray-600 text-[12px] mb-2 text-justify font-semibold">
             Upload the course thumbnail, it will be the display image for your course.
           </p>
-          <div className="flex justify-center items-center h-[40vh] w-[80%] mx-auto
-          border-2 border-dashed border-gray-200 rounded-md gap-3 font-semibold text-[14px] text-gray-600">
-            Drag & drop or click to upload image (Max 5MB) <UploadIcon />
+          <div 
+          onClick={() => {thumbnailUploadRef?.current?.click()}}
+          onDragOver={(e) => {
+            e.preventDefault()
+            setIsDragging(true)
+          }}
+          onDragLeave={(e) => {
+            e.preventDefault()
+            setIsDragging(false)
+          }}
+          onDrop={(e) => {
+            e.preventDefault()
+            setIsDragging(false)
+            thumbnailImageChange(e.dataTransfer.files?.[0])
+          }}
+          className="flex justify-center items-center h-[40vh] w-full mx-auto
+          border-2 border-dashed border-gray-200 rounded-md gap-3 font-semibold text-[14px] 
+          text-gray-600 cursor-pointer">
+            <input type="file" className="hidden" accept=".png,.jpg,.jpeg"
+            ref={(e) => {thumbnailUploadRef.current = e;}}
+            onChange={(e) => thumbnailImageChange(e.target.files?.[0])}
+            />
+            {
+              (thumbnailFile) ? 
+                <Image 
+                src={URL.createObjectURL(thumbnailFile)} 
+                height={400}
+                width={600}
+                className="h-full w-auto bg-black"
+                alt="Selected Thumbnail File" /> : (
+                  (thumbnailUploadProgress > 0) ? <p>Progress: {thumbnailUploadProgress}%</p> :
+                  <p className="flex">
+                    {
+                      (isDragging) ? "Drop Here ..." : `Drag n Drop or Click to upload image (Max ${allowedFileSize}MB)`
+                    }
+                     <UploadIcon className="h-5 w-5 ml-2" />
+                  </p>
+                )
+            }
           </div>
         </div>
 
@@ -63,10 +156,10 @@ const addCoursePage = () => {
               {/* Course Title */}
               <FormField
                 control={form.control}
-                name="courseTitle"
+                name="title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Course Title</FormLabel>
+                    <FormLabel>Course Title *</FormLabel>
                     <FormControl>
                       <Input placeholder="Course Title" {...field} />
                     </FormControl>
@@ -78,7 +171,7 @@ const addCoursePage = () => {
               {/* Course Description */}
               <FormField
                 control={form.control}
-                name="courseDescription"
+                name="description"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Course Description</FormLabel>
@@ -95,15 +188,19 @@ const addCoursePage = () => {
                 <Button type="submit" className="bg-teal-600 hover:bg-teal-700 cursor-pointer text-white">
                   Save Course
                 </Button>
-                <Button className="bg-red-400 hover:bg-red-500 cursor-pointer text-white">
+                <Button
+                type="button"
+                className="bg-red-400 hover:bg-red-500 cursor-pointer text-white"
+                onClick={() => {router.back()}}
+                >
                   Cancel
                 </Button>
               </div>
             </form>
           </Form>
         </div>
-
       </section>
+      }
 
     </main>
   )

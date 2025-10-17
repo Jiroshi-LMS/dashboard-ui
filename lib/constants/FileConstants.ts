@@ -7,9 +7,11 @@ export const fileContentTypes = {
 }
 
 export const fileUploadPrefixes = {
-    PROFILE: "profile"
+    PROFILE: "profile",
+    COURSE_THUMBNAIL: "course-thumbnail" 
 }
 
 export const constantFilenames = {
-    PROFILE: "pfp"
+    PROFILE: "pfp",
+    COURSE_THUMBNAIL: "course-thumbnail"
 }

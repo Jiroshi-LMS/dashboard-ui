@@ -21,17 +21,18 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { page } from "@/lib/constants/RouteConstants";
 
 // Menu items.
 const utilItems = [
   {
     title: "Dashboard",
-    url: "/instructor/dashboard",
+    url: page.DASHBOARD_HOME,
     icon: LayoutDashboardIcon,
   },
   {
     title: "Courses",
-    url: "/instructor/dashboard/courses",
+    url: page.LIST_LESSONS,
     icon: GraduationCapIcon,
   },
   {

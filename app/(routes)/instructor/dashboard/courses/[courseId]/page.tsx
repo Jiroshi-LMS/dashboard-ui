@@ -34,6 +34,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { page } from "@/lib/constants/RouteConstants";
 
 interface CourseDetailsPageProps {
   params: Promise<{ courseId: string }>;
@@ -195,7 +196,7 @@ const courseDetailsPage = async ({params}: CourseDetailsPageProps) => {
               </form>
             </div>
             <div>
-              <Link href="/instructor/dashboard/courses/lessons/add-lesson">
+              <Link href={page.CREATE_LESSON(courseId)}>
                 <Button className='bg-primary text-white hover:bg-teal-600 hover:text-white cursor-pointer'><PlusIcon /> Add new lesson</Button>
               </Link>
             </div>

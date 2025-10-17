@@ -13,7 +13,7 @@ import z from "zod"
 import toast from "react-hot-toast"
 import Image from "next/image"
 import { setInstructorProfileService } from "../instructorServices"
-import { fetchInstructorStrict } from "../instructorSlice"
+import { fetchInstructor } from "../instructorSlice"
 import { page } from "@/lib/constants/RouteConstants"
 import { profile_completion } from "@/lib/constants/instructorConstants"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
@@ -94,7 +94,7 @@ const InstructorSetupProfileForm = () => {
             setIsUpdatingProfile(true);
             const resp = await setInstructorProfileService(values)
             if (!resp?.status) return toast.error(resp?.msg ?? "Unable to update profile! Please try again later.");
-            dispatch(fetchInstructorStrict())
+            dispatch(fetchInstructor(true))
             setIsUpdatingProfile(false);
             router.replace(page.DASHBOARD_HOME)
         } catch (err: any) {
