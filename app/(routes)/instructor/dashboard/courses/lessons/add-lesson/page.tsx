@@ -1,7 +1,8 @@
 "use client"
 
 import { useRouter } from "next/navigation";
-import Stepper from "@/app/components/organisms/InstructorDashboard/DashboardStepper"
+
+import Stepper from "@/app/components/organism/InstructorDashboard/DashboardStepper";
 import VideoDetailsStep from "@/app/components/stepper-content/lesson-upload/VideoDetailsStep";
 import VideoResourcesStep from "@/app/components/stepper-content/lesson-upload/VideoResourcesStep";
 import VideoUploadStep from "@/app/components/stepper-content/lesson-upload/VideoUploadStep";

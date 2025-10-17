@@ -94,7 +94,8 @@ return (
         {/* Right side - Add Button */}
         <div>
           <Link href="/instructor/dashboard/courses/add-course">
-            <Button className="bg-primary text-white hover:bg-teal-600 hover:text-white flex items-center gap-2">
+            <Button className="bg-primary text-white hover:bg-teal-600 hover:text-white flex 
+            items-center gap-2 cursor-pointer">
               <PlusIcon className="h-4 w-4" />
               Add new course
             </Button>
