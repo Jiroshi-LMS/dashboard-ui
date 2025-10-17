@@ -23,8 +23,9 @@ type PaginatedResults = {
 
 
 type StandardFilters = {
-  filters: Object
+  filters: any
   ordering: string | null
   search: string | null
-  page: number
+  page: number,
+  page_size: number
 }

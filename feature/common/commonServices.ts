@@ -42,6 +42,7 @@ export const fetchListDataService = async (url: string, listingFilters: Standard
             params.append("ordering", listingFilters.ordering);
 
         params.append("page", String(listingFilters.page));
+        params.append("page_size", String(listingFilters.page_size))
     }
 
     const queryString = params.toString() ? `?${params.toString()}` : "";

@@ -15,7 +15,7 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { PlusIcon } from 'lucide-react'
+import { FilterIcon, PlusIcon } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { Course } from '@/feature/courses/courseTypes'
 import { CommonPaginationBar } from '@/app/components/organism/Paginator/CommonPaginationBar'
@@ -24,6 +24,9 @@ import SortButton from '@/app/components/atoms/FilterButtons'
 import { fetchListDataService } from '@/feature/common/commonServices'
 import { route } from '@/lib/constants/RouteConstants'
 import { useDebounce } from '@/hooks/useDebounced'
+import { DateRangePicker } from '@/app/components/atoms/DateRangePicker'
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Label } from '@/components/ui/label'
 
 
 
@@ -38,7 +41,8 @@ const courseManagementPage = () => {
     filters: {},
     ordering: null,
     search: null,
-    page: 1
+    page: 1,
+    page_size: 15
   })
 
   const fetchCourseData = async (courseFilters: StandardFilters) => {
@@ -103,45 +107,139 @@ const courseManagementPage = () => {
     <main className='main-container'>
       <h1 className='page-title'>Instructor Dashboard</h1>
 
-      <section className='flex justify-between items-center'>
-        <div className='flex justify-start items-center gap-2'>
-          <div>
-            <Select 
-            onValueChange={(statusValue: string) => {
-              if (statusValue === 'all') handleFilterChange('status', null)
-              else handleFilterChange('status', statusValue)
-            }}
-            defaultValue='all'>
-              <SelectTrigger className="w-[180px]">
+      <section className="flex flex-wrap justify-between items-center gap-3 bg-white/60 backdrop-blur-sm p-3 rounded-xl border border-gray-200 shadow-sm">
+  {/* Left side - Filters */}
+  <div className="flex flex-wrap items-center gap-3">
+    {/* Filter Popover */}
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          className="flex items-center gap-2 border-gray-300 hover:bg-gray-50"
+        >
+          <FilterIcon className="h-4 w-4" />
+          Filters
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent
+        side="bottom"
+        align="start"
+        className=" z-30 w-80 bg-white border border-gray-200 rounded-md p-4 shadow-sm my-1"
+      >
+        <div className="flex flex-col gap-5">
+          {/* Date Range */}
+          <div className="space-y-2">
+            <p className="text-sm font-semibold text-gray-700">Date Range</p>
+            <DateRangePicker
+              onChange={(range) => {
+                console.log(range)
+                if (!range) {
+                  handleFilterChange("created_at_after", null);
+                  handleFilterChange("created_at_before", null);
+                  return;
+                }
+                const formatDate = (date: Date) =>
+                  date.getFullYear() +
+                  "-" +
+                  String(date.getMonth() + 1).padStart(2, "0") +
+                  "-" +
+                  String(date.getDate()).padStart(2, "0");
+
+                if (range.from)
+                  handleFilterChange("created_at_after", formatDate(range.from));
+                if (range.to)
+                  handleFilterChange("created_at_before", formatDate(range.to));
+              }}
+              value={{
+                from: (courseFilters?.filters?.created_at_after) ? new Date(courseFilters?.filters?.created_at_after) : undefined,
+                to: (courseFilters?.filters?.created_at_before) ? new Date(courseFilters?.filters?.created_at_before) : undefined,
+              }}
+            />
+          </div>
+
+          {/* Status Filter */}
+          <div className="space-y-2">
+            <p className="text-sm font-semibold text-gray-700">Status</p>
+            <Select
+              onValueChange={(statusValue: string) => {
+                if (statusValue === "all") handleFilterChange("status", null);
+                else handleFilterChange("status", statusValue);
+              }}
+              defaultValue="all"
+              value={courseFilters?.filters?.status || ""}
+            >
+              <SelectTrigger className="w-full">
                 <SelectValue placeholder="All Statuses" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectLabel>Statuses</SelectLabel>
-                  <SelectItem value='all' className='hover:text-white'>All Statuses</SelectItem>
-                  <SelectItem value="active" className='hover:text-white'>Active</SelectItem>
-                  <SelectItem value="inactive" className='hover:text-white'>Inactive</SelectItem>
-                  <SelectItem value="draft" className='hover:text-white'>Draft</SelectItem>
+                  <SelectItem value="all">All Statuses</SelectItem>
+                  <SelectItem value="active">Active</SelectItem>
+                  <SelectItem value="inactive">Inactive</SelectItem>
+                  <SelectItem value="draft">Draft</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
           </div>
-          <div>
-            <Input type='date' placeholder='Select date range to filter'/>
-          </div>
-          <div>
-            <Input type="search" name='search' placeholder="Search by course name" 
-            onChange={e => setSearch(e.target.value)} />
+
+          {/* Clear Filters Button */}
+          <div className="pt-2">
+            <Button
+              variant="outline"
+              className="w-full text-sm border-gray-300 hover:bg-gray-100"
+              onClick={() => {
+                setCourseFilters({
+                  filters: {},
+                  ordering: null,
+                  search: null,
+                  page: 1,
+                  page_size: 15
+                })
+              }}
+            >
+              Clear Filters
+            </Button>
           </div>
         </div>
-        <div>
-            <Link href="/instructor/dashboard/courses/add-course">
-              <Button className='bg-primary text-white hover:bg-teal-600 hover:text-white cursor-pointer'>
-                  <PlusIcon /> Add new course
-              </Button>
-            </Link>
-        </div>
-      </section>
+      </PopoverContent>
+    </Popover>
+
+    {/* Search Input */}
+    <div className="relative">
+      <Input
+        type="search"
+        name="search"
+        placeholder="Search by course name"
+        className="pl-9 w-64 border-gray-300"
+        onChange={(e) => setSearch(e.target.value)}
+      />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-400"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"
+        />
+      </svg>
+    </div>
+  </div>
+
+  {/* Right side - Add Button */}
+  <div>
+    <Link href="/instructor/dashboard/courses/add-course">
+      <Button className="bg-primary text-white hover:bg-teal-600 hover:text-white flex items-center gap-2">
+        <PlusIcon className="h-4 w-4" />
+        Add new course
+      </Button>
+    </Link>
+  </div>
+</section>
 
       <TabularDataList
         title="All Courses"
