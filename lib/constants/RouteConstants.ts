@@ -20,6 +20,7 @@ export const page = {
     DASHBOARD_HOME: "/instructor/dashboard",
     LOGIN: "/auth/login",
 
-    LIST_LESSONS: '/instructor/dashboard/courses',
+    CREATE_COURSE: "/instructor/dashboard/courses/add-course",
+    LIST_COURSE: '/instructor/dashboard/courses',
     CREATE_LESSON: (courseId: string) => `/instructor/dashboard/courses/${courseId}/add-lesson`,
 }

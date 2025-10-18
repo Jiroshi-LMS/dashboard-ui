@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import { Course } from "../courseTypes";
 import toast from "react-hot-toast";
 import { fetchListDataService } from "@/feature/common/commonServices";
-import { route } from "@/lib/constants/RouteConstants";
+import { page, route } from "@/lib/constants/RouteConstants";
 import CourseListFilters from "./CourseListFilters";
 import { useFilters } from "@/hooks/useFilters";
 
@@ -93,7 +93,7 @@ return (
 
         {/* Right side - Add Button */}
         <div>
-          <Link href="/instructor/dashboard/courses/add-course">
+          <Link href={page.CREATE_COURSE}>
             <Button className="bg-primary text-white hover:bg-teal-600 hover:text-white flex 
             items-center gap-2 cursor-pointer">
               <PlusIcon className="h-4 w-4" />

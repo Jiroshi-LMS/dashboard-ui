@@ -32,7 +32,7 @@ const utilItems = [
   },
   {
     title: "Courses",
-    url: page.LIST_LESSONS,
+    url: page.LIST_COURSE,
     icon: GraduationCapIcon,
   },
   {

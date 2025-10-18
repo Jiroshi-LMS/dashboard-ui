@@ -164,7 +164,7 @@ const courseDetailsPage = async ({params}: CourseDetailsPageProps) => {
         </aside>
 
         <div className="flex justify-end items-center w-full my-3 gap-3">
-          <Link href="/instructor/dashboard/courses/add-course">
+          <Link href={page.CREATE_COURSE}>
             <Button className='bg-blue-400 text-white hover:bg-blue-500 hover:text-white cursor-pointer'><PlusIcon /> Add another course</Button>
           </Link>
           <Link href={`/instructor/dashboard/courses/${courseId}/edit`}>
