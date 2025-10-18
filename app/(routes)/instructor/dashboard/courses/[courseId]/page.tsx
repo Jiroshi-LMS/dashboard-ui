@@ -35,6 +35,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { page } from "@/lib/constants/RouteConstants";
+import CourseRetrieveData from "@/feature/courses/components/CourseRetrieveData";
 
 interface CourseDetailsPageProps {
   params: Promise<{ courseId: string }>;
@@ -115,53 +116,12 @@ const static_table_data = [
 
 const courseDetailsPage = async ({params}: CourseDetailsPageProps) => {
   const { courseId } = await params
-  let courseStatus = "active"
-  let badge_color = 'bg-primary text-white'
-  if (courseStatus === 'inactive') {
-    badge_color = 'bg-red-400 text-white'
-  } else if (courseStatus === 'draft') {
-    badge_color = 'bg-blue-400 text-white'
-  }
   return (
     <main className="main-container">
       <h1 className="page-title">Course Details</h1>
 
       <div className="relative flex flex-col justify-start items-start w-full min-h-screen">
-
-        <aside className="flex justify-center items-start bg-gray-50 w-full p-2">
-          <div className="w-full"> 
-            <Image 
-            src="https://img.freepik.com/free-photo/serious-young-caucasian-geometry-teacher-wearing-glasses-sitting-desk-with-school-tools-classroom-holding-hourglass-vertically-looking-it_141793-105472.jpg" 
-            className="w-[500px] object-cover border-[2px] border-teal-700"
-            height={400}
-            width={600}
-            alt="course thumbnail" 
-            />
-          </div>
-          <div className="flex flex-col justify-between items-start w-full h-full px-4">
-            <h2 className="content-title">Back-End Development with Django</h2>
-            <div className="flex justify-between items-center w-full my-1">
-              <span className="flex items-center text-gray-400 text-[14px]"><Clock10Icon className="h-3 w-3 mr-1"/> 25 hours</span>
-              <span><Badge className={`${badge_color} uppercase`}><ActivityIcon /> {courseStatus}</Badge></span>
-            </div>
-            <div className="flex justify-between items-center w-full my-1">
-              <span className="flex items-center text-gray-400 text-[14px]"><UsersIcon className="h-3 w-3 mr-1"/> 50 Enrollments</span>
-              <span className="flex items-center text-gray-400 text-[14px]"><Calendar1Icon className="h-3 w-3 mr-1"/> 2025-05-01</span>
-            </div>
-            <div>
-              <h4 className="my-3 font-bold text-gray-600">Course Description</h4>
-              <p className="text-gray-600 text-[12px] mt-4 text-justify h-[9em] overflow-scroll">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                Suspendisse potenti. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. 
-                Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. 
-                Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. 
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut gravida lorem. Ut turpis felis, pulvinar a semper sed, adipiscing id dolor. 
-                Pellentesque auctor nisi id magna consequat sagittis. Curabitur dapibus enim sit amet elit pharetra tincidunt feugiat nisl imperdiet. 
-                Ut convallis libero in urna ultrices accumsan. Donec sed odio eros. Donec viverra mi quis quam pulvinar at malesuada arcu rhoncus.
-              </p>
-            </div>
-          </div>
-        </aside>
+        <CourseRetrieveData courseId={courseId} />
 
         <div className="flex justify-end items-center w-full my-3 gap-3">
           <Link href={page.CREATE_COURSE}>

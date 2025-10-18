@@ -9,6 +9,7 @@ export const route = {
 
     LIST_COURSES: "/courses/views/",
     CREATE_COURSE: "/courses/views/",
+    RETRIEVE_COURSE: (courseId: string) => `/courses/views/${courseId}/`,
     
     // Common
     GET_PRESIGNED_UPLOAD: "/internals/generate-upload-presigned-url/"

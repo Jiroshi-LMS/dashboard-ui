@@ -10,3 +10,8 @@ export const createCourseService = async (
     const { data } = await api.post(route.CREATE_COURSE, values)
     return data as StandardResponse
 }
+
+export const fetchCourseById = async (courseId: string): Promise<StandardResponse> => {
+    const { data } = await api.get(route.RETRIEVE_COURSE(courseId))
+    return data as StandardResponse
+}
