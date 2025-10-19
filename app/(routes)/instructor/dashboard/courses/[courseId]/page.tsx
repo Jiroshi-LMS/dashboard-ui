@@ -1,5 +1,6 @@
-import { ActivityIcon, Calendar1Icon, Clock10Icon, PencilIcon, PlusIcon, TrashIcon, UsersIcon } from "lucide-react";
-import Image from "next/image"
+"use client"
+
+import { Clock10Icon, PencilIcon, PlusIcon, TrashIcon } from "lucide-react";
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge";
 
@@ -36,6 +37,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { page } from "@/lib/constants/RouteConstants";
 import CourseRetrieveData from "@/feature/courses/components/CourseRetrieveData";
+import { deleteCourseService } from "@/feature/courses/courseServices";
+import toast from "react-hot-toast";
+import { standardErrors } from "@/lib/constants/errors";
+import React from "react";
+import { useRouter } from "next/navigation";
 
 interface CourseDetailsPageProps {
   params: Promise<{ courseId: string }>;
@@ -114,8 +120,27 @@ const static_table_data = [
   }
 ]
 
-const courseDetailsPage = async ({params}: CourseDetailsPageProps) => {
-  const { courseId } = await params
+const courseDetailsPage = ({params}: CourseDetailsPageProps) => {
+  const router = useRouter()
+  const { courseId } = React.use(params)
+
+  const handleCourseDeletion = async() => {
+    try {
+      const resp = await deleteCourseService(courseId)
+      if (resp?.status){
+        toast.success("Course has been removed successfully !")
+        router.replace(page.LIST_COURSE)
+      }
+      else toast.error("Could not delete course! Please try again later.")
+    } catch (err: any) {
+      toast.error(
+        err?.response?.data?.msg ||
+        err?.message ||
+        standardErrors.UNKNOWN
+      )
+    }
+  }
+
   return (
     <main className="main-container">
       <h1 className="page-title">Course Details</h1>
@@ -215,7 +240,7 @@ const courseDetailsPage = async ({params}: CourseDetailsPageProps) => {
       <div className="flex justify-end items-center w-full">
         <AlertDialog>
           <AlertDialogTrigger className="flex justify-center items-center gap-2 bg-red-400 hover:bg-red-500 cursor-pointer
-          text-white px-2 py-2 font-semibold text-[13px] rounded-md"> <TrashIcon className="w-4" /> Delete Course</AlertDialogTrigger>
+          text-white px-2 py-2 font-semibold text-[13px] rounded-md mt-10"> <TrashIcon className="w-4" /> Delete Course</AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
@@ -226,7 +251,11 @@ const courseDetailsPage = async ({params}: CourseDetailsPageProps) => {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction className="bg-red-400 hover:bg-red-500 cursor-pointer text-white">Continue</AlertDialogAction>
+              <AlertDialogAction 
+              onClick={handleCourseDeletion}
+              className="bg-red-400 hover:bg-red-500 cursor-pointer text-white">
+                Continue
+              </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>

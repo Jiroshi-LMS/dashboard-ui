@@ -11,6 +11,7 @@ export const route = {
     CREATE_COURSE: "/courses/views/",
     UPDATE_COURSE: (courseId: string) => `/courses/views/${courseId}/`,
     RETRIEVE_COURSE: (courseId: string) => `/courses/views/${courseId}/`,
+    DELETE_COURSE: (courseId: string) => `/courses/views/${courseId}/`,
     
     // Common
     GET_PRESIGNED_UPLOAD: "/internals/generate-upload-presigned-url/"

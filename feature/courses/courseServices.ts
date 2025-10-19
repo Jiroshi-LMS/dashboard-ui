@@ -22,8 +22,13 @@ export const updateCourseService = async (
   return data as StandardResponse
 }
 
-const retrieveCourseService = async (courseId: string): Promise<StandardResponse> => {
+export const retrieveCourseService = async (courseId: string): Promise<StandardResponse> => {
     const { data } = await api.get(route.RETRIEVE_COURSE(courseId))
+    return data as StandardResponse
+}
+
+export const deleteCourseService = async (courseId: string): Promise<StandardResponse> => {
+    const { data } = await api.delete(route.DELETE_COURSE(courseId))
     return data as StandardResponse
 }
 
