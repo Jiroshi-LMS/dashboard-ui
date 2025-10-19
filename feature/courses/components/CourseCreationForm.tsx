@@ -31,6 +31,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
 
 const CourseCreationForm = () => {
   const router = useRouter();
@@ -72,7 +73,10 @@ const CourseCreationForm = () => {
   }, [])
 
   useEffect(() => {
+    const uploadProgressTimeout = setTimeout(() => {
       if (thumbnailUploadProgress === 100) setThumbnailUploadProgress(0)
+    }, 500)
+    return () => {clearTimeout(uploadProgressTimeout)}
   }, [thumbnailUploadProgress, setThumbnailUploadProgress])
 
   const thumbnailImageChange = async (file: File | undefined) => {
@@ -133,6 +137,14 @@ const CourseCreationForm = () => {
           Upload the course thumbnail, it will be the display image for your
           course.
         </p>
+        {
+          thumbnailUploadProgress > 0 ?
+          <div className="flex justify-center items-center h-[40vh] w-full mx-auto
+          border-2 border-dashed border-gray-200 rounded-md gap-3 font-semibold text-[14px] 
+          text-gray-600 cursor-pointer">
+            <Progress value={thumbnailUploadProgress} className="w-[60%]" />
+          </div> 
+        :
         <div
           onClick={() => {
             thumbnailUploadRef?.current?.click();
@@ -171,8 +183,6 @@ const CourseCreationForm = () => {
               className="h-full w-auto bg-black"
               alt="Selected Thumbnail File"
             />
-          ) : thumbnailUploadProgress > 0 ? (
-            <p>Progress: {thumbnailUploadProgress}%</p>
           ) : (
             <p className="flex">
               {isDragging
@@ -182,6 +192,7 @@ const CourseCreationForm = () => {
             </p>
           )}
         </div>
+        }
       </div>
 
       <div>

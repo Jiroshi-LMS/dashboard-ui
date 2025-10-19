@@ -16,8 +16,8 @@ import {
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
+  PaginationEllipsis,
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
@@ -218,15 +218,12 @@ const courseDetailsPage = ({params}: CourseDetailsPageProps) => {
                 <PaginationPrevious href="#" />
               </PaginationItem>
               {
-              Array.from({ length: static_table_data.length }, (_, index) => (
-                <PaginationItem key={index}>
-                  <PaginationLink href="#">{index + 1}</PaginationLink>
-                </PaginationItem>
-              ))
-            } 
-              {/* <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem> */}
+                Array.from({ length: static_table_data.length }, (_, index) => (
+                  <PaginationItem key={index}>
+                    <PaginationLink href="#">{index + 1}</PaginationLink>
+                  </PaginationItem>
+                ))
+              }
               <PaginationItem>
                 <PaginationNext href="#" />
               </PaginationItem>

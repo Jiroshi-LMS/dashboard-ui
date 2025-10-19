@@ -22,6 +22,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { units } from "@/lib/constants/common"
 import Loader from "@/app/components/atoms/Loader"
+import { Progress } from "@/components/ui/progress"
 
 const InstructorSetupProfileForm = () => {
     const router = useRouter()
@@ -63,7 +64,10 @@ const InstructorSetupProfileForm = () => {
     }, [])
 
     useEffect(() => {
-        if (profileUploadProgress === 100) setProfileUploadProgress(0)
+        const uploadTimeout = setTimeout(() => {
+            if (profileUploadProgress === 100) setProfileUploadProgress(0);
+        }, 500)
+        return () => {clearTimeout(uploadTimeout)}
     }, [profileUploadProgress, setProfileUploadProgress])
 
     useEffect(() => {
@@ -128,11 +132,10 @@ const InstructorSetupProfileForm = () => {
                             priority />
                             <div className="flex flex-col justify-center items-center">
                                 {
-                                (profileUploadProgress !== 0) ? 
-                                    <span>
-                                    <b>PROGRESS: </b>
-                                    {profileUploadProgress}%
-                                    </span>
+                                (profileUploadProgress > 0) ? 
+                                    <div className="w-full py-3">
+                                        <Progress value={profileUploadProgress} className="w-full" />
+                                    </div>
                                     : null
                                 }
                                 <h4 className="font-bold text-black text-[14px]">Profile Picture</h4>
