@@ -12,39 +12,14 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { fetchCourseById } from "../courseServices";
 import { Course } from "../courseTypes";
-import toast from "react-hot-toast";
-import { standardErrors } from "@/lib/constants/errors";
 
 const CourseRetrieveData = ({ courseId }: { courseId: string }) => {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [course, setCourse] = useState<Course | null>(null);
 
-  const fetchCourseData = async (courseId: string) => {
-    try {
-      const resp = await fetchCourseById(courseId);
-      const courseData = resp?.response;
-      if (courseData) {
-        const dateObject = new Date(courseData.created_at);
-        const formattedCourseData: Course = {
-          ...courseData,
-          created_at: dateObject.toLocaleString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          }),
-        };
-        setCourse(formattedCourseData);
-      } else toast.error(standardErrors.UNKNOWN);
-      setLoading(false);
-    } catch (err: any) {
-      toast.error("Failed to fetch course! Try again.");
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
     setLoading(true);
-    fetchCourseData(courseId);
+    fetchCourseById(courseId, setCourse, setLoading);
   }, [courseId]);
 
   let badge_color = "bg-primary text-white";
@@ -106,7 +81,7 @@ const CourseRetrieveData = ({ courseId }: { courseId: string }) => {
                 Course Description
               </h4>
               <p className="text-gray-600 text-sm leading-relaxed text-justify max-h-[10rem] overflow-auto pr-1">
-                {course.description || "N/A"} Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas ea assumenda earum fugit animi accusamus, dolor cumque. In provident, eum excepturi praesentium culpa repellendus impedit quam tempora hic labore quos laudantium maxime, quo quisquam consectetur amet nulla corrupti dolorum molestiae obcaecati et mollitia numquam. Laudantium omnis quasi facilis. Non voluptate laborum consequatur molestias minus excepturi assumenda possimus optio delectus! Voluptate ipsa nihil fuga tempore ipsum architecto cum aspernatur hic eligendi ut? Deleniti aliquid eum distinctio earum, obcaecati eaque nesciunt. Laboriosam minima aut modi repudiandae eius voluptatem ex quis eligendi ab vitae! Aliquid impedit eius beatae aspernatur natus excepturi dolorum a.
+                {course.description || "N/A"}
               </p>
             </div>
           </div>

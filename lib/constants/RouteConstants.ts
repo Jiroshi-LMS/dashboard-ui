@@ -9,6 +9,7 @@ export const route = {
 
     LIST_COURSES: "/courses/views/",
     CREATE_COURSE: "/courses/views/",
+    UPDATE_COURSE: (courseId: string) => `/courses/views/${courseId}/`,
     RETRIEVE_COURSE: (courseId: string) => `/courses/views/${courseId}/`,
     
     // Common
@@ -23,5 +24,6 @@ export const page = {
 
     CREATE_COURSE: "/instructor/dashboard/courses/add-course",
     LIST_COURSE: '/instructor/dashboard/courses',
+    RETRIEVE_COURSE: (courseId: string) => `/instructor/dashboard/courses/${courseId}`,
     CREATE_LESSON: (courseId: string) => `/instructor/dashboard/courses/${courseId}/add-lesson`,
 }

@@ -1,16 +1,14 @@
 "use client";
 
 import { usePresignedUpload } from "@/hooks/usePresignedUpload";
-import { useAppSelector } from "@/hooks/useRedux";
 import {
   constantFilenames,
   fileContentTypes,
   fileUploadPrefixes,
   PUBLIC_UPLOAD,
 } from "@/lib/constants/FileConstants";
-import { RootState } from "@/store";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { courseCreationFormSchema } from "../courseSchemas";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -37,15 +35,11 @@ import { Button } from "@/components/ui/button";
 const CourseCreationForm = () => {
   const router = useRouter();
   const allowedFileSize = 5;
-  const { data: instructor } = useAppSelector(
-    (state: RootState) => state.instructor
-  );
 
   const { uploadFile } = usePresignedUpload(
     constantFilenames.COURSE_THUMBNAIL,
     fileUploadPrefixes.COURSE_THUMBNAIL,
-    PUBLIC_UPLOAD,
-    instructor?.uuid
+    PUBLIC_UPLOAD
   );
 
   const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
@@ -64,6 +58,22 @@ const CourseCreationForm = () => {
       description: "",
     },
   });
+
+  useEffect(() => {
+      const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+        if (!thumbnailFile) return;
+          e.preventDefault()
+          e.returnValue = "" // required for Chrome to trigger the prompt
+      }
+      window.addEventListener("beforeunload", handleBeforeUnload)
+      return () => {
+          window.removeEventListener("beforeunload", handleBeforeUnload)
+      }
+  }, [])
+
+  useEffect(() => {
+      if (thumbnailUploadProgress === 100) setThumbnailUploadProgress(0)
+  }, [thumbnailUploadProgress, setThumbnailUploadProgress])
 
   const thumbnailImageChange = async (file: File | undefined) => {
     try {
@@ -108,7 +118,7 @@ const CourseCreationForm = () => {
       setIsLoading(false);
       toast.error(
         err?.message ||
-          "Couldn't save your profile info! Please try again later."
+          "Couldn't create your course! Please try again later."
       );
     }
   };

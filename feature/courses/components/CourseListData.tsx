@@ -113,7 +113,7 @@ return (
             header: () => "Course Name",
             render: (course) => (
               <Link
-                href={`/instructor/dashboard/courses/${course.uuid}`}
+                href={page.RETRIEVE_COURSE(course?.uuid)}
                 className="hover:text-teal-500 font-semibold"
               >
                 {course.title}

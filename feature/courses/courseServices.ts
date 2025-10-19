@@ -1,17 +1,55 @@
 import z from "zod";
-import { courseCreationFormSchema } from "./courseSchemas";
+import { courseCreationFormSchema, updateCourseFormSchema } from "./courseSchemas";
 import api from "@/lib/api/axios";
 import { route } from "@/lib/constants/RouteConstants";
+import { Course } from "./courseTypes";
+import { SetStateAction } from "react";
+import toast from "react-hot-toast";
+import { standardErrors } from "@/lib/constants/errors";
 
 
 export const createCourseService = async (
     values: z.infer<typeof courseCreationFormSchema>
 ): Promise<StandardResponse> => {
-    const { data } = await api.post(route.CREATE_COURSE, values)
-    return data as StandardResponse
+  const { data } = await api.post(route.CREATE_COURSE, values)
+  return data as StandardResponse
 }
 
-export const fetchCourseById = async (courseId: string): Promise<StandardResponse> => {
+export const updateCourseService = async (
+    courseId: string, values: z.infer<typeof updateCourseFormSchema>
+): Promise<StandardResponse> => {
+  const { data } = await api.put(route.UPDATE_COURSE(courseId), values)
+  return data as StandardResponse
+}
+
+const retrieveCourseService = async (courseId: string): Promise<StandardResponse> => {
     const { data } = await api.get(route.RETRIEVE_COURSE(courseId))
     return data as StandardResponse
 }
+
+export const fetchCourseById = async (
+    courseId: string, 
+    setCourse: React.Dispatch<SetStateAction<Course | null>>,
+    setLoading: React.Dispatch<SetStateAction<boolean>>
+) => {
+    try {
+      const resp = await retrieveCourseService(courseId);
+      const courseData = resp?.response;
+      if (courseData) {
+        const dateObject = new Date(courseData.created_at);
+        const formattedCourseData: Course = {
+          ...courseData,
+          created_at: dateObject.toLocaleString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          }),
+        };
+        setCourse(formattedCourseData);
+      } else toast.error(standardErrors.UNKNOWN);
+      setLoading(false);
+    } catch (err: any) {
+      toast.error("Failed to fetch course! Try again.");
+      setLoading(false);
+    }
+  };
