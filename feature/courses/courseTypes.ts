@@ -8,3 +8,10 @@ export type Course = {
     title: string
     uuid: string
 }
+
+
+export type LessonRelatedLink = {
+    index: number,
+    title: string,
+    url: string
+}

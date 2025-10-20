@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { withFormValidation } from "@/lib/utils";
 import { CreateLessonWithDetails } from "@/feature/courses/courseServices";
+import { page } from "@/lib/constants/RouteConstants";
 
 interface CreateLessonPageProps {
   params: Promise<{ courseId: string }>;
@@ -42,34 +43,34 @@ const addLessonPage = ({params}: CreateLessonPageProps) => {
                     content: <VideoDetailsStep
                             form={videoDetailsForm}
                             />,
-                    onNext: withFormValidation(
-                        videoDetailsForm, 
-                        async (values: z.infer<typeof VideoDetailsFormSchema>): Promise<boolean> => {
-                            if (lessonId) return true;
-                            const response = await CreateLessonWithDetails(values)
-                            if (response?.success && response?.lesson_uuid) {
-                                setLessonId(response.lesson_uuid)
-                                return true;
-                            }
-                            return false;
-                        }
-                    ),
+                    onNext: async () => true
+                    // onNext: withFormValidation(
+                    //     videoDetailsForm, 
+                    //     async (values: z.infer<typeof VideoDetailsFormSchema>): Promise<boolean> => {
+                    //         if (lessonId) return true;
+                    //         const response = await CreateLessonWithDetails(values)
+                    //         if (response?.success && response?.lesson_uuid) {
+                    //             setLessonId(response.lesson_uuid)
+                    //             return true;
+                    //         }
+                    //         return false;
+                    //     }
+                    // ),
                 },
                 {
                     label: "Lesson Extra Resources",
-                    content: <VideoResourcesStep />,
-                    onNext: async () => {
-                        return true;
-                    },
+                    content: <VideoResourcesStep lessonId={lessonId} />,
+                    onNext: async () => true
                 },
                 {
                     label: "Lesson Video",
                     content: <VideoUploadStep />,
-                    onNext: async () => {
-                        return true;
-                    },
+                    onNext: async () => false,
                 }
             ]}
+            onSubmit={()=>{
+                router.push(page.RETRIEVE_COURSE(courseId))
+            }}
             submitLabel="Upload Lesson"
         />
 

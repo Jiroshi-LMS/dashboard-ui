@@ -1,10 +1,10 @@
 "use client"
 
 import { useRouter } from "next/navigation";
-import Stepper from "@/app/components/organisms/InstructorDashboard/DashboardStepper"
 import VideoDetailsStep from "@/feature/courses/components/lesson-upload/VideoDetailsStep";
 import VideoResourcesStep from "@/feature/courses/components/lesson-upload/VideoResourcesStep";
 import VideoUploadStep from "@/feature/courses/components/lesson-upload/VideoUploadStep";
+import Stepper from "@/app/components/organism/InstructorDashboard/DashboardStepper";
 
 const editLessonPage = () => {
     const router = useRouter();
