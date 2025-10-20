@@ -24,3 +24,11 @@ export const VideoDetailsFormSchema = z.object({
   description: z.string().optional(),
   course_uuid: z.uuidv4()
 })
+
+
+// Resources
+
+export const textResourceFormSchema = z.object({
+  notes: z.string().optional(),
+  lesson_uuid: z.string(),
+});

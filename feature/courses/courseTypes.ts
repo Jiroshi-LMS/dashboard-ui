@@ -11,7 +11,6 @@ export type Course = {
 
 
 export type LessonRelatedLink = {
-    index: number,
     title: string,
     url: string
 }

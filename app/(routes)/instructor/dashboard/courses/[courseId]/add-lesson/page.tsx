@@ -43,19 +43,19 @@ const addLessonPage = ({params}: CreateLessonPageProps) => {
                     content: <VideoDetailsStep
                             form={videoDetailsForm}
                             />,
-                    onNext: async () => true
-                    // onNext: withFormValidation(
-                    //     videoDetailsForm, 
-                    //     async (values: z.infer<typeof VideoDetailsFormSchema>): Promise<boolean> => {
-                    //         if (lessonId) return true;
-                    //         const response = await CreateLessonWithDetails(values)
-                    //         if (response?.success && response?.lesson_uuid) {
-                    //             setLessonId(response.lesson_uuid)
-                    //             return true;
-                    //         }
-                    //         return false;
-                    //     }
-                    // ),
+                    // onNext: async () => true
+                    onNext: withFormValidation(
+                        videoDetailsForm, 
+                        async (values: z.infer<typeof VideoDetailsFormSchema>): Promise<boolean> => {
+                            if (lessonId) return true;
+                            const response = await CreateLessonWithDetails(values)
+                            if (response?.success && response?.lesson_uuid) {
+                                setLessonId(response.lesson_uuid)
+                                return true;
+                            }
+                            return false;
+                        }
+                    ),
                 },
                 {
                     label: "Lesson Extra Resources",
