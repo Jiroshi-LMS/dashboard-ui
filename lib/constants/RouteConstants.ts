@@ -12,6 +12,9 @@ export const route = {
     UPDATE_COURSE: (courseId: string) => `/courses/views/${courseId}/`,
     RETRIEVE_COURSE: (courseId: string) => `/courses/views/${courseId}/`,
     DELETE_COURSE: (courseId: string) => `/courses/views/${courseId}/`,
+
+    CREATE_LESSON_DETAILS: "/courses/lessons/",
+    UPDATE_LESSON_MEDIA: (lessonId: string) => `/courses/lessons/${lessonId}/update-lesson-media/`,
     
     // Common
     GET_PRESIGNED_UPLOAD: "/internals/generate-upload-presigned-url/"

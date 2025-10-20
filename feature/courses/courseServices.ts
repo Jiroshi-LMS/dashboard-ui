@@ -1,11 +1,12 @@
 import z from "zod";
-import { courseCreationFormSchema, updateCourseFormSchema } from "./courseSchemas";
+import { courseCreationFormSchema, updateCourseFormSchema, VideoDetailsFormSchema } from "./courseSchemas";
 import api from "@/lib/api/axios";
 import { route } from "@/lib/constants/RouteConstants";
 import { Course } from "./courseTypes";
 import { SetStateAction } from "react";
 import toast from "react-hot-toast";
 import { standardErrors } from "@/lib/constants/errors";
+import { createLessonDetailsService } from "./courseRepositories";
 
 
 export const createCourseService = async (
@@ -58,3 +59,21 @@ export const fetchCourseById = async (
       setLoading(false);
     }
   };
+
+
+export const CreateLessonWithDetails = async (
+  values: z.infer<typeof VideoDetailsFormSchema>,
+): Promise<{success: boolean, lesson_uuid: string | null}> => {
+  try {
+    const resp: StandardResponse = await createLessonDetailsService(values)
+    if (resp?.status) {
+      toast.success("Lesson Created Successfully !")
+      return {success: true, lesson_uuid: resp?.response?.lesson_id}
+    }
+    toast.error(resp?.msg || "Lesson Creation Failed !")
+    return {success: false, lesson_uuid: null}
+  } catch (err: any) {
+    toast.error(err?.response?.data?.msg || err?.message || standardErrors.UNKNOWN)
+    return {success: false, lesson_uuid: null}
+  }
+}

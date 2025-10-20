@@ -1,5 +1,7 @@
 import z from "zod";
 
+// Courses
+
 export const courseCreationFormSchema = z.object({
     thumbnail: z.string(),
     title: z.string().min(2, "Please provide a course title!"),
@@ -11,4 +13,14 @@ export const updateCourseFormSchema = z.object({
   description: z.string().optional(),
   access_status: z.boolean(),
   thumbnail: z.string().optional()
+})
+
+
+
+// Lessons
+
+export const VideoDetailsFormSchema = z.object({
+  title: z.string().min(2, "Full name must be at least 2 characters."),
+  description: z.string().optional(),
+  course_uuid: z.uuidv4()
 })

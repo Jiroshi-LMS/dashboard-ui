@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { z } from "zod"
-import { useForm } from "react-hook-form"
+import { useForm, UseFormReturn } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import { UploadIcon } from "lucide-react"
@@ -18,37 +18,29 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { VideoDetailsFormSchema } from "../../courseSchemas"
 
-const formSchema = z.object({
-  courseTitle: z.string().min(2, "Full name must be at least 2 characters."),
-  courseDescription: z.string().optional(),
-})
 
-const VideoDetailsStep = (props: any) => {
 
-  const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-          courseTitle: "",
-          courseDescription: "",
-        },
-      })
+type VideoDetailsStepProps = {
+  form: UseFormReturn<z.infer<typeof VideoDetailsFormSchema>>,
+}
+
+
+const VideoDetailsStep = ({form}: VideoDetailsStepProps) => {
     
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log("Form Submitted:", values)
-  }
   return (
     <main className="my-4">
       <section>
         <div className="w-[80%] mx-auto">
           <h1 className="section-title">Add Lesson Details</h1>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
 
               {/* Course Title */}
               <FormField
                 control={form.control}
-                name="courseTitle"
+                name="title"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Lesson Title</FormLabel>
@@ -63,7 +55,7 @@ const VideoDetailsStep = (props: any) => {
               {/* Course Description */}
               <FormField
                 control={form.control}
-                name="courseDescription"
+                name="description"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Lesson Description</FormLabel>

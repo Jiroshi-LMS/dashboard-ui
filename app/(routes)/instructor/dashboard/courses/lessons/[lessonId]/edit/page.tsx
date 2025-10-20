@@ -2,9 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import Stepper from "@/app/components/organisms/InstructorDashboard/DashboardStepper"
-import VideoDetailsStep from "@/app/components/stepper-content/lesson-upload/VideoDetailsStep";
-import VideoResourcesStep from "@/app/components/stepper-content/lesson-upload/VideoResourcesStep";
-import VideoUploadStep from "@/app/components/stepper-content/lesson-upload/VideoUploadStep";
+import VideoDetailsStep from "@/feature/courses/components/lesson-upload/VideoDetailsStep";
+import VideoResourcesStep from "@/feature/courses/components/lesson-upload/VideoResourcesStep";
+import VideoUploadStep from "@/feature/courses/components/lesson-upload/VideoUploadStep";
 
 const editLessonPage = () => {
     const router = useRouter();
