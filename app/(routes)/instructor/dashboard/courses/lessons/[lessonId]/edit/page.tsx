@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import VideoDetailsStep from "@/feature/courses/components/lesson-upload/VideoDetailsStep";
-import VideoResourcesStep from "@/feature/courses/components/lesson-upload/VideoResourcesStep";
+import VideoResourcesStep from "@/feature/courses/components/lesson-upload/VideoTextResourcesStep";
 import VideoUploadStep from "@/feature/courses/components/lesson-upload/VideoUploadStep";
 import Stepper from "@/app/components/organism/InstructorDashboard/DashboardStepper";
 

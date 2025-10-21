@@ -1,12 +1,12 @@
 import z from "zod";
-import { courseCreationFormSchema, updateCourseFormSchema, VideoDetailsFormSchema } from "./courseSchemas";
+import { courseCreationFormSchema, referenceMaterialResourceFormSchema, updateCourseFormSchema, VideoDetailsFormSchema } from "./courseSchemas";
 import api from "@/lib/api/axios";
 import { route } from "@/lib/constants/RouteConstants";
-import { Course } from "./courseTypes";
+import { Course, LessonReferenceMaterial } from "./courseTypes";
 import { SetStateAction } from "react";
 import toast from "react-hot-toast";
 import { standardErrors } from "@/lib/constants/errors";
-import { createLessonDetailsService } from "./courseRepositories";
+import { createLessonDetailsService, createLessonReferenceMaterialRepository } from "./courseRepositories";
 
 
 export const createCourseService = async (
@@ -75,5 +75,22 @@ export const CreateLessonWithDetails = async (
   } catch (err: any) {
     toast.error(err?.response?.data?.msg || err?.message || standardErrors.UNKNOWN)
     return {success: false, lesson_uuid: null}
+  }
+}
+
+
+export const CreateLessonReferenceMaterialService = async (
+  values: LessonReferenceMaterial,
+  lessonId: string
+): Promise<boolean> => {
+  try {
+    const resp: StandardResponse = await createLessonReferenceMaterialRepository(values, lessonId)
+    if (resp?.status) {
+      return true
+    }
+    return false
+  } catch (err: any) {
+    toast.error(err?.response?.data?.msg || err?.message || standardErrors.UNKNOWN)
+    return false
   }
 }

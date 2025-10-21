@@ -1,8 +1,8 @@
 import z from "zod";
-import { textResourceFormSchema, VideoDetailsFormSchema } from "./courseSchemas";
+import { referenceMaterialResourceFormSchema, textResourceFormSchema, VideoDetailsFormSchema } from "./courseSchemas";
 import api from "@/lib/api/axios";
 import { route } from "@/lib/constants/RouteConstants";
-import { LessonRelatedLink } from "./courseTypes";
+import { LessonReferenceMaterial, LessonRelatedLink } from "./courseTypes";
 
 
 export const createLessonDetailsService = async (
@@ -19,5 +19,15 @@ export const updateTextResourceRepository = async (
     return await api.patch(route.UPDATE_TEXT_RESOURCES, {
         ...values,
         related_links: relatedLinks
+    }) as StandardResponse
+}
+
+export const createLessonReferenceMaterialRepository = async (
+  values: LessonReferenceMaterial,
+  lessonId: string
+): Promise<StandardResponse> => {
+    return await api.post(route.CREATE_REFERENCE_MATERIAL, {
+        ...values,
+        lesson_uuid: lessonId
     }) as StandardResponse
 }

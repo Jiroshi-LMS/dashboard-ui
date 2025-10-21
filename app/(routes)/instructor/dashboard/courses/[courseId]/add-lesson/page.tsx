@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 
 import Stepper from "@/app/components/organism/InstructorDashboard/DashboardStepper";
 import VideoDetailsStep from "@/feature/courses/components/lesson-upload/VideoDetailsStep";
-import VideoResourcesStep from "@/feature/courses/components/lesson-upload/VideoResourcesStep";
+import VideoTextResourcesStep from "@/feature/courses/components/lesson-upload/VideoTextResourcesStep";
 import VideoUploadStep from "@/feature/courses/components/lesson-upload/VideoUploadStep";
 import React, { useState } from "react";
 import z from "zod";
@@ -14,6 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { withFormValidation } from "@/lib/utils";
 import { CreateLessonWithDetails } from "@/feature/courses/courseServices";
 import { page } from "@/lib/constants/RouteConstants";
+import VideoReferenceMaterialsStep from "@/feature/courses/components/lesson-upload/VideoReferenceMaterialsStep";
 
 interface CreateLessonPageProps {
   params: Promise<{ courseId: string }>;
@@ -58,8 +59,13 @@ const addLessonPage = ({params}: CreateLessonPageProps) => {
                     ),
                 },
                 {
-                    label: "Lesson Extra Resources",
-                    content: <VideoResourcesStep lessonId={lessonId} />,
+                    label: "Lesson Text Resources",
+                    content: <VideoTextResourcesStep lessonId={lessonId} />,
+                    onNext: async () => true
+                },
+                {
+                    label: "Lesson Reference Material",
+                    content: <VideoReferenceMaterialsStep lessonId={lessonId} />,
                     onNext: async () => true
                 },
                 {

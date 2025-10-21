@@ -14,3 +14,12 @@ export type LessonRelatedLink = {
     title: string,
     url: string
 }
+
+
+export type LessonReferenceMaterial = {
+    title: string,
+    file_name: string,
+    file_size: number,
+    file_type: string,
+    file_key: string
+}

@@ -17,6 +17,8 @@ export const route = {
     UPDATE_LESSON_MEDIA: (lessonId: string) => `/courses/lessons/${lessonId}/update-lesson-media/`,
 
     UPDATE_TEXT_RESOURCES: "/courses/resources/update-text-resources/",
+    CREATE_REFERENCE_MATERIAL: "/courses/resources/",
+
     
     // Common
     GET_PRESIGNED_UPLOAD: "/internals/generate-upload-presigned-url/"

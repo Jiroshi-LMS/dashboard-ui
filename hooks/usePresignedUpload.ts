@@ -26,7 +26,7 @@ export const usePresignedUpload = (
     }, [presignedData, filename, uploadPrefix, uploadType, specific_id])
 
     const uploadFile = useCallback(async (
-        file: File, contentType: string, setUploadProgress: React.Dispatch<SetStateAction<number>>
+        file: File, contentType: string, setUploadProgress?: React.Dispatch<SetStateAction<number>>
     ) => {
         try {
             const { presignedURL, objectKey } = await getPresignedURL(contentType);
@@ -35,7 +35,7 @@ export const usePresignedUpload = (
                 headers: {"Content-Type": file.type || fileContentTypes.OCTET_STREAM},
                 onUploadProgress: (e) => {
                     const progress = Math.round((e.loaded * 100) / (e.total ?? 1));
-                    setUploadProgress(progress)
+                    if (setUploadProgress) setUploadProgress(progress)
                 }
             })
             return { objectKey, presignedURL };

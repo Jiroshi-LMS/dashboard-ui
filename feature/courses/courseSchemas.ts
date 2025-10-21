@@ -32,3 +32,9 @@ export const textResourceFormSchema = z.object({
   notes: z.string().optional(),
   lesson_uuid: z.string(),
 });
+
+
+export const referenceMaterialResourceFormSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  referenceFile: z.instanceof(File, { message: "File is required" }),
+});
