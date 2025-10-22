@@ -16,18 +16,28 @@ export const updateTextResourceRepository = async (
     values: z.infer<typeof textResourceFormSchema>,
     relatedLinks: Array<LessonRelatedLink>
 ): Promise<StandardResponse> => {
-    return await api.patch(route.UPDATE_TEXT_RESOURCES, {
+    const { data } = await api.patch(route.UPDATE_TEXT_RESOURCES, {
         ...values,
         related_links: relatedLinks
-    }) as StandardResponse
+    })
+    return data as StandardResponse
 }
 
 export const createLessonReferenceMaterialRepository = async (
   values: LessonReferenceMaterial,
   lessonId: string
 ): Promise<StandardResponse> => {
-    return await api.post(route.CREATE_REFERENCE_MATERIAL, {
+    const {data} = await api.post(route.CREATE_REFERENCE_MATERIAL, {
         ...values,
         lesson_uuid: lessonId
-    }) as StandardResponse
+    }) 
+    return data as StandardResponse
+}
+
+export const removeLessonReferenceMaterialRepository = async (
+    resourceId: string
+): Promise<StandardResponse> => {
+    const {data} = await api.delete(route.DELETE_REFERENCE_MATERIAL(resourceId)) 
+    return data as StandardResponse
+
 }

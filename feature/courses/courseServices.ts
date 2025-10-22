@@ -6,7 +6,7 @@ import { Course, LessonReferenceMaterial } from "./courseTypes";
 import { SetStateAction } from "react";
 import toast from "react-hot-toast";
 import { standardErrors } from "@/lib/constants/errors";
-import { createLessonDetailsService, createLessonReferenceMaterialRepository } from "./courseRepositories";
+import { createLessonDetailsService, createLessonReferenceMaterialRepository, removeLessonReferenceMaterialRepository } from "./courseRepositories";
 
 
 export const createCourseService = async (
@@ -82,15 +82,28 @@ export const CreateLessonWithDetails = async (
 export const CreateLessonReferenceMaterialService = async (
   values: LessonReferenceMaterial,
   lessonId: string
-): Promise<boolean> => {
+): Promise<{success: boolean, response: {resource_id: string} | null}> => {
   try {
     const resp: StandardResponse = await createLessonReferenceMaterialRepository(values, lessonId)
     if (resp?.status) {
-      return true
+      return {success: true, response: resp?.response}
     }
-    return false
+    return {success: false, response: null}
   } catch (err: any) {
     toast.error(err?.response?.data?.msg || err?.message || standardErrors.UNKNOWN)
+    return {success: false, response: null}
+  }
+}
+
+
+export const RemoveLessonReferenceMaterialService = async (
+  resourceId: string
+): Promise<boolean> => {
+  try {
+    const resp: StandardResponse = await removeLessonReferenceMaterialRepository(resourceId)
+    if (resp?.status) return true
     return false
+  } catch (err: any) {
+    return false;
   }
 }

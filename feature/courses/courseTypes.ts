@@ -21,5 +21,6 @@ export type LessonReferenceMaterial = {
     file_name: string,
     file_size: number,
     file_type: string,
-    file_key: string
+    file_key: string,
+    resource_id: string | null
 }

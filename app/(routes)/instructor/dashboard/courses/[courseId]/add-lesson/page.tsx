@@ -6,7 +6,7 @@ import Stepper from "@/app/components/organism/InstructorDashboard/DashboardStep
 import VideoDetailsStep from "@/feature/courses/components/lesson-upload/VideoDetailsStep";
 import VideoTextResourcesStep from "@/feature/courses/components/lesson-upload/VideoTextResourcesStep";
 import VideoUploadStep from "@/feature/courses/components/lesson-upload/VideoUploadStep";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import z from "zod";
 import { VideoDetailsFormSchema } from "@/feature/courses/courseSchemas";
 import { useForm } from "react-hook-form";
@@ -33,6 +33,19 @@ const addLessonPage = ({params}: CreateLessonPageProps) => {
           course_uuid: courseId
         },
       })
+
+    // useEffect(() => {
+    //     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+    //         e.preventDefault();
+    //         e.returnValue = ""; // Required for Chrome
+    //     };
+
+    //     window.addEventListener("beforeunload", handleBeforeUnload);
+
+    //     return () => {
+    //         window.removeEventListener("beforeunload", handleBeforeUnload);
+    //     };
+    // }, []);
 
   return (
     <main className="main-container">
