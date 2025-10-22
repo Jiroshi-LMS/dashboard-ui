@@ -10,6 +10,12 @@ export type Course = {
 }
 
 
+export type LessonMediaData = {
+    file: File | null,
+    duration: number
+}
+
+
 export type LessonRelatedLink = {
     title: string,
     url: string

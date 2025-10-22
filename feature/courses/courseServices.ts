@@ -2,11 +2,11 @@ import z from "zod";
 import { courseCreationFormSchema, referenceMaterialResourceFormSchema, updateCourseFormSchema, VideoDetailsFormSchema } from "./courseSchemas";
 import api from "@/lib/api/axios";
 import { route } from "@/lib/constants/RouteConstants";
-import { Course, LessonReferenceMaterial } from "./courseTypes";
+import { Course, LessonMediaData, LessonReferenceMaterial } from "./courseTypes";
 import { SetStateAction } from "react";
 import toast from "react-hot-toast";
 import { standardErrors } from "@/lib/constants/errors";
-import { createLessonDetailsService, createLessonReferenceMaterialRepository, removeLessonReferenceMaterialRepository } from "./courseRepositories";
+import { createLessonDetailsService, createLessonReferenceMaterialRepository, removeLessonReferenceMaterialRepository, updateLessonMediaRepository } from "./courseRepositories";
 
 
 export const createCourseService = async (
@@ -105,5 +105,44 @@ export const RemoveLessonReferenceMaterialService = async (
     return false
   } catch (err: any) {
     return false;
+  }
+}
+
+
+export const UpdateLessonMediaService = async (
+  lessonId: string,
+  mediaData: LessonMediaData,
+  uploadFile: (
+    file: File, 
+    contentType: string, 
+    setUploadProgress?: React.Dispatch<SetStateAction<number>>
+    ) => Promise<PresignedDataState>,
+    setFileUploadProgress: React.Dispatch<SetStateAction<number>>
+): Promise<boolean> => {
+  try {
+    if (!mediaData.file || !mediaData.duration) return false
+    const {objectKey} = await uploadFile(
+      mediaData.file,
+      mediaData.file.type,
+      setFileUploadProgress
+    )
+    if (!objectKey) {
+        setFileUploadProgress(0);
+        throw new Error("Unable to upload file! Please try again later.")
+    }
+    const resp = await updateLessonMediaRepository(lessonId, objectKey, mediaData.duration)
+    if (resp?.status) {
+      toast.success("Lesson Media Updated Successfully !")
+      return true
+    }
+    throw new Error("Unable to update lesson media! Please try again later.")
+  } catch (err: any) {
+    toast.error(
+      err?.response?.data?.msg || 
+      err?.message || 
+      standardErrors.UNKNOWN
+    )
+    setFileUploadProgress(0);
+    return false
   }
 }

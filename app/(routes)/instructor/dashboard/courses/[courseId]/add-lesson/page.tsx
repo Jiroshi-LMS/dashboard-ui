@@ -12,9 +12,13 @@ import { VideoDetailsFormSchema } from "@/feature/courses/courseSchemas";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { withFormValidation } from "@/lib/utils";
-import { CreateLessonWithDetails } from "@/feature/courses/courseServices";
+import { CreateLessonWithDetails, UpdateLessonMediaService } from "@/feature/courses/courseServices";
 import { page } from "@/lib/constants/RouteConstants";
 import VideoReferenceMaterialsStep from "@/feature/courses/components/lesson-upload/VideoReferenceMaterialsStep";
+import toast from "react-hot-toast";
+import { usePresignedUpload } from "@/hooks/usePresignedUpload";
+import { constantFilenames, fileUploadPrefixes, PRIVATE_UPLOAD } from "@/lib/constants/FileConstants";
+import { LessonMediaData } from "@/feature/courses/courseTypes";
 
 interface CreateLessonPageProps {
   params: Promise<{ courseId: string }>;
@@ -24,28 +28,40 @@ const addLessonPage = ({params}: CreateLessonPageProps) => {
     const router = useRouter();
     const { courseId } = React.use(params)
     const [lessonId, setLessonId] = useState<string | null>(null)
+    const [lessonMediaUploadProgress, setLessonMediaUploadProgress] = useState<number>(0)
+    const [lessonMediaFile, setLessonMediaFile] = useState<LessonMediaData>({
+        file: null,
+        duration: 0
+    })
+
+    const {uploadFile: uploadLessonMedia} = usePresignedUpload(
+        constantFilenames.LESSON_MEDIA,
+        fileUploadPrefixes.LESSON_MEDIA,
+        PRIVATE_UPLOAD,
+        courseId
+    )
 
     const videoDetailsForm = useForm<z.infer<typeof VideoDetailsFormSchema>>({
         resolver: zodResolver(VideoDetailsFormSchema),
         defaultValues: {
-          title: "",
-          description: "",
-          course_uuid: courseId
+            title: "",
+            description: "",
+            course_uuid: courseId
         },
-      })
+    })
 
-    // useEffect(() => {
-    //     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-    //         e.preventDefault();
-    //         e.returnValue = ""; // Required for Chrome
-    //     };
+    useEffect(() => {
+        const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+            e.preventDefault();
+            e.returnValue = ""; // Required for Chrome
+        };
 
-    //     window.addEventListener("beforeunload", handleBeforeUnload);
+        window.addEventListener("beforeunload", handleBeforeUnload);
 
-    //     return () => {
-    //         window.removeEventListener("beforeunload", handleBeforeUnload);
-    //     };
-    // }, []);
+        return () => {
+            window.removeEventListener("beforeunload", handleBeforeUnload);
+        };
+    }, []);
 
   return (
     <main className="main-container">
@@ -57,7 +73,6 @@ const addLessonPage = ({params}: CreateLessonPageProps) => {
                     content: <VideoDetailsStep
                             form={videoDetailsForm}
                             />,
-                    // onNext: async () => true
                     onNext: withFormValidation(
                         videoDetailsForm, 
                         async (values: z.infer<typeof VideoDetailsFormSchema>): Promise<boolean> => {
@@ -83,8 +98,25 @@ const addLessonPage = ({params}: CreateLessonPageProps) => {
                 },
                 {
                     label: "Lesson Video",
-                    content: <VideoUploadStep />,
-                    onNext: async () => false,
+                    content: <VideoUploadStep 
+                                lessonId={lessonId} 
+                                fileData={lessonMediaFile} 
+                                setFileData={setLessonMediaFile}
+                                uploadProgress={lessonMediaUploadProgress}
+                            />,
+                    onNext: async () => {
+                        if (!lessonId) return false
+                        if (!lessonMediaFile) {
+                            toast.error("Please select a valid media!")
+                            return false;
+                        }
+                        return await UpdateLessonMediaService(
+                            lessonId,
+                            lessonMediaFile, 
+                            uploadLessonMedia,
+                            setLessonMediaUploadProgress
+                        )
+                    },
                 }
             ]}
             onSubmit={()=>{

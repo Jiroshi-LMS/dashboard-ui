@@ -41,3 +41,14 @@ export const removeLessonReferenceMaterialRepository = async (
     return data as StandardResponse
 
 }
+
+
+export const updateLessonMediaRepository = async (
+    lessonId: string, mediaKey: string, mediaDuration: number
+): Promise<StandardResponse> => {
+    const {data} = await api.patch(route.UPDATE_LESSON_MEDIA(lessonId), {
+        media_key: mediaKey,
+        media_duration: mediaDuration
+    })
+    return data as StandardResponse
+}
