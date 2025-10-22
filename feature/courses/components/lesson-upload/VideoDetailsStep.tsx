@@ -43,7 +43,7 @@ const VideoDetailsStep = ({form}: VideoDetailsStepProps) => {
                 name="title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Lesson Title</FormLabel>
+                    <FormLabel>Lesson Title *</FormLabel>
                     <FormControl>
                       <Input placeholder="Lesson Title" {...field} />
                     </FormControl>

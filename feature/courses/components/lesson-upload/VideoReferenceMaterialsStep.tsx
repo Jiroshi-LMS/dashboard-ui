@@ -143,10 +143,10 @@ const VideoReferenceMaterialsStep = ({
         </div> :
       <div className="border border-gray-200 bg-white rounded-2xl shadow-sm p-8 transition hover:shadow-md">
         <h1 className="section-title text-2xl font-semibold mb-2 text-gray-900">
-          Add Reference Materials
+          Add Reference Materials (Optional)
         </h1>
         <p className="text-gray-600 text-[13px] mb-6 font-medium">
-          Upload PDFs, PPTX, DOCX or images for your lesson. Enrolled learners
+          Upload PDFs, PPTX, DOCX, XLSX or images for your lesson. Enrolled learners
           will be able to download these resources.
         </p>
 

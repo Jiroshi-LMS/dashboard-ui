@@ -91,7 +91,7 @@ const VideoTextResourcesStep: React.FC<VideoResourceSetupProps> = ({ lessonId })
         <FormProvider {...textResourceForm}>
           <form onSubmit={textResourceForm.handleSubmit(updateTextResources)} className="space-y-8">
             <div>
-              <h1 className="section-title">Add Lesson Notes</h1>
+              <h1 className="section-title">Add Lesson Notes (Optional)</h1>
               <FormField
                 control={textResourceForm.control}
                 name="notes"
@@ -108,7 +108,7 @@ const VideoTextResourcesStep: React.FC<VideoResourceSetupProps> = ({ lessonId })
             </div>
 
             <div>
-              <h1 className="section-title">Add Reference URLs</h1>
+              <h1 className="section-title">Add Reference URLs (Optional)</h1>
               <p className="text-gray-600 text-[12px] mb-2 font-semibold">
                 Add multiple reference URLs for your lesson.
               </p>
