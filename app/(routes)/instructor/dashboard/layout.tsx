@@ -15,7 +15,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   const router = useRouter()
-  const {instructor, status: instructorFetchingStatus} = useRedirectForLoggedOut()
+  const { instructor, status, error } = useRedirectForLoggedOut();
 
   useEffect(() => {
     if (instructor) {
@@ -23,16 +23,18 @@ export default function DashboardLayout({
     }
   }, [instructor])
 
+  if (status === 'failed' && error) {
+    return <div className="h-screen w-screen flex justify-center items-center text-red-400 text-2xl font-bold">
+      Error: {error}. Please check your connection...
+      </div>;
+  }
+
+  if (status === 'loading') return <Loader className="h-screen"/>
+
   return (
     <>
-      {
-        (!instructor && instructorFetchingStatus !== 'succeeded') ?
-        <Loader className="h-screen"/> :
-        <>
-          <DashboardSidebar profile={instructor} />
-          {children}
-        </>
-      }
+      <DashboardSidebar profile={instructor} />
+      {children}
     </>
   );
 }

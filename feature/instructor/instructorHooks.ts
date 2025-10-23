@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { page } from "@/lib/constants/RouteConstants";
@@ -7,6 +7,7 @@ import { profile_completion } from "@/lib/constants/instructorConstants";
 import { RootState } from "@/store";
 import { fetchInstructor, logout} from "@/feature/instructor/instructorSlice";
 import { authLiterals } from "@/lib/constants/common";
+import { standardErrors } from "@/lib/constants/errors";
 
 
 
@@ -34,49 +35,111 @@ export const useRedirectForLoggedIn = () => {
 }
 
 
+// export const useRedirectForLoggedOut = () => {
+//     const router = useRouter();
+//     const dispatch = useAppDispatch()
+//     const {data: instructor, status, loggedIn, error:fetchingError} = useAppSelector((state: RootState) => state.instructor);
+//     const [handledLogout, setHandledLogout] = useState(false);
+
+//     useEffect(() => {
+//         const token = localStorage.getItem(authLiterals.ACCESS);
+
+//         if (!token && !handledLogout) {
+//             setHandledLogout(true);
+//             dispatch(logout());
+//             router.replace(page.LOGIN);
+//             return;
+//         }
+
+//         if (status === 'failed' && !instructor && !handledLogout) {
+//             setHandledLogout(true);
+//             dispatch(logout());
+//             router.replace(page.LOGIN);
+//         }
+//     }, [loggedIn, status, instructor, dispatch, router, handledLogout]);
+
+//     return {instructor, status, loggedIn, fetchingError}
+// }
+
 export const useRedirectForLoggedOut = () => {
-    const router = useRouter();
-    const dispatch = useAppDispatch()
-    const {data: instructor, status, loggedIn, error:fetchingError} = useAppSelector((state: RootState) => state.instructor);
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { data: instructor, status, loggedIn, error: fetchingError } = useAppSelector(
+    (state: RootState) => state.instructor
+  );
+  
+  // Prevent duplicate operations
+  const isLoggingOut = useRef(false);
+  const hasCheckedInitialAuth = useRef(false);
 
-    useEffect(()=> {
-        const token = localStorage.getItem(authLiterals.ACCESS);
-        if (!token) {
-            dispatch(logout());
-            router.replace(page.LOGIN);
-            return;
-        }
+  // Logout handler
+  const handleLogout = useCallback(() => {
+    if (isLoggingOut.current) return;
+    
+    isLoggingOut.current = true;
+    localStorage.removeItem(authLiterals.ACCESS);
+    dispatch(logout());
+    router.replace(page.LOGIN);
+  }, [dispatch, router]);
 
-        if (!loggedIn && status === 'idle') {
-            dispatch(fetchInstructor());
-        }
+  // Check if error is auth-related
+  const isAuthError = useCallback((error: any) => {
+    if (!error) return false;
+    const msg = typeof error === 'string' ? error : error?.message || '';
+    return (
+      msg === standardErrors.SESSION_EXPIRED ||
+      msg === standardErrors.TOKEN_EXPIRED ||
+      msg.includes('TOKEN') ||
+      msg.includes('SESSION')
+    );
+  }, []);
 
-        if (status === 'failed' && !instructor) {
-            dispatch(logout());
-            router.replace(page.LOGIN);
-        }
+  // Run once on mount
+  useEffect(() => {
+    if (hasCheckedInitialAuth.current) return;
+    hasCheckedInitialAuth.current = true;
 
-    }, [loggedIn, status, dispatch, router])
+    const token = localStorage.getItem(authLiterals.ACCESS);
 
-    // useEffect(() => {
-    //     if (!loggedIn && status === 'idle') dispatch(fetchInstructor());
-    // }, [loggedIn, status, dispatch])
+    // No token → logout
+    if (!token) {
+      handleLogout();
+      return;
+    }
 
-    // useEffect(() => {
-    //     const isInstructorNotReady = (
-    //         (status === 'failed' && !instructor && !loggedIn)
-    //     )
-    //     if (isInstructorNotReady) {
-    //         const timeout = setTimeout(() => {
-    //             const token = localStorage.getItem(authLiterals.ACCESS);
-    //             if (!token) {
-    //                 dispatch(logout())
-    //                 router.replace(page.LOGIN);
-    //             }
-    //         }, 500);
-    //         return () => clearTimeout(timeout);
-    //     }
-    // }, [status, loggedIn, instructor, router])
+    // Has token but not logged in → fetch
+    if (!loggedIn && status === 'idle') {
+      dispatch(fetchInstructor());
+    }
+  }, []);
 
-    return {instructor, status, loggedIn, fetchingError}
-}
+  // Handle failures
+  useEffect(() => {
+    if (isLoggingOut.current) return;
+
+    // Failed fetch
+    if (status === 'failed' && fetchingError) {
+      if (isAuthError(fetchingError)) {
+        handleLogout();
+      }
+      // Network errors don't trigger logout
+    }
+
+    // Success but no data
+    if (status === 'succeeded' && !instructor) {
+      handleLogout();
+    }
+  }, [status, fetchingError, instructor, isAuthError, handleLogout]);
+
+  // Watch for external token removal
+  useEffect(() => {
+    if (isLoggingOut.current) return;
+    
+    const token = localStorage.getItem(authLiterals.ACCESS);
+    if (loggedIn && !token) {
+      handleLogout();
+    }
+  }, [loggedIn, handleLogout]);
+
+  return { instructor, status, loggedIn, error: fetchingError };
+};
