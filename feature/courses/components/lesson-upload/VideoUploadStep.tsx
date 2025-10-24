@@ -1,7 +1,7 @@
 "use client";
 
 import Loader from "@/app/components/atoms/Loader";
-import { UploadIcon, XIcon, VideoIcon } from "lucide-react";
+import { UploadIcon, XIcon, VideoIcon, BanIcon } from "lucide-react";
 import { SetStateAction, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { LessonMediaData } from "../../courseTypes";
@@ -13,6 +13,7 @@ type VideoUploadStepProps = {
   fileData: LessonMediaData;
   setFileData: React.Dispatch<SetStateAction<LessonMediaData>>;
   uploadProgress: number;
+  cancelUpload: () => void;
 };
 
 const VideoUploadStep = ({
@@ -20,6 +21,7 @@ const VideoUploadStep = ({
   fileData,
   setFileData,
   uploadProgress,
+  cancelUpload,
 }: VideoUploadStepProps) => {
   const allowedFileSize = 2; // GB
   const videoUploadRef = useRef<HTMLInputElement | null>(null);
@@ -111,7 +113,7 @@ const VideoUploadStep = ({
             type="file"
             accept="video/mp4"
             className="hidden"
-            ref={(e) => {videoUploadRef.current = e}}
+            ref={(e) => { videoUploadRef.current = e; }}
             onChange={(e) => videoFileChange(e?.target?.files?.[0])}
           />
 
@@ -135,23 +137,33 @@ const VideoUploadStep = ({
                 </div>
               </div>
 
+              {/* Upload Progress + Cancel */}
               {uploadProgress > 0 && uploadProgress < 100 && (
                 <div className="mt-4 mb-4">
                   <Progress value={uploadProgress} className="h-2" />
-                  <p className="text-xs text-gray-500 mt-1 text-right">
-                    Uploading... {uploadProgress.toFixed(0)}%
-                  </p>
+                  <div className="flex justify-between items-center mt-1">
+                    <p className="text-xs text-gray-500">Uploading... {uploadProgress.toFixed(0)}%</p>
+                    <button
+                    onClick={cancelUpload}
+                    className="flex items-center justify-center gap-2 px-3 py-1.5 
+                              text-sm font-semibold text-white bg-red-500 rounded-md
+                              hover:bg-red-600 active:bg-red-700 
+                              shadow-sm hover:shadow-md transition-all duration-150"
+                  >
+                    <BanIcon size={14} />
+                    Cancel Upload
+                  </button>
+                  </div>
                 </div>
               )}
 
-              {/* Preview Player */}
+              {/* Video Preview */}
               <video
                 src={previewURL}
                 controls
                 className="rounded-lg w-full max-h-[400px] border border-gray-100 mt-2"
               ></video>
 
-              {/* Upload completed status */}
               {uploadProgress === 100 && (
                 <p className="text-xs text-green-600 mt-3 text-right font-semibold">
                   ✅ Upload complete

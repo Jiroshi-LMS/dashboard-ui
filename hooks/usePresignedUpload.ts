@@ -1,7 +1,8 @@
-import { SetStateAction, useCallback, useState } from "react";
+import { SetStateAction, useCallback, useRef, useState } from "react";
 import { fileContentTypes, PUBLIC_UPLOAD } from "@/lib/constants/FileConstants";
 import { fetchPresignedUploadURL } from "../feature/common/commonServices";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 
 export const usePresignedUpload = (
@@ -14,6 +15,13 @@ export const usePresignedUpload = (
         presignedURL: null,
         objectKey: null
     })
+    const abortControllerRef = useRef<AbortController | null>(null);
+
+    const cancelUpload = useCallback(() => {
+        if (abortControllerRef.current) {
+            abortControllerRef.current.abort();
+        }
+    }, []);
 
     const getPresignedURL = useCallback(async (contentType: string) => {
         if (presignedData.presignedURL && presignedData.objectKey) return presignedData
@@ -26,9 +34,14 @@ export const usePresignedUpload = (
     }, [presignedData, filename, uploadPrefix, uploadType, specific_id])
 
     const uploadFile = useCallback(async (
-        file: File, contentType: string, setUploadProgress?: React.Dispatch<SetStateAction<number>>
+        file: File, 
+        contentType: string, 
+        setUploadProgress?: React.Dispatch<SetStateAction<number>>
     ) => {
         try {
+             const controller = new AbortController();
+            abortControllerRef.current = controller;
+
             const { presignedURL, objectKey } = await getPresignedURL(contentType);
             if (!presignedURL || !objectKey) throw new Error("Unable to upload file! Please try again later.")
             await axios.put(presignedURL, file, {
@@ -36,10 +49,15 @@ export const usePresignedUpload = (
                 onUploadProgress: (e) => {
                     const progress = Math.round((e.loaded * 100) / (e.total ?? 1));
                     if (setUploadProgress) setUploadProgress(progress)
-                }
+                },
+                signal: controller.signal
             })
             return { objectKey, presignedURL };
         } catch (err: any) {
+            if (axios.isCancel(err)) {
+                throw new Error("Upload Cancelled !")
+            }
+
             if (err?.response?.status === 403) {
                 setPresignedData((prev) => ({
                     ...prev,
@@ -53,5 +71,5 @@ export const usePresignedUpload = (
         }
     }, [getPresignedURL])
 
-    return {uploadFile, presignedData, setPresignedData}
+    return {uploadFile, presignedData, setPresignedData, cancelUpload}
 }

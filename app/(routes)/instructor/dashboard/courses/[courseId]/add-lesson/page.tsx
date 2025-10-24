@@ -34,7 +34,7 @@ const addLessonPage = ({params}: CreateLessonPageProps) => {
         duration: 0
     })
 
-    const {uploadFile: uploadLessonMedia} = usePresignedUpload(
+    const {uploadFile: uploadLessonMedia, cancelUpload: cancelLessonMediaUpload} = usePresignedUpload(
         constantFilenames.LESSON_MEDIA,
         fileUploadPrefixes.LESSON_MEDIA,
         PRIVATE_UPLOAD,
@@ -103,6 +103,7 @@ const addLessonPage = ({params}: CreateLessonPageProps) => {
                                 fileData={lessonMediaFile} 
                                 setFileData={setLessonMediaFile}
                                 uploadProgress={lessonMediaUploadProgress}
+                                cancelUpload={cancelLessonMediaUpload}
                             />,
                     onNext: async () => {
                         if (!lessonId) return false
