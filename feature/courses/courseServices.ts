@@ -7,6 +7,7 @@ import { SetStateAction } from "react";
 import toast from "react-hot-toast";
 import { standardErrors } from "@/lib/constants/errors";
 import { createLessonDetailsService, createLessonReferenceMaterialRepository, removeLessonReferenceMaterialRepository, updateLessonMediaRepository } from "./courseRepositories";
+import { PresignedUploadReturnState } from "../common/commonTypes";
 
 
 export const createCourseService = async (
@@ -116,19 +117,20 @@ export const UpdateLessonMediaService = async (
     file: File, 
     contentType: string, 
     setUploadProgress?: React.Dispatch<SetStateAction<number>>
-    ) => Promise<PresignedDataState>,
+    ) => Promise<PresignedUploadReturnState>,
     setFileUploadProgress: React.Dispatch<SetStateAction<number>>
 ): Promise<boolean> => {
   try {
     if (!mediaData.file || !mediaData.duration) return false
-    const {objectKey} = await uploadFile(
+    const {objectKey, isCancelled } = await uploadFile(
       mediaData.file,
       mediaData.file.type,
       setFileUploadProgress
     )
-    if (!objectKey) {
+    if (!objectKey || isCancelled.current) {
+        isCancelled.current = false;
         setFileUploadProgress(0);
-        throw new Error("Unable to upload file! Please try again later.")
+        throw new Error("Upload cancelled!.")
     }
     const resp = await updateLessonMediaRepository(lessonId, objectKey, mediaData.duration)
     if (resp?.status) {

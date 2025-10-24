@@ -11,7 +11,6 @@ type PresignedDataState = {
   objectKey: string | null
 }
 
-
 type PaginatedResults = {
   count: number;
   current_page: number;

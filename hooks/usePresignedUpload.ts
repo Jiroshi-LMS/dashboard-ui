@@ -1,8 +1,8 @@
 import { SetStateAction, useCallback, useRef, useState } from "react";
-import { fileContentTypes, PUBLIC_UPLOAD } from "@/lib/constants/FileConstants";
+import { fileContentTypes } from "@/lib/constants/FileConstants";
 import { fetchPresignedUploadURL } from "../feature/common/commonServices";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { PresignedUploadReturnState } from "@/feature/common/commonTypes";
 
 
 export const usePresignedUpload = (
@@ -16,9 +16,11 @@ export const usePresignedUpload = (
         objectKey: null
     })
     const abortControllerRef = useRef<AbortController | null>(null);
+    const isCancelled = useRef(false);
 
     const cancelUpload = useCallback(() => {
         if (abortControllerRef.current) {
+            isCancelled.current = true;
             abortControllerRef.current.abort();
         }
     }, []);
@@ -37,10 +39,11 @@ export const usePresignedUpload = (
         file: File, 
         contentType: string, 
         setUploadProgress?: React.Dispatch<SetStateAction<number>>
-    ) => {
+    ): Promise<PresignedUploadReturnState> => {
         try {
              const controller = new AbortController();
             abortControllerRef.current = controller;
+            isCancelled.current = false;
 
             const { presignedURL, objectKey } = await getPresignedURL(contentType);
             if (!presignedURL || !objectKey) throw new Error("Unable to upload file! Please try again later.")
@@ -52,9 +55,10 @@ export const usePresignedUpload = (
                 },
                 signal: controller.signal
             })
-            return { objectKey, presignedURL };
+            return { objectKey, presignedURL, isCancelled };
         } catch (err: any) {
             if (axios.isCancel(err)) {
+                isCancelled.current=false;
                 throw new Error("Upload Cancelled !")
             }
 
