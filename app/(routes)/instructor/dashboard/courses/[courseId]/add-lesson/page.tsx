@@ -50,14 +50,13 @@ const addLessonPage = ({params}: CreateLessonPageProps) => {
         },
     })
 
+    // Prompt before refresh
     useEffect(() => {
         const handleBeforeUnload = (e: BeforeUnloadEvent) => {
             e.preventDefault();
             e.returnValue = ""; // Required for Chrome
         };
-
         window.addEventListener("beforeunload", handleBeforeUnload);
-
         return () => {
             window.removeEventListener("beforeunload", handleBeforeUnload);
         };

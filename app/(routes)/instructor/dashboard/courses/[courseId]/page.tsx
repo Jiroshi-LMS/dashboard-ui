@@ -42,6 +42,7 @@ import toast from "react-hot-toast";
 import { standardErrors } from "@/lib/constants/errors";
 import React from "react";
 import { useRouter } from "next/navigation";
+import LessonListView from "@/feature/courses/components/lesson-upload/LessonListView";
 
 interface CourseDetailsPageProps {
   params: Promise<{ courseId: string }>;
@@ -157,79 +158,7 @@ const courseDetailsPage = ({params}: CourseDetailsPageProps) => {
           </Link>
         </div>
 
-        <section className="h-full w-full">
-          <h2 className="section-title">All Lessons</h2>
-          <section className='flex justify-between items-center my-4'>
-            <div className='flex justify-start items-center gap-2'>
-              <div>
-                <Select>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="All Statuses" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Statuses</SelectLabel>
-                      <SelectItem value="active" className='hover:text-white'>Active</SelectItem>
-                      <SelectItem value="inactive" className='hover:text-white'>Inactive</SelectItem>
-                      <SelectItem value="draft" className='hover:text-white'>Draft</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
-              <form>
-                <Input type="search" placeholder="Search by course name" />
-              </form>
-            </div>
-            <div>
-              <Link href={page.CREATE_LESSON(courseId)}>
-                <Button className='bg-primary text-white hover:bg-teal-600 hover:text-white cursor-pointer'><PlusIcon /> Add new lesson</Button>
-              </Link>
-            </div>
-          </section>
-
-          {
-            static_table_data.map((data, index) => {
-              let lessonBadgeColor = 'bg-primary text-white'
-              if (data.status === 'inactive') {
-                lessonBadgeColor = 'bg-red-400 text-white'
-              } else if (data.status === 'draft') {
-                lessonBadgeColor = 'bg-blue-400 text-white'
-              }
-              return (
-                <div key={index} className="flex flex-col justify-center items-start w-full p-3 nth-[2n]:bg-gray-100 border-[1px] border-gray-200 rounded-sm my-1">
-                  <div className="flex justify-between items-center w-full">
-                    <h4 className="font-bold text-gray-600 my-3">
-                      <Link href={`/instructor/dashboard/courses/lessons/${data.lessonId}`} className="hover:text-teal-500">{data.lesson_name}</Link>
-                    </h4>
-                    <span className="ml-2"><Badge className={`${lessonBadgeColor} uppercase`}>{data.status}</Badge></span>
-                  </div>
-                  <p className="my-1 line-clamp-2 text-[12px] text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo modi quisquam ullam, repellat eos ipsa quod, distinctio nihil laudantium aut in perferendis illum quidem excepturi quibusdam perspiciatis atque ad dolorem?</p>
-                  <div className="flex justify-between items-center w-full my-1">
-                    <span className="flex items-center text-gray-400 text-[14px]"><Clock10Icon className="h-3 w-3 mr-1"/> {data.duration} hours</span>
-                    <span className="text-gray-400 text-[14px]">{data.created_at}</span>
-                  </div>
-                </div>
-              )
-            })
-          }
-          <Pagination className='my-5'>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious href="#" />
-              </PaginationItem>
-              {
-                Array.from({ length: static_table_data.length }, (_, index) => (
-                  <PaginationItem key={index}>
-                    <PaginationLink href="#">{index + 1}</PaginationLink>
-                  </PaginationItem>
-                ))
-              }
-              <PaginationItem>
-                <PaginationNext href="#" />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
-        </section>
+        <LessonListView courseId={courseId} />
       </div>
       {/* <div className="flex justify-end items-center w-full">
           <Button className="bg-red-400 hover:bg-red-500 cursor-pointer"></Button>

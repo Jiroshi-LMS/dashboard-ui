@@ -13,6 +13,7 @@ export const route = {
     RETRIEVE_COURSE: (courseId: string) => `/courses/views/${courseId}/`,
     DELETE_COURSE: (courseId: string) => `/courses/views/${courseId}/`,
 
+    LIST_LESSONS: `/courses/lessons/`,
     CREATE_LESSON_DETAILS: "/courses/lessons/",
     UPDATE_LESSON_MEDIA: (lessonId: string) => `/courses/lessons/${lessonId}/update-lesson-media/`,
 

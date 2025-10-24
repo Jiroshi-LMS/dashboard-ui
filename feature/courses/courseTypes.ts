@@ -10,6 +10,16 @@ export type Course = {
 }
 
 
+export type LessonListItem = {
+    uuid: string
+    created_at: string
+    title: string
+    access_status: string
+    description: string | null
+    duration: number
+}
+
+
 export type LessonMediaData = {
     file: File | null,
     duration: number
