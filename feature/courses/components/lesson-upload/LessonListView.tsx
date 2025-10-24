@@ -14,6 +14,7 @@ import { LessonListItem } from '../../courseTypes'
 import { Badge } from '@/components/ui/badge'
 import { CommonPaginationBar } from '@/app/components/organism/Paginator/CommonPaginationBar'
 import Loader from '@/app/components/atoms/Loader'
+import { convertSeconds } from '@/lib/utils'
 
 
 const LessonListView = ({courseId}: {courseId: string}) => {
@@ -53,6 +54,7 @@ const LessonListView = ({courseId}: {courseId: string}) => {
                                 month: "long",
                                 day: "numeric",
                             }),
+                            duration: convertSeconds(lesson.duration, 'minutes')
                         };
                     }
                 );
@@ -135,9 +137,9 @@ const LessonListView = ({courseId}: {courseId: string}) => {
                 </h4>
                 <span className="ml-2"><Badge className={`${lessonBadgeColor} uppercase`}>{data.access_status}</Badge></span>
                 </div>
-                <p className="my-1 line-clamp-2 text-[12px] text-gray-500">{data.description} Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo modi quisquam ullam, repellat eos ipsa quod, distinctio nihil laudantium aut in perferendis illum quidem excepturi quibusdam perspiciatis atque ad dolorem?</p>
+                <p className="my-1 line-clamp-2 text-[12px] text-gray-500">{data.description}</p>
                 <div className="flex justify-between items-center w-full my-1">
-                <span className="flex items-center text-gray-400 text-[14px]"><Clock10Icon className="h-3 w-3 mr-1"/> {data.duration} hours</span>
+                <span className="flex items-center text-gray-400 text-[14px]"><Clock10Icon className="h-3 w-3 mr-1"/> {data.duration} min(s)</span>
                 <span className="text-gray-400 text-[14px]">{data.created_at}</span>
                 </div>
             </div>

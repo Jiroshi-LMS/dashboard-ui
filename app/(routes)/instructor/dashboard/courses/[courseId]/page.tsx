@@ -1,27 +1,7 @@
 "use client"
 
-import { Clock10Icon, PencilIcon, PlusIcon, TrashIcon } from "lucide-react";
+import { PencilIcon, PlusIcon, TrashIcon } from "lucide-react";
 import Link from "next/link"
-import { Badge } from "@/components/ui/badge";
-
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue
-} from "@/components/ui/select"
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationEllipsis,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -34,7 +14,6 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { page } from "@/lib/constants/RouteConstants";
 import CourseRetrieveData from "@/feature/courses/components/CourseRetrieveData";
 import { deleteCourseService } from "@/feature/courses/courseServices";
@@ -48,78 +27,6 @@ interface CourseDetailsPageProps {
   params: Promise<{ courseId: string }>;
 }
 
-const static_table_data = [
-  {
-    "lessonId": 'lesson-1',
-    "lesson_name": "Lesson 1",
-    "status": "active",
-    "duration": 10,
-    "created_at": "2023-05-01"
-  },
-  {
-    "lessonId": 'lesson-2',
-    "lesson_name": "Lesson 2",
-    "status": "inactive",
-    "duration": 20,
-    "created_at": "2023-05-02"
-  },
-  {
-    "lessonId": 'lesson-3',
-    "lesson_name": "Lesson 3",
-    "status": "draft",
-    "duration": 30,
-    "created_at": "2023-05-03"
-  },
-  {
-    "lessonId": 'lesson-4',
-    "lesson_name": "Lesson 4",
-    "status": "active",
-    "duration": 40,
-    "created_at": "2023-05-04"
-  },
-  {
-    "lessonId": 'lesson-5',
-    "lesson_name": "Lesson 5",
-    "status": "inactive",
-    "duration": 50,
-    "created_at": "2023-05-05"
-  },
-  {
-    "lessonId": 'lesson-6',
-    "lesson_name": "Lesson 6",
-    "status": "draft",
-    "duration": 60,
-    "created_at": "2023-05-06"
-  },
-  {
-    "lessonId": 'lesson-7',
-    "lesson_name": "Lesson 7",
-    "status": "draft",
-    "duration": 30,
-    "created_at": "2023-05-03"
-  },
-  {
-    "lessonId": 'lesson-8',
-    "lesson_name": "Lesson 8",
-    "status": "active",
-    "duration": 40,
-    "created_at": "2023-05-04"
-  },
-  {
-    "lessonId": 'lesson-9',
-    "lesson_name": "Lesson 9",
-    "status": "inactive",
-    "duration": 50,
-    "created_at": "2023-05-05"
-  },
-  {
-    "lessonId": 'lesson-10',
-    "lesson_name": "Lesson 10",
-    "status": "draft",
-    "duration": 60,
-    "created_at": "2023-05-06"
-  }
-]
 
 const courseDetailsPage = ({params}: CourseDetailsPageProps) => {
   const router = useRouter()
@@ -160,9 +67,7 @@ const courseDetailsPage = ({params}: CourseDetailsPageProps) => {
 
         <LessonListView courseId={courseId} />
       </div>
-      {/* <div className="flex justify-end items-center w-full">
-          <Button className="bg-red-400 hover:bg-red-500 cursor-pointer"></Button>
-      </div> */}
+      
       <div className="flex justify-end items-center w-full">
         <AlertDialog>
           <AlertDialogTrigger className="flex justify-center items-center gap-2 bg-red-400 hover:bg-red-500 cursor-pointer

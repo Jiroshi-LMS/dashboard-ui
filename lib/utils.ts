@@ -13,10 +13,27 @@ export const localDateToUTC = (date: Date) => {
   return utcDate.toISOString().split("T")[0]; // YYYY-MM-DD
 };
 
+
 export const utcToLocalDate = (utcString: string): Date => {
   const [year, month, day] = utcString.split("-").map(Number);
   return new Date(year, month - 1, day); // Local timezone
 };
+
+
+export function convertSeconds(seconds: number, returnType: "hours" | "minutes" | "seconds" = "hours"): number {
+  if (isNaN(seconds) || seconds < 0) throw new Error("Invalid seconds input");
+
+  switch (returnType) {
+    case "hours":
+      return parseFloat((seconds / 3600).toFixed(2));
+    case "minutes":
+      return parseFloat((seconds / 60).toFixed(2));
+    case "seconds":
+    default:
+      return parseFloat(seconds.toFixed(2));
+  }
+}
+
 
 export function withFormValidation<T extends FieldValues, R>(
     form: UseFormReturn<T>,

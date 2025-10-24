@@ -7,6 +7,9 @@
 
 - API Docs Pages
 
+# Fixes
+
+- Fix document icon on video resource creation step
 
 
 # POST MVP
