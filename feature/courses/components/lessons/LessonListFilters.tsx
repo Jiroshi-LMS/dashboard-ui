@@ -160,7 +160,7 @@ const LessonListFilters = ({
                 onClick={() => {
                   setLessonFilters({
                     filters: {
-                      courseId: courseId
+                      course_id: courseId
                     },
                     ordering: null,
                     search: null,
