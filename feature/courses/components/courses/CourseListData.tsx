@@ -7,7 +7,7 @@ import { useDebouncedState } from "@/hooks/useDebouncedState";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { Course } from "../courseTypes";
+import { Course } from "../../courseTypes";
 import toast from "react-hot-toast";
 import { fetchListDataService } from "@/feature/common/commonServices";
 import { page, route } from "@/lib/constants/RouteConstants";

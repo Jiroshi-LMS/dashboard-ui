@@ -1,5 +1,5 @@
 "use client";
-import CourseListData from "@/feature/courses/components/CourseListData";
+import CourseListData from "@/feature/courses/components/courses/CourseListData";
 
 const courseManagementPage = () => {
   return (

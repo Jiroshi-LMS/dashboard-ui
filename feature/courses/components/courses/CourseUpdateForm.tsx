@@ -2,14 +2,14 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { Course } from "../courseTypes";
+import { Course } from "../../courseTypes";
 import { usePresignedUpload } from "@/hooks/usePresignedUpload";
 import { constantFilenames, fileContentTypes, fileUploadPrefixes, PUBLIC_UPLOAD } from "@/lib/constants/FileConstants";
 import { useForm } from "react-hook-form";
-import { updateCourseFormSchema } from "../courseSchemas";
+import { updateCourseFormSchema } from "../../courseSchemas";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { fetchCourseById, updateCourseService } from "../courseServices";
+import { fetchCourseById, updateCourseService } from "../../courseServices";
 import { units } from "@/lib/constants/common";
 import toast from "react-hot-toast";
 import { page } from "@/lib/constants/RouteConstants";
@@ -98,7 +98,7 @@ const CourseUpdateForm = ({ courseId } : { courseId: string }) => {
         setThumbnailUploadProgress
       );
       setThumbnailFile(file);
-      form.setValue("thumbnail", objectKey);
+      form.setValue("thumbnail", objectKey as string);
     } catch (err: any) {
       toast.error(
         err?.message ?? "Something went wrong! Please try again later."

@@ -1,6 +1,6 @@
 "use client"
 import React from "react"
-import CourseUpdateForm from "@/feature/courses/components/CourseUpdateForm"
+import CourseUpdateForm from "@/feature/courses/components/courses/CourseUpdateForm"
 
 interface CourseDetailsPageProps {
   params: Promise<{ courseId: string }>;

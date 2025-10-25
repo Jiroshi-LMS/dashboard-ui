@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button";
 import { page } from "@/lib/constants/RouteConstants";
-import CourseRetrieveData from "@/feature/courses/components/CourseRetrieveData";
+import CourseRetrieveData from "@/feature/courses/components/courses/CourseRetrieveData";
 import { deleteCourseService } from "@/feature/courses/courseServices";
 import toast from "react-hot-toast";
 import { standardErrors } from "@/lib/constants/errors";
@@ -67,7 +67,7 @@ const courseDetailsPage = ({params}: CourseDetailsPageProps) => {
 
         <LessonListView courseId={courseId} />
       </div>
-      
+
       <div className="flex justify-end items-center w-full">
         <AlertDialog>
           <AlertDialogTrigger className="flex justify-center items-center gap-2 bg-red-400 hover:bg-red-500 cursor-pointer

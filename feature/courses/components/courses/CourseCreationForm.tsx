@@ -9,13 +9,13 @@ import {
 } from "@/lib/constants/FileConstants";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { courseCreationFormSchema } from "../courseSchemas";
+import { courseCreationFormSchema } from "../../courseSchemas";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { units } from "@/lib/constants/common";
 import toast from "react-hot-toast";
-import { createCourseService } from "../courseServices";
+import { createCourseService } from "../../courseServices";
 import { page } from "@/lib/constants/RouteConstants";
 import Loader from "@/app/components/atoms/Loader";
 import Image from "next/image";
@@ -95,7 +95,7 @@ const CourseCreationForm = () => {
         setThumbnailUploadProgress
       );
       setThumbnailFile(file);
-      form.setValue("thumbnail", objectKey);
+      form.setValue("thumbnail", objectKey as string);
     } catch (err: any) {
       toast.error(
         err?.message ?? "Something went wrong! Please try again later."

@@ -10,8 +10,8 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { fetchCourseById } from "../courseServices";
-import { Course } from "../courseTypes";
+import { fetchCourseById } from "../../courseServices";
+import { Course } from "../../courseTypes";
 import { convertSeconds } from "@/lib/utils";
 
 const CourseRetrieveData = ({ courseId }: { courseId: string }) => {
