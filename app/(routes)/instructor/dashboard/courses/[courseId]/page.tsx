@@ -21,7 +21,7 @@ import toast from "react-hot-toast";
 import { standardErrors } from "@/lib/constants/errors";
 import React from "react";
 import { useRouter } from "next/navigation";
-import LessonListView from "@/feature/courses/components/lesson-upload/LessonListView";
+import LessonListView from "@/feature/courses/components/lessons/LessonListView";
 
 interface CourseDetailsPageProps {
   params: Promise<{ courseId: string }>;

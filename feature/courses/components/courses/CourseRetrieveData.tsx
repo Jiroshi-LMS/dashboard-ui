@@ -12,7 +12,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { fetchCourseById } from "../../courseServices";
 import { Course } from "../../courseTypes";
-import { convertSeconds } from "@/lib/utils";
+import { convertSeconds, getStringifiedDuration } from "@/lib/utils";
 
 const CourseRetrieveData = ({ courseId }: { courseId: string }) => {
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -59,7 +59,7 @@ const CourseRetrieveData = ({ courseId }: { courseId: string }) => {
             <div className="flex flex-wrap justify-between text-gray-500 text-sm">
               <span className="flex items-center">
                 <Clock10Icon className="h-4 w-4 mr-1" />
-                {convertSeconds(course.duration, 'hours')} hour(s)
+                {getStringifiedDuration(course.duration)}
               </span>
               <Badge className={`${badge_color} flex items-center gap-1 uppercase`}>
                 <ActivityIcon className="h-4 w-4" /> {course.access_status}

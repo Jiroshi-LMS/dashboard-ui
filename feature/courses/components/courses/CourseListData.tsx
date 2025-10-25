@@ -13,6 +13,7 @@ import { fetchListDataService } from "@/feature/common/commonServices";
 import { page, route } from "@/lib/constants/RouteConstants";
 import CourseListFilters from "./CourseListFilters";
 import { useFilters } from "@/hooks/useFilters";
+import { convertSeconds, getStringifiedDuration } from "@/lib/utils";
 
 const CourseListData = () => {
     const [courseList, setCourseList] = useState<Array<Course> | null>(null);
@@ -111,6 +112,7 @@ return (
         columns={[
           {
             header: () => "Course Name",
+            align: "center",
             render: (course) => (
               <Link
                 href={page.RETRIEVE_COURSE(course?.uuid)}
@@ -135,6 +137,17 @@ return (
                 </Badge>
               );
             },
+          },
+          {
+            header: () => {
+              return (
+                <>
+                  Duration <SortButton onClick={() => {}} />
+                </>
+              );
+            },
+            align: "center",
+            render: (course) => getStringifiedDuration(course.duration)
           },
           {
             header: () => {

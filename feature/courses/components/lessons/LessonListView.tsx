@@ -14,7 +14,8 @@ import { LessonListItem } from '../../courseTypes'
 import { Badge } from '@/components/ui/badge'
 import { CommonPaginationBar } from '@/app/components/organism/Paginator/CommonPaginationBar'
 import Loader from '@/app/components/atoms/Loader'
-import { convertSeconds } from '@/lib/utils'
+import { convertSeconds, getStringifiedDuration } from '@/lib/utils'
+import LessonListFilters from './LessonListFilters'
 
 
 const LessonListView = ({courseId}: {courseId: string}) => {
@@ -54,7 +55,6 @@ const LessonListView = ({courseId}: {courseId: string}) => {
                                 month: "long",
                                 day: "numeric",
                             }),
-                            duration: convertSeconds(lesson.duration, 'minutes')
                         };
                     }
                 );
@@ -88,31 +88,17 @@ const LessonListView = ({courseId}: {courseId: string}) => {
     <section className="h-full w-full">
         <h2 className="section-title">All Lessons</h2>
         <section className='flex justify-between items-center my-4'>
-        <div className='flex justify-start items-center gap-2'>
+            <LessonListFilters
+                lessonFilters={lessonFilters}
+                setLessonFilters={setLessonFilters}
+                setSearch={setSearch}
+                handleFilterChange={handleFilterChange}
+            />
             <div>
-            <Select>
-                <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="All Statuses" />
-                </SelectTrigger>
-                <SelectContent>
-                <SelectGroup>
-                    <SelectLabel>Statuses</SelectLabel>
-                    <SelectItem value="active" className='hover:text-white'>Active</SelectItem>
-                    <SelectItem value="inactive" className='hover:text-white'>Inactive</SelectItem>
-                    <SelectItem value="draft" className='hover:text-white'>Draft</SelectItem>
-                </SelectGroup>
-                </SelectContent>
-            </Select>
+                <Link href={page.CREATE_LESSON(courseId)}>
+                <Button className='bg-primary text-white hover:bg-teal-600 hover:text-white cursor-pointer'><PlusIcon /> Add new lesson</Button>
+                </Link>
             </div>
-            <form>
-            <Input type="search" placeholder="Search by course name" />
-            </form>
-        </div>
-        <div>
-            <Link href={page.CREATE_LESSON(courseId)}>
-            <Button className='bg-primary text-white hover:bg-teal-600 hover:text-white cursor-pointer'><PlusIcon /> Add new lesson</Button>
-            </Link>
-        </div>
         </section>
 
         {
@@ -139,7 +125,7 @@ const LessonListView = ({courseId}: {courseId: string}) => {
                 </div>
                 <p className="my-1 line-clamp-2 text-[12px] text-gray-500">{data.description}</p>
                 <div className="flex justify-between items-center w-full my-1">
-                <span className="flex items-center text-gray-400 text-[14px]"><Clock10Icon className="h-3 w-3 mr-1"/> {data.duration} min(s)</span>
+                <span className="flex items-center text-gray-400 text-[14px]"><Clock10Icon className="h-3 w-3 mr-1"/> {getStringifiedDuration(data.duration)}</span>
                 <span className="text-gray-400 text-[14px]">{data.created_at}</span>
                 </div>
             </div>

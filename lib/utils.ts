@@ -35,6 +35,18 @@ export function convertSeconds(seconds: number, returnType: "hours" | "minutes" 
 }
 
 
+export function getStringifiedDuration(seconds: number): string {
+  if (isNaN(seconds) || seconds < 0) throw new Error("Invalid seconds input");
+
+  let duration = parseFloat((seconds / 3600).toFixed(2)); // In hours
+  if (duration >= 1) return `${duration} hour(s)`
+  duration = parseFloat((seconds / 60).toFixed(2));
+  if (duration >= 1) return `${duration} minute(s)`
+  return `${seconds} second(s)`
+  
+}
+
+
 export function withFormValidation<T extends FieldValues, R>(
     form: UseFormReturn<T>,
     submitFn: (values: T) => Promise<R>,
