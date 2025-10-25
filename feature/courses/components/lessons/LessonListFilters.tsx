@@ -15,10 +15,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { localDateToUTC, utcToLocalDate } from "@/lib/utils";
-import { FilterIcon } from "lucide-react";
+import { FilterIcon, ArrowDownAZ, ArrowUpAZ } from "lucide-react";
 import React, { SetStateAction } from "react";
 
 type LessonListFilterProps = {
+  courseId: string,
   lessonFilters: StandardFilters;
   setLessonFilters: React.Dispatch<SetStateAction<StandardFilters>>;
   setSearch: React.Dispatch<SetStateAction<string>>;
@@ -26,6 +27,7 @@ type LessonListFilterProps = {
 };
 
 const LessonListFilters = ({
+  courseId,
   lessonFilters,
   setLessonFilters,
   setSearch,
@@ -46,7 +48,7 @@ const LessonListFilters = ({
         <PopoverContent
           side="bottom"
           align="start"
-          className=" z-30 w-80 bg-white border border-gray-200 rounded-md p-4 shadow-sm my-1"
+          className="z-30 w-80 bg-white border border-gray-200 rounded-md p-4 shadow-sm my-1"
         >
           <div className="flex flex-col gap-5">
             {/* Date Range */}
@@ -81,6 +83,8 @@ const LessonListFilters = ({
                 }}
               />
             </div>
+
+            {/* Status */}
             <div className="space-y-2">
               <p className="text-sm font-semibold text-gray-700">Status</p>
               <Select
@@ -104,13 +108,60 @@ const LessonListFilters = ({
                 </SelectContent>
               </Select>
             </div>
+
+            {/* Sorting */}
+            <div className="space-y-2">
+              <p className="text-sm font-semibold text-gray-700">Sort By</p>
+              <div className="flex flex-col gap-2">
+                {[
+                  { key: "duration", label: "Duration" },
+                  { key: "created_at", label: "Created At" },
+                ].map(({ key, label }) => {
+                  const isActive =
+                    lessonFilters?.ordering?.replace("-", "") === key;
+                  const isDesc = lessonFilters?.ordering?.startsWith("-");
+
+                  return (
+                    <Button
+                      key={key}
+                      variant={isActive ? "default" : "outline"}
+                      className={`w-full justify-between text-sm ${
+                        isActive ? "bg-teal-500 text-white" : ""
+                      }`}
+                      onClick={() => {
+                        let newOrder: string | null = key;
+                        if (isActive && !isDesc) newOrder = `-${key}`;
+                        else if (isActive && isDesc) newOrder = null;
+
+                        handleFilterChange("ordering", newOrder);
+                      }}
+                    >
+                      <span>{label}</span>
+                      {isActive ? (
+                        isDesc ? (
+                          <span className="text-xs text-gray-100">↓ Desc</span>
+                        ) : (
+                          <span className="text-xs text-gray-100">↑ Asc</span>
+                        )
+                      ) : (
+                        <span className="text-xs text-gray-500">—</span>
+                      )}
+                    </Button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Clear Filters */}
             <div className="pt-2">
               <Button
                 variant="outline"
                 className="w-full text-sm border-gray-300 hover:bg-gray-100"
                 onClick={() => {
                   setLessonFilters({
-                    filters: {},
+                    filters: {
+                      courseId: courseId
+                    },
                     ordering: null,
                     search: null,
                     page: 1,

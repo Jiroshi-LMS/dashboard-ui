@@ -89,6 +89,7 @@ const LessonListView = ({courseId}: {courseId: string}) => {
         <h2 className="section-title">All Lessons</h2>
         <section className='flex justify-between items-center my-4'>
             <LessonListFilters
+                courseId={courseId}
                 lessonFilters={lessonFilters}
                 setLessonFilters={setLessonFilters}
                 setSearch={setSearch}
