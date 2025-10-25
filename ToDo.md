@@ -10,7 +10,7 @@
 # Fixes
 
 - Fix document icon on video resource creation step
-
+- Improve duration storing. int -> float for more precision
 
 # POST MVP
 

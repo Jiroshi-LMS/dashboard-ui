@@ -1,9 +1,9 @@
 "use client"
 
 import { useRouter } from "next/navigation";
-import VideoDetailsStep from "@/feature/courses/components/lesson-upload/VideoDetailsStep";
-import VideoResourcesStep from "@/feature/courses/components/lesson-upload/VideoTextResourcesStep";
-import VideoUploadStep from "@/feature/courses/components/lesson-upload/VideoUploadStep";
+// import VideoDetailsStep from "@/feature/courses/components/lesson-upload/VideoDetailsStep";
+// import VideoResourcesStep from "@/feature/courses/components/lesson-upload/VideoTextResourcesStep";
+// import VideoUploadStep from "@/feature/courses/components/lesson-upload/VideoUploadStep";
 import Stepper from "@/app/components/organism/InstructorDashboard/DashboardStepper";
 
 const editLessonPage = () => {
@@ -11,7 +11,7 @@ const editLessonPage = () => {
   return (
     <main className="main-container">
         <h1 className="page-title">Edit Lesson</h1>
-        <Stepper
+        {/* <Stepper
             steps={[
                 {
                     label: "Lesson Details",
@@ -40,7 +40,7 @@ const editLessonPage = () => {
                 router.replace("/instructor/dashboard/courses/");
             }}
             submitLabel="Upload Lesson"
-        />
+        /> */}
 
     </main>
   )

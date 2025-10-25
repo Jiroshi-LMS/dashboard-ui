@@ -10,6 +10,17 @@ export type Course = {
 }
 
 
+export type Lesson = {
+    access_status: string
+    created_at: string
+    description: string | null
+    duration: number
+    title: string
+    uuid: string
+    video_url: string
+}
+
+
 export type LessonListItem = {
     uuid: string
     created_at: string

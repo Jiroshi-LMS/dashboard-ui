@@ -2,11 +2,11 @@ import z from "zod";
 import { courseCreationFormSchema, referenceMaterialResourceFormSchema, updateCourseFormSchema, VideoDetailsFormSchema } from "./courseSchemas";
 import api from "@/lib/api/axios";
 import { route } from "@/lib/constants/RouteConstants";
-import { Course, LessonMediaData, LessonReferenceMaterial } from "./courseTypes";
-import { SetStateAction } from "react";
+import { Course, Lesson, LessonMediaData, LessonReferenceMaterial } from "./courseTypes";
+import { Dispatch, SetStateAction } from "react";
 import toast from "react-hot-toast";
 import { standardErrors } from "@/lib/constants/errors";
-import { createLessonDetailsService, createLessonReferenceMaterialRepository, removeLessonReferenceMaterialRepository, updateLessonMediaRepository } from "./courseRepositories";
+import { createLessonDetailsService, createLessonReferenceMaterialRepository, fetchLessonByIdRepository, removeLessonReferenceMaterialRepository, updateLessonMediaRepository } from "./courseRepositories";
 import { PresignedUploadReturnState } from "../common/commonTypes";
 
 
@@ -147,4 +147,36 @@ export const UpdateLessonMediaService = async (
     setFileUploadProgress(0);
     return false
   }
+}
+
+
+export const FetchLessonByIdService = async (
+  lessonId: string,
+  setLoading: Dispatch<SetStateAction<boolean>>,
+  setLesson: Dispatch<SetStateAction<Lesson | null>>,
+): Promise<boolean> => {
+  setLoading(true)
+  try {
+    const resp: StandardResponse = await fetchLessonByIdRepository(lessonId)
+    const lessonData = resp?.response;
+      if (resp?.status && lessonData) {
+        const dateObject = new Date(lessonData.created_at);
+        const formattedLessonData: Lesson = {
+          ...lessonData,
+          created_at: dateObject.toLocaleString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          }),
+        };
+        setLesson(formattedLessonData);
+        setLoading(false)
+        return true
+      }
+      toast.error(resp?.msg || "Unable to retrieve lesson data! Please try again later.");
+  } catch (err: any) {
+    toast.error(err?.response?.data?.msg || err?.message || standardErrors.UNKNOWN)
+  }
+  setLoading(false)
+  return false
 }
