@@ -1,7 +1,4 @@
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination'
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { fetchListDataService } from '@/feature/common/commonServices'
 import { useDebouncedState } from '@/hooks/useDebouncedState'
 import { useFilters } from '@/hooks/useFilters'
@@ -14,7 +11,7 @@ import { LessonListItem } from '../../courseTypes'
 import { Badge } from '@/components/ui/badge'
 import { CommonPaginationBar } from '@/app/components/organism/Paginator/CommonPaginationBar'
 import Loader from '@/app/components/atoms/Loader'
-import { convertSeconds, getStringifiedDuration } from '@/lib/utils'
+import { getStringifiedDuration } from '@/lib/utils'
 import LessonListFilters from './LessonListFilters'
 
 
@@ -120,7 +117,7 @@ const LessonListView = ({courseId}: {courseId: string}) => {
             <div key={index} className="flex flex-col justify-center items-start w-full p-3 nth-[2n]:bg-gray-100 border-[1px] border-gray-200 rounded-sm my-1">
                 <div className="flex justify-between items-center w-full">
                 <h4 className="font-bold text-gray-600 my-3">
-                    <Link href={`/instructor/dashboard/courses/lessons/${data.uuid}`} className="hover:text-teal-500">{data.title}</Link>
+                    <Link href={page.RETRIEVE_LESSON(courseId, data.uuid)} className="hover:text-teal-500">{data.title}</Link>
                 </h4>
                 <span className="ml-2"><Badge className={`${lessonBadgeColor} uppercase`}>{data.access_status}</Badge></span>
                 </div>

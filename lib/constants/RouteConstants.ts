@@ -35,5 +35,7 @@ export const page = {
     CREATE_COURSE: "/instructor/dashboard/courses/add-course",
     LIST_COURSE: '/instructor/dashboard/courses',
     RETRIEVE_COURSE: (courseId: string) => `/instructor/dashboard/courses/${courseId}`,
+
     CREATE_LESSON: (courseId: string) => `/instructor/dashboard/courses/${courseId}/add-lesson`,
+    RETRIEVE_LESSON: (courseId: string, lessonId: string) => `/instructor/dashboard/courses/${courseId}/${lessonId}`,
 }
