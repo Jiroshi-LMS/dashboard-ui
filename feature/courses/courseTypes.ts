@@ -17,7 +17,7 @@ export type Lesson = {
     duration: number
     title: string
     uuid: string
-    video_url: string
+    video_url: string | null
 }
 
 
@@ -50,4 +50,21 @@ export type LessonReferenceMaterial = {
     file_type: string,
     file_key: string,
     resource_id: string | null
+}
+
+
+export type LessonResourcesAll = {
+    notes: string | null
+    related_links: Array<{
+        url: string,
+        title: string
+    }> | null
+    file_resources: Array<{
+        uuid: string
+        title: string,
+        file_name: string,
+        file_size: number,
+        file_type: string,
+        file_key: string
+    }> | null
 }

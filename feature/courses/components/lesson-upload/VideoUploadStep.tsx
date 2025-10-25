@@ -5,7 +5,7 @@ import { UploadIcon, XIcon, VideoIcon, BanIcon } from "lucide-react";
 import { SetStateAction, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { LessonMediaData } from "../../courseTypes";
-import { validateMP4File } from "@/lib/utils";
+import { formatFileSize, validateMP4File } from "@/lib/utils";
 import { Progress } from "@/components/ui/progress";
 
 type VideoUploadStepProps = {
@@ -29,12 +29,7 @@ const VideoUploadStep = ({
   const [isValidatingVideoFile, setIsValidatingVideoFile] = useState<boolean>(false);
   const [previewURL, setPreviewURL] = useState<string | null>(null);
 
-  const formatFileSize = (bytes: number): string => {
-    if (!bytes) return "0 Bytes";
-    const units = ["Bytes", "KB", "MB", "GB"];
-    const index = Math.floor(Math.log(bytes) / Math.log(1024));
-    return `${(bytes / Math.pow(1024, index)).toFixed(2)} ${units[index]}`;
-  };
+  
 
   const videoFileChange = async (file: File | undefined) => {
     if (!file) return;

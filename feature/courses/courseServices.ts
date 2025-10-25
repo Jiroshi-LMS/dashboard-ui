@@ -2,11 +2,11 @@ import z from "zod";
 import { courseCreationFormSchema, referenceMaterialResourceFormSchema, updateCourseFormSchema, VideoDetailsFormSchema } from "./courseSchemas";
 import api from "@/lib/api/axios";
 import { route } from "@/lib/constants/RouteConstants";
-import { Course, Lesson, LessonMediaData, LessonReferenceMaterial } from "./courseTypes";
+import { Course, Lesson, LessonMediaData, LessonReferenceMaterial, LessonResourcesAll } from "./courseTypes";
 import { Dispatch, SetStateAction } from "react";
 import toast from "react-hot-toast";
 import { standardErrors } from "@/lib/constants/errors";
-import { createLessonDetailsService, createLessonReferenceMaterialRepository, fetchLessonByIdRepository, removeLessonReferenceMaterialRepository, updateLessonMediaRepository } from "./courseRepositories";
+import { createLessonDetailsService, createLessonReferenceMaterialRepository, fetchLessonByIdRepository, fetchLessonResourcesRepository, removeLessonReferenceMaterialRepository, updateLessonMediaRepository } from "./courseRepositories";
 import { PresignedUploadReturnState } from "../common/commonTypes";
 
 
@@ -174,6 +174,29 @@ export const FetchLessonByIdService = async (
         return true
       }
       toast.error(resp?.msg || "Unable to retrieve lesson data! Please try again later.");
+  } catch (err: any) {
+    toast.error(err?.response?.data?.msg || err?.message || standardErrors.UNKNOWN)
+  }
+  setLoading(false)
+  return false
+}
+
+
+export const FetchLessonResourcesService = async (
+  lessonId: string,
+  setLoading: Dispatch<SetStateAction<boolean>>,
+  setLessonResources: Dispatch<SetStateAction<LessonResourcesAll | null>>
+) => {
+  setLoading(true)
+  try {
+    const resp = await fetchLessonResourcesRepository(lessonId)
+    const lessonResources = resp?.response
+    if (resp?.status && lessonResources) {
+      setLessonResources(lessonResources)
+      setLoading(false)
+      return true
+    }
+    toast.error(resp?.msg || "Unable to fetch lesson resources! Please try again later.")
   } catch (err: any) {
     toast.error(err?.response?.data?.msg || err?.message || standardErrors.UNKNOWN)
   }

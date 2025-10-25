@@ -21,6 +21,7 @@ export const route = {
     UPDATE_TEXT_RESOURCES: "/courses/resources/update-text-resources/",
     CREATE_REFERENCE_MATERIAL: "/courses/resources/",
     DELETE_REFERENCE_MATERIAL: (resourceId: string) => `/courses/resources/${resourceId}/`,
+    RETRIEVE_LESSON_RESOURCES: (lessonId: string) => `/courses/resources/?lesson_id=${lessonId}`,
 
     
     // Common

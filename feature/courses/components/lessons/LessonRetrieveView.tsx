@@ -12,49 +12,7 @@ import { FetchLessonByIdService } from '../../courseServices'
 import Loader from '@/app/components/atoms/Loader'
 import { Badge } from '@/components/ui/badge'
 import { getStringifiedDuration } from '@/lib/utils'
-
-
-const static_attached_links = [
-  {
-    link_id: "link-1",
-    link_title: "Django Documentation",
-    link_url: "https://docs.djangoproject.com/en/4.1/",
-  },
-  {
-    link_id: "link-2",
-    link_title: "Python Documentation",
-    link_url: "https://docs.python.org/3/",
-  },
-  {
-    link_id: "link-3",
-    link_title: "Git Documentation",
-    link_url: "https://git-scm.com/docs",
-  },
-];
-
-const static_downloadables = [
-  {
-    downloadable_id: "downloadable-1",
-    downloadable_title: "Lesson 1 Notes",
-    downloadable_file_name: "notes_lesson_1.pdf",
-    downloadable_file_size: "10MB",
-    downloadable_file_type: "pdf",
-  },
-  {
-    downloadable_id: "downloadable-2",
-    downloadable_title: "Django Book PDF",
-    downloadable_file_name: "django_book.pdf",
-    downloadable_file_size: "20MB",
-    downloadable_file_type: "pdf",
-  },
-  {
-    downloadable_id: "downloadable-3",
-    downloadable_title: "Learn Python PDF",
-    downloadable_file_name: "learn_python.pdf",
-    downloadable_file_size: "12MB",
-    downloadable_file_type: "pdf",
-  },
-];
+import LessonResourceRetrieveView from './LessonResourceRetrieveView'
 
 const LessonRetrieveView = ({lessonId}: {lessonId: string}) => {
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -93,6 +51,9 @@ const LessonRetrieveView = ({lessonId}: {lessonId: string}) => {
 
         <CardContent className="space-y-5">
           {/* Video */}
+          {
+            (lesson?.video_url) ?
+          
           <div className="rounded-md overflow-hidden bg-black relative">
             <video
               className="w-full h-[60vh] object-contain"
@@ -106,6 +67,11 @@ const LessonRetrieveView = ({lessonId}: {lessonId: string}) => {
               Your browser does not support the video tag.
             </video>
           </div>
+          :
+          <div className='text-red-400 text-center font-bold text-lg'>
+            Video hasn't been uploaded yet !
+          </div>
+        }
 
           {/* Meta Info */}
           <div className="flex flex-wrap justify-between items-center text-sm text-gray-600">
@@ -151,77 +117,10 @@ const LessonRetrieveView = ({lessonId}: {lessonId: string}) => {
       </Card>
 
       {/* Tabs */}
-      <Card className="shadow-md border border-gray-200">
-        <CardContent className="pt-6">
-          <Tabs defaultValue="notes">
-            <TabsList className="grid w-full grid-cols-3 mb-4">
-              <TabsTrigger value="notes">Notes</TabsTrigger>
-              <TabsTrigger value="attached-links">Attached Links</TabsTrigger>
-              <TabsTrigger value="downloadables">Downloadables</TabsTrigger>
-            </TabsList>
-
-            <TabsContent
-              value="notes"
-              className="text-gray-700 text-sm leading-relaxed min-h-[20vh]"
-            >
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              Consectetur dicta iusto aut quaerat quibusdam facilis.
-            </TabsContent>
-
-            <TabsContent value="attached-links">
-              <div className="space-y-3">
-                {static_attached_links.map((link) => (
-                  <div key={link.link_id} className="border-b pb-2">
-                    <h4 className="font-semibold text-gray-800">
-                      {link.link_title}
-                    </h4>
-                    <Link
-                      href={link.link_url}
-                      target="_blank"
-                      className="text-primary text-sm hover:underline"
-                    >
-                      {link.link_url}
-                    </Link>
-                  </div>
-                ))}
-              </div>
-            </TabsContent>
-
-            <TabsContent value="downloadables">
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {static_downloadables.map((item) => (
-                  <Card
-                    key={item.downloadable_id}
-                    className="border-gray-200 shadow-sm"
-                  >
-                    <CardContent className="flex items-center gap-3 p-4">
-                      <img
-                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/833px-PDF_file_icon.svg.png"
-                        alt="PDF"
-                        className="w-10"
-                      />
-                      <div className="flex-1">
-                        <p className="font-medium text-gray-800 text-sm">
-                          {item.downloadable_title}
-                        </p>
-                        <p className="text-gray-500 text-xs">
-                          {item.downloadable_file_size}
-                        </p>
-                      </div>
-                      <Button variant="ghost" size="icon">
-                        <DownloadIcon size={16} />
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </TabsContent>
-          </Tabs>
-        </CardContent>
-      </Card>
+      <LessonResourceRetrieveView lessonId={lessonId} />
 
       {/* Delete Section */}
-      <div className="flex justify-end">
+      <div className="flex justify-end mt-20">
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button variant="destructive" className="flex items-center gap-2">

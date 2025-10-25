@@ -60,3 +60,11 @@ export const fetchLessonByIdRepository = async (
     const {data} = await api.get(route.RETRIEVE_LESSON(lessonId))
     return data as StandardResponse
 }
+
+
+export const fetchLessonResourcesRepository = async (
+    lessonId: string
+): Promise<StandardResponse> => {
+    const {data} = await api.get(route.RETRIEVE_LESSON_RESOURCES(lessonId))
+    return data as StandardResponse
+}
