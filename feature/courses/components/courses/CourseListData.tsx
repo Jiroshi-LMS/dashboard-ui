@@ -142,7 +142,13 @@ return (
             header: () => {
               return (
                 <>
-                  Duration <SortButton onClick={() => {}} />
+                  Duration <SortButton onClick={() => {
+                      const val =
+                        courseFilters?.ordering === "-duration"
+                          ? "duration"
+                          : "-duration";
+                      handleFilterChange("ordering", val);
+                    }} />
                 </>
               );
             },
