@@ -117,7 +117,15 @@ const LessonListView = ({courseId}: {courseId: string}) => {
             <div key={index} className="flex flex-col justify-center items-start w-full p-3 nth-[2n]:bg-gray-100 border-[1px] border-gray-200 rounded-sm my-1">
                 <div className="flex justify-between items-center w-full">
                 <h4 className="font-bold text-gray-600 my-3">
-                    <Link href={page.RETRIEVE_LESSON(courseId, data.uuid)} className="hover:text-teal-500">{data.title}</Link>
+                    <Link 
+                        href={(data.access_status === 'draft') ? 
+                            page.EDIT_LESSON(courseId, data.uuid) : 
+                            page.RETRIEVE_LESSON(courseId, data.uuid)
+                        } 
+                        className="hover:text-teal-500"
+                    >
+                        {data.title}
+                    </Link>
                 </h4>
                 <span className="ml-2"><Badge className={`${lessonBadgeColor} uppercase`}>{data.access_status}</Badge></span>
                 </div>

@@ -22,7 +22,7 @@ const LessonDetailsPage = ({ params }: LessonDetailsPageProps) => {
         </h1>
       </div>
 
-      <LessonRetrieveView lessonId={lessonId} />
+      <LessonRetrieveView courseId={courseId} lessonId={lessonId} />
       
     </main>
   );

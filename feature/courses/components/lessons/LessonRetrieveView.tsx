@@ -13,8 +13,9 @@ import Loader from '@/app/components/atoms/Loader'
 import { Badge } from '@/components/ui/badge'
 import { getStringifiedDuration } from '@/lib/utils'
 import LessonResourceRetrieveView from './LessonResourceRetrieveView'
+import { page } from '@/lib/constants/RouteConstants'
 
-const LessonRetrieveView = ({lessonId}: {lessonId: string}) => {
+const LessonRetrieveView = ({courseId, lessonId}: {courseId: string, lessonId: string}) => {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [lesson, setLesson] = useState<Lesson | null>(null);
 
@@ -102,7 +103,7 @@ const LessonRetrieveView = ({lessonId}: {lessonId: string}) => {
           {/* Edit Button */}
           <div className="flex justify-end">
             <Link
-              href={`/instructor/dashboard/courses/lessons/${lessonId}/edit`}
+              href={page.EDIT_LESSON(courseId, lessonId)}
             >
               <Button
                 size="sm"

@@ -40,4 +40,5 @@ export const page = {
 
     CREATE_LESSON: (courseId: string) => `/instructor/dashboard/courses/${courseId}/add-lesson`,
     RETRIEVE_LESSON: (courseId: string, lessonId: string) => `/instructor/dashboard/courses/${courseId}/${lessonId}`,
+    EDIT_LESSON: (courseId: string, lessonId: string) => `/instructor/dashboard/courses/${courseId}/${lessonId}/edit`
 }
