@@ -144,7 +144,16 @@ const LessonResourceRetrieveView = ({lessonId}: {lessonId: string}) => {
                             {formatFileSize(file.file_size)}
                             </p>
                         </div>
-                        <Button variant="ghost" size="icon">
+                        <Button variant="ghost" size="icon"
+                        onClick={() => {
+                            const link = document.createElement("a");
+                            link.target = "_blank"
+                            link.href = file.file_key;
+                            link.download = file.title || "download";
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                        }}>
                             <DownloadIcon size={16} />
                         </Button>
                         </CardContent>
