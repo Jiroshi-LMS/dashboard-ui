@@ -15,7 +15,7 @@ import { UploadIcon, FileTextIcon, FileIcon, XIcon } from "lucide-react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import z from "zod";
+import z, { object } from "zod";
 import { referenceMaterialResourceFormSchema } from "../../courseSchemas";
 import { LessonReferenceMaterial } from "../../courseTypes";
 import toast from "react-hot-toast";
@@ -73,6 +73,7 @@ const VideoReferenceMaterialsStep = ({
         contentType,
         setReferenceUploadProgress
       );
+      if (!objectKey) throw new Error("Failed to upload file! Please try again later.")
       const material: LessonReferenceMaterial = {
         title: values.title,
         file_name: file.name,
