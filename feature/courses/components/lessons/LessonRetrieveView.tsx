@@ -3,21 +3,18 @@
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { ActivityIcon, Calendar1Icon, Clock10Icon, DownloadIcon, PencilIcon, TrashIcon } from 'lucide-react'
+import { ActivityIcon, Calendar1Icon, Clock10Icon, PencilIcon, TrashIcon } from 'lucide-react'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { Lesson } from '../../courseTypes'
-import { FetchLessonByIdService } from '../../courseServices'
+import { DeleteLessonService, FetchLessonByIdService } from '../../courseServices'
 import Loader from '@/app/components/atoms/Loader'
 import { Badge } from '@/components/ui/badge'
 import { getStringifiedDuration } from '@/lib/utils'
 import LessonResourceRetrieveView from './LessonResourceRetrieveView'
 import { page } from '@/lib/constants/RouteConstants'
-import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
-import { standardErrors } from '@/lib/constants/errors'
-import { deleteLessonRepository } from '../../courseRepositories'
+
 
 const LessonRetrieveView = ({courseId, lessonId}: {courseId: string, lessonId: string}) => {
   const router = useRouter()
@@ -27,23 +24,6 @@ const LessonRetrieveView = ({courseId, lessonId}: {courseId: string, lessonId: s
   useEffect(() => {
     FetchLessonByIdService(lessonId, setLoading, setLesson);
   }, []);
-
-  const DeleteLessonService = async() => {
-    try {
-      const resp = await deleteLessonRepository(lessonId)
-      if (resp?.status){
-        toast.success("Course has been removed successfully !")
-        router.replace(page.RETRIEVE_COURSE(courseId))
-      }
-      else toast.error(resp?.msg || "Could not delete course! Please try again later.")
-    } catch (err: any) {
-      toast.error(
-        err?.response?.data?.msg ||
-        err?.message ||
-        standardErrors.UNKNOWN
-      )
-    }
-  }
 
   const badgeColor =
     lesson?.access_status === "inactive"
@@ -161,7 +141,7 @@ const LessonRetrieveView = ({courseId, lessonId}: {courseId: string, lessonId: s
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
               <AlertDialogAction 
-                onClick={DeleteLessonService}
+                onClick={() => {DeleteLessonService(courseId, lessonId, router)}}
                 className="bg-red-400 hover:bg-red-500 cursor-pointer text-white">
                   Continue
               </AlertDialogAction>

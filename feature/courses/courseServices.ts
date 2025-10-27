@@ -1,13 +1,14 @@
 import z from "zod";
 import { courseCreationFormSchema, referenceMaterialResourceFormSchema, updateCourseFormSchema, VideoDetailsFormSchema } from "./courseSchemas";
 import api from "@/lib/api/axios";
-import { route } from "@/lib/constants/RouteConstants";
+import { page, route } from "@/lib/constants/RouteConstants";
 import { Course, Lesson, LessonMediaData, LessonReferenceMaterial, LessonResourcesAll } from "./courseTypes";
 import { Dispatch, SetStateAction } from "react";
 import toast from "react-hot-toast";
 import { standardErrors } from "@/lib/constants/errors";
-import { createLessonDetailsService, createLessonReferenceMaterialRepository, fetchLessonByIdRepository, fetchLessonResourcesRepository, removeLessonReferenceMaterialRepository, updateLessonMediaRepository } from "./courseRepositories";
+import { createLessonDetailsService, createLessonReferenceMaterialRepository, deleteLessonRepository, fetchLessonByIdRepository, fetchLessonResourcesRepository, removeLessonReferenceMaterialRepository, updateLessonMediaRepository } from "./courseRepositories";
 import { PresignedUploadReturnState } from "../common/commonTypes";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 
 export const createCourseService = async (
@@ -203,3 +204,25 @@ export const FetchLessonResourcesService = async (
   setLoading(false)
   return false
 }
+
+
+export const DeleteLessonService = async(
+  courseId: string,
+  lessonId: string,
+  router: AppRouterInstance
+) => {
+    try {
+      const resp = await deleteLessonRepository(lessonId)
+      if (resp?.status){
+        toast.success("Course has been removed successfully !")
+        router.replace(page.RETRIEVE_COURSE(courseId))
+      }
+      else toast.error(resp?.msg || "Could not delete course! Please try again later.")
+    } catch (err: any) {
+      toast.error(
+        err?.response?.data?.msg ||
+        err?.message ||
+        standardErrors.UNKNOWN
+      )
+    }
+  }
