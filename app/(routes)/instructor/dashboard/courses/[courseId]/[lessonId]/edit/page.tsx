@@ -1,46 +1,44 @@
 "use client"
 
 import { useRouter } from "next/navigation";
-// import VideoDetailsStep from "@/feature/courses/components/lesson-upload/VideoDetailsStep";
-// import VideoResourcesStep from "@/feature/courses/components/lesson-upload/VideoTextResourcesStep";
-// import VideoUploadStep from "@/feature/courses/components/lesson-upload/VideoUploadStep";
 import Stepper from "@/app/components/organism/InstructorDashboard/DashboardStepper";
+import VideoDetailsUpdateStep from "@/feature/courses/components/lesson-update/VideoDetailsUpdateStep";
 
 const editLessonPage = () => {
     const router = useRouter();
   return (
     <main className="main-container">
         <h1 className="page-title">Edit Lesson</h1>
-        {/* <Stepper
+        <Stepper
             steps={[
                 {
                     label: "Lesson Details",
-                    content: <VideoDetailsStep />,
+                    content: <VideoDetailsUpdateStep />,
                     onNext: async () => {
                         return true;
                     },
                 },
-                {
-                    label: "Lesson Extra Resources",
-                    content: <VideoResourcesStep />,
-                    onNext: async () => {
-                        return true;
-                    },
-                },
-                {
-                    label: "Lesson Video",
-                    content: <VideoUploadStep />,
-                    onNext: async () => {
-                        return true;
-                    },
-                }
+                // {
+                //     label: "Lesson Extra Resources",
+                //     content: <VideoResourcesStep />,
+                //     onNext: async () => {
+                //         return true;
+                //     },
+                // },
+                // {
+                //     label: "Lesson Video",
+                //     content: <VideoUploadStep />,
+                //     onNext: async () => {
+                //         return true;
+                //     },
+                // }
             ]}
             onSubmit={async () => {
                 console.log("Submitted");
-                router.replace("/instructor/dashboard/courses/");
+                // router.replace("/instructor/dashboard/courses/");
             }}
             submitLabel="Upload Lesson"
-        /> */}
+        />
 
     </main>
   )

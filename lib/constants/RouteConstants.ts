@@ -17,6 +17,7 @@ export const route = {
     CREATE_LESSON_DETAILS: "/courses/lessons/",
     UPDATE_LESSON_MEDIA: (lessonId: string) => `/courses/lessons/${lessonId}/update-lesson-media/`,
     RETRIEVE_LESSON: (lessonId: string) => `/courses/lessons/${lessonId}/`,
+    DELETE_LESSON: (lessonId: string) => `/courses/lessons/${lessonId}/`,
 
     UPDATE_TEXT_RESOURCES: "/courses/resources/update-text-resources/",
     CREATE_REFERENCE_MATERIAL: "/courses/resources/",

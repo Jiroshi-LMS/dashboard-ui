@@ -68,3 +68,11 @@ export const fetchLessonResourcesRepository = async (
     const {data} = await api.get(route.RETRIEVE_LESSON_RESOURCES(lessonId))
     return data as StandardResponse
 }
+
+
+export const deleteLessonRepository = async (
+    lessonId: string
+): Promise<StandardResponse> => {
+    const {data} = await api.delete(route.DELETE_LESSON(lessonId))
+    return data as StandardResponse
+}
