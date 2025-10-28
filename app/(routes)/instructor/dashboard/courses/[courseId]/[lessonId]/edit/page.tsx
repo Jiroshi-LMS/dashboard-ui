@@ -2,15 +2,16 @@
 
 import { useRouter } from "next/navigation";
 import Stepper from "@/app/components/organism/InstructorDashboard/DashboardStepper";
-import VideoDetailsUpdateStep from "@/feature/courses/components/lesson-update/VideoDetailsUpdateStep";
 import React, { useEffect, useState } from "react";
-import { FetchLessonByIdService } from "@/feature/courses/courseServices";
-import { Lesson } from "@/feature/courses/courseTypes";
+import { FetchLessonByIdService, FetchLessonResourcesService } from "@/feature/courses/courseServices";
+import { Lesson, LessonResourcesAll } from "@/feature/courses/courseTypes";
 import Loader from "@/app/components/atoms/Loader";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 import { DeleteLessonService } from "@/feature/courses/courseServices";
 import { Button } from "@/components/ui/button";
 import { TrashIcon } from "lucide-react";
+import LessonDetailsUpdateStep from "@/feature/courses/components/lesson-update/LessonDetailsUpdateStep";
+import LessonTextResourceUpdateStep from "@/feature/courses/components/lesson-update/LessonTextResourcesUpdateStep";
 
 
 interface LessonEditPageProps {
@@ -25,9 +26,15 @@ const editLessonPage = ({params}: LessonEditPageProps) => {
     const router = useRouter();
     const [isLoading, setLoading] = useState<boolean>(false);
     const [lesson, setLesson] = useState<Lesson | null>(null)
+    const [lessonResources, setLessonResources] = useState<LessonResourcesAll | null>(null)
 
     useEffect(() => {
-        FetchLessonByIdService(lessonId, setLoading, setLesson);
+        (async () => {
+            setLoading(true)
+            await FetchLessonByIdService(lessonId, setLesson);
+            await FetchLessonResourcesService(lessonId, setLessonResources);
+            setLoading(false)
+        })()
     }, []);
 
   return (
@@ -35,7 +42,7 @@ const editLessonPage = ({params}: LessonEditPageProps) => {
         <h1 className="page-title">Edit Lesson</h1>
         {
             (isLoading) ? <Loader className="h-[75vh]" /> :
-            (!lesson) ? 
+            (!lesson || !lessonResources) ? 
                 <div className="flex justify-center items-center min-h-[75vh] w-full">
                     <h1 className="text-red-500 font-semibold text-lg text-center max-w-md">
                         Unable to fetch lesson data. Please try again later...
@@ -74,14 +81,14 @@ const editLessonPage = ({params}: LessonEditPageProps) => {
                 steps={[
                     {
                         label: "Lesson Details",
-                        content: <VideoDetailsUpdateStep lessonId={lessonId} lessonData={lesson}/>,
+                        content: <LessonDetailsUpdateStep lessonId={lessonId} lessonData={lesson}/>,
                         onNext: async () => {
                             return true;
                         },
                     },
                     {
-                        label: "Lesson Extra Resources",
-                        content: <p>Test Step</p>,
+                        label: "Lesson Text Resources",
+                        content: <LessonTextResourceUpdateStep lessonId={lessonId} resourceData={lessonResources} />,
                         onNext: async () => {
                             return true;
                         },

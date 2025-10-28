@@ -10,17 +10,17 @@ import { Button } from '@/components/ui/button'
 import { SquarePen, TrashIcon, UploadIcon } from 'lucide-react'
 import { Lesson } from '../../courseTypes'
 import { Switch } from '@/components/ui/switch'
-import { UpdateVideoDetailsService } from '../../courseServices'
+import { UpdateLessonDetailsService } from '../../courseServices'
 import Loader from '@/app/components/atoms/Loader'
 
 
 
-type VideoDetailsUpdateStepProps = {
+type LessonDetailsUpdateStepProps = {
   lessonId: string,
   lessonData: Lesson
 }
 
-const VideoDetailsUpdateStep = ({lessonId, lessonData}: VideoDetailsUpdateStepProps) => {
+const LessonDetailsUpdateStep = ({lessonId, lessonData}: LessonDetailsUpdateStepProps) => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -33,11 +33,11 @@ const VideoDetailsUpdateStep = ({lessonId, lessonData}: VideoDetailsUpdateStepPr
       },
   })
 
-  const videoDetailsFormSubmissionHandler = async (
+  const lessonDetailsSubmissionFormHandler = async (
     values: z.infer<typeof LessonDetailsUpdateFormSchema>
   ) => {
     setIsLoading(true)
-    await UpdateVideoDetailsService(lessonId, values)
+    await UpdateLessonDetailsService(lessonId, values)
     setIsLoading(false)
   }
 
@@ -49,7 +49,7 @@ const VideoDetailsUpdateStep = ({lessonId, lessonData}: VideoDetailsUpdateStepPr
         <div className="w-[80%] mx-auto">
           <h1 className="section-title">Add Lesson Details</h1>
           <Form {...lessonDetailsForm}>
-            <form onSubmit={lessonDetailsForm.handleSubmit(videoDetailsFormSubmissionHandler)} className="space-y-6">
+            <form onSubmit={lessonDetailsForm.handleSubmit(lessonDetailsSubmissionFormHandler)} className="space-y-6">
 
               {/* Course Title */}
               <FormField
@@ -112,4 +112,4 @@ const VideoDetailsUpdateStep = ({lessonId, lessonData}: VideoDetailsUpdateStepPr
   )
 }
 
-export default VideoDetailsUpdateStep
+export default LessonDetailsUpdateStep

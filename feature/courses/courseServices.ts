@@ -153,10 +153,10 @@ export const UpdateLessonMediaService = async (
 
 export const FetchLessonByIdService = async (
   lessonId: string,
-  setLoading: Dispatch<SetStateAction<boolean>>,
   setLesson: Dispatch<SetStateAction<Lesson | null>>,
+  setLoading?: Dispatch<SetStateAction<boolean>>,
 ): Promise<boolean> => {
-  setLoading(true)
+  if (setLoading) setLoading(true)
   try {
     const resp: StandardResponse = await fetchLessonByIdRepository(lessonId)
     const lessonData = resp?.response;
@@ -171,37 +171,37 @@ export const FetchLessonByIdService = async (
           }),
         };
         setLesson(formattedLessonData);
-        setLoading(false)
+        if (setLoading) setLoading(false)
         return true
       }
       toast.error(resp?.msg || "Unable to retrieve lesson data! Please try again later.");
   } catch (err: any) {
     toast.error(err?.response?.data?.msg || err?.message || standardErrors.UNKNOWN)
   }
-  setLoading(false)
+  if (setLoading) setLoading(false)
   return false
 }
 
 
 export const FetchLessonResourcesService = async (
   lessonId: string,
-  setLoading: Dispatch<SetStateAction<boolean>>,
-  setLessonResources: Dispatch<SetStateAction<LessonResourcesAll | null>>
+  setLessonResources: Dispatch<SetStateAction<LessonResourcesAll | null>>,
+  setLoading?: Dispatch<SetStateAction<boolean>>,
 ) => {
-  setLoading(true)
+  if (setLoading) setLoading(true)
   try {
     const resp = await fetchLessonResourcesRepository(lessonId)
     const lessonResources = resp?.response
     if (resp?.status && lessonResources) {
       setLessonResources(lessonResources)
-      setLoading(false)
+      if (setLoading) setLoading(false)
       return true
     }
     toast.error(resp?.msg || "Unable to fetch lesson resources! Please try again later.")
   } catch (err: any) {
     toast.error(err?.response?.data?.msg || err?.message || standardErrors.UNKNOWN)
   }
-  setLoading(false)
+  if (setLoading) setLoading(false)
   return false
 }
 
@@ -228,7 +228,7 @@ export const DeleteLessonService = async(
   }
 
 
-export const UpdateVideoDetailsService = async(
+export const UpdateLessonDetailsService = async(
   lessonId: string,
   values: z.infer<typeof LessonDetailsUpdateFormSchema>
 ) => {

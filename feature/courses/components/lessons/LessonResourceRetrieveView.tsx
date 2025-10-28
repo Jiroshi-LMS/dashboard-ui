@@ -58,7 +58,7 @@ const LessonResourceRetrieveView = ({lessonId}: {lessonId: string}) => {
     const [lessonResources, setLessonResources] = useState<LessonResourcesAll | null>(null)
 
     useEffect(() => {
-        FetchLessonResourcesService(lessonId, setIsLoading, setLessonResources)
+        FetchLessonResourcesService(lessonId, setLessonResources, setIsLoading)
     }, [])
   if (isLoading) return <Loader className='h-[30vh]' />
 

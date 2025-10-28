@@ -22,7 +22,7 @@ const LessonRetrieveView = ({courseId, lessonId}: {courseId: string, lessonId: s
   const [lesson, setLesson] = useState<Lesson | null>(null);
 
   useEffect(() => {
-    FetchLessonByIdService(lessonId, setLoading, setLesson);
+    FetchLessonByIdService(lessonId, setLesson, setLoading);
   }, []);
 
   const badgeColor =
