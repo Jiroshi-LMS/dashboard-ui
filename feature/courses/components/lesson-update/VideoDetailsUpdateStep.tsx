@@ -16,12 +16,11 @@ import Loader from '@/app/components/atoms/Loader'
 
 
 type VideoDetailsUpdateStepProps = {
-  courseId: string,
   lessonId: string,
   lessonData: Lesson
 }
 
-const VideoDetailsUpdateStep = ({courseId, lessonId, lessonData}: VideoDetailsUpdateStepProps) => {
+const VideoDetailsUpdateStep = ({lessonId, lessonData}: VideoDetailsUpdateStepProps) => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
 

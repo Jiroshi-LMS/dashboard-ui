@@ -74,18 +74,18 @@ const editLessonPage = ({params}: LessonEditPageProps) => {
                 steps={[
                     {
                         label: "Lesson Details",
-                        content: <VideoDetailsUpdateStep courseId={courseId} lessonId={lessonId} lessonData={lesson}/>,
+                        content: <VideoDetailsUpdateStep lessonId={lessonId} lessonData={lesson}/>,
                         onNext: async () => {
                             return true;
                         },
                     },
-                    // {
-                    //     label: "Lesson Extra Resources",
-                    //     content: <VideoResourcesStep />,
-                    //     onNext: async () => {
-                    //         return true;
-                    //     },
-                    // },
+                    {
+                        label: "Lesson Extra Resources",
+                        content: <p>Test Step</p>,
+                        onNext: async () => {
+                            return true;
+                        },
+                    },
                     // {
                     //     label: "Lesson Video",
                     //     content: <VideoUploadStep />,
