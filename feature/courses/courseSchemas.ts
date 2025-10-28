@@ -25,11 +25,10 @@ export const VideoDetailsFormSchema = z.object({
   course_uuid: z.uuidv4()
 })
 
-export const VideoDetailsUpdateFormSchema = z.object({
+export const LessonDetailsUpdateFormSchema = z.object({
   title: z.string().min(2, "Full name must be at least 2 characters."),
   description: z.string().optional(),
-  access_status: z.boolean(),
-  course_uuid: z.uuidv4()
+  access_status: z.boolean()
 })
 
 

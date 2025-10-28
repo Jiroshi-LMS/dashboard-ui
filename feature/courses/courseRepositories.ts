@@ -1,5 +1,5 @@
 import z from "zod";
-import { referenceMaterialResourceFormSchema, textResourceFormSchema, VideoDetailsFormSchema } from "./courseSchemas";
+import { LessonDetailsUpdateFormSchema, referenceMaterialResourceFormSchema, textResourceFormSchema, VideoDetailsFormSchema } from "./courseSchemas";
 import api from "@/lib/api/axios";
 import { route } from "@/lib/constants/RouteConstants";
 import { LessonReferenceMaterial, LessonRelatedLink } from "./courseTypes";
@@ -74,5 +74,13 @@ export const deleteLessonRepository = async (
     lessonId: string
 ): Promise<StandardResponse> => {
     const {data} = await api.delete(route.DELETE_LESSON(lessonId))
+    return data as StandardResponse
+}
+
+export const updateVideoDetailsRepository = async (
+    lessonId: string,
+    values: z.infer<typeof LessonDetailsUpdateFormSchema>
+): Promise<StandardResponse> => {
+    const {data} = await api.put(route.UPDATE_LESSON_DETAILS(lessonId), values)
     return data as StandardResponse
 }

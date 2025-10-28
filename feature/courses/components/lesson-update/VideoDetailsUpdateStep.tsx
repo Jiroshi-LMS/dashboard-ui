@@ -2,14 +2,16 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { zodResolver } from '@hookform/resolvers/zod'
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import z from 'zod'
-import { VideoDetailsUpdateFormSchema } from '../../courseSchemas'
+import z, { boolean } from 'zod'
+import { LessonDetailsUpdateFormSchema } from '../../courseSchemas'
 import { Button } from '@/components/ui/button'
 import { SquarePen, TrashIcon, UploadIcon } from 'lucide-react'
 import { Lesson } from '../../courseTypes'
 import { Switch } from '@/components/ui/switch'
+import { UpdateVideoDetailsService } from '../../courseServices'
+import Loader from '@/app/components/atoms/Loader'
 
 
 
@@ -21,27 +23,38 @@ type VideoDetailsUpdateStepProps = {
 
 const VideoDetailsUpdateStep = ({courseId, lessonId, lessonData}: VideoDetailsUpdateStepProps) => {
 
-  const videoDetailsForm = useForm<z.infer<typeof VideoDetailsUpdateFormSchema>>({
-      resolver: zodResolver(VideoDetailsUpdateFormSchema),
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  const lessonDetailsForm = useForm<z.infer<typeof LessonDetailsUpdateFormSchema>>({
+      resolver: zodResolver(LessonDetailsUpdateFormSchema),
       defaultValues: {
           title: lessonData?.title || "",
           description: lessonData?.description || "",
-          access_status: (lessonData?.access_status === 'active') ? true : false,
-          course_uuid: courseId
+          access_status: (lessonData?.access_status === 'active') ? true : false
       },
   })
+
+  const videoDetailsFormSubmissionHandler = async (
+    values: z.infer<typeof LessonDetailsUpdateFormSchema>
+  ) => {
+    setIsLoading(true)
+    await UpdateVideoDetailsService(lessonId, values)
+    setIsLoading(false)
+  }
+
+  if (isLoading) return <Loader className='h-[70vh]' />
 
   return (
     <main className="my-4">
       <section>
         <div className="w-[80%] mx-auto">
           <h1 className="section-title">Add Lesson Details</h1>
-          <Form {...videoDetailsForm}>
-            <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
+          <Form {...lessonDetailsForm}>
+            <form onSubmit={lessonDetailsForm.handleSubmit(videoDetailsFormSubmissionHandler)} className="space-y-6">
 
               {/* Course Title */}
               <FormField
-                control={videoDetailsForm.control}
+                control={lessonDetailsForm.control}
                 name="title"
                 render={({ field }) => (
                   <FormItem>
@@ -56,7 +69,7 @@ const VideoDetailsUpdateStep = ({courseId, lessonId, lessonData}: VideoDetailsUp
 
               {/* Course Description */}
               <FormField
-                control={videoDetailsForm.control}
+                control={lessonDetailsForm.control}
                 name="description"
                 render={({ field }) => (
                   <FormItem>
@@ -70,7 +83,7 @@ const VideoDetailsUpdateStep = ({courseId, lessonId, lessonData}: VideoDetailsUp
               />
 
               <FormField
-                control={videoDetailsForm.control}
+                control={lessonDetailsForm.control}
                 name="access_status"
                 render={({ field }) => (
                   <FormItem>

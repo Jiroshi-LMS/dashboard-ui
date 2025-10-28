@@ -1,12 +1,12 @@
 import z from "zod";
-import { courseCreationFormSchema, referenceMaterialResourceFormSchema, updateCourseFormSchema, VideoDetailsFormSchema } from "./courseSchemas";
+import { courseCreationFormSchema, LessonDetailsUpdateFormSchema, referenceMaterialResourceFormSchema, updateCourseFormSchema, VideoDetailsFormSchema } from "./courseSchemas";
 import api from "@/lib/api/axios";
 import { page, route } from "@/lib/constants/RouteConstants";
 import { Course, Lesson, LessonMediaData, LessonReferenceMaterial, LessonResourcesAll } from "./courseTypes";
 import { Dispatch, SetStateAction } from "react";
 import toast from "react-hot-toast";
 import { standardErrors } from "@/lib/constants/errors";
-import { createLessonDetailsService, createLessonReferenceMaterialRepository, deleteLessonRepository, fetchLessonByIdRepository, fetchLessonResourcesRepository, removeLessonReferenceMaterialRepository, updateLessonMediaRepository } from "./courseRepositories";
+import { createLessonDetailsService, createLessonReferenceMaterialRepository, deleteLessonRepository, fetchLessonByIdRepository, fetchLessonResourcesRepository, removeLessonReferenceMaterialRepository, updateLessonMediaRepository, updateVideoDetailsRepository } from "./courseRepositories";
 import { PresignedUploadReturnState } from "../common/commonTypes";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
@@ -226,3 +226,26 @@ export const DeleteLessonService = async(
       )
     }
   }
+
+
+export const UpdateVideoDetailsService = async(
+  lessonId: string,
+  values: z.infer<typeof LessonDetailsUpdateFormSchema>
+) => {
+  try {
+    const resp = await updateVideoDetailsRepository(lessonId, values)
+    if (resp?.status){
+      toast.success("Course has been removed successfully !")
+      return true
+    }
+    toast.error(resp?.msg || "Could not delete course! Please try again later.")
+    return false
+  } catch (err: any) {
+    toast.error(
+      err?.response?.data?.msg ||
+      err?.message ||
+      standardErrors.UNKNOWN
+    )
+    return false
+  }
+}
