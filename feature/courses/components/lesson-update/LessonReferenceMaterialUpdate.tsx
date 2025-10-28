@@ -12,12 +12,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { UploadIcon, FileTextIcon, FileIcon, XIcon } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z, { object } from "zod";
 import { referenceMaterialResourceFormSchema } from "../../courseSchemas";
-import { LessonReferenceMaterial } from "../../courseTypes";
+import { LessonReferenceMaterial, LessonResourcesAll } from "../../courseTypes";
 import toast from "react-hot-toast";
 import { usePresignedUpload } from "@/hooks/usePresignedUpload";
 import { constantFilenames, fileContentTypes, fileUploadPrefixes, PRIVATE_UPLOAD } from "@/lib/constants/FileConstants";
@@ -26,10 +26,12 @@ import { CreateLessonReferenceMaterialService, RemoveLessonReferenceMaterialServ
 import Loader from "@/app/components/atoms/Loader";
 import { Progress } from "@/components/ui/progress";
 
-const VideoReferenceMaterialsStep = ({
+const LessonReferenceMaterialUpdate = ({
   lessonId,
+  resourceData
 }: {
   lessonId: string | null;
+  resourceData: LessonResourcesAll | null
 }) => {
   const allowedFileSize = 20; // MBs
   const {uploadFile, setPresignedData} = usePresignedUpload(
@@ -39,9 +41,31 @@ const VideoReferenceMaterialsStep = ({
       lessonId
   )
 
+  const [initialCheck, setInitialCheck] = useState<boolean>(true);
   const [referenceMaterialList, setReferenceMaterialList] = useState<Array<LessonReferenceMaterial>>([])
   const [referenceUploadProgress, setReferenceUploadProgress] = useState<number>(0)
   const [referenceCardLoaders, setReferenceCardLoaders] = useState<Record<number, boolean>>({})
+
+
+  useEffect(() => {
+    if (!initialCheck || !resourceData) return
+    setInitialCheck(false)
+    setReferenceMaterialList(() => {
+      const arr: LessonReferenceMaterial[] = []
+      resourceData?.file_resources?.forEach((referenceMaterial) => {
+        const newMaterial: LessonReferenceMaterial = {
+          title: referenceMaterial.title,
+          file_name: referenceMaterial.file_name,
+          file_size: referenceMaterial.file_size,
+          file_type: referenceMaterial.file_type,
+          file_key: referenceMaterial.file_key,
+          resource_id: referenceMaterial.uuid
+        }
+        arr.push(newMaterial)
+      })
+      return arr
+    })
+  }, [resourceData])
 
   const referenceMaterialForm = useForm<
     z.infer<typeof referenceMaterialResourceFormSchema>
@@ -285,4 +309,4 @@ const VideoReferenceMaterialsStep = ({
   );
 };
 
-export default VideoReferenceMaterialsStep;
+export default LessonReferenceMaterialUpdate;
