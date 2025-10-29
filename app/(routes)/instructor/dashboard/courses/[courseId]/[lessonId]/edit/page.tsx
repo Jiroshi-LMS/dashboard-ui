@@ -13,6 +13,7 @@ import { TrashIcon } from "lucide-react";
 import LessonDetailsUpdateStep from "@/feature/courses/components/lesson-update/LessonDetailsUpdateStep";
 import LessonTextResourceUpdateStep from "@/feature/courses/components/lesson-update/LessonTextResourcesUpdateStep";
 import LessonReferenceMaterialUpdate from "@/feature/courses/components/lesson-update/LessonReferenceMaterialUpdate";
+import LessonVideoUpdateStep from "@/feature/courses/components/lesson-update/LessonVideoUpdateStep";
 
 
 interface LessonEditPageProps {
@@ -81,15 +82,18 @@ const editLessonPage = ({params}: LessonEditPageProps) => {
                     },
                     {
                         label: "Update Lesson Video",
-                        content: <p>LessonVideo</p>,
+                        content: <LessonVideoUpdateStep 
+                                    courseId={courseId} 
+                                    lessonId={lessonId} 
+                                    lessonData={lesson}
+                                />,
                         onNext: async () => {
                             return true;
                         }
                     }
                 ]}
                 onSubmit={async () => {
-                    console.log("Submitted");
-                    // router.replace("/instructor/dashboard/courses/");
+                    router.back();
                 }}
                 submitLabel="Done"
             />

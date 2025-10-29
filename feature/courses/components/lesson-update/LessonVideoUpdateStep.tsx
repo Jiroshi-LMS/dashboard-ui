@@ -2,34 +2,52 @@
 
 import Loader from "@/app/components/atoms/Loader";
 import { UploadIcon, XIcon, VideoIcon, BanIcon } from "lucide-react";
-import { SetStateAction, useRef, useState } from "react";
+import { SetStateAction, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import { LessonMediaData } from "../../courseTypes";
-import { formatFileSize, validateMP4File } from "@/lib/utils";
+import { Lesson, LessonMediaData } from "../../courseTypes";
+import { convertSeconds, formatFileSize, validateMP4File } from "@/lib/utils";
 import { Progress } from "@/components/ui/progress";
+import { usePresignedUpload } from "@/hooks/usePresignedUpload";
+import { constantFilenames, fileUploadPrefixes, PRIVATE_UPLOAD } from "@/lib/constants/FileConstants";
+import { Button } from "@/components/ui/button";
+import { UpdateLessonMediaService } from "../../courseServices";
 
 type VideoUploadStepProps = {
-  lessonId: string | null;
-  fileData: LessonMediaData;
-  setFileData: React.Dispatch<SetStateAction<LessonMediaData>>;
-  uploadProgress: number;
-  cancelUpload: () => void;
+  courseId: string;
+  lessonId: string;
+  lessonData: Lesson;
 };
 
 const LessonVideoUpdateStep = ({
+  courseId,
   lessonId,
-  fileData,
-  setFileData,
-  uploadProgress,
-  cancelUpload,
+  lessonData
 }: VideoUploadStepProps) => {
   const allowedFileSize = 2; // GB
+  const [uploadProgress, setUploadProgress] = useState<number>(0)
+  const [fileData, setFileData] = useState<LessonMediaData>({
+      file: null,
+      duration: 0
+  })
+
+  const {uploadFile: uploadLessonMedia, cancelUpload} = usePresignedUpload(
+      constantFilenames.LESSON_MEDIA,
+      fileUploadPrefixes.LESSON_MEDIA,
+      PRIVATE_UPLOAD,
+      courseId
+  )
   const videoUploadRef = useRef<HTMLInputElement | null>(null);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [isValidatingVideoFile, setIsValidatingVideoFile] = useState<boolean>(false);
-  const [previewURL, setPreviewURL] = useState<string | null>(null);
+  const [previewURL, setPreviewURL] = useState<string | null>(lessonData.video_url);
+  const [disableUploadBtn, setDisableUploadButton] = useState<boolean>(false)
 
-  
+  useEffect(() => {
+    if (uploadProgress >= 100){
+      const uploadTimeout = setTimeout(() => {setUploadProgress(0)}, 1000)
+      return () => clearTimeout(uploadTimeout)
+    }
+  }, [uploadProgress])
 
   const videoFileChange = async (file: File | undefined) => {
     if (!file) return;
@@ -61,6 +79,24 @@ const LessonVideoUpdateStep = ({
     setPreviewURL(null);
   };
 
+
+  const videoUploadHandler = async () => {
+    if (!lessonId) return false
+    if (!fileData.file) {
+        toast.error("Please select a valid media!")
+        return false;
+    }
+    setDisableUploadButton(true)
+    await UpdateLessonMediaService(
+        lessonId,
+        fileData, 
+        uploadLessonMedia,
+        setUploadProgress
+    )
+    setDisableUploadButton(false)
+  }
+
+
   if (!lessonId) return <Loader className="h-screen" />;
 
   return (
@@ -69,7 +105,7 @@ const LessonVideoUpdateStep = ({
         <div>
           <h2 className="section-title">Lesson Video Upload</h2>
           <p className="text-gray-600 text-[12px] mb-2 text-justify font-semibold">
-            Upload the lesson video. It will be securely served to enrolled course members.
+            Upload the lesson video. It will be served to enrolled course members.
           </p>
 
           {/* Upload Area */}
@@ -113,7 +149,7 @@ const LessonVideoUpdateStep = ({
           />
 
           {/* Preview Section */}
-          {previewURL && fileData.file && (
+          {previewURL && (
             <div className="mt-8 w-[80%] mx-auto border border-gray-200 rounded-xl shadow-sm p-4 relative bg-white">
               <button
                 onClick={clearVideo}
@@ -125,9 +161,9 @@ const LessonVideoUpdateStep = ({
               <div className="flex items-center gap-3 mb-3">
                 <VideoIcon className="text-teal-600" size={20} />
                 <div>
-                  <p className="font-semibold text-[14px]">{fileData.file.name}</p>
+                  <p className="font-semibold text-[14px]">{fileData?.file?.name || lessonData?.title || ""}</p>
                   <p className="text-xs text-gray-500">
-                    {formatFileSize(fileData.file.size)} • {fileData.duration.toFixed(2)}s
+                    {(fileData?.file) ? formatFileSize(fileData.file.size) + " • " + fileData.duration.toFixed(2) + "s": lessonData?.duration + 's' || ""}
                   </p>
                 </div>
               </div>
@@ -166,6 +202,16 @@ const LessonVideoUpdateStep = ({
               )}
             </div>
           )}
+
+          <div className="w-full flex justify-end items-center my-3">
+            <Button
+              disabled={!fileData.file || (uploadProgress > 0 && uploadProgress < 100) || disableUploadBtn}
+              className={(!fileData.file) ? `bg-gray-500 hover:bg-gray-400 cursor-not-allowed !pointer-events-auto` : ""}
+              onClick={videoUploadHandler}
+            >
+              {(uploadProgress > 0 && uploadProgress < 100) ? <span className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full" /> : "Update Video"}
+            </Button>
+          </div>
         </div>
       </section>
     </main>
