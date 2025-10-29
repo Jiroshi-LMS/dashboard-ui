@@ -51,62 +51,47 @@ const editLessonPage = ({params}: LessonEditPageProps) => {
                 </div>
             :
             <>
-            {/* Delete Section */}
-            <div className="flex justify-end mb-3">
-                <AlertDialog>
-                <AlertDialogTrigger asChild>
-                    <Button variant="destructive" className="flex items-center gap-2">
-                    <TrashIcon size={16} /> Delete Lesson
-                    </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                    <AlertDialogHeader>
-                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                        This action cannot be undone. It will permanently delete your
-                        lesson and its data.
-                    </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction 
-                        onClick={() => {DeleteLessonService(courseId, lessonId, router)}}
-                        className="bg-red-400 hover:bg-red-500 cursor-pointer text-white">
-                        Continue
-                    </AlertDialogAction>
-                    </AlertDialogFooter>
-                </AlertDialogContent>
-                </AlertDialog>
-            </div>
             <Stepper
                 steps={[
                     {
-                        label: "Lesson Details",
-                        content: <LessonDetailsUpdateStep lessonId={lessonId} lessonData={lesson}/>,
+                        label: "Update Lesson Details",
+                        content: <LessonDetailsUpdateStep 
+                                    courseId={courseId} 
+                                    lessonId={lessonId} 
+                                    lessonData={lesson}
+                                    router={router}
+                                />,
                         onNext: async () => {
                             return true;
                         },
                     },
                     {
-                        label: "Lesson Text Resources",
+                        label: "Update Lesson Text Resources",
                         content: <LessonTextResourceUpdateStep lessonId={lessonId} resourceData={lessonResources} />,
                         onNext: async () => {
                             return true;
                         },
                     },
                     {
-                        label: "Lesson Video",
+                        label: "Update Lesson Reference Material",
                         content: <LessonReferenceMaterialUpdate lessonId={lessonId} resourceData={lessonResources} />,
                         onNext: async () => {
                             return true;
                         },
+                    },
+                    {
+                        label: "Update Lesson Video",
+                        content: <p>LessonVideo</p>,
+                        onNext: async () => {
+                            return true;
+                        }
                     }
                 ]}
                 onSubmit={async () => {
                     console.log("Submitted");
                     // router.replace("/instructor/dashboard/courses/");
                 }}
-                submitLabel="Save"
+                submitLabel="Done"
             />
             </>
         }

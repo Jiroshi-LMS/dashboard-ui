@@ -10,17 +10,21 @@ import { Button } from '@/components/ui/button'
 import { SquarePen, TrashIcon, UploadIcon } from 'lucide-react'
 import { Lesson } from '../../courseTypes'
 import { Switch } from '@/components/ui/switch'
-import { UpdateLessonDetailsService } from '../../courseServices'
+import { DeleteLessonService, UpdateLessonDetailsService } from '../../courseServices'
 import Loader from '@/app/components/atoms/Loader'
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog'
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 
 
 
 type LessonDetailsUpdateStepProps = {
+  courseId: string,
   lessonId: string,
-  lessonData: Lesson
+  lessonData: Lesson,
+  router: AppRouterInstance
 }
 
-const LessonDetailsUpdateStep = ({lessonId, lessonData}: LessonDetailsUpdateStepProps) => {
+const LessonDetailsUpdateStep = ({courseId, lessonId, lessonData, router}: LessonDetailsUpdateStepProps) => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -45,6 +49,33 @@ const LessonDetailsUpdateStep = ({lessonId, lessonData}: LessonDetailsUpdateStep
 
   return (
     <main className="my-4">
+      {/* Delete Section */}
+            <div className="flex justify-end mb-3">
+                <AlertDialog>
+                <AlertDialogTrigger asChild>
+                    <Button variant="destructive" className="flex items-center gap-2">
+                    <TrashIcon size={16} /> Delete Lesson
+                    </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                        This action cannot be undone. It will permanently delete your
+                        lesson and its data.
+                    </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction 
+                        onClick={() => {DeleteLessonService(courseId, lessonId, router)}}
+                        className="bg-red-400 hover:bg-red-500 cursor-pointer text-white">
+                        Continue
+                    </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+                </AlertDialog>
+            </div>
       <section>
         <div className="w-[80%] mx-auto">
           <h1 className="section-title">Add Lesson Details</h1>
