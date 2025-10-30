@@ -3,14 +3,14 @@
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { ActivityIcon, Calendar1Icon, Clock10Icon, PencilIcon, TrashIcon } from 'lucide-react'
+import { ActivityIcon, Calendar1Icon, Clock10Icon, Package, PencilIcon, TrashIcon } from 'lucide-react'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { Lesson } from '../../courseTypes'
 import { DeleteLessonService, FetchLessonByIdService } from '../../courseServices'
 import Loader from '@/app/components/atoms/Loader'
 import { Badge } from '@/components/ui/badge'
-import { getStringifiedDuration } from '@/lib/utils'
+import { formatFileSize, getStringifiedDuration } from '@/lib/utils'
 import LessonResourceRetrieveView from './LessonResourceRetrieveView'
 import { page } from '@/lib/constants/RouteConstants'
 import { useRouter } from 'next/navigation'
@@ -86,6 +86,9 @@ const LessonRetrieveView = ({courseId, lessonId}: {courseId: string, lessonId: s
               </Badge>
               <span className="flex items-center gap-1">
                 <Clock10Icon size={14} /> {getStringifiedDuration(lesson?.duration || 0)}
+              </span>
+              <span className="flex items-center gap-1">
+                <Package size={14} /> {formatFileSize(lesson?.media_size || 0)}
               </span>
             </div>
             <div className="flex items-center gap-2">

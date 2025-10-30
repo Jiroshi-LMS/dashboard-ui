@@ -43,14 +43,16 @@ export function convertSeconds(seconds: number, returnType: "hours" | "minutes" 
 }
 
 
-export function getStringifiedDuration(seconds: number): string {
+export function getStringifiedDuration(secondsInput: number): string {
+  const seconds = Number(secondsInput);
   if (isNaN(seconds) || seconds < 0) throw new Error("Invalid seconds input");
 
   let duration = parseFloat((seconds / 3600).toFixed(2)); // In hours
   if (duration >= 1) return `${duration} hour(s)`
   duration = parseFloat((seconds / 60).toFixed(2));
   if (duration >= 1) return `${duration} minute(s)`
-  return `${seconds} second(s)`
+  duration = parseFloat(seconds.toFixed(2))
+  return `${duration} second(s)`
   
 }
 
