@@ -59,7 +59,7 @@ const DashboardHome = () => {
       {/* Upcoming Section */}
       <section className="mt-10">
         <h2 className="section-title mb-5">What’s Upcoming?</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
           {[
             {
               title: 'Instructor Payments',
@@ -96,23 +96,23 @@ const DashboardHome = () => {
               key={i}
               className="border border-gray-200 hover:border-gray-300 transition-all shadow-sm hover:shadow-md rounded-xl"
             >
-              <CardHeader className="pb-2">
-                <div className="flex items-center justify-between">
+              <CardHeader className="">
+                <div className="flex flex-col items-start justify-center">
                   <div className="flex items-center gap-2">
                     {item.icon}
-                    <CardTitle className="text-sm font-semibold text-gray-800 truncate">
+                    <CardTitle className="text-sm font-semibold text-gray-800 truncate px-2">
                       {item.title}
                     </CardTitle>
                   </div>
                   <span
-                    className="whitespace-nowrap text-[10px] font-medium px-2 py-0.5 rounded-full border border-gray-300 text-gray-600 bg-gray-50"
+                    className="whitespace-nowrap text-[10px] font-medium px-2 py-0.5 rounded-full border border-gray-300 text-gray-600 bg-gray-50 mt-2"
                     style={{ flexShrink: 0 }}
                   >
                     {item.tag}
                   </span>
                 </div>
               </CardHeader>
-              <CardContent className="pt-1">
+              <CardContent className="">
                 <p className="text-sm text-gray-600 leading-relaxed">
                   {item.desc}
                 </p>
