@@ -17,6 +17,7 @@ export type Lesson = {
     duration: number
     title: string
     uuid: string
+    media_size: number
     video_url: string | null
 }
 

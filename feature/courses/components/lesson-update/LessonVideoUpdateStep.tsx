@@ -163,7 +163,8 @@ const LessonVideoUpdateStep = ({
                 <div>
                   <p className="font-semibold text-[14px]">{fileData?.file?.name || lessonData?.title || ""}</p>
                   <p className="text-xs text-gray-500">
-                    {(fileData?.file) ? formatFileSize(fileData.file.size) + " • " + fileData.duration.toFixed(2) + "s": lessonData?.duration + 's' || ""}
+                    {(fileData?.file) ? formatFileSize(fileData.file.size) + " • " + fileData.duration.toFixed(2) + "s": 
+                    formatFileSize(lessonData?.media_size || 0) + " • " + lessonData?.duration + 's' || ""}
                   </p>
                 </div>
               </div>
