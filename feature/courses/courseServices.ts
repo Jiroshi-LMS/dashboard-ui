@@ -133,7 +133,7 @@ export const UpdateLessonMediaService = async (
         setFileUploadProgress(0);
         throw new Error("Upload cancelled!.")
     }
-    const resp = await updateLessonMediaRepository(lessonId, objectKey, mediaData.duration)
+    const resp = await updateLessonMediaRepository(lessonId, objectKey, mediaData.duration, mediaData.file.size)
     if (resp?.status) {
       toast.success("Lesson Media Updated Successfully !")
       return true
