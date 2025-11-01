@@ -11,6 +11,10 @@
 
 - Fix document icon on video resource creation step
 - Improve duration storing. int -> float for more precision
+- Move some of services functions to repositories folder
+- Test Platform under slow internet conditions and stress tests
+- Improved Error Handling
+- Improvements on the DRY part (make reusables)
 
 # POST MVP
 
