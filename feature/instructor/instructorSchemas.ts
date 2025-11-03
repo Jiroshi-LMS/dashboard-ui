@@ -34,3 +34,14 @@ export const instructorAccountDetailsUpdateSchema = z.object({
   }),
   phone_number: z.string().regex(/^(\d{10})?$/, "Enter a valid 10-digit phone number.").optional()
 })
+
+
+export const instructorPasswordDetailsUpdateFormSchema = z.object({
+    current_password: z.string().min(1, "Current password is required"),
+    new_password: z.string().min(6, "New password must be at least 6 characters"),
+    retype_new_password: z.string().min(6, "New password must be at least 6 characters"),
+  })
+  .refine((data) => data.new_password === data.retype_new_password, {
+    path: ["retype_new_password"],
+    message: "Passwords do not match",
+  })

@@ -36,7 +36,7 @@ const profilePage = () => {
         <>
             <InstructorUpdateProfileForm instructor={instructor} setIsUpdatingProfile={setLoading} />
             <InstructorUpdateAccountDetails instructor={instructor} setIsUpdatingProfile={setLoading} />
-            <InstructorUpdatePasswordForm />
+            <InstructorUpdatePasswordForm setIsUpdatingProfile={setLoading} />
         </>
         }
     </main>

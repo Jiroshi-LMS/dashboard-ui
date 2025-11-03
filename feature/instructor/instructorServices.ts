@@ -1,9 +1,9 @@
 import api from "@/lib/api/axios"
 import { route } from "@/lib/constants/RouteConstants"
-import { instructorAccountDetailsUpdateSchema, instructorProfileInfoSchema, instructorRegistrationSchema, loginFormSchema } from "@/feature/instructor/instructorSchemas"
+import { instructorAccountDetailsUpdateSchema, instructorPasswordDetailsUpdateFormSchema, instructorProfileInfoSchema, instructorRegistrationSchema, loginFormSchema } from "@/feature/instructor/instructorSchemas"
 import z from "zod"
 import { countryCodes } from "@/lib/constants/common"
-import { updateInstructorAccountDetailsRepository } from "./instructorRepository"
+import { updateInstructorAccountDetailsRepository, updateInstructorPasswordRepository } from "./instructorRepository"
 import toast from "react-hot-toast"
 import { standardErrors } from "@/lib/constants/errors"
 
@@ -64,6 +64,23 @@ export const InstructorAccountDetailsUpdateService = async (
       return resp
     }
     throw new Error("Failed to update account details !")
+  } catch (err: any) {
+    toast.error(err?.response?.data?.msg || err?.message || standardErrors.UNKNOWN)
+    return null
+  }
+}
+
+
+export const InstructorPasswordUpdateService = async (
+  values: z.infer<typeof instructorPasswordDetailsUpdateFormSchema>
+): Promise<StandardResponse | null> => {
+  try {
+    const resp: StandardResponse = await updateInstructorPasswordRepository(values)
+    if (resp?.status) {
+      toast.success("Password Updated Successfully !")
+      return resp
+    }
+    throw new Error("Failed to update password !")
   } catch (err: any) {
     toast.error(err?.response?.data?.msg || err?.message || standardErrors.UNKNOWN)
     return null
