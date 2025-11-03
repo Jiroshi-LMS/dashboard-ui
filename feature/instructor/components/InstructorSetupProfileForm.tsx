@@ -87,7 +87,7 @@ const InstructorSetupProfileForm = () => {
                 throw new Error("Please provide a valid file format.");
             const {objectKey} = await uploadFile(file, contentType, setProfileUploadProgress)
             setImageFile(file)
-            form.setValue("profileImg", objectKey)
+            form.setValue("profileImg", objectKey as string)
         } catch (err: any) {
             toast.error(err?.message ?? "Something went wrong! Please try again later.")
         }
