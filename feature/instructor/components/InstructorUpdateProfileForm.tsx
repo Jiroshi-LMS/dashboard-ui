@@ -52,6 +52,7 @@ const InstructorUpdateProfileForm = ({
   })
 
   const [imageFile, setImageFile] = useState<File | null>(null)
+  const [disableAction, setDisableAction] = useState<boolean>(false)
   const [profileUploadProgress, setProfileUploadProgress] = useState<number>(0)
 
   useEffect(() => {
@@ -88,6 +89,7 @@ const InstructorUpdateProfileForm = ({
   }
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDisableAction(true)
     try {
         const file = e.target.files?.[0];
         if (!file) return;
@@ -102,6 +104,7 @@ const InstructorUpdateProfileForm = ({
     } catch (err: any) {
         toast.error(err?.message ?? "Something went wrong! Please try again later.")
     }
+    setDisableAction(false)
   }
 
   const handleDelete = () => {
@@ -159,6 +162,7 @@ const InstructorUpdateProfileForm = ({
               variant="outline"
               className={`text-sm font-medium flex items-center gap-1 border-red-500 text-red-600 hover:bg-red-50 transition-all duration-200 ${!imageFile ? 'opacity-50 cursor-not-allowed' : ''}`}
               onClick={handleDelete}
+              disabled={profileUploadProgress > 0 || disableAction}
             >
               <TrashIcon size={14} /> Delete
             </Button>
@@ -203,7 +207,9 @@ const InstructorUpdateProfileForm = ({
               />
 
               <div className="flex justify-end">
-                <Button className="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-6">
+                <Button 
+                  className="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-6"
+                  disabled={profileUploadProgress > 0 || disableAction}>
                   Save Changes
                 </Button>
               </div>

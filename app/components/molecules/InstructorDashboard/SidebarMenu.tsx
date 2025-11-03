@@ -40,11 +40,11 @@ const utilItems = [
     url: "/instructor/dashboard/students",
     icon: UsersIcon,
   },
-  {
-    title: "Analytics",
-    url: "/instructor/dashboard/analytics",
-    icon: ChartAreaIcon,
-  },
+  // {
+  //   title: "Analytics",
+  //   url: "/instructor/dashboard/analytics",
+  //   icon: ChartAreaIcon,
+  // },
   {
     title: "Manage API Keys",
     url: "/instructor/dashboard/api-keys",
