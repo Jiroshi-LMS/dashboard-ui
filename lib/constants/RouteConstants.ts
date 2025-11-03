@@ -6,6 +6,7 @@ export const route = {
     
     INSTRUCTOR: "/instructor/",
     SET_INSTRUCTOR_PROFILE: "/instructor/profile/",
+    UPDATE_INSTRUCTOR_INFO: "/instructor/update-info/",
 
     LIST_COURSES: "/courses/views/",
     CREATE_COURSE: "/courses/views/",

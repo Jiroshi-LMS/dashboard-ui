@@ -1,8 +1,11 @@
 import api from "@/lib/api/axios"
 import { route } from "@/lib/constants/RouteConstants"
-import { instructorProfileInfoSchema, instructorRegistrationSchema, loginFormSchema } from "@/feature/instructor/instructorSchemas"
+import { instructorAccountDetailsUpdateSchema, instructorProfileInfoSchema, instructorRegistrationSchema, loginFormSchema } from "@/feature/instructor/instructorSchemas"
 import z from "zod"
 import { countryCodes } from "@/lib/constants/common"
+import { updateInstructorAccountDetailsRepository } from "./instructorRepository"
+import toast from "react-hot-toast"
+import { standardErrors } from "@/lib/constants/errors"
 
 export const fetchInstructorService = async (): Promise<StandardResponse> => {
     const resp = await api.get(route.ME)
@@ -48,4 +51,21 @@ export const setInstructorProfileService = async (
     profileUpdateParams['profile_picture'] = values.profileImg
   const resp = await api.post(route.SET_INSTRUCTOR_PROFILE, profileUpdateParams)
   return resp.data as StandardResponse
+}
+
+
+export const InstructorAccountDetailsUpdateService = async (
+  values: z.infer<typeof instructorAccountDetailsUpdateSchema>
+): Promise<StandardResponse | null> => {
+  try {
+    const resp: StandardResponse = await updateInstructorAccountDetailsRepository(values)
+    if (resp?.status) {
+      toast.success("Account Details Updated Successfully !")
+      return resp
+    }
+    throw new Error("Failed to update account details !")
+  } catch (err: any) {
+    toast.error(err?.response?.data?.msg || err?.message || standardErrors.UNKNOWN)
+    return null
+  }
 }

@@ -24,3 +24,13 @@ export const instructorProfileInfoSchema = z.object({
   location: z.string().optional(),
   bio: z.string().optional(),
 })
+
+
+export const instructorAccountDetailsUpdateSchema = z.object({
+  full_name: z.string().min(2, "Full name must be at least 2 characters."),
+  username: z.string().min(3, "Username must be at least 3 characters."),
+  email: z.email().refine((val) => !!val, {
+    message: "Enter a valid email address.",
+  }),
+  phone_number: z.string().regex(/^(\d{10})?$/, "Enter a valid 10-digit phone number.").optional()
+})

@@ -78,6 +78,7 @@ const InstructorUpdateProfileForm = ({
         setIsUpdatingProfile(true);
         const resp = await setInstructorProfileService(values)
         if (!resp?.status) return toast.error(resp?.msg ?? "Unable to update profile! Please try again later.");
+        toast.success("Profile Details Updated !")
         dispatch(fetchInstructor(true))
         setIsUpdatingProfile(false);
     } catch (err: any) {

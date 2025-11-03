@@ -1,39 +1,126 @@
+'use client'
+
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import React from 'react'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import React, { Dispatch, SetStateAction } from 'react'
+import { Instructor } from '../instructorTypes'
+import { useForm } from 'react-hook-form'
+import z from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { instructorAccountDetailsUpdateSchema } from '../instructorSchemas'
+import { InstructorAccountDetailsUpdateService } from '../instructorServices'
 
-const InstructorUpdateAccountDetails = () => {
+const InstructorUpdateAccountDetails = ({
+  instructor,
+  setIsUpdatingProfile,
+}: {
+  instructor: Instructor | null
+  setIsUpdatingProfile: Dispatch<SetStateAction<boolean>>
+}) => {
+  const form = useForm<z.infer<typeof instructorAccountDetailsUpdateSchema>>({
+    resolver: zodResolver(instructorAccountDetailsUpdateSchema),
+    defaultValues: {
+      full_name: instructor?.full_name || '',
+      username: instructor?.username || '',
+      email: instructor?.email || '',
+      phone_number: instructor?.phone_number || '',
+    },
+  })
+
+  const onSubmit = async (values: z.infer<typeof instructorAccountDetailsUpdateSchema>) => {
+    setIsUpdatingProfile(true)
+    await InstructorAccountDetailsUpdateService(values)
+    setIsUpdatingProfile(false)
+  }
+
   return (
-    <section className="flex flex-col justify-center items-start w-[80%] mx-auto">
-        <h2 className="section-title">Account Settings</h2>
+    <section className="max-w-4xl mx-auto bg-white rounded-xl border border-gray-200 shadow-sm p-8 mt-6">
+      <h2 className="text-xl font-bold text-gray-800 mb-8">Account Settings</h2>
 
-        <div className="flex justify-center items-center gap-4 w-full">
-            <div className="flex flex-col gap-1 w-full">
-                <Label htmlFor="url-title" className="text-[14px]">Full Name</Label>
-                <Input placeholder="Full Name" className="w-full" name="url-title" id="url-title" />
-            </div>
-            <div className="flex flex-col gap-1 w-full">
-                <Label htmlFor="reference-url" className="text-[14px]">Username</Label>
-                <Input placeholder="Username" className="w-full" name="url-title" id="url-title" />
-            </div>
-        </div>
-        <div className="flex justify-center items-center gap-4 w-full my-4">
-            <div className="flex flex-col gap-1 w-full">
-                <Label htmlFor="url-title" className="text-[14px]">Email</Label>
-                <Input placeholder="Email" className="w-full" name="url-title" id="url-title" />
-            </div>
-            <div className="flex flex-col gap-1 w-full">
-                <Label htmlFor="url-title" className="text-[14px]">Phone Number</Label>
-                <div className="flex justify-center items-center gap-2">
-                    <Input type="tel" placeholder="Phone Number" className="w-[4em]" name="url-title" id="url-title" value="+91" disabled/>
-                    <Input placeholder="Phone Number" className="w-full" name="url-title" id="url-title" />
-                </div>
-            </div>
-        </div>
-        <div className="flex justify-end items-center w-full">
-            <Button className='bg-primary text-white hover:bg-teal-600 hover:text-white cursor-pointer my-4'>Save Changes</Button>
-        </div>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          {/* Row 1: Full name & Username */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <FormField
+              control={form.control}
+              name="full_name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Full Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Full Name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Username" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          {/* Row 2: Email & Phone */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input type="email" placeholder="Email address" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="phone_number"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phone Number</FormLabel>
+                  <div className="flex gap-2">
+                    <Input
+                      type="text"
+                      value="+91"
+                      disabled
+                      className="w-20 text-center bg-gray-100 text-gray-500"
+                    />
+                    <FormControl>
+                      <Input type="tel" placeholder="9876543210" {...field} />
+                    </FormControl>
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          {/* Save Button */}
+          <div className="flex justify-end">
+            <Button
+              type="submit"
+              className="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-6 py-2 rounded-md"
+            >
+              Save Changes
+            </Button>
+          </div>
+        </form>
+      </Form>
     </section>
   )
 }
