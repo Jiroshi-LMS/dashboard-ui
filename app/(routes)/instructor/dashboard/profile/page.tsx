@@ -34,7 +34,7 @@ const profilePage = () => {
         </div>
         :
         <>
-            <InstructorUpdateProfileForm instructor={instructor} />
+            <InstructorUpdateProfileForm instructor={instructor} setIsUpdatingProfile={setLoading} />
             <InstructorUpdateAccountDetails />
             <InstructorUpdatePasswordForm />
         </>

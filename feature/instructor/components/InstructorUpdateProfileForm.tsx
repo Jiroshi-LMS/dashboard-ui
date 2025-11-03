@@ -2,11 +2,10 @@
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { TrashIcon, UploadIcon } from 'lucide-react'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { Instructor } from '../instructorTypes'
 import { instructorProfileInfoSchema } from '../instructorSchemas'
 import { useForm } from 'react-hook-form'
@@ -24,9 +23,20 @@ import {
 import { units } from '@/lib/constants/common'
 import toast from 'react-hot-toast'
 import { usePresignedUpload } from '@/hooks/usePresignedUpload'
+import { Progress } from '@/components/ui/progress'
+import { setInstructorProfileService } from '../instructorServices'
+import { useAppDispatch } from '@/hooks/useRedux'
+import { fetchInstructor } from '../instructorSlice'
 
-const InstructorUpdateProfileForm = ({ instructor }: { instructor: Instructor | null }) => {
+const InstructorUpdateProfileForm = ({ 
+    instructor,
+    setIsUpdatingProfile
+}: { 
+    instructor: Instructor | null,
+    setIsUpdatingProfile: Dispatch<SetStateAction<boolean>>
+}) => {
   const allowedFileSize = 5
+  const dispatch = useAppDispatch()
   const { uploadFile } = usePresignedUpload(
           constantFilenames.PROFILE, 
           fileUploadPrefixes.PROFILE,
@@ -44,8 +54,36 @@ const InstructorUpdateProfileForm = ({ instructor }: { instructor: Instructor | 
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [profileUploadProgress, setProfileUploadProgress] = useState<number>(0)
 
-  const updateProfileFormHandler = (values: z.infer<typeof instructorProfileInfoSchema>) => {
-    console.log(values)
+  useEffect(() => {
+        const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+            if (!imageFile) return;
+            e.preventDefault()
+            e.returnValue = "" // required for Chrome to trigger the prompt
+        }
+        window.addEventListener("beforeunload", handleBeforeUnload)
+        return () => {
+            window.removeEventListener("beforeunload", handleBeforeUnload)
+        }
+    }, [])
+
+    useEffect(() => {
+        const uploadTimeout = setTimeout(() => {
+            if (profileUploadProgress === 100) setProfileUploadProgress(0);
+        }, 500)
+        return () => {clearTimeout(uploadTimeout)}
+    }, [profileUploadProgress, setProfileUploadProgress])
+
+  const updateProfileFormHandler = async (values: z.infer<typeof instructorProfileInfoSchema>) => {
+   try {
+        setIsUpdatingProfile(true);
+        const resp = await setInstructorProfileService(values)
+        if (!resp?.status) return toast.error(resp?.msg ?? "Unable to update profile! Please try again later.");
+        dispatch(fetchInstructor(true))
+        setIsUpdatingProfile(false);
+    } catch (err: any) {
+        setIsUpdatingProfile(false);
+        toast.error(err?.message || "Couldn't save your profile info! Please try again later.")
+    }
   }
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,7 +105,7 @@ const InstructorUpdateProfileForm = ({ instructor }: { instructor: Instructor | 
 
   const handleDelete = () => {
     setImageFile(null)
-    form.setValue('profileImg', '' as any)
+    form.setValue('profileImg', undefined)
   }
 
   return (
@@ -104,8 +142,15 @@ const InstructorUpdateProfileForm = ({ instructor }: { instructor: Instructor | 
           </div>
 
           <div className="text-center space-y-1">
+            {
+                (profileUploadProgress > 0) ? 
+                <div className="w-full py-3">
+                    <Progress value={profileUploadProgress} className="w-full" />
+                </div>
+                : null
+            }
             <h4 className="font-semibold text-gray-800 text-sm">Profile Picture</h4>
-            <p className="text-gray-500 text-xs">PNG or JPEG under 15 MB</p>
+            <p className="text-gray-500 text-xs">PNG or JPEG under {allowedFileSize} MB</p>
           </div>
 
           <Button

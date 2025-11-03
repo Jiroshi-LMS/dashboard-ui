@@ -40,10 +40,12 @@ export const loginInstructorService = async (
 export const setInstructorProfileService = async (
   values: z.infer<typeof instructorProfileInfoSchema>
 ): Promise<StandardResponse> => {
-  const resp = await api.post(route.SET_INSTRUCTOR_PROFILE, {
-    profile_picture: values.profileImg || null,
+  const profileUpdateParams: any = {
     location: (values.location && values.location.length > 0) ? values.location : null,
     bio: (values.bio && values.bio.length > 0) ? values.bio : null
-  })
+  }
+  if (values.profileImg && values.profileImg !== "")
+    profileUpdateParams['profile_picture'] = values.profileImg
+  const resp = await api.post(route.SET_INSTRUCTOR_PROFILE, profileUpdateParams)
   return resp.data as StandardResponse
 }
