@@ -1,46 +1,168 @@
+'use client'
+
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { TrashIcon, UploadIcon } from 'lucide-react'
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
 import { Instructor } from '../instructorTypes'
+import { instructorProfileInfoSchema } from '../instructorSchemas'
+import { useForm } from 'react-hook-form'
+import z from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { constantFilenames, fileContentTypes, fileUploadPrefixes, PUBLIC_UPLOAD, staticFiles } from '@/lib/constants/FileConstants'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from '@/components/ui/form'
+import { units } from '@/lib/constants/common'
+import toast from 'react-hot-toast'
+import { usePresignedUpload } from '@/hooks/usePresignedUpload'
 
-const InstructorUpdateProfileForm = ({instructor}: {instructor: Instructor | null}) => {
+const InstructorUpdateProfileForm = ({ instructor }: { instructor: Instructor | null }) => {
+  const allowedFileSize = 5
+  const { uploadFile } = usePresignedUpload(
+          constantFilenames.PROFILE, 
+          fileUploadPrefixes.PROFILE,
+          PUBLIC_UPLOAD
+      )
+  const form = useForm<z.infer<typeof instructorProfileInfoSchema>>({
+    resolver: zodResolver(instructorProfileInfoSchema),
+    defaultValues: {
+      profileImg: '',
+      location: instructor?.profile?.location || '',
+      bio: instructor?.profile?.bio || '',
+    },
+  })
+
+  const [imageFile, setImageFile] = useState<File | null>(null)
+  const [profileUploadProgress, setProfileUploadProgress] = useState<number>(0)
+
+  const updateProfileFormHandler = (values: z.infer<typeof instructorProfileInfoSchema>) => {
+    console.log(values)
+  }
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        const contentType = file.type
+        if (file.type !== fileContentTypes.PNG && 
+            file.type !== fileContentTypes.JPG && 
+            file.size > allowedFileSize * units.MB) 
+            throw new Error("Please provide a valid file format.");
+        const {objectKey} = await uploadFile(file, contentType, setProfileUploadProgress)
+        setImageFile(file)
+        form.setValue("profileImg", objectKey as string)
+    } catch (err: any) {
+        toast.error(err?.message ?? "Something went wrong! Please try again later.")
+    }
+  }
+
+  const handleDelete = () => {
+    setImageFile(null)
+    form.setValue('profileImg', '' as any)
+  }
+
   return (
-    <section className="flex flex-col justify-center items-start w-[80%] mx-auto">
-        <h2 className="section-title">Profile Settings</h2>
+    <section className="max-w-4xl mx-auto bg-white rounded-xl border border-gray-200 shadow-sm p-8 mt-6">
+      <h2 className="text-xl font-bold text-gray-800 mb-8">Profile Settings</h2>
 
-        <div className="flex justify-between items-center w-full">
-            <div className="flex flex-col justify-start items-center my-2 gap-4">
-                <div className="flex flex-col justify-center items-center gap-4">
-                    <Image src={instructor?.profile?.profile_picture_url || ""} alt="instructor profile" height={150} width={150} className="rounded-full border-[2px] border-teal-700" />
-                    <div className="flex flex-col justify-center items-center">
-                        <h4 className="font-bold text-black text-[14px]">Profile Picture</h4>
-                        <span className="font-medium text-gray-500 text-[12px]">PNG, JPEG under 15 MB</span>
-                    </div>
-                </div>
-                <div className="flex gap-2">
-                    <Button className='bg-primary text-white hover:bg-teal-600 hover:text-white cursor-pointer text-[12px]'><UploadIcon /> Upload</Button>
-                    <Button className="bg-red-400 hover:bg-red-500 cursor-pointer text-[12px]"><TrashIcon />Delete</Button>
-                </div>
-            </div>
+      <div className="flex flex-col md:flex-row justify-between gap-10">
+        {/* Profile Picture Section */}
+        <div className="flex flex-col items-center gap-4 md:w-[40%] relative group">
+          <div className="relative">
+            <Image
+              src={(imageFile) ? URL.createObjectURL(imageFile) : instructor?.profile?.profile_picture_url || staticFiles.PROFILE_PLACEHOLDER}
+              alt="instructor profile"
+              height={160}
+              width={160}
+              className="rounded-full border-2 border-teal-600 object-cover transition-transform duration-300 group-hover:scale-105 h-[10em] w-[10em]"
+            />
 
-            <div className="my-2 flex flex-col justify-center items-start gap-4 w-[50%]">
-                <div className="flex flex-col gap-1 w-full">
-                    <Label htmlFor="url-title" className="text-[14px]">Location</Label>
-                    <Input placeholder="Location" className="w-full" name="url-title" id="url-title" />
-                </div>
-                <div className="flex flex-col gap-1 w-full">
-                    <Label htmlFor="reference-url" className="text-[14px]">Bio</Label>
-                    <Textarea placeholder="Bio" className="w-full h-[7em]" name="reference-url" id="reference-url"></Textarea>
-                </div>
-            </div>
+            {/* Hover Upload Button */}
+            <label
+              htmlFor="profile-upload"
+              className="absolute bottom-2 right-2 bg-white rounded-full p-2 shadow-md text-teal-600 cursor-pointer hover:bg-teal-50 transition-opacity duration-200 opacity-0 group-hover:opacity-100"
+              title="Upload Profile Picture"
+            >
+              <UploadIcon size={16} />
+              <input
+                type="file"
+                id="profile-upload"
+                accept="image/png, image/jpeg"
+                className="hidden"
+                onChange={handleFileChange}
+              />
+            </label>
+          </div>
+
+          <div className="text-center space-y-1">
+            <h4 className="font-semibold text-gray-800 text-sm">Profile Picture</h4>
+            <p className="text-gray-500 text-xs">PNG or JPEG under 15 MB</p>
+          </div>
+
+          <Button
+            variant="outline"
+            className={`text-sm font-medium flex items-center gap-1 border-red-500 text-red-600 hover:bg-red-50 transition-all duration-200 ${!imageFile ? 'opacity-50 cursor-not-allowed' : ''}`}
+            onClick={handleDelete}
+            disabled={!imageFile}
+          >
+            <TrashIcon size={14} /> Delete
+          </Button>
         </div>
-        <div className="flex justify-end items-center w-full">
-            <Button className='bg-primary text-white hover:bg-teal-600 hover:text-white cursor-pointer my-4'>Save Changes</Button>
+
+        {/* Info Form Section */}
+        <div className="flex flex-col gap-6 w-full md:w-[60%]">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(updateProfileFormHandler)} className="space-y-6">
+              <FormField
+                control={form.control}
+                name="location"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Location</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter your location" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="bio"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Bio</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Write a short bio about yourself..."
+                        className="h-28 resize-none"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <div className="flex justify-end">
+                <Button className="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-6">
+                  Save Changes
+                </Button>
+              </div>
+            </form>
+          </Form>
         </div>
+      </div>
     </section>
   )
 }

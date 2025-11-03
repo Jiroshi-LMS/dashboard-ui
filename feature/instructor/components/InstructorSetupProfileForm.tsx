@@ -4,7 +4,7 @@ import { useAppDispatch } from "@/hooks/useRedux"
 import { useRouter } from "next/navigation"
 import { useRedirectForLoggedOut } from "../instructorHooks"
 import { usePresignedUpload } from "@/hooks/usePresignedUpload"
-import { constantFilenames, fileContentTypes, fileUploadPrefixes, PUBLIC_UPLOAD } from "@/lib/constants/FileConstants"
+import { constantFilenames, fileContentTypes, fileUploadPrefixes, PUBLIC_UPLOAD, staticFiles } from "@/lib/constants/FileConstants"
 import { useEffect, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { instructorProfileInfoSchema } from "../instructorSchemas"
@@ -32,8 +32,7 @@ const InstructorSetupProfileForm = () => {
     const { uploadFile } = usePresignedUpload(
         constantFilenames.PROFILE, 
         fileUploadPrefixes.PROFILE,
-        PUBLIC_UPLOAD, 
-        instructor?.uuid
+        PUBLIC_UPLOAD
     )
 
     const [imageFile, setImageFile] = useState<File | null>(null)
@@ -123,8 +122,9 @@ const InstructorSetupProfileForm = () => {
                         onChange={profileImageChange} accept=".png,.jpg,.jpeg" />
                         <div className="flex flex-col justify-center items-center gap-4">
                             <Image 
-                            src={(imageFile) ? URL.createObjectURL(imageFile) : ((instructor?.profile?.profile_picture_url) ? instructor?.profile?.profile_picture_url : 
-                                "https://jiroshi-static-dev.s3.ap-south-1.amazonaws.com/defaults/profile-default.png")}
+                            src={(imageFile) ? URL.createObjectURL(imageFile) : 
+                                ((instructor?.profile?.profile_picture_url) ? instructor?.profile?.profile_picture_url : 
+                                staticFiles.PROFILE_PLACEHOLDER)}
                             alt="instructor profile" height={150} width={150} 
                             className="rounded-full border-[2px] border-teal-700 object-cover object-center
                             h-[10em] w-[10em]"

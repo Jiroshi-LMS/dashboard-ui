@@ -20,3 +20,7 @@ export const constantFilenames = {
     LESSON_REFERENCE_MATERIAL: "lesson-resource",
     LESSON_MEDIA: "lesson-media"
 }
+
+export const staticFiles = {
+    PROFILE_PLACEHOLDER: "https://jiroshi-static-dev.s3.ap-south-1.amazonaws.com/defaults/profile-default.png"
+}
