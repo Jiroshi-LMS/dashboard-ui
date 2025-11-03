@@ -10,6 +10,8 @@ import z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { instructorAccountDetailsUpdateSchema } from '../instructorSchemas'
 import { InstructorAccountDetailsUpdateService } from '../instructorServices'
+import { useAppDispatch } from '@/hooks/useRedux'
+import { fetchInstructor } from '../instructorSlice'
 
 const InstructorUpdateAccountDetails = ({
   instructor,
@@ -18,6 +20,8 @@ const InstructorUpdateAccountDetails = ({
   instructor: Instructor | null
   setIsUpdatingProfile: Dispatch<SetStateAction<boolean>>
 }) => {
+
+  const dispatch = useAppDispatch()
   const form = useForm<z.infer<typeof instructorAccountDetailsUpdateSchema>>({
     resolver: zodResolver(instructorAccountDetailsUpdateSchema),
     defaultValues: {
@@ -31,6 +35,7 @@ const InstructorUpdateAccountDetails = ({
   const onSubmit = async (values: z.infer<typeof instructorAccountDetailsUpdateSchema>) => {
     setIsUpdatingProfile(true)
     await InstructorAccountDetailsUpdateService(values)
+    dispatch(fetchInstructor(true))
     setIsUpdatingProfile(false)
   }
 
