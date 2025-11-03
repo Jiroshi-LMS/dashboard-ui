@@ -152,15 +152,17 @@ const InstructorUpdateProfileForm = ({
             <h4 className="font-semibold text-gray-800 text-sm">Profile Picture</h4>
             <p className="text-gray-500 text-xs">PNG or JPEG under {allowedFileSize} MB</p>
           </div>
-
-          <Button
-            variant="outline"
-            className={`text-sm font-medium flex items-center gap-1 border-red-500 text-red-600 hover:bg-red-50 transition-all duration-200 ${!imageFile ? 'opacity-50 cursor-not-allowed' : ''}`}
-            onClick={handleDelete}
-            disabled={!imageFile}
-          >
-            <TrashIcon size={14} /> Delete
-          </Button>
+          {
+            (imageFile) ? 
+            <Button
+              variant="outline"
+              className={`text-sm font-medium flex items-center gap-1 border-red-500 text-red-600 hover:bg-red-50 transition-all duration-200 ${!imageFile ? 'opacity-50 cursor-not-allowed' : ''}`}
+              onClick={handleDelete}
+            >
+              <TrashIcon size={14} /> Delete
+            </Button>
+            : null
+          }
         </div>
 
         {/* Info Form Section */}
