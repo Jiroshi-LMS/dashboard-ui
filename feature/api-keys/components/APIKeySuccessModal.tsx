@@ -6,9 +6,17 @@ import { Check, Copy, Key, Shield } from "lucide-react"
 import { Dispatch, SetStateAction, useState } from "react"
 
 const APIKeySuccessModal = (
-    {showSuccessModal, setShowSuccessModal}: {showSuccessModal: boolean, setShowSuccessModal: Dispatch<SetStateAction<boolean>>}
+    {
+        showSuccessModal, 
+        setShowSuccessModal,
+        newlyCreatedKey
+    }: 
+    {
+        showSuccessModal: boolean, 
+        setShowSuccessModal: Dispatch<SetStateAction<boolean>>,
+        newlyCreatedKey: CreatedKeys | null
+    }
 ) => {
-    const [newlyCreatedKey, setNewlyCreatedKey] = useState<CreatedKeys | null>(null)
     const [copiedKey, setCopiedKey] = useState<string | null>(null)
 
     const copyToClipboard = (text: string, id: string) => {

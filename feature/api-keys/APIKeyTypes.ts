@@ -6,10 +6,6 @@ type KeyPair = {
 }
 
 type CreatedKeys = {
-  id: string
-  name: string
-  expires_at_days: string
-  createdAt: string
   publicKey: string
   privateKey: string
 }

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import {
   AlertDialog,
@@ -34,6 +34,7 @@ export default function KeyManager() {
       createdAt: "2025-10-20"
     },
   ])
+  const [newlyCreatedKey, setNewlyCreatedKey] = useState<CreatedKeys | null>(null)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [showUsageModal, setShowUsageModal] = useState(false)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
@@ -51,6 +52,18 @@ export default function KeyManager() {
     }
     setShowDeleteDialog(false)
   }
+
+  // Prompt before refresh
+  useEffect(() => {
+      const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+          e.preventDefault();
+          e.returnValue = ""; // Required for Chrome
+      };
+      window.addEventListener("beforeunload", handleBeforeUnload);
+      return () => {
+          window.removeEventListener("beforeunload", handleBeforeUnload);
+      };
+  }, []);
 
   return (
     <div className="w-screen min-h-screen bg-gray-50">
@@ -74,13 +87,17 @@ export default function KeyManager() {
         </div>
 
         <div className="space-y-4">
-          <APIKeyGenerationForm setShowSuccessModal={setShowSuccessModal} />
+          <APIKeyGenerationForm setShowSuccessModal={setShowSuccessModal} setNewlyCreatedKey={setNewlyCreatedKey} />
           <APIKeyList keys={keys} handleDelete={handleDelete} />
         </div>
       </div>
 
       <APIKeyUsageModal showUsageModal={showUsageModal} setShowUsageModal={setShowUsageModal} />
-      <APIKeySuccessModal showSuccessModal={showSuccessModal} setShowSuccessModal={setShowSuccessModal} />
+      <APIKeySuccessModal 
+        showSuccessModal={showSuccessModal} 
+        setShowSuccessModal={setShowSuccessModal}
+        newlyCreatedKey={newlyCreatedKey}
+      />
 
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent>

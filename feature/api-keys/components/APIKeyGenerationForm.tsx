@@ -10,48 +10,41 @@ import { keyGenerationSchema } from "../APIKeySchema"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import z from "zod"
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
+import { GenerateKeyPairService } from "../APIKeyServices"
+import ButtonLoader from "@/app/components/atoms/ButtonLoader"
 
-const APIKeyGenerationForm = ({setShowSuccessModal}: {setShowSuccessModal: Dispatch<SetStateAction<boolean>>}) => {
-    const form = useForm<z.infer<typeof keyGenerationSchema>>({
-        resolver: zodResolver(keyGenerationSchema),
-        defaultValues: { name: "", expires_at_days: "1m" },
-    })
-
-  const generateKey = (prefix: string) => {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-    let key = prefix
-    for (let i = 0; i < 32; i++) {
-      key += chars.charAt(Math.floor(Math.random() * chars.length))
-    }
-    return key
+const APIKeyGenerationForm = (
+  {
+    setShowSuccessModal, 
+    setNewlyCreatedKey
+  }: 
+  {
+    setShowSuccessModal: Dispatch<SetStateAction<boolean>>,
+    setNewlyCreatedKey: Dispatch<SetStateAction<CreatedKeys | null>>
   }
+) => {
+  const [isGenerating, setIsGenerating] = useState<boolean>(false)
+  const form = useForm<z.infer<typeof keyGenerationSchema>>({
+      resolver: zodResolver(keyGenerationSchema),
+      defaultValues: { key_name: "", expires_at_days: "1m" },
+  })
 
-  const onSubmit = (values: z.infer<typeof keyGenerationSchema>) => {
-    const id = crypto.randomUUID()
-    const expires_at_days = values.expires_at_days === "1w" ? "1 Week" : values.expires_at_days === "1m" ? "1 Month" : values.expires_at_days === "1y" ? "1 Year" : "Never"
-    const createdAt = new Date().toISOString().split("T")[0]
-    
-    const newKeyPair: KeyPair = {
-      id,
-      name: values.name,
-      expires_at_days,
-      createdAt,
+  const onSubmit = async (values: z.infer<typeof keyGenerationSchema>) => {
+    setIsGenerating(true)
+    const expires_at_days = values.expires_at_days === "1w" ? 7 : 
+                            values.expires_at_days === "1m" ? 30 : 
+                            values.expires_at_days === "1y" ? 365 : null;
+    const response = await GenerateKeyPairService(values.key_name, expires_at_days)
+    if (response) {
+      setNewlyCreatedKey({
+        publicKey: response.publicKey,
+        privateKey: response.privateKey
+      })
+      setShowSuccessModal(true)
     }
-    
-    const newCreatedKeys: CreatedKeys = {
-      id,
-      name: values.name,
-      expires_at_days,
-      createdAt,
-      publicKey: generateKey("pk_live_"),
-      privateKey: generateKey("sk_live_"),
-    }
-    
-    // setKeys((prev) => [newKeyPair, ...prev])
-    // setNewlyCreatedKey(newCreatedKeys)
-    setShowSuccessModal(true)
     form.reset()
+    setIsGenerating(false)
   }
 
   return (
@@ -65,10 +58,10 @@ const APIKeyGenerationForm = ({setShowSuccessModal}: {setShowSuccessModal: Dispa
 
         <CardContent className="p-6 bg-white">
             <Form {...form}>
-            <div className="flex gap-4 items-end">
+              <div className="flex gap-4 items-end">
                 <FormField
                 control={form.control}
-                name="name"
+                name="key_name"
                 render={({ field }) => (
                     <FormItem className="flex-1">
                     <FormLabel className="text-sm font-medium text-gray-700">Key Name</FormLabel>
@@ -97,10 +90,10 @@ const APIKeyGenerationForm = ({setShowSuccessModal}: {setShowSuccessModal: Dispa
                         </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                        <SelectItem value="1w">1 Week</SelectItem>
-                        <SelectItem value="1m">1 Month</SelectItem>
-                        <SelectItem value="1y">1 Year</SelectItem>
-                        <SelectItem value="never">Never</SelectItem>
+                          <SelectItem value="1w">7 Days</SelectItem>
+                          <SelectItem value="1m">30 Days</SelectItem>
+                          <SelectItem value="1y">365 Days</SelectItem>
+                          <SelectItem value="never">Never</SelectItem>
                         </SelectContent>
                     </Select>
                     <FormMessage />
@@ -111,12 +104,23 @@ const APIKeyGenerationForm = ({setShowSuccessModal}: {setShowSuccessModal: Dispa
                 <Button
                 type="button"
                 onClick={form.handleSubmit(onSubmit)}
-                className="h-10 bg-teal-600 hover:bg-teal-700"
+                className={
+                  "h-10" +
+                  !isGenerating ? 
+                  "bg-teal-600 hover:bg-teal-700" :
+                  "bg-teal-200 cursor-not-allowed"
+                }
+                disabled={isGenerating}
                 >
-                <Plus className="w-4 h-4 mr-2" />
+                {
+                  isGenerating ? 
+                  <ButtonLoader/>
+                  :
+                  <Plus className="w-4 h-4 mr-2" />
+                }
                 Create Key
                 </Button>
-            </div>
+              </div>
             </Form>
         </CardContent>
     </Card> 
