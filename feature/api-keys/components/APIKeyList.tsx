@@ -1,5 +1,4 @@
 import Loader from "@/app/components/atoms/Loader";
-import { CommonPaginationBar } from "@/app/components/organism/Paginator/CommonPaginationBar";
 import {
   AlertDialogFooter,
   AlertDialogHeader,
@@ -13,8 +12,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { fetchListDataService } from "@/feature/common/commonServices";
-import { useDebouncedState } from "@/hooks/useDebouncedState";
-import { useFilters } from "@/hooks/useFilters";
 import { route } from "@/lib/constants/RouteConstants";
 import {
   AlertDialog,
@@ -33,7 +30,6 @@ import React, {
   useState,
 } from "react";
 import toast from "react-hot-toast";
-import APIKeyListFilters from "./APIKeyListFilters";
 
 type APIKeyListProps = {
   keys: Array<KeyItem> | null;
@@ -42,26 +38,9 @@ type APIKeyListProps = {
 
 const APIKeyList = ({ keys, setKeys }: APIKeyListProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [paginationData, setPaginationData] = useState<PaginatedResults | null>(
-    null
-  );
-  const [search, setSearch] = useDebouncedState("", 500);
-  const [isInitial, setIsInitial] = useState(true);
   const hasFetchedOnce = useRef(false);
   const [keyToDelete, setKeyToDelete] = useState<string | null>(null);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-
-  const {
-    listFilters: keyFilters,
-    setListFilters: setKeyFilters,
-    handleFilterChange,
-  } = useFilters({
-    filters: {},
-    ordering: null,
-    search: null,
-    page: 1,
-    page_size: 15,
-  });
 
   const handleDelete = (id: string) => {
     setKeyToDelete(id);
@@ -78,13 +57,12 @@ const APIKeyList = ({ keys, setKeys }: APIKeyListProps) => {
     setShowDeleteDialog(false);
   };
 
-  const fetchAPIKeysData = async (keyFilters: StandardFilters) => {
+  const fetchAPIKeysData = async () => {
     setIsLoading(true);
     try {
-      const resp = await fetchListDataService(route.LIST_API_KEYS, keyFilters);
+      const resp = await fetchListDataService(route.LIST_API_KEYS);
       const paginatedData: PaginatedResults | null = resp?.response;
       if (paginatedData) {
-        setPaginationData(paginatedData);
         const formattedData = paginatedData?.results?.map(
           (keyData: KeyItem, idx) => {
             const keyCreatedDateObject = new Date(keyData.created_at);
@@ -117,57 +95,38 @@ const APIKeyList = ({ keys, setKeys }: APIKeyListProps) => {
   };
 
   useEffect(() => {
-    if (isInitial) {
-      setIsInitial(false);
-      return;
-    }
-    handleFilterChange("search", search);
-  }, [search]);
-
-  useEffect(() => {
-    if (hasFetchedOnce.current && isInitial) return;
+    if (hasFetchedOnce.current) return;
     hasFetchedOnce.current = true;
-    setPaginationData(null);
     setKeys(null);
-    fetchAPIKeysData(keyFilters);
-  }, [keyFilters]);
+    fetchAPIKeysData();
+  }, []);
 
-  const totalPages = paginationData?.total_pages || 1;
-    return (
-      <div className="space-y-6">
-        <Card className="border border-gray-200">
-          <CardHeader className="border-b border-gray-100 bg-white">
-            <CardTitle className="text-lg font-semibold text-gray-900">
-              Your Keys
-            </CardTitle>
-            {
-                (keys) ?
+  return (
+    <div className="space-y-6">
+      <Card className="border border-gray-200 gap-0">
+        <CardHeader className="border-b border-gray-100 bg-white">
+          <CardTitle className="text-lg font-semibold text-gray-900">
+            Your Keys
+          </CardTitle>
+          {keys ? (
             <CardDescription>
               {keys.length} active key{keys.length !== 1 ? "s" : ""}
-            </CardDescription> : null
-            }
-            <section className="flex justify-between items-center">
-              <APIKeyListFilters
-                keyFilters={keyFilters}
-                setKeyFilters={setKeyFilters}
-                setSearch={setSearch}
-                handleFilterChange={handleFilterChange}
-              />
-            </section>
-          </CardHeader>
-          {
-            (isLoading) ? 
-                <CardContent>
-                    <Loader className="h-[30vh]" />
-                </CardContent> :
-            (!keys) ? 
-                <CardContent>
-                    <div className="flex justify-center items-center h-[50vh]">
-                        <h1 className="text-red-400 font-bold text-2xl text-center">
-                        "Nothing to show! Try generating an API Key."
-                        </h1>
-                    </div>
-                </CardContent> :
+            </CardDescription>
+          ) : null}
+        </CardHeader>
+        {isLoading ? (
+          <CardContent>
+            <Loader className="h-[30vh]" />
+          </CardContent>
+        ) : !keys ? (
+          <CardContent>
+            <div className="flex justify-center items-center h-[50vh]">
+              <h1 className="text-red-400 font-bold text-2xl text-center">
+                "Nothing to show! Try generating an API Key."
+              </h1>
+            </div>
+          </CardContent>
+        ) : (
           <CardContent className="p-0 bg-white">
             {keys.length === 0 ? (
               <div className="text-center py-20">
@@ -246,42 +205,30 @@ const APIKeyList = ({ keys, setKeys }: APIKeyListProps) => {
               </div>
             )}
           </CardContent>
-        }
-
-          {paginationData && totalPages > 1 && (
-            <section className="my-3">
-              <CommonPaginationBar
-                currentPage={keyFilters.page}
-                totalPages={totalPages}
-                onPageChange={(page: number) =>
-                  setKeyFilters((prev) => ({ ...prev, page }))
-                }
-              />
-            </section>
-          )}
-        </Card>
-        <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Delete API Key?</AlertDialogTitle>
-              <AlertDialogDescription>
-                This will permanently delete this key pair. Any applications
-                using these keys will immediately lose access.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction
-                onClick={confirmDelete}
-                className="bg-red-600 hover:bg-red-700"
-              >
-                Delete
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      </div>
-    );
+        )}
+      </Card>
+      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete API Key?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will permanently delete this key pair. Any applications using
+              these keys will immediately lose access.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={confirmDelete}
+              className="bg-red-600 hover:bg-red-700"
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
+  );
 };
 
 export default APIKeyList;
