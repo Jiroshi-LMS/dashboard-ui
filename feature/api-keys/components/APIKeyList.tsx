@@ -1,206 +1,287 @@
-import Loader from '@/app/components/atoms/Loader'
-import { CommonPaginationBar } from '@/app/components/organism/Paginator/CommonPaginationBar'
-import { AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { fetchListDataService } from '@/feature/common/commonServices'
-import { useDebouncedState } from '@/hooks/useDebouncedState'
-import { useFilters } from '@/hooks/useFilters'
-import { route } from '@/lib/constants/RouteConstants'
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogTitle } from '@radix-ui/react-alert-dialog'
-import { Key, Trash2 } from 'lucide-react'
-import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
-import toast from 'react-hot-toast'
-import APIKeyListFilters from './APIKeyListFilters'
-
+import Loader from "@/app/components/atoms/Loader";
+import { CommonPaginationBar } from "@/app/components/organism/Paginator/CommonPaginationBar";
+import {
+  AlertDialogFooter,
+  AlertDialogHeader,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { fetchListDataService } from "@/feature/common/commonServices";
+import { useDebouncedState } from "@/hooks/useDebouncedState";
+import { useFilters } from "@/hooks/useFilters";
+import { route } from "@/lib/constants/RouteConstants";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogTitle,
+} from "@radix-ui/react-alert-dialog";
+import { Key, Trash2 } from "lucide-react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import toast from "react-hot-toast";
+import APIKeyListFilters from "./APIKeyListFilters";
 
 type APIKeyListProps = {
-    keys: Array<KeyItem> | null, 
-    setKeys: Dispatch<SetStateAction<Array<KeyItem>|null>>
-}
+  keys: Array<KeyItem> | null;
+  setKeys: Dispatch<SetStateAction<Array<KeyItem> | null>>;
+};
 
-const APIKeyList = (
-    {keys, setKeys}: APIKeyListProps
-) => {
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [paginationData, setPaginationData] = useState<PaginatedResults | null>(null);
+const APIKeyList = ({ keys, setKeys }: APIKeyListProps) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [paginationData, setPaginationData] = useState<PaginatedResults | null>(
+    null
+  );
   const [search, setSearch] = useDebouncedState("", 500);
   const [isInitial, setIsInitial] = useState(true);
   const hasFetchedOnce = useRef(false);
-  const [keyToDelete, setKeyToDelete] = useState<string | null>(null)
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+  const [keyToDelete, setKeyToDelete] = useState<string | null>(null);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const {
-  listFilters: keyFilters, 
-  setListFilters: setKeyFilters, 
-  handleFilterChange
+    listFilters: keyFilters,
+    setListFilters: setKeyFilters,
+    handleFilterChange,
   } = useFilters({
-      filters: {},
-      ordering: null,
-      search: null,
-      page: 1,
-      page_size: 15,
-  })
+    filters: {},
+    ordering: null,
+    search: null,
+    page: 1,
+    page_size: 15,
+  });
 
   const handleDelete = (id: string) => {
-    setKeyToDelete(id)
-    setShowDeleteDialog(true)
-  }
+    setKeyToDelete(id);
+    setShowDeleteDialog(true);
+  };
 
   const confirmDelete = () => {
     if (keyToDelete) {
-      setKeys((prev) => (prev) ? prev.filter((k) => k.uuid !== keyToDelete) : prev);
-      setKeyToDelete(null)
+      setKeys((prev) =>
+        prev ? prev.filter((k) => k.uuid !== keyToDelete) : prev
+      );
+      setKeyToDelete(null);
     }
-    setShowDeleteDialog(false)
-  }
+    setShowDeleteDialog(false);
+  };
 
   const fetchAPIKeysData = async (keyFilters: StandardFilters) => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-        const resp = await fetchListDataService(
-            route.LIST_API_KEYS,
-            keyFilters
+      const resp = await fetchListDataService(route.LIST_API_KEYS, keyFilters);
+      const paginatedData: PaginatedResults | null = resp?.response;
+      if (paginatedData) {
+        setPaginationData(paginatedData);
+        const formattedData = paginatedData?.results?.map(
+          (keyData: KeyItem, idx) => {
+            const keyCreatedDateObject = new Date(keyData.created_at);
+            let keyExpiresDateObject: Date | null = null;
+            if (keyData.expires_at)
+              keyExpiresDateObject = new Date(keyData.expires_at);
+            return {
+              ...keyData,
+              created_at: keyCreatedDateObject.toLocaleString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              }),
+              expires_at:
+                keyExpiresDateObject?.toLocaleString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                }) || "Never",
+            };
+          }
         );
-        const paginatedData: PaginatedResults | null = resp?.response;
-        if (paginatedData) {
-            setPaginationData(paginatedData);
-            const formattedData = paginatedData?.results?.map(
-            (keyData: KeyItem, idx) => {
-                const keyCreatedDateObject = new Date(keyData.created_at);
-                let keyExpiresDateObject: Date | null = null;
-                if (keyData.expires_at) keyExpiresDateObject = new Date(keyData.expires_at);
-                return {
-                  ...keyData,
-                  created_at: keyCreatedDateObject.toLocaleString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                  }),
-                  expires_at: keyExpiresDateObject?.toLocaleString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                  }) || "Never"
-                };
-            }
-            );
-            setKeys(formattedData);
-        }
+        setKeys(formattedData);
+      }
     } catch (err: any) {
-        toast.error("Failed to fetch courses! Try again.");
-        setKeys([]);
+      toast.error("Failed to fetch courses! Try again.");
+      setKeys([]);
     }
-    setIsLoading(false)
+    setIsLoading(false);
   };
 
   useEffect(() => {
-    fetchAPIKeysData(keyFilters)
-  }, [])
+    if (isInitial) {
+      setIsInitial(false);
+      return;
+    }
+    handleFilterChange("search", search);
+  }, [search]);
 
-  const totalPages = paginationData?.total_pages || 1
+  useEffect(() => {
+    if (hasFetchedOnce.current && isInitial) return;
+    hasFetchedOnce.current = true;
+    setPaginationData(null);
+    setKeys(null);
+    fetchAPIKeysData(keyFilters);
+  }, [keyFilters]);
 
-  if (isLoading) return <Loader className='h-[30vh]' />
-  else if (!keys) return (
-    <div className="flex justify-center items-center h-[50vh]">
-        <h1 className="text-red-400 font-bold text-2xl text-center">"Nothing to show! Try creating a lesson."</h1>
-    </div>
-  )
-  else
-  return (
-    <div className="space-y-6">
+  const totalPages = paginationData?.total_pages || 1;
+    return (
+      <div className="space-y-6">
         <Card className="border border-gray-200">
-            <CardHeader className="border-b border-gray-100 bg-white">
-                <CardTitle className="text-lg font-semibold text-gray-900">Your Keys</CardTitle>
-                <CardDescription>
-                {keys.length} active key{keys.length !== 1 ? 's' : ''}
-                </CardDescription>
-                <section className='flex justify-between items-center my-4'>
-                    <APIKeyListFilters
-                        // courseId={courseId}
-                        // lessonFilters={lessonFilters}
-                        // setLessonFilters={setLessonFilters}
-                        // setSearch={setSearch}
-                        // handleFilterChange={handleFilterChange}
-                    />
-                </section>
-            </CardHeader>
-
-            <CardContent className="p-0 bg-white">
-                {keys.length === 0 ? (
-                <div className="text-center py-16">
-                    <Key className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-                    <p className="text-gray-500">No keys created yet</p>
-                    <p className="text-gray-400 text-sm mt-1">Create your first API key to get started</p>
-                </div>
-                ) : (
-                <div className="divide-y divide-gray-100">
-                    {keys.map((key) => (
-                    <div
-                        key={key.uuid}
-                        className="p-6 hover:bg-gray-50 transition-colors"
-                    >
-                        <div className="flex items-center justify-between">
-                        <div className="flex-1">
-                            <div className="flex items-center gap-3 mb-2">
-                            <div className="w-8 h-8 rounded-lg bg-teal-500 flex items-center justify-center">
-                                <Key className="w-4 h-4 text-white" />
-                            </div>
-                            <h3 className="font-medium text-gray-900">{key.key_name}</h3>
-                            </div>
-                            <div className="flex items-center gap-4 text-sm text-gray-500 ml-11">
-                            <span>Created {key.created_at}</span>
-                            <span>•</span>
-                            <span>Expires: {key.expires_at}</span>
-                            </div>
-                        </div>
-                        <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleDelete(key.uuid)}
-                            className="text-gray-400 hover:text-red-600 hover:bg-red-50"
-                        >
-                            <Trash2 className="w-4 h-4" />
-                        </Button>
-                        </div>
+          <CardHeader className="border-b border-gray-100 bg-white">
+            <CardTitle className="text-lg font-semibold text-gray-900">
+              Your Keys
+            </CardTitle>
+            {
+                (keys) ?
+            <CardDescription>
+              {keys.length} active key{keys.length !== 1 ? "s" : ""}
+            </CardDescription> : null
+            }
+            <section className="flex justify-between items-center">
+              <APIKeyListFilters
+                keyFilters={keyFilters}
+                setKeyFilters={setKeyFilters}
+                setSearch={setSearch}
+                handleFilterChange={handleFilterChange}
+              />
+            </section>
+          </CardHeader>
+          {
+            (isLoading) ? 
+                <CardContent>
+                    <Loader className="h-[30vh]" />
+                </CardContent> :
+            (!keys) ? 
+                <CardContent>
+                    <div className="flex justify-center items-center h-[50vh]">
+                        <h1 className="text-red-400 font-bold text-2xl text-center">
+                        "Nothing to show! Try generating an API Key."
+                        </h1>
                     </div>
-                    ))}
-                </div>
-                )}
-            </CardContent>
-            {paginationData && totalPages > 1 && (
-                <section className="my-3">
-                    <CommonPaginationBar
-                        currentPage={keyFilters.page}
-                        totalPages={totalPages}
-                        onPageChange={(page: number) =>
-                            setKeyFilters((prev) => ({ ...prev, page }))
-                        }
-                    />
-                </section>
+                </CardContent> :
+          <CardContent className="p-0 bg-white">
+            {keys.length === 0 ? (
+              <div className="text-center py-20">
+                <Key className="w-12 h-12 text-gray-200 mx-auto mb-3" />
+                <p className="text-gray-500 font-medium">No API Keys Yet</p>
+                <p className="text-gray-400 text-sm mt-1">
+                  Create your first key to begin integrating.
+                </p>
+              </div>
+            ) : (
+              <div className="flex flex-col divide-y">
+                {keys.map((key) => (
+                  <div
+                    key={key.uuid}
+                    className="group flex items-center justify-between p-5 hover:bg-gray-50 transition-colors"
+                  >
+                    {/* Left Section */}
+                    <div className="flex items-start gap-4 flex-1">
+                      <div className="mt-1 w-9 h-9 rounded-lg bg-teal-500 flex items-center justify-center">
+                        <Key className="w-4 h-4 text-white" />
+                      </div>
+
+                      <div className="space-y-1">
+                        {/* Name + Type + Status Badges */}
+                        <div className="flex items-center flex-wrap gap-2">
+                          <h3 className="font-medium text-gray-900">
+                            {key.key_name}
+                          </h3>
+
+                          {/* Key Type Badge */}
+                          <span
+                            className={
+                              key.key_type === "public"
+                                ? "text-xs px-2 py-0.5 rounded-full bg-blue-100 text-blue-700"
+                                : "text-xs px-2 py-0.5 rounded-full bg-orange-100 text-orange-700"
+                            }
+                          >
+                            {key.key_type === "public" ? "Public" : "Private"}
+                          </span>
+
+                          {/* Status Badge */}
+                          <span
+                            className={
+                              key.status === "active"
+                                ? "text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700"
+                                : key.status === "revoked"
+                                ? "text-xs px-2 py-0.5 rounded-full bg-red-100 text-red-700"
+                                : "text-xs px-2 py-0.5 rounded-full bg-gray-200 text-gray-600"
+                            }
+                          >
+                            {key.status.charAt(0).toUpperCase() +
+                              key.status.slice(1)}
+                          </span>
+                        </div>
+
+                        {/* Meta Info */}
+                        <div className="text-sm text-gray-500 flex items-center gap-3">
+                          <span>Created: {key.created_at}</span>
+                          <span className="text-gray-400">•</span>
+                          <span>Expires: {key.expires_at}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Delete Button (only visible on hover) */}
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="opacity-0 group-hover:opacity-100 transition text-gray-400 hover:text-red-600 hover:bg-red-50"
+                      onClick={() => handleDelete(key.uuid)}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
             )}
+          </CardContent>
+        }
+
+          {paginationData && totalPages > 1 && (
+            <section className="my-3">
+              <CommonPaginationBar
+                currentPage={keyFilters.page}
+                totalPages={totalPages}
+                onPageChange={(page: number) =>
+                  setKeyFilters((prev) => ({ ...prev, page }))
+                }
+              />
+            </section>
+          )}
         </Card>
         <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Delete API Key?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This will permanently delete this key pair. Any applications using these keys will immediately lose access.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={confirmDelete}
-              className="bg-red-600 hover:bg-red-700"
-            >
-              Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-    </div>
-  )
-}
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Delete API Key?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This will permanently delete this key pair. Any applications
+                using these keys will immediately lose access.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={confirmDelete}
+                className="bg-red-600 hover:bg-red-700"
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </div>
+    );
+};
 
-export default APIKeyList
+export default APIKeyList;
