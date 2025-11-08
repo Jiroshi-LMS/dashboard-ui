@@ -11,6 +11,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Key, Trash2 } from 'lucide-react'
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
+import APIKeyListFilters from './APIKeyListFilters'
 
 
 type APIKeyListProps = {
@@ -21,6 +22,7 @@ type APIKeyListProps = {
 const APIKeyList = (
     {keys, setKeys}: APIKeyListProps
 ) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [paginationData, setPaginationData] = useState<PaginatedResults | null>(null);
   const [search, setSearch] = useDebouncedState("", 500);
   const [isInitial, setIsInitial] = useState(true);
@@ -54,6 +56,7 @@ const APIKeyList = (
   }
 
   const fetchAPIKeysData = async (keyFilters: StandardFilters) => {
+    setIsLoading(true)
     try {
         const resp = await fetchListDataService(
             route.LIST_API_KEYS,
@@ -88,6 +91,7 @@ const APIKeyList = (
         toast.error("Failed to fetch courses! Try again.");
         setKeys([]);
     }
+    setIsLoading(false)
   };
 
   useEffect(() => {
@@ -96,7 +100,13 @@ const APIKeyList = (
 
   const totalPages = paginationData?.total_pages || 1
 
-  if (!keys) return <Loader className='h-[30vh]' />
+  if (isLoading) return <Loader className='h-[30vh]' />
+  else if (!keys) return (
+    <div className="flex justify-center items-center h-[50vh]">
+        <h1 className="text-red-400 font-bold text-2xl text-center">"Nothing to show! Try creating a lesson."</h1>
+    </div>
+  )
+  else
   return (
     <div className="space-y-6">
         <Card className="border border-gray-200">
@@ -105,15 +115,15 @@ const APIKeyList = (
                 <CardDescription>
                 {keys.length} active key{keys.length !== 1 ? 's' : ''}
                 </CardDescription>
-                {/* <section className='flex justify-between items-center my-4'>
-                    <LessonListFilters
-                        courseId={courseId}
-                        lessonFilters={lessonFilters}
-                        setLessonFilters={setLessonFilters}
-                        setSearch={setSearch}
-                        handleFilterChange={handleFilterChange}
+                <section className='flex justify-between items-center my-4'>
+                    <APIKeyListFilters
+                        // courseId={courseId}
+                        // lessonFilters={lessonFilters}
+                        // setLessonFilters={setLessonFilters}
+                        // setSearch={setSearch}
+                        // handleFilterChange={handleFilterChange}
                     />
-                </section> */}
+                </section>
             </CardHeader>
 
             <CardContent className="p-0 bg-white">
