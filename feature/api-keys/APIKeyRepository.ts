@@ -8,3 +8,9 @@ export const generateKeyPairRepository = async (key_name: string, expires_at_day
     })
     return data as StandardResponse
 }
+
+
+// export const fetchKeyListRepository = async () => {
+//     const {data} = await api.get(route.LIST_API_KEYS)
+//     return data as StandardResponse
+// }

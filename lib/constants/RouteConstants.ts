@@ -9,6 +9,7 @@ export const route = {
     UPDATE_INSTRUCTOR_INFO: "/instructor/update-info/",
     UPDATE_INSTRUCTOR_PASSWORD: "/instructor/update-password/",
     GENERATE_API_KEYS: "/apikeys/views/",
+    LIST_API_KEYS: "/apikeys/views/",
 
     LIST_COURSES: "/courses/views/",
     CREATE_COURSE: "/courses/views/",

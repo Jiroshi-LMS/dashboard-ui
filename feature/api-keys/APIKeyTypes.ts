@@ -1,8 +1,9 @@
-type KeyPair = {
-  id: string
-  name: string
-  expires_at_days: string
-  createdAt: string
+type KeyItem = {
+  uuid: string
+  key_name: string
+  key_type: string
+  expires_at: string
+  created_at: string
 }
 
 type CreatedKeys = {

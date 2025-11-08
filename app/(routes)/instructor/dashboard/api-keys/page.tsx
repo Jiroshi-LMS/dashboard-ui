@@ -1,17 +1,7 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
 import { Info } from "lucide-react"
 import APIKeyGenerationForm from "@/feature/api-keys/components/APIKeyGenerationForm"
 import APIKeyList from "@/feature/api-keys/components/APIKeyList"
@@ -20,38 +10,10 @@ import APIKeySuccessModal from "@/feature/api-keys/components/APIKeySuccessModal
 
 
 export default function KeyManager() {
-  const [keys, setKeys] = useState<KeyPair[]>([
-    { 
-      id: "1", 
-      name: "Production API", 
-      expires_at_days: "1 Month", 
-      createdAt: "2025-10-25"
-    },
-    { 
-      id: "2", 
-      name: "Development", 
-      expires_at_days: "Never", 
-      createdAt: "2025-10-20"
-    },
-  ])
+  const [keys, setKeys] = useState<Array<KeyItem>|null>(null)
   const [newlyCreatedKey, setNewlyCreatedKey] = useState<CreatedKeys | null>(null)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [showUsageModal, setShowUsageModal] = useState(false)
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
-  const [keyToDelete, setKeyToDelete] = useState<string | null>(null)
-
-  const handleDelete = (id: string) => {
-    setKeyToDelete(id)
-    setShowDeleteDialog(true)
-  }
-
-  const confirmDelete = () => {
-    if (keyToDelete) {
-      setKeys((prev) => prev.filter((k) => k.id !== keyToDelete))
-      setKeyToDelete(null)
-    }
-    setShowDeleteDialog(false)
-  }
 
   // Prompt before refresh
   useEffect(() => {
@@ -88,7 +50,7 @@ export default function KeyManager() {
 
         <div className="space-y-4">
           <APIKeyGenerationForm setShowSuccessModal={setShowSuccessModal} setNewlyCreatedKey={setNewlyCreatedKey} />
-          <APIKeyList keys={keys} handleDelete={handleDelete} />
+          <APIKeyList keys={keys} setKeys={setKeys} />
         </div>
       </div>
 
@@ -98,26 +60,6 @@ export default function KeyManager() {
         setShowSuccessModal={setShowSuccessModal}
         newlyCreatedKey={newlyCreatedKey}
       />
-
-      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Delete API Key?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This will permanently delete this key pair. Any applications using these keys will immediately lose access.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction 
-              onClick={confirmDelete}
-              className="bg-red-600 hover:bg-red-700"
-            >
-              Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </div>
   )
 }
