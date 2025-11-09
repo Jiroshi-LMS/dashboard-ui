@@ -34,9 +34,11 @@ import toast from "react-hot-toast";
 type APIKeyListProps = {
   keys: Array<KeyItem> | null;
   setKeys: Dispatch<SetStateAction<Array<KeyItem> | null>>;
+  shouldFetchKeyList: boolean;
+  setShouldFetchKeyList: Dispatch<SetStateAction<boolean>>;
 };
 
-const APIKeyList = ({ keys, setKeys }: APIKeyListProps) => {
+const APIKeyList = ({ keys, setKeys, shouldFetchKeyList, setShouldFetchKeyList }: APIKeyListProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const hasFetchedOnce = useRef(false);
   const [keyToDelete, setKeyToDelete] = useState<string | null>(null);
@@ -95,11 +97,12 @@ const APIKeyList = ({ keys, setKeys }: APIKeyListProps) => {
   };
 
   useEffect(() => {
-    if (hasFetchedOnce.current) return;
+    if (hasFetchedOnce.current && !shouldFetchKeyList) return;
     hasFetchedOnce.current = true;
     setKeys(null);
     fetchAPIKeysData();
-  }, []);
+    setShouldFetchKeyList(false)
+  }, [shouldFetchKeyList]);
 
   return (
     <div className="space-y-6">

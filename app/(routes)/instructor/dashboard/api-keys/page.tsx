@@ -14,6 +14,7 @@ export default function KeyManager() {
   const [newlyCreatedKey, setNewlyCreatedKey] = useState<CreatedKeys | null>(null)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [showUsageModal, setShowUsageModal] = useState(false)
+  const [shouldFetchKeyList, setShouldFetchKeyList] = useState(true)
 
   // Prompt before refresh
   useEffect(() => {
@@ -49,8 +50,17 @@ export default function KeyManager() {
         </div>
 
         <div className="space-y-4">
-          <APIKeyGenerationForm setShowSuccessModal={setShowSuccessModal} setNewlyCreatedKey={setNewlyCreatedKey} />
-          <APIKeyList keys={keys} setKeys={setKeys} />
+          <APIKeyGenerationForm 
+            setShowSuccessModal={setShowSuccessModal}
+            setNewlyCreatedKey={setNewlyCreatedKey} 
+            setShouldFetchKeyList={setShouldFetchKeyList}
+          />
+          <APIKeyList 
+            keys={keys} 
+            setKeys={setKeys}
+            shouldFetchKeyList={shouldFetchKeyList}
+            setShouldFetchKeyList={setShouldFetchKeyList}  
+          />
         </div>
       </div>
 

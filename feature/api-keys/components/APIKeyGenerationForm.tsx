@@ -17,11 +17,13 @@ import ButtonLoader from "@/app/components/atoms/ButtonLoader"
 const APIKeyGenerationForm = (
   {
     setShowSuccessModal, 
-    setNewlyCreatedKey
+    setNewlyCreatedKey,
+    setShouldFetchKeyList
   }: 
   {
     setShowSuccessModal: Dispatch<SetStateAction<boolean>>,
-    setNewlyCreatedKey: Dispatch<SetStateAction<CreatedKeys | null>>
+    setNewlyCreatedKey: Dispatch<SetStateAction<CreatedKeys | null>>,
+    setShouldFetchKeyList: Dispatch<SetStateAction<boolean>>
   }
 ) => {
   const [isGenerating, setIsGenerating] = useState<boolean>(false)
@@ -45,6 +47,7 @@ const APIKeyGenerationForm = (
     }
     form.reset()
     setIsGenerating(false)
+    setShouldFetchKeyList(true)
   }
 
   return (
