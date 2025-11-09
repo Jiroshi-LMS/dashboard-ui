@@ -1,5 +1,5 @@
 import toast from "react-hot-toast"
-import { generateKeyPairRepository } from "./APIKeyRepository"
+import { deleteAPIKeyRepository, generateKeyPairRepository } from "./APIKeyRepository"
 import { standardErrors } from "@/lib/constants/errors"
 
 
@@ -24,11 +24,13 @@ export const GenerateKeyPairService = async (
 }
 
 
-// export const FetchKeyListService = async () => {
-//     try{
-//         const resp = await fetchKeyListRepository()
-//     } catch (err: any) {
-
-//     }
-//     return null
-//  }
+export const DeleteAPIKeyService = async (uuid: string) => {
+    try {
+        const resp = await deleteAPIKeyRepository(uuid)
+        if (resp?.status) {
+            toast.success("API Key deleted successfully !")
+        }
+    } catch(err: any) {
+        toast.error(err?.response?.data?.msg || err?.message || standardErrors.UNKNOWN)
+    }
+} 

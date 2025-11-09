@@ -20,7 +20,7 @@ import {
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogTitle,
-} from "@radix-ui/react-alert-dialog";
+} from "@/components/ui/alert-dialog";
 import { Key, Trash2 } from "lucide-react";
 import React, {
   Dispatch,
@@ -30,6 +30,7 @@ import React, {
   useState,
 } from "react";
 import toast from "react-hot-toast";
+import { DeleteAPIKeyService } from "../APIKeyServices";
 
 type APIKeyListProps = {
   keys: Array<KeyItem> | null;
@@ -44,17 +45,15 @@ const APIKeyList = ({ keys, setKeys, shouldFetchKeyList, setShouldFetchKeyList }
   const [keyToDelete, setKeyToDelete] = useState<string | null>(null);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
-  const handleDelete = (id: string) => {
-    setKeyToDelete(id);
+  const handleDelete = (uuid: string) => {
+    setKeyToDelete(uuid);
     setShowDeleteDialog(true);
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (keyToDelete) {
-      setKeys((prev) =>
-        prev ? prev.filter((k) => k.uuid !== keyToDelete) : prev
-      );
-      setKeyToDelete(null);
+      await DeleteAPIKeyService(keyToDelete)
+      setShouldFetchKeyList(true)
     }
     setShowDeleteDialog(false);
   };
@@ -210,26 +209,28 @@ const APIKeyList = ({ keys, setKeys, shouldFetchKeyList, setShouldFetchKeyList }
           </CardContent>
         )}
       </Card>
-      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Delete API Key?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This will permanently delete this key pair. Any applications using
-              these keys will immediately lose access.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
+
+      <div className="flex justify-end items-center w-full">
+        <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete your course
+                and remove your data from our servers.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction 
               onClick={confirmDelete}
-              className="bg-red-600 hover:bg-red-700"
-            >
-              Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+              className="bg-red-400 hover:bg-red-500 cursor-pointer text-white">
+                Continue
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </div>
     </div>
   );
 };

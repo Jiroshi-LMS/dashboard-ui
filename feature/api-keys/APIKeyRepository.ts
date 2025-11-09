@@ -10,7 +10,7 @@ export const generateKeyPairRepository = async (key_name: string, expires_at_day
 }
 
 
-// export const fetchKeyListRepository = async () => {
-//     const {data} = await api.get(route.LIST_API_KEYS)
-//     return data as StandardResponse
-// }
+export const deleteAPIKeyRepository = async (uuid: string) => {
+    const { data } = await api.delete(route.DELETE_API_KEY(uuid))
+    return data as StandardResponse
+}

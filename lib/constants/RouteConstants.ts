@@ -10,6 +10,7 @@ export const route = {
     UPDATE_INSTRUCTOR_PASSWORD: "/instructor/update-password/",
     GENERATE_API_KEYS: "/apikeys/views/",
     LIST_API_KEYS: "/apikeys/views/",
+    DELETE_API_KEY: (uuid: string) => `/apikeys/views/${uuid}/`,
 
     LIST_COURSES: "/courses/views/",
     CREATE_COURSE: "/courses/views/",
