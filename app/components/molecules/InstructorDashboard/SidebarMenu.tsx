@@ -35,11 +35,11 @@ const utilItems = [
     url: page.LIST_COURSE,
     icon: GraduationCapIcon,
   },
-  {
-    title: "Students",
-    url: "/instructor/dashboard/students",
-    icon: UsersIcon,
-  },
+  // {
+  //   title: "Enrollments",
+  //   url: "/instructor/dashboard/students",
+  //   icon: UsersIcon,
+  // },
   // {
   //   title: "Analytics",
   //   url: "/instructor/dashboard/analytics",
