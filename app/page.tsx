@@ -177,10 +177,12 @@ export default function Home() {
                     <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
                 </Link>
-                <Button variant="outline" size="lg" className="h-14 px-8 text-base rounded-full bg-white border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300">
-                  <Terminal className="mr-2 w-5 h-5" />
-                  Read Documentation
-                </Button>
+                <Link href="/documentation-view/apis" target="_blank">
+                  <Button variant="outline" size="lg" className="h-14 px-8 text-base rounded-full bg-white border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300">
+                    <Terminal className="mr-2 w-5 h-5" />
+                    Read Documentation
+                  </Button>
+                </Link>
               </motion.div>
             </div>
 
