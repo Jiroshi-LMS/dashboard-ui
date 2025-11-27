@@ -12,11 +12,16 @@ const sections: ApiSectionLink[] = [
     ]
   },
   {
-    title: 'User Management',
+    title: 'Instructor',
     items: [
-      { id: 'get-users', title: 'Get All Users' },
-      { id: 'create-user', title: 'Create User' },
-      { id: 'get-user-details', title: 'Get User Details' },
+      { id: 'get-instructor-profile', title: 'Get Profile' },
+    ]
+  },
+  {
+    title: 'Courses',
+    items: [
+      { id: 'list-course-catalogue', title: 'List Catalogue' },
+      { id: 'get-course-details', title: 'Get Course Details' },
     ]
   }
 ];
@@ -54,7 +59,7 @@ const ApiDocumentationPage = () => {
                 <Info className="w-5 h-5 flex-shrink-0 text-blue-500" />
                 <div>
                   <p className="font-semibold mb-1">Base URL</p>
-                  <p>All API requests should be made to <code className="bg-blue-100 px-1.5 py-0.5 rounded text-blue-900 font-mono">https://api.jiroshi.com/v1</code></p>
+                  <p>All API requests should be made to <code className="bg-blue-100 px-1.5 py-0.5 rounded text-blue-900 font-mono">https://api.jiroshi.com/api/v1</code></p>
                 </div>
               </div>
               <hr className="mt-12 border-slate-100" />
@@ -68,103 +73,95 @@ const ApiDocumentationPage = () => {
               </p>
               <ApiDoc.Body
                 title="Authentication Header"
-                code={`Authorization: Bearer <YOUR_API_KEY>`}
+                code={`x-api-key: <YOUR_API_KEY>`}
                 language="bash"
               />
               <hr className="mt-12 border-slate-100" />
             </div>
 
-            {/* Get Users - Composable Example */}
-            <ApiDoc.Root id="get-users">
+            {/* Instructor Profile */}
+            <ApiDoc.Root id="get-instructor-profile">
               <ApiDoc.Header
-                title="Get All Users"
+                title="Get Instructor Profile"
                 method="GET"
-                url="/users"
+                url="/instructor/profile/"
               />
               <ApiDoc.Description>
-                Returns a list of users. The users are returned in sorted order, with the most recently created users appearing first.
+                Retrieves the profile details of the authenticated instructor.
               </ApiDoc.Description>
-
-              <ApiDoc.Custom>
-                <div className="bg-amber-50 border border-amber-100 rounded-lg p-4 flex gap-3 text-amber-800 text-sm mb-6">
-                  <AlertCircle className="w-5 h-5 flex-shrink-0 text-amber-500" />
-                  <p>
-                    <strong>Note:</strong> This endpoint is rate limited to 100 requests per minute.
-                  </p>
-                </div>
-              </ApiDoc.Custom>
-
-              <ApiDoc.Parameters
-                parameters={[
-                  { name: 'limit', type: 'integer', required: false, description: 'A limit on the number of objects to be returned. Limit can range between 1 and 100.' },
-                  { name: 'starting_after', type: 'string', required: false, description: 'A cursor for use in pagination. ' },
-                ]}
-              />
               <ApiDoc.Response
                 code={JSON.stringify({
-                  object: 'list',
+                  success: true,
+                  data: {
+                    id: "inst_123",
+                    name: "John Doe",
+                    email: "john@example.com",
+                    specialization: "Web Development"
+                  }
+                }, null, 2)}
+              />
+            </ApiDoc.Root>
+
+            {/* List Course Catalogue */}
+            <ApiDoc.Root id="list-course-catalogue">
+              <ApiDoc.Header
+                title="List Course Catalogue"
+                method="GET"
+                url="/courses/course-catalogue/"
+              />
+              <ApiDoc.Description>
+                Returns a list of available courses in the catalogue.
+              </ApiDoc.Description>
+              <ApiDoc.Response
+                code={JSON.stringify({
+                  success: true,
                   data: [
-                    { id: 'usr_123', object: 'user', name: 'Jane Doe', email: 'jane@example.com' },
-                    { id: 'usr_456', object: 'user', name: 'John Smith', email: 'john@example.com' }
-                  ],
-                  has_more: true,
-                  url: '/v1/users'
+                    {
+                      id: "course_1",
+                      title: "Advanced React Patterns",
+                      description: "Master React with advanced patterns.",
+                      price: 49.99
+                    },
+                    {
+                      id: "course_2",
+                      title: "Node.js Microservices",
+                      description: "Build scalable microservices with Node.js.",
+                      price: 59.99
+                    }
+                  ]
                 }, null, 2)}
               />
             </ApiDoc.Root>
 
-            {/* Create User - Composable Example */}
-            <ApiDoc.Root id="create-user">
+            {/* Get Course Details */}
+            <ApiDoc.Root id="get-course-details">
               <ApiDoc.Header
-                title="Create User"
-                method="POST"
-                url="/users"
-              />
-              <ApiDoc.Description>
-                Creates a new user object.
-              </ApiDoc.Description>
-              <ApiDoc.Body
-                code={JSON.stringify({
-                  name: 'New User',
-                  email: 'new.user@example.com',
-                  role: 'member'
-                }, null, 2)}
-              />
-              <ApiDoc.Response
-                code={JSON.stringify({
-                  id: 'usr_789',
-                  object: 'user',
-                  name: 'New User',
-                  email: 'new.user@example.com',
-                  role: 'member',
-                  created_at: 1698393600
-                }, null, 2)}
-              />
-            </ApiDoc.Root>
-
-            {/* Get User Details - Composable Example */}
-            <ApiDoc.Root id="get-user-details">
-              <ApiDoc.Header
-                title="Get User Details"
+                title="Get Course Details"
                 method="GET"
-                url="/users/{id}"
+                url="/courses/course-catalogue/{courseId}/"
               />
               <ApiDoc.Description>
-                Retrieves the details of an existing user. You need only supply the unique user identifier that was returned upon user creation.
+                Retrieves detailed information about a specific course.
               </ApiDoc.Description>
               <ApiDoc.Parameters
                 title="Path Parameters"
                 parameters={[
-                  { name: 'id', type: 'string', required: true, description: 'The identifier of the user to be retrieved.' },
+                  { name: 'courseId', type: 'string', required: true, description: 'The unique identifier of the course.' },
                 ]}
               />
               <ApiDoc.Response
                 code={JSON.stringify({
-                  id: 'usr_123',
-                  object: 'user',
-                  name: 'Jane Doe',
-                  email: 'jane@example.com',
-                  role: 'admin'
+                  success: true,
+                  data: {
+                    id: "course_1",
+                    title: "Advanced React Patterns",
+                    description: "Master React with advanced patterns.",
+                    price: 49.99,
+                    modules: [
+                      { title: "Introduction", duration: "10m" },
+                      { title: "HOCs and Render Props", duration: "45m" }
+                    ]
+                  }
                 }, null, 2)}
               />
             </ApiDoc.Root>

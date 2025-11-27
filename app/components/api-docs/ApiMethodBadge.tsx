@@ -5,11 +5,11 @@ interface ApiMethodBadgeProps {
 }
 
 const methodColors: Record<string, string> = {
-    GET: 'bg-blue-100 text-blue-800 border-blue-200',
-    POST: 'bg-green-100 text-green-800 border-green-200',
-    PUT: 'bg-orange-100 text-orange-800 border-orange-200',
+    GET: 'bg-green-100 text-green-800 border-green-200',
+    POST: 'bg-yellow-100 text-yellow-800 border-yellow-200',
+    PUT: 'bg-purple-100 text-purple-800 border-purple-200',
     DELETE: 'bg-red-100 text-red-800 border-red-200',
-    PATCH: 'bg-yellow-100 text-yellow-800 border-yellow-200',
+    PATCH: 'bg-orange-100 text-orange-800 border-orange-200',
 };
 
 const ApiMethodBadge: React.FC<ApiMethodBadgeProps> = ({ method }) => {
