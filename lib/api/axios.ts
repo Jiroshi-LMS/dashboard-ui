@@ -4,8 +4,8 @@ import { standardErrors } from '../constants/errors';
 import { route } from '../constants/RouteConstants';
 
 const api = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
-    withCredentials: true
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  withCredentials: true
 })
 
 api.interceptors.request.use((config) => {
@@ -48,6 +48,7 @@ api.interceptors.response.use(
         })
           .then((token) => {
             originalRequest.headers["Authorization"] = "Bearer " + token;
+            originalRequest._retry = true;
             return api(originalRequest);
           })
           .catch((err) => Promise.reject(err));

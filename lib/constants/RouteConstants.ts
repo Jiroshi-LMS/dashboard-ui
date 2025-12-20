@@ -3,7 +3,11 @@ export const route = {
     ME: "/instructor/me/",
     LOGIN: "/instructor/login/",
     REFRESH: "/instructor/token/refresh/",
-    
+
+    // Dashboard
+    DASHBOARD_KPI: "/view/kpi/",
+
+    // Instructor
     INSTRUCTOR: "/instructor/",
     SET_INSTRUCTOR_PROFILE: "/instructor/profile/",
     UPDATE_INSTRUCTOR_INFO: "/instructor/update-info/",
@@ -12,12 +16,14 @@ export const route = {
     LIST_API_KEYS: "/apikeys/views/",
     DELETE_API_KEY: (uuid: string) => `/apikeys/views/${uuid}/`,
 
+    // Courses
     LIST_COURSES: "/courses/views/",
     CREATE_COURSE: "/courses/views/",
     UPDATE_COURSE: (courseId: string) => `/courses/views/${courseId}/`,
     RETRIEVE_COURSE: (courseId: string) => `/courses/views/${courseId}/`,
     DELETE_COURSE: (courseId: string) => `/courses/views/${courseId}/`,
 
+    // Lessons
     LIST_LESSONS: `/courses/lessons/`,
     CREATE_LESSON_DETAILS: "/courses/lessons/",
     UPDATE_LESSON_MEDIA: (lessonId: string) => `/courses/lessons/${lessonId}/update-lesson-media/`,
@@ -25,12 +31,12 @@ export const route = {
     DELETE_LESSON: (lessonId: string) => `/courses/lessons/${lessonId}/`,
     UPDATE_LESSON_DETAILS: (lessonId: string) => `/courses/lessons/${lessonId}/`,
 
+    // Resources
     UPDATE_TEXT_RESOURCES: "/courses/resources/update-text-resources/",
     CREATE_REFERENCE_MATERIAL: "/courses/resources/",
     DELETE_REFERENCE_MATERIAL: (resourceId: string) => `/courses/resources/${resourceId}/`,
     RETRIEVE_LESSON_RESOURCES: (lessonId: string) => `/courses/resources/?lesson_id=${lessonId}`,
 
-    
     // Common
     GET_PRESIGNED_UPLOAD: "/internals/generate-upload-presigned-url/"
 }

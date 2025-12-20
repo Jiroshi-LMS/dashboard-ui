@@ -7,6 +7,7 @@ import {
   BellIcon
 } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import DashboardKPI from '@/feature/dashboard/components/DashboardKPI'
 
 const DashboardHome = () => {
   return (
@@ -16,44 +17,7 @@ const DashboardHome = () => {
       {/* KPI Section */}
       <section>
         <h2 className="section-title">Key Performance Indicators</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-6">
-          {[
-            {
-              title: 'Total Courses',
-              value: '100',
-              change: '+5 this month',
-              icon: <RocketIcon className="text-indigo-500 w-5 h-5" />
-            },
-            {
-              title: 'Total Lessons',
-              value: '400',
-              change: '+300 this month',
-              icon: <DatabaseIcon className="text-emerald-500 w-5 h-5" />
-            },
-            {
-              title: 'Total Enrollments',
-              value: '200',
-              change: '+150 this month',
-              icon: <BarChart3Icon className="text-teal-500 w-5 h-5" />
-            }
-          ].map((item, i) => (
-            <Card
-              key={i}
-              className="border border-gray-200 shadow-sm hover:shadow-md transition-all rounded-xl"
-            >
-              <CardContent className="p-5">
-                <div className="flex justify-between items-center">
-                  <p className="font-medium text-gray-700">{item.title}</p>
-                  {item.icon}
-                </div>
-                <p className="text-3xl font-bold mt-2 text-gray-900">
-                  {item.value}
-                </p>
-                <p className="text-xs text-gray-500 mt-1">{item.change}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        <DashboardKPI />
       </section>
 
       {/* Upcoming Section */}

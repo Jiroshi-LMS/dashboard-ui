@@ -26,10 +26,10 @@ export default function DashboardLayout({
   if (status === 'failed' && error) {
     return <div className="h-screen w-screen flex justify-center items-center text-red-400 text-2xl font-bold">
       Error: {error}. Please check your connection...
-      </div>;
+    </div>;
   }
 
-  if (status === 'loading') return <Loader className="h-screen"/>
+  if (status === 'loading' || status === 'idle') return <Loader className="h-screen" />
 
   return (
     <>
