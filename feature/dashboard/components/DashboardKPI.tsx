@@ -25,7 +25,6 @@ const DashboardKPI = () => {
         retrieveDashboardKPIService().then((resp) => {
             if (resp) {
                 setKPIs(resp)
-                console.log(resp)
             }
         }).finally(() => {
             setLoading(false)
