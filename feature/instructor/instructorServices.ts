@@ -3,20 +3,20 @@ import { route } from "@/lib/constants/RouteConstants"
 import { instructorAccountDetailsUpdateSchema, instructorPasswordDetailsUpdateFormSchema, instructorProfileInfoSchema, instructorRegistrationSchema, loginFormSchema } from "@/feature/instructor/instructorSchemas"
 import z from "zod"
 import { countryCodes } from "@/lib/constants/common"
-import { updateInstructorAccountDetailsRepository, updateInstructorPasswordRepository } from "./instructorRepository"
+import { logoutRepository, updateInstructorAccountDetailsRepository, updateInstructorPasswordRepository } from "./instructorRepository"
 import toast from "react-hot-toast"
 import { standardErrors } from "@/lib/constants/errors"
 
 export const fetchInstructorService = async (): Promise<StandardResponse> => {
-    const resp = await api.get(route.ME)
-    return resp.data as StandardResponse
+  const resp = await api.get(route.ME)
+  return resp.data as StandardResponse
 }
 
 
 export const registerInstructorService = async (
   values: z.infer<typeof instructorRegistrationSchema>
 ): Promise<StandardResponse> => {
-  const submissionPayload :InstructorSignupSubmissionPayload = {
+  const submissionPayload: InstructorSignupSubmissionPayload = {
     full_name: values.fullName,
     username: values.username,
     email: values.email,
@@ -39,6 +39,20 @@ export const loginInstructorService = async (
   return resp.data as StandardResponse
 }
 
+
+export const logoutService = async (): Promise<boolean> => {
+  try {
+    const resp = await logoutRepository()
+    if (resp?.status) {
+      toast.success("Logged out successfully !")
+      return true
+    }
+    throw new Error("Failed to logout !")
+  } catch (err: any) {
+    toast.error(err?.response?.data?.msg || err?.message || standardErrors.UNKNOWN)
+  }
+  return false
+}
 
 export const setInstructorProfileService = async (
   values: z.infer<typeof instructorProfileInfoSchema>

@@ -3,6 +3,7 @@ export const route = {
     ME: "/instructor/me/",
     LOGIN: "/instructor/login/",
     REFRESH: "/instructor/token/refresh/",
+    LOGOUT: "/instructor/logout/",
 
     // Dashboard
     DASHBOARD_KPI: "/view/kpi/",
