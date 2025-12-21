@@ -16,80 +16,80 @@ import { useFilters } from "@/hooks/useFilters";
 import { convertSeconds, getStringifiedDuration } from "@/lib/utils";
 
 const CourseListData = () => {
-    const [courseList, setCourseList] = useState<Array<Course> | null>(null);
-    const [paginationData, setPaginationData] = useState<PaginatedResults | null>(null);
-    const [search, setSearch] = useDebouncedState("", 500);
-    const [isInitial, setIsInitial] = useState(true);
-    const hasFetchedOnce = useRef(false);
-    const {
-    listFilters: courseFilters, 
-    setListFilters: setCourseFilters, 
+  const [courseList, setCourseList] = useState<Array<Course> | null>(null);
+  const [paginationData, setPaginationData] = useState<PaginatedResults | null>(null);
+  const [search, setSearch] = useDebouncedState("", 500);
+  const [isInitial, setIsInitial] = useState(true);
+  const hasFetchedOnce = useRef(false);
+  const {
+    listFilters: courseFilters,
+    setListFilters: setCourseFilters,
     handleFilterChange
-    } = useFilters({
-        filters: {},
-        ordering: null,
-        search: null,
-        page: 1,
-        page_size: 15,
-    })
+  } = useFilters({
+    filters: {},
+    ordering: null,
+    search: null,
+    page: 1,
+    page_size: 15,
+  })
 
-    const fetchCourseData = async (courseFilters: StandardFilters) => {
-        try {
-            const resp = await fetchListDataService(
-                route.LIST_COURSES,
-                courseFilters
-            );
-            const paginatedData: PaginatedResults | null = resp?.response;
-            if (paginatedData) {
-                setPaginationData(paginatedData);
-                const formattedCourseData = paginatedData?.results?.map(
-                (course: Course, idx) => {
-                    const dateObject = new Date(course.created_at);
-                    return {
-                    ...course,
-                    created_at: dateObject.toLocaleString("en-US", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                    }),
-                    };
-                }
-                );
-                setCourseList(formattedCourseData);
-            }
-        } catch (err: any) {
-            toast.error("Failed to fetch courses! Try again.");
-            setCourseList([]);
-        }
-    };
+  const fetchCourseData = async (courseFilters: StandardFilters) => {
+    try {
+      const resp = await fetchListDataService(
+        route.LIST_COURSES,
+        courseFilters
+      );
+      const paginatedData: PaginatedResults | null = resp?.response;
+      if (paginatedData) {
+        setPaginationData(paginatedData);
+        const formattedCourseData = paginatedData?.results?.map(
+          (course: Course, idx) => {
+            const dateObject = new Date(course.created_at);
+            return {
+              ...course,
+              created_at: dateObject.toLocaleString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              }),
+            };
+          }
+        );
+        setCourseList(formattedCourseData);
+      }
+    } catch (err: any) {
+      toast.error("Failed to fetch courses! Try again.");
+      setCourseList([]);
+    }
+  };
 
-    useEffect(() => {
-        if (isInitial) {
-            setIsInitial(false);
-            return;
-        }
-        handleFilterChange("search", search);
-    }, [search]);
+  useEffect(() => {
+    if (isInitial) {
+      setIsInitial(false);
+      return;
+    }
+    handleFilterChange("search", search);
+  }, [search]);
 
-    useEffect(() => {
-        if (hasFetchedOnce.current && isInitial) return;
-        hasFetchedOnce.current = true;
-        setPaginationData(null);
-        setCourseList(null);
-        fetchCourseData(courseFilters);
-    }, [courseFilters]);
+  useEffect(() => {
+    if (hasFetchedOnce.current && isInitial) return;
+    hasFetchedOnce.current = true;
+    setPaginationData(null);
+    setCourseList(null);
+    fetchCourseData(courseFilters);
+  }, [courseFilters]);
 
-    const totalPages = paginationData?.total_pages || 1;
+  const totalPages = paginationData?.total_pages || 1;
 
-return (
+  return (
     <>
-    <section className="flex flex-wrap justify-between items-center gap-3 bg-white/60 backdrop-blur-sm p-3 rounded-xl border border-gray-200 shadow-sm">
-        
+      <section className="flex flex-wrap justify-between items-center gap-3 bg-white/60 backdrop-blur-sm p-3 rounded-xl border border-gray-200 shadow-sm">
+
         <CourseListFilters
-            courseFilters={courseFilters}
-            setCourseFilters={setCourseFilters}
-            setSearch={setSearch}
-            handleFilterChange={handleFilterChange}
+          courseFilters={courseFilters}
+          setCourseFilters={setCourseFilters}
+          setSearch={setSearch}
+          handleFilterChange={handleFilterChange}
         />
 
         {/* Right side - Add Button */}
@@ -143,12 +143,12 @@ return (
               return (
                 <>
                   Duration <SortButton onClick={() => {
-                      const val =
-                        courseFilters?.ordering === "-duration"
-                          ? "duration"
-                          : "-duration";
-                      handleFilterChange("ordering", val);
-                    }} />
+                    const val =
+                      courseFilters?.ordering === "-duration"
+                        ? "duration"
+                        : "-duration";
+                    handleFilterChange("ordering", val);
+                  }} />
                 </>
               );
             },
@@ -159,7 +159,13 @@ return (
             header: () => {
               return (
                 <>
-                  Enrolled Students <SortButton onClick={() => {}} />
+                  Enrolled Students <SortButton onClick={() => {
+                    const val =
+                      courseFilters?.ordering === "-enrollments_count"
+                        ? "enrollments_count"
+                        : "-enrollments_count";
+                    handleFilterChange("ordering", val);
+                  }} />
                 </>
               );
             },

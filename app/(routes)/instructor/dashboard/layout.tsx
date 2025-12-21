@@ -34,7 +34,7 @@ export default function DashboardLayout({
     </div>;
   }
 
-  if (!isMounted || status === 'loading' || status === 'idle') return <Loader className="h-screen" />
+  if (typeof window === 'undefined' || !isMounted || status === 'loading' || status === 'idle') return <Loader className="h-screen" />
 
   return (
     <>
