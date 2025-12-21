@@ -17,12 +17,18 @@ export const route = {
     LIST_API_KEYS: "/apikeys/views/",
     DELETE_API_KEY: (uuid: string) => `/apikeys/views/${uuid}/`,
 
+    // Students
+    LIST_STUDENTS: "/students/list",
+
     // Courses
     LIST_COURSES: "/courses/views/",
     CREATE_COURSE: "/courses/views/",
     UPDATE_COURSE: (courseId: string) => `/courses/views/${courseId}/`,
     RETRIEVE_COURSE: (courseId: string) => `/courses/views/${courseId}/`,
     DELETE_COURSE: (courseId: string) => `/courses/views/${courseId}/`,
+
+    // Enrollments
+    LIST_ENROLLMENTS: "/courses/enrollments/",
 
     // Lessons
     LIST_LESSONS: `/courses/lessons/`,

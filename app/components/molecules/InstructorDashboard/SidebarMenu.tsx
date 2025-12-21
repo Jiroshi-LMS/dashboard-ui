@@ -35,11 +35,11 @@ const utilItems = [
     url: page.LIST_COURSE,
     icon: GraduationCapIcon,
   },
-  // {
-  //   title: "Enrollments",
-  //   url: "/instructor/dashboard/students",
-  //   icon: UsersIcon,
-  // },
+  {
+    title: "Students",
+    url: "/instructor/dashboard/students",
+    icon: UsersIcon,
+  },
   // {
   //   title: "Analytics",
   //   url: "/instructor/dashboard/analytics",
@@ -62,24 +62,25 @@ export function SiderbarMenuContent() {
   const pathname = usePathname();
   return (
     <>
-        <SidebarGroup>
-            <SidebarGroupContent>
-                <SidebarMenu>
-                {utilItems.map((item) => {
-                  const isActive = pathname === item.url;
-                  return (
-                    <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                        <Link href={item.url}  className={isActive ? "bg-teal-500 text-white hover:bg-teal-500 hover:text-white" : ""} {...(item.target && { target: "_blank" })}>
-                        <item.icon />
-                        <span>{item.title}</span>
-                        </Link>
-                    </SidebarMenuButton>
-                    </SidebarMenuItem>
-                )})}
-                </SidebarMenu>
-            </SidebarGroupContent>
-        </SidebarGroup>
+      <SidebarGroup>
+        <SidebarGroupContent>
+          <SidebarMenu>
+            {utilItems.map((item) => {
+              const isActive = pathname === item.url;
+              return (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <Link href={item.url} className={isActive ? "bg-teal-500 text-white hover:bg-teal-500 hover:text-white" : ""} {...(item.target && { target: "_blank" })}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              )
+            })}
+          </SidebarMenu>
+        </SidebarGroupContent>
+      </SidebarGroup>
     </>
   );
 }
