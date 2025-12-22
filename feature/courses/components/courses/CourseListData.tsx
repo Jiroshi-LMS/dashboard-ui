@@ -171,7 +171,8 @@ const CourseListData = () => {
             },
             align: "center",
             render: (course) => (
-              <Link href={`${page.LIST_ENROLLMENTS}?course_uuid=${course.uuid}`}>
+              <Link href={`${page.LIST_ENROLLMENTS}?course_uuid=${course.uuid}`}
+                className="hover:text-teal-500">
                 {course.enrollments}
               </Link>
             ),
