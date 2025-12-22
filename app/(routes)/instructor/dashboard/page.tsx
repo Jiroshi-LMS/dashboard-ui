@@ -42,7 +42,7 @@ const DashboardHome = () => {
               title: 'Razorpay Payment Support',
               desc: 'Get paid directly by your students to your bank account via Razorpay integration.',
               icon: <CreditCardIcon className="text-green-500 w-5 h-5" />,
-              tag: 'Coming Soon'
+              tag: 'In Planning'
             },
             {
               title: 'Improved Student Analytics',
