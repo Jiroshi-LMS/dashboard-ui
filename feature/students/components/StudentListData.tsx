@@ -149,9 +149,12 @@ const StudentListData = () => {
                         header: () => "Actions",
                         align: "center",
                         render: (student) => (
-                            <button>
-                                <InfoIcon className='text-gray-500 cursor-pointer w-4' />
-                            </button>
+                            <Link
+                                href={`${page.LIST_ENROLLMENTS}?student_uuid=${student.uuid}`}
+                                className="flex justify-center items-center hover:text-teal-500 font-semibold"
+                            >
+                                <InfoIcon className="text-gray-500 cursor-pointer w-4" />
+                            </Link>
                         ),
                     }
                 ]}

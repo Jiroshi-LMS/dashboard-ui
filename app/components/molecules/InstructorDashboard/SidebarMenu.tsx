@@ -11,6 +11,7 @@ import {
   NetworkIcon,
   KeyIcon,
   BookOpenIcon,
+  UserPlusIcon,
 } from "lucide-react";
 
 import {
@@ -39,6 +40,11 @@ const utilItems = [
     title: "Students",
     url: "/instructor/dashboard/students",
     icon: UsersIcon,
+  },
+  {
+    title: "Enrollments",
+    url: "/instructor/dashboard/enrollments",
+    icon: UserPlusIcon,
   },
   // {
   //   title: "Analytics",

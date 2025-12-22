@@ -9,7 +9,6 @@ import toast from "react-hot-toast";
 import { TabularDataList } from "@/app/components/organism/DataSection/CommonDataSection";
 import SortButton from "@/app/components/atoms/FilterButtons";
 import { CommonPaginationBar } from "@/app/components/organism/Paginator/CommonPaginationBar";
-import { InfoIcon } from "lucide-react";
 import { EnrollmentDataType } from "../enrollmentTypes";
 import EnrollmentsListFilters from "./EnrollmentListFilters";
 import Link from "next/link";
@@ -108,7 +107,7 @@ const EnrollmentsListData = ({ studentUUID, courseUUID }: EnrollmentsListDataPro
                 title="All Students"
                 data={enrollmentDataList}
                 loading={!enrollmentDataList}
-                emptyMessage="No students enrolled yet."
+                emptyMessage="No enrollments yet."
                 columns={[
                     {
                         header: () => "Student Identifier",

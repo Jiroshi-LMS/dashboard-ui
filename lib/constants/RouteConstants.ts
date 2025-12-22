@@ -58,6 +58,10 @@ export const page = {
     LIST_COURSE: '/instructor/dashboard/courses',
     RETRIEVE_COURSE: (courseId: string) => `/instructor/dashboard/courses/${courseId}`,
 
+    LIST_STUDENTS: "/instructor/dashboard/students",
+
+    LIST_ENROLLMENTS: "/instructor/dashboard/enrollments",
+
     CREATE_LESSON: (courseId: string) => `/instructor/dashboard/courses/${courseId}/add-lesson`,
     RETRIEVE_LESSON: (courseId: string, lessonId: string) => `/instructor/dashboard/courses/${courseId}/${lessonId}`,
     EDIT_LESSON: (courseId: string, lessonId: string) => `/instructor/dashboard/courses/${courseId}/${lessonId}/edit`
