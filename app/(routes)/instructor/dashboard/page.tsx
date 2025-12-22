@@ -4,7 +4,9 @@ import {
   BarChart3Icon,
   CreditCardIcon,
   DatabaseIcon,
-  BellIcon
+  BellIcon,
+  LockIcon,
+  SearchIcon
 } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import DashboardKPI from '@/feature/dashboard/components/DashboardKPI'
@@ -16,7 +18,6 @@ const DashboardHome = () => {
 
       {/* KPI Section */}
       <section>
-        <h2 className="section-title">Key Performance Indicators</h2>
         <DashboardKPI />
       </section>
 
@@ -26,34 +27,40 @@ const DashboardHome = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
           {[
             {
-              title: 'Instructor Payments',
-              desc: 'Get paid directly to your bank account via Razorpay integration.',
+              title: 'Media Management Library',
+              desc: 'Upload and manage your media files and resources in one place.',
+              icon: <DatabaseIcon className="text-blue-500 w-5 h-5" />,
+              tag: 'In Planning'
+            },
+            {
+              title: 'Course & Lesson Permissions',
+              desc: 'Control who and how your students can access your courses and lessons.',
+              icon: <LockIcon className="text-purple-500 w-5 h-5" />,
+              tag: 'In Planning'
+            },
+            {
+              title: 'Razorpay Payment Support',
+              desc: 'Get paid directly by your students to your bank account via Razorpay integration.',
               icon: <CreditCardIcon className="text-green-500 w-5 h-5" />,
               tag: 'Coming Soon'
             },
             {
-              title: 'Student Analytics',
+              title: 'Improved Student Analytics',
               desc: 'View engagement metrics, retention trends, and course performance.',
-              icon: <BarChart3Icon className="text-blue-500 w-5 h-5" />,
-              tag: 'In Development'
+              icon: <BarChart3Icon className="text-yellow-500 w-5 h-5" />,
+              tag: 'Coming Soon'
             },
             {
-              title: 'Notification Center',
-              desc: 'Receive instant updates about new enrollments and payments.',
-              icon: <BellIcon className="text-yellow-500 w-5 h-5" />,
-              tag: 'Design Phase'
-            },
-            {
-              title: 'Advanced Course Editor',
-              desc: 'A sleek new editor with drag & drop uploads and inline previews.',
-              icon: <SettingsIcon className="text-purple-500 w-5 h-5" />,
-              tag: 'Beta Testing'
-            },
-            {
-              title: 'Public Instructor Profiles',
-              desc: 'Let students discover your courses and reviews on your profile.',
+              title: 'Featured Courses',
+              desc: 'Highlight your best courses and lessons to attract more students.',
               icon: <RocketIcon className="text-orange-500 w-5 h-5" />,
-              tag: 'Planned'
+              tag: 'Coming Soon'
+            },
+            {
+              title: 'Course Tagging',
+              desc: 'Organize your courses and lessons with tags for better searchability.',
+              icon: <SearchIcon className="text-orange-500 w-5 h-5" />,
+              tag: 'Coming Soon'
             }
           ].map((item, i) => (
             <Card
