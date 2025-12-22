@@ -99,7 +99,7 @@ const EnrollmentsListFilters = ({ enrollmentFilters, setEnrollmentFilters, setSe
                 <Input
                     type="search"
                     name="search"
-                    placeholder="Search by student"
+                    placeholder="Search by student or course"
                     className="pl-9 w-64 border-gray-300"
                     onChange={(e) => setSearch(e.target.value)}
                 />

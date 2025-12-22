@@ -104,7 +104,7 @@ const EnrollmentsListData = ({ studentUUID, courseUUID }: EnrollmentsListDataPro
             </section>
 
             <TabularDataList
-                title="All Students"
+                title="All Enrollments"
                 data={enrollmentDataList}
                 loading={!enrollmentDataList}
                 emptyMessage="No enrollments yet."
