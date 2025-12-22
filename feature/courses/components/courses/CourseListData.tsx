@@ -170,7 +170,11 @@ const CourseListData = () => {
               );
             },
             align: "center",
-            render: (course) => course.enrollments,
+            render: (course) => (
+              <Link href={`${page.LIST_ENROLLMENTS}?course_uuid=${course.uuid}`}>
+                {course.enrollments}
+              </Link>
+            ),
           },
           {
             header: () => {

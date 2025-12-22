@@ -13,6 +13,8 @@ import React, { useEffect, useState } from "react";
 import { fetchCourseById } from "../../courseServices";
 import { Course } from "../../courseTypes";
 import { convertSeconds, getStringifiedDuration } from "@/lib/utils";
+import { page } from "@/lib/constants/RouteConstants";
+import Link from "next/link";
 
 const CourseRetrieveData = ({ courseId }: { courseId: string }) => {
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -67,10 +69,10 @@ const CourseRetrieveData = ({ courseId }: { courseId: string }) => {
             </div>
 
             <div className="flex flex-wrap justify-between text-gray-500 text-sm">
-              <span className="flex items-center">
+              <Link href={`${page.LIST_ENROLLMENTS}?course_uuid=${course.uuid}`} className="flex items-center hover:text-teal-500">
                 <UsersIcon className="h-4 w-4 mr-1" />
                 {course.enrollments} Enrollments
-              </span>
+              </Link>
               <span className="flex items-center">
                 <Calendar1Icon className="h-4 w-4 mr-1" />
                 {course.created_at}
