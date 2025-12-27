@@ -20,11 +20,11 @@ export const SidebarHeaderContent = () => {
   )
 }
 
-export const SidebarFooterContent = ({profile}: {profile: Instructor | null}) => {
+export const SidebarFooterContent = ({ profile }: { profile: Instructor | null }) => {
 
   return (
     <footer className="flex justify-end items-center p-3">
-      <p className="font-semibold text-[13px] ">Hey, {profile?.full_name || "Instructor"}</p>
+      <p className="font-semibold text-[13px] overflow-hidden whitespace-nowrap text-ellipsis">Hey, {profile?.full_name || "Instructor"}</p>
       <Link href={`/instructor/dashboard/profile`}>
         <Avatar className="ml-2">
           <AvatarImage

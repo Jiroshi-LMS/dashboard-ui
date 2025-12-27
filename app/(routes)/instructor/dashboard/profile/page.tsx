@@ -57,7 +57,7 @@ const profilePage = () => {
               <div className="flex justify-end items-center w-full">
                 <AlertDialog>
                   <AlertDialogTrigger className="flex justify-center items-center gap-2 bg-red-400 hover:bg-red-500 cursor-pointer
-                  text-white px-2 py-2 font-semibold text-[13px] rounded-md mt-10 mx-8">Logout <LogOutIcon className="w-4" /></AlertDialogTrigger>
+                  text-white px-4 py-2 font-semibold text-[13px] rounded-md mt-10 mx-8">Logout <LogOutIcon className="w-4" /></AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogHeader>
                       <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>

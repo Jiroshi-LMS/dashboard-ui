@@ -115,13 +115,13 @@ export default function InstructorUpdatePasswordForm({ setIsUpdatingProfile }: P
               />
 
               <div className="flex justify-end">
-                    <Button
-                        type="submit"
-                        className="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-6 py-2 rounded-md"
-                    >
-                        Save Changes
-                    </Button>
-                </div>
+                <Button
+                  type="submit"
+                  className="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-6 py-2 rounded-md"
+                >
+                  Save Changes
+                </Button>
+              </div>
             </form>
           </Form>
         </CardContent>

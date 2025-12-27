@@ -29,6 +29,7 @@ const InstructorUpdateAccountDetails = ({
       username: instructor?.username || '',
       email: instructor?.email || '',
       phone_number: instructor?.phone_number || '',
+      current_password: '',
     },
   })
 
@@ -109,6 +110,22 @@ const InstructorUpdateAccountDetails = ({
                       <Input type="tel" placeholder="9876543210" {...field} />
                     </FormControl>
                   </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <FormField
+              control={form.control}
+              name="current_password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Current Password</FormLabel>
+                  <FormControl>
+                    <Input type="password" placeholder="Current Password" {...field} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
