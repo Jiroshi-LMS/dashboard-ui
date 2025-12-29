@@ -3,6 +3,10 @@ import { ApiDoc } from '@/app/components/api-docs/ApiDoc';
 import ApiSidebar, { ApiSectionLink } from '@/app/components/api-docs/ApiSidebar';
 import { AlertCircle, Info } from 'lucide-react';
 import Introduction from './components/introduction/Introduction';
+import ApiKeys from './components/introduction/ApiKeys';
+import ApiKeyUsage from './components/introduction/ApiKeyUsage';
+import ResponseFormat from './components/introduction/ResponseFormat';
+import ErrorCodes from './components/introduction/ErrorCodes';
 
 const sections: ApiSectionLink[] = [
   {
@@ -11,6 +15,8 @@ const sections: ApiSectionLink[] = [
       { id: 'introduction', title: 'Introduction' },
       { id: 'api-keys', title: 'API Keys' },
       { id: 'api-key-usage', title: 'API Key Usage' },
+      { id: 'response-format', title: 'Response Format' },
+      { id: 'error-codes', title: 'Error Codes' },
     ]
   },
   {
@@ -55,8 +61,16 @@ const ApiDocumentationPage = () => {
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="max-w-3xl">
             <h1 className="text-4xl font-bold text-slate-900 mb-4 tracking-tight"><span className="text-teal-500">Jiroshi V1</span> API Reference</h1>
-            <p className="text-lg text-slate-600 leading-relaxed">
-              Welcome to the Jiroshi API documentation. Our API is organized around REST. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.
+            <p className="text-sm text-slate-600 leading-relaxed">
+              The Jiroshi REST API provides a secure, scalable interface for managing instructors,
+              students, courses, enrollments, and related platform operations.
+              It is designed around standard REST principles, uses JSON for request and response
+              payloads, and enforces strict authentication and authorization at every layer.
+              The API is built to support multi-tenant instructor workflows, fine-grained access
+              control, and extensibility for future features such as payments, analytics, and
+              integrations.
+              This documentation serves as a technical reference for developers integrating with
+              Jiroshi or building internal services on top of its API layer.
             </p>
           </div>
         </div>
@@ -69,7 +83,14 @@ const ApiDocumentationPage = () => {
         {/* Main Content */}
         <main className="flex-1 min-w-0 pb-24">
           <div className="max-w-4xl">
+
+            {/* Introduction */}
             <Introduction />
+            <ApiKeys />
+            <ApiKeyUsage />
+            <ResponseFormat />
+            <ErrorCodes />
+
 
             {/* Authentication - Custom Section Example */}
             <div id="authentication" className="mb-16 scroll-mt-32">
