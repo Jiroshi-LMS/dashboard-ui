@@ -2,19 +2,35 @@ import React from 'react';
 import { ApiDoc } from '@/app/components/api-docs/ApiDoc';
 import ApiSidebar, { ApiSectionLink } from '@/app/components/api-docs/ApiSidebar';
 import { AlertCircle, Info } from 'lucide-react';
+import Introduction from './components/introduction/Introduction';
 
 const sections: ApiSectionLink[] = [
   {
     title: 'Getting Started',
     items: [
       { id: 'introduction', title: 'Introduction' },
-      { id: 'authentication', title: 'Authentication' },
+      { id: 'api-keys', title: 'API Keys' },
+      { id: 'api-key-usage', title: 'API Key Usage' },
     ]
   },
   {
     title: 'Instructor',
     items: [
-      { id: 'get-instructor-profile', title: 'Get Profile' },
+      { id: 'get-instructor-profile', title: 'Get Instructor Profile' },
+      { id: 'get-instructor-kpis', title: 'Get Instructor KPIs' },
+    ]
+  },
+  {
+    title: 'Authentication',
+    items: [
+      { id: 'authentication-intro', title: 'Introduction' },
+      { id: 'signup', title: 'Signup' },
+      { id: 'login', title: 'Login' },
+      { id: 'refresh-token', title: 'Refresh Token' },
+      { id: 'logout', title: 'Logout' },
+      { id: 'me-call', title: 'Student Profile Call' },
+      { id: 'update-student-details', title: 'Update Student Details' },
+      { id: 'student-identifier-lookup', title: 'Student Identifier Lookup' }
     ]
   },
   {
@@ -22,6 +38,11 @@ const sections: ApiSectionLink[] = [
     items: [
       { id: 'list-course-catalogue', title: 'List Catalogue' },
       { id: 'get-course-details', title: 'Get Course Details' },
+      { id: 'list-course-lessons', title: 'List Course Lessons' },
+      { id: 'enroll-to-course', title: 'Enroll to Course' },
+      { id: 'get-lesson', title: 'Get Lesson' },
+      { id: 'lesson-resources', title: 'Lesson Extra Resources' },
+      { id: 'student-enrolled-courses', title: 'Student Enrolled Courses' }
     ]
   }
 ];
@@ -33,7 +54,7 @@ const ApiDocumentationPage = () => {
       <div className="bg-white border-b border-slate-200 pt-24 pb-12">
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="max-w-3xl">
-            <h1 className="text-4xl font-bold text-slate-900 mb-4 tracking-tight">API Reference</h1>
+            <h1 className="text-4xl font-bold text-slate-900 mb-4 tracking-tight"><span className="text-teal-500">Jiroshi V1</span> API Reference</h1>
             <p className="text-lg text-slate-600 leading-relaxed">
               Welcome to the Jiroshi API documentation. Our API is organized around REST. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.
             </p>
@@ -48,22 +69,7 @@ const ApiDocumentationPage = () => {
         {/* Main Content */}
         <main className="flex-1 min-w-0 pb-24">
           <div className="max-w-4xl">
-
-            {/* Introduction - Custom Section Example */}
-            <div id="introduction" className="mb-16 scroll-mt-32">
-              <h2 className="text-2xl font-bold text-slate-900 mb-6">Introduction</h2>
-              <p className="text-slate-600 mb-4 leading-relaxed">
-                The Jiroshi API provides programmatic access to all data in your account. You can use the API to integrate Jiroshi with your existing workflows, build custom dashboards, or automate repetitive tasks.
-              </p>
-              <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 flex gap-3 text-blue-800 text-sm">
-                <Info className="w-5 h-5 flex-shrink-0 text-blue-500" />
-                <div>
-                  <p className="font-semibold mb-1">Base URL</p>
-                  <p>All API requests should be made to <code className="bg-blue-100 px-1.5 py-0.5 rounded text-blue-900 font-mono">https://api.jiroshi.com/api/v1</code></p>
-                </div>
-              </div>
-              <hr className="mt-12 border-slate-100" />
-            </div>
+            <Introduction />
 
             {/* Authentication - Custom Section Example */}
             <div id="authentication" className="mb-16 scroll-mt-32">

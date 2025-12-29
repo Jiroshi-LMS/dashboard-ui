@@ -1,3 +1,8 @@
+# Improvements
+- [] Landing Page Textual Fixes
+- [] Landing Page UI Fixes
+- [] Redirection if authenticated
+
 # Feedback Page
 
 - [] Add User Feedback Google Form
@@ -6,6 +11,7 @@
 
 # API Docs
 
+- [] API Key Usage Docs
 - [] API Docs Pages
 
 # POST MVP
