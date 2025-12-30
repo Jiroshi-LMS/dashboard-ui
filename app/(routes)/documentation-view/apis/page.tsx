@@ -7,6 +7,7 @@ import ApiKeys from './components/introduction/ApiKeys';
 import ApiKeyUsage from './components/introduction/ApiKeyUsage';
 import ResponseFormat from './components/introduction/ResponseFormat';
 import ErrorCodes from './components/introduction/ErrorCodes';
+import Pagination from './components/introduction/Pagination';
 
 const sections: ApiSectionLink[] = [
   {
@@ -17,7 +18,7 @@ const sections: ApiSectionLink[] = [
       { id: 'api-key-usage', title: 'API Key Usage' },
       { id: 'response-format', title: 'Response Format' },
       { id: 'error-codes', title: 'Error Codes' },
-      { id: 'pagination', title: 'Pagination' },
+      { id: 'pagination', title: 'Working with Pagination' },
       { id: 'selections-and-filtering-options', title: 'Selections & Filters' }
     ]
   },
@@ -92,6 +93,7 @@ const ApiDocumentationPage = () => {
             <ApiKeyUsage />
             <ResponseFormat />
             <ErrorCodes />
+            <Pagination />
 
 
             {/* Authentication - Custom Section Example */}
