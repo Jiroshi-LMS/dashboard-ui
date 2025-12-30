@@ -8,6 +8,9 @@ import ApiKeyUsage from './components/introduction/ApiKeyUsage';
 import ResponseFormat from './components/introduction/ResponseFormat';
 import ErrorCodes from './components/introduction/ErrorCodes';
 import Pagination from './components/introduction/Pagination';
+import SelectionsAndFilters from './components/introduction/SelectionsAndFilters';
+
+
 
 const sections: ApiSectionLink[] = [
   {
@@ -94,6 +97,9 @@ const ApiDocumentationPage = () => {
             <ResponseFormat />
             <ErrorCodes />
             <Pagination />
+            <SelectionsAndFilters />
+
+            {/* Instructor */}
 
 
             {/* Authentication - Custom Section Example */}

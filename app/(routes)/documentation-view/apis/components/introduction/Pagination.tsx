@@ -14,18 +14,22 @@ const Pagination = () => {
                 times and better performance on large datasets.
             </p>
 
-            <p className="text-slate-600 mb-6 leading-relaxed">
-                Tenants may override this behavior and use page-offset based pagination by
-                explicitly passing the query parameter <code className="ml-1 bg-slate-100 px-1.5 py-0.5 rounded font-mono">pagination:page</code> :
+            <div className="text-slate-600 mb-6 leading-relaxed">
+                <p className="mb-4">
+                    Tenants may override this behavior and use page-offset based pagination by
+                    explicitly passing the query parameter <code className="ml-1 bg-slate-100 px-1.5 py-0.5 rounded font-mono">pagination:page</code>:
+                </p>
                 <ApiDoc.Body
                     title="Override Default Pagination to Page Offset Pagination"
                     language="bash"
                     code={`GET /api/v1/public/courses/?pagination=page`}
                 />
-                Cursor-based pagination can also be explicitly enforced using
-                <code className="ml-1 bg-slate-100 px-1.5 py-0.5 rounded font-mono">pagination=cursor</code>, although this
-                is the default behavior and does not need to be specified.
-            </p>
+                <p className="mt-4">
+                    Cursor-based pagination can also be explicitly enforced using
+                    <code className="ml-1 bg-slate-100 px-1.5 py-0.5 rounded font-mono">pagination=cursor</code>, although this
+                    is the default behavior and does not need to be specified.
+                </p>
+            </div>
 
             <div className="bg-amber-50 border border-amber-100 rounded-lg p-4 text-amber-900 text-sm mb-8">
                 <p className="font-semibold mb-1">Performance Note</p>
@@ -336,8 +340,6 @@ const Pagination = () => {
                     For most production use cases, cursor-based pagination remains the
                     recommended and default approach in Jiroshi APIs.
                 </p>
-
-                <hr className="mt-12 border-slate-100" />
             </div>
 
 
