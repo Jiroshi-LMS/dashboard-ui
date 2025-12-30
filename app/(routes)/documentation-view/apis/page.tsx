@@ -11,6 +11,7 @@ import Pagination from './components/introduction/Pagination';
 import SelectionsAndFilters from './components/introduction/SelectionsAndFilters';
 import GetInstructorProfile from './components/instructor/GetInstructorProfile';
 import GetInstructorKPI from './components/instructor/GetInstructorKPI';
+import AuthIntro from './components/authentication/AuthIntro';
 
 
 
@@ -105,20 +106,8 @@ const ApiDocumentationPage = () => {
             <GetInstructorProfile />
             <GetInstructorKPI />
 
-
-            {/* Authentication - Custom Section Example */}
-            <div id="authentication" className="mb-16 scroll-mt-32">
-              <h2 className="text-2xl font-bold text-slate-900 mb-6">Authentication</h2>
-              <p className="text-slate-600 mb-4 leading-relaxed">
-                The Jiroshi API uses API keys to authenticate requests. You can view and manage your API keys in the Jiroshi Dashboard.
-              </p>
-              <ApiDoc.Body
-                title="Authentication Header"
-                code={`x-api-key: <YOUR_API_KEY>`}
-                language="bash"
-              />
-              <hr className="mt-12 border-slate-100" />
-            </div>
+            {/* Authentication */}
+            <AuthIntro />
 
             {/* List Course Catalogue */}
             <ApiDoc.Root id="list-course-catalogue">
