@@ -31,7 +31,7 @@ const Introduction = () => {
 
             <ApiDoc.Body
                 title="Active Base URL for Jiroshi V1"
-                code={`https://api.jiroshi.com/api/v1`}
+                code={`https://api.jiroshi.com/api/v1/public`}
                 language="bash"
             />
 
@@ -41,13 +41,13 @@ const Introduction = () => {
                     <p>
                         All API requests should be made to{" "}
                         <code className="bg-blue-100 px-1.5 py-0.5 rounded text-blue-900 font-mono">
-                            https://api.jiroshi.com/api/v1
+                            https://api.jiroshi.com/api/v1/public
                         </code>
                     </p>
                     <p className="mt-2 text-blue-700">
                         <span className="font-semibold">Note:</span> Future versions will be
                         exposed under separate versioned paths (for example,
-                        <code className="ml-1 bg-blue-100 px-1 rounded font-mono">/api/v2</code>).
+                        <code className="ml-1 bg-blue-100 px-1 rounded font-mono">/api/v2/public</code>).
                     </p>
                 </div>
             </div>

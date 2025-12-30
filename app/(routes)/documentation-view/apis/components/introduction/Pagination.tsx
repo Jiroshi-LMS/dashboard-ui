@@ -22,7 +22,7 @@ const Pagination = () => {
                 <ApiDoc.Body
                     title="Override Default Pagination to Page Offset Pagination"
                     language="bash"
-                    code={`GET /api/v1/public/courses/?pagination=page`}
+                    code={`GET /courses/?pagination=page`}
                 />
                 <p className="mt-4">
                     Cursor-based pagination can also be explicitly enforced using
@@ -140,7 +140,7 @@ const Pagination = () => {
                 <ApiDoc.Body
                     title="Next Page Request"
                     language="bash"
-                    code={`GET /api/v1/public/courses/?cursor=<NEXT_CURSOR_VALUE>`}
+                    code={`GET /courses/?cursor=<NEXT_CURSOR_VALUE>`}
                 />
 
                 <p className="text-slate-600 mb-6 leading-relaxed">
@@ -157,7 +157,7 @@ const Pagination = () => {
                 <ApiDoc.Body
                     title="Previous Page Request"
                     language="bash"
-                    code={`GET /api/v1/public/courses/?cursor=<PREVIOUS_CURSOR_VALUE>`}
+                    code={`GET /courses/?cursor=<PREVIOUS_CURSOR_VALUE>`}
                 />
 
                 <p className="text-slate-600 mb-6 leading-relaxed">
@@ -226,7 +226,7 @@ const Pagination = () => {
                 <ApiDoc.Body
                     title="Page-Based Pagination Request"
                     language="bash"
-                    code={`GET /api/v1/public/courses/?pagination=page&page=1&page_size=10`}
+                    code={`GET /courses/?pagination=page&page=1&page_size=10`}
                 />
 
                 <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-8">

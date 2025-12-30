@@ -35,7 +35,7 @@ const SelectionsAndFilters = () => {
             <ApiDoc.Body
                 title="Selections Query Parameter"
                 language="bash"
-                code={`GET /api/v1/courses/<course_id>/lessons/?selections=title,description`}
+                code={`GET /courses/<course_id>/lessons/?selections=title,description`}
             />
 
             <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-8">
@@ -85,7 +85,7 @@ const SelectionsAndFilters = () => {
             <ApiDoc.Body
                 title="Generic Search"
                 language="bash"
-                code={`GET /api/v1/public/courses/?search=backend`}
+                code={`GET /courses/?search=backend`}
             />
 
             <p className="text-slate-600 mb-4 leading-relaxed">
@@ -96,7 +96,7 @@ const SelectionsAndFilters = () => {
             <ApiDoc.Body
                 title="Field-Specific Search"
                 language="bash"
-                code={`GET /api/v1/public/courses/?title=django`}
+                code={`GET /courses/?title=django`}
             />
 
             <p className="text-slate-600 mb-8 leading-relaxed">
@@ -125,10 +125,10 @@ const SelectionsAndFilters = () => {
                 title="Ordering Examples"
                 language="bash"
                 code={`# Ascending order by duration
-GET /api/v1/public/courses/?ordering=duration
+GET /courses/?ordering=duration
 
 # Descending order by duration
-GET /api/v1/public/courses/?ordering=-duration`}
+GET /courses/?ordering=-duration`}
             />
 
             {/* ---------- Date Range ---------- */}
@@ -156,7 +156,7 @@ GET /api/v1/public/courses/?ordering=-duration`}
             <ApiDoc.Body
                 title="Date Range Filter Example"
                 language="bash"
-                code={`GET /api/v1/public/courses/?created_at_after=2025-01-01T00:00:00Z&created_at_before=2025-01-31T23:59:59Z`}
+                code={`GET /courses/?created_at_after=2025-01-01T00:00:00Z&created_at_before=2025-01-31T23:59:59Z`}
             />
 
             <div className="bg-amber-50 border-l-4 border-amber-400 p-4 my-6">
