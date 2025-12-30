@@ -9,6 +9,8 @@ import ResponseFormat from './components/introduction/ResponseFormat';
 import ErrorCodes from './components/introduction/ErrorCodes';
 import Pagination from './components/introduction/Pagination';
 import SelectionsAndFilters from './components/introduction/SelectionsAndFilters';
+import GetInstructorProfile from './components/instructor/GetInstructorProfile';
+import GetInstructorKPI from './components/instructor/GetInstructorKPI';
 
 
 
@@ -100,6 +102,8 @@ const ApiDocumentationPage = () => {
             <SelectionsAndFilters />
 
             {/* Instructor */}
+            <GetInstructorProfile />
+            <GetInstructorKPI />
 
 
             {/* Authentication - Custom Section Example */}
@@ -116,35 +120,13 @@ const ApiDocumentationPage = () => {
               <hr className="mt-12 border-slate-100" />
             </div>
 
-            {/* Instructor Profile */}
-            <ApiDoc.Root id="get-instructor-profile">
-              <ApiDoc.Header
-                title="Get Instructor Profile"
-                method="GET"
-                url="/instructor/profile/"
-              />
-              <ApiDoc.Description>
-                Retrieves the profile details of the authenticated instructor.
-              </ApiDoc.Description>
-              <ApiDoc.Response
-                code={JSON.stringify({
-                  success: true,
-                  data: {
-                    id: "inst_123",
-                    name: "John Doe",
-                    email: "john@example.com",
-                    specialization: "Web Development"
-                  }
-                }, null, 2)}
-              />
-            </ApiDoc.Root>
-
             {/* List Course Catalogue */}
             <ApiDoc.Root id="list-course-catalogue">
               <ApiDoc.Header
                 title="List Course Catalogue"
                 method="GET"
                 url="/courses/course-catalogue/"
+                authKeyType="public"
               />
               <ApiDoc.Description>
                 Returns a list of available courses in the catalogue.
@@ -176,6 +158,7 @@ const ApiDocumentationPage = () => {
                 title="Get Course Details"
                 method="GET"
                 url="/courses/course-catalogue/{courseId}/"
+                authKeyType="public"
               />
               <ApiDoc.Description>
                 Retrieves detailed information about a specific course.

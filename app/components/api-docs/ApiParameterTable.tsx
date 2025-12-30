@@ -16,31 +16,36 @@ const ApiParameterTable: React.FC<ApiParameterTableProps> = ({ parameters, title
     if (!parameters || parameters.length === 0) return null;
 
     return (
-        <div className="mt-4">
-            <h4 className="text-sm font-semibold text-gray-700 mb-2">{title}</h4>
-            <div className="overflow-x-auto border rounded-lg">
-                <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
+        <div className="mt-8">
+            <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+                {title}
+            </h4>
+            <div className="overflow-hidden border border-slate-200 rounded-xl shadow-sm bg-white">
+                <table className="min-w-full divide-y divide-slate-200">
+                    <thead className="bg-slate-50/50">
                         <tr>
-                            <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                            <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                            <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Required</th>
-                            <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                            <th scope="col" className="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase tracking-wider">Name</th>
+                            <th scope="col" className="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase tracking-wider">Type</th>
+                            <th scope="col" className="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase tracking-wider">Required</th>
+                            <th scope="col" className="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase tracking-wider">Description</th>
                         </tr>
                     </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
+                    <tbody className="divide-y divide-slate-100 italic-last-child">
                         {parameters.map((param, index) => (
-                            <tr key={index}>
-                                <td className="px-4 py-3 text-sm font-medium text-gray-900 font-mono">{param.name}</td>
-                                <td className="px-4 py-3 text-sm text-gray-500 font-mono text-xs">{param.type}</td>
-                                <td className="px-4 py-3 text-sm text-gray-500">
+                            <tr key={index} className="hover:bg-slate-50/50 transition-colors">
+                                <td className="px-4 py-3.5 text-xs font-bold text-slate-900 font-mono tracking-tight">{param.name}</td>
+                                <td className="px-4 py-3.5 text-xs text-slate-500 font-mono">
+                                    <span className="bg-slate-100 px-1.5 py-0.5 rounded text-[10px]">{param.type}</span>
+                                </td>
+                                <td className="px-4 py-3.5 text-xs">
                                     {param.required ? (
-                                        <span className="text-red-600 font-medium text-xs">Yes</span>
+                                        <span className="text-rose-600 font-bold text-[10px] uppercase bg-rose-50 px-1.5 py-0.5 rounded border border-rose-100">Yes</span>
                                     ) : (
-                                        <span className="text-gray-400 text-xs">No</span>
+                                        <span className="text-slate-400 text-[10px] uppercase bg-slate-50 px-1.5 py-0.5 rounded border border-slate-100">No</span>
                                     )}
                                 </td>
-                                <td className="px-4 py-3 text-sm text-gray-500">{param.description}</td>
+                                <td className="px-4 py-3.5 text-xs text-slate-600 leading-relaxed font-body">{param.description}</td>
                             </tr>
                         ))}
                     </tbody>

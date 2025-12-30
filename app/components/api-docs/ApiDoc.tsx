@@ -2,7 +2,9 @@ import React from 'react';
 import ApiMethodBadge from './ApiMethodBadge';
 import ApiParameterTable, { ApiParameter } from './ApiParameterTable';
 import ApiCodeBlock from './ApiCodeBlock';
+import ApiDocHeaderClient from './ApiDocHeaderClient';
 import { cn } from '@/lib/utils';
+import { Lock, Globe } from 'lucide-react';
 
 // --- Types ---
 
@@ -16,6 +18,7 @@ interface ApiDocHeaderProps {
     title: string;
     method: string;
     url: string;
+    authKeyType?: 'public' | 'secret' | 'none';
     className?: string;
 }
 
@@ -53,17 +56,33 @@ const Root: React.FC<ApiDocRootProps> = ({ id, children, className }) => {
     );
 };
 
-const Header: React.FC<ApiDocHeaderProps> = ({ title, method, url, className }) => {
+const Header: React.FC<ApiDocHeaderProps> = ({ title, method, url, authKeyType = 'none', className }) => {
     return (
-        <div className={cn("mb-6", className)}>
-            <div className="flex items-center gap-3 mb-3">
-                <h2 className="text-2xl font-bold text-slate-900 tracking-tight">{title}</h2>
-                <ApiMethodBadge method={method} />
+        <div className={cn("mb-8", className)}>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                <div className="flex items-center gap-3">
+                    <h2 className="text-2xl font-bold text-slate-900 tracking-tight">{title}</h2>
+                    <ApiMethodBadge method={method} />
+                </div>
+
+                {authKeyType !== 'none' && (
+                    <div className={cn(
+                        "flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wide border w-fit uppercase",
+                        authKeyType === 'secret'
+                            ? "bg-amber-50 text-amber-700 border-amber-200"
+                            : "bg-blue-50 text-blue-700 border-blue-200"
+                    )}>
+                        {authKeyType === 'secret' ? (
+                            <Lock className="w-3 h-3" />
+                        ) : (
+                            <Globe className="w-3 h-3" />
+                        )}
+                        <span>{authKeyType} Key required</span>
+                    </div>
+                )}
             </div>
-            <div className="flex items-center gap-2 text-sm font-mono text-slate-600 bg-slate-50 px-3 py-2 rounded-md border border-slate-200 w-fit">
-                <span className="font-bold text-slate-400 select-none">{method}</span>
-                <span className="text-slate-700">{url}</span>
-            </div>
+
+            <ApiDocHeaderClient url={url} method={method} />
         </div>
     );
 };
