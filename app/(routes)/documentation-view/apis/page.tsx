@@ -14,6 +14,7 @@ import GetInstructorKPI from './components/instructor/GetInstructorKPI';
 import AuthIntro from './components/authentication/AuthIntro';
 import AuthTransport from './components/authentication/AuthTransport';
 import Signup from './components/authentication/Signup';
+import Login from './components/authentication/Login';
 
 
 
@@ -113,6 +114,7 @@ const ApiDocumentationPage = () => {
             <AuthIntro />
             <AuthTransport />
             <Signup />
+            <Login />
 
             {/* List Course Catalogue */}
             <ApiDoc.Root id="list-course-catalogue">
