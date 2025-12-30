@@ -19,6 +19,7 @@ import RefreshToken from './components/authentication/RefreshToken';
 import Logout from './components/authentication/Logout';
 import StudentProfileDetails from './components/authentication/StudentProfileDetails';
 import StudentUpdateDetails from './components/authentication/StudentUpdateDetails';
+import StudentIdentifierLookup from './components/authentication/StudentIdentifierLookup';
 
 
 
@@ -123,6 +124,7 @@ const ApiDocumentationPage = () => {
             <Logout />
             <StudentProfileDetails />
             <StudentUpdateDetails />
+            <StudentIdentifierLookup />
 
             {/* List Course Catalogue */}
             <ApiDoc.Root id="list-course-catalogue">
