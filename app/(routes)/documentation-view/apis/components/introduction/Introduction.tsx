@@ -36,7 +36,6 @@ const Introduction = () => {
             />
 
             <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 flex gap-3 text-blue-800 text-sm">
-                <Info className="w-5 h-5 flex-shrink-0 text-blue-500" />
                 <div>
                     <p className="font-semibold mb-1">Base URL</p>
                     <p>

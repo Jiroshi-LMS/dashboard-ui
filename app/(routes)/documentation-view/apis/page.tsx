@@ -17,6 +17,8 @@ const sections: ApiSectionLink[] = [
       { id: 'api-key-usage', title: 'API Key Usage' },
       { id: 'response-format', title: 'Response Format' },
       { id: 'error-codes', title: 'Error Codes' },
+      { id: 'pagination', title: 'Pagination' },
+      { id: 'selections-and-filtering-options', title: 'Selections & Filters' }
     ]
   },
   {

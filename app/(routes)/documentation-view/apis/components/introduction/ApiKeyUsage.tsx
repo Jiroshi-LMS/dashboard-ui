@@ -19,7 +19,7 @@ const ApiKeyUsage = () => {
             </p>
 
             <ApiDoc.Body
-                title="Authentication Header"
+                title="API Key Header"
                 code={`x-api-key: <YOUR_API_KEY>`}
                 language="bash"
             />
