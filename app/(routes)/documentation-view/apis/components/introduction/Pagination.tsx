@@ -31,14 +31,11 @@ const Pagination = () => {
                 </p>
             </div>
 
-            <div className="bg-amber-50 border border-amber-100 rounded-lg p-4 text-amber-900 text-sm mb-8">
-                <p className="font-semibold mb-1">Performance Note</p>
-                <p>
-                    Page-offset based pagination is considerably slower and less efficient
-                    than cursor-based pagination, especially for large datasets. For optimal
-                    performance, cursor-based pagination is strongly recommended.
-                </p>
-            </div>
+            <ApiDoc.Warning title="Performance Note">
+                Page-offset based pagination is considerably slower and less efficient
+                than cursor-based pagination, especially for large datasets. For optimal
+                performance, cursor-based pagination is strongly recommended.
+            </ApiDoc.Warning>
 
             <h3 className="text-lg font-semibold text-slate-900 mb-3">
                 Cursor-Based Pagination Response
@@ -187,8 +184,7 @@ const Pagination = () => {
                     </li>
                 </ul>
 
-                <div className="bg-amber-50 border border-amber-100 rounded-lg p-4 text-amber-900 text-sm mt-5 mb-8">
-                    <p className="font-semibold mb-1">Cursor Based Pagination Limitations</p>
+                <ApiDoc.Warning title="Cursor Based Pagination Limitations">
                     <p>
                         With cursor based pagination, <b>the number of results that can be
                             fetched in a single request is fixed to 20 items. </b>
@@ -197,7 +193,7 @@ const Pagination = () => {
                         Also, <b>you won't have access to the count of total number of items </b> and related details
                         about the listing data.
                     </p>
-                </div>
+                </ApiDoc.Warning>
             </div>
 
             <div id="page-pagination" className="mb-16 scroll-mt-32">
@@ -304,8 +300,7 @@ const Pagination = () => {
                     </li>
                 </ul>
 
-                <div className="bg-amber-50 border border-amber-100 rounded-lg p-4 text-amber-900 text-sm mt-5 mb-8">
-                    <p className="font-semibold mb-1">Page-Offset Based Pagination Limitations</p>
+                <ApiDoc.Warning title="Page-Offset Based Pagination Limitations">
                     <ul className="list-disc pl-6 text-slate-600 space-y-2">
                         <li>
                             With page-offset based pagination, fetching data becomes slower as page numbers increase due to
@@ -318,7 +313,7 @@ const Pagination = () => {
                             Not suitable for large datasets or high-frequency access patterns.
                         </li>
                     </ul>
-                </div>
+                </ApiDoc.Warning>
 
                 <h4 className="text-md font-semibold text-slate-900 mb-2">
                     When to Use Page-Based Pagination

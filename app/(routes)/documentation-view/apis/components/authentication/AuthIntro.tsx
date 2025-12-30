@@ -1,10 +1,11 @@
+import { ApiDoc } from '@/app/components/api-docs/ApiDoc'
 import React from 'react'
 
 const AuthIntro = () => {
     return (
         <div id="authentication-intro" className="mb-16 scroll-mt-32">
             <h2 className="text-2xl font-bold text-slate-900 mb-6">
-                Authentication
+                Student Authentication ( Introduction )
             </h2>
 
             <p className="text-slate-600 mb-6 leading-relaxed">
@@ -34,14 +35,11 @@ const AuthIntro = () => {
                 to access resources belonging to another instructor.
             </p>
 
-            <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 text-blue-900 text-sm mb-8">
-                <p className="font-semibold mb-1">Important</p>
-                <p>
-                    Student access and refresh tokens are always validated in the context
-                    of the instructor API key used during authentication. Cross-tenant
-                    token usage is not permitted.
-                </p>
-            </div>
+            <ApiDoc.Info title="Important">
+                Student access and refresh tokens are always validated in the context
+                of the instructor API key used during authentication. Cross-tenant
+                token usage is not permitted.
+            </ApiDoc.Info>
 
             {/* Placeholder: Add authentication flow diagram */}
             {/* Placeholder: Add token lifespan and rotation details */}

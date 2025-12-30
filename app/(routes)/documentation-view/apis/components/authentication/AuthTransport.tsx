@@ -1,0 +1,87 @@
+import { ApiDoc } from '@/app/components/api-docs/ApiDoc'
+import React from 'react'
+
+const AuthTransport = () => {
+    return (
+        <div id="authentication-transport" className="mb-16 scroll-mt-32">
+            <h2 className="text-2xl font-bold text-slate-900 mb-6">
+                Authentication Transport & Client Detection
+            </h2>
+
+            <p className="text-slate-600 mb-6 leading-relaxed">
+                Jiroshi adapts its authentication token handling based on the detected
+                client environment to ensure maximum security while supporting multiple
+                application types.
+            </p>
+
+            <h4 className="text-md font-semibold text-slate-900 mb-2">
+                Browser-Based Clients
+            </h4>
+
+            <p className="text-slate-600 mb-6 leading-relaxed">
+                When a request is identified as originating from a browser environment,
+                refresh tokens are issued and stored exclusively via
+                <strong> HTTP-only cookies</strong>. These cookies are inaccessible to
+                browser-side JavaScript and are automatically included in subsequent
+                refresh requests by the browser.
+            </p>
+
+            <p className="text-slate-600 mb-8 leading-relaxed">
+                In this mode, refresh tokens are <strong>never exposed</strong> in API
+                responses or request payloads, significantly reducing the risk of token
+                theft via XSS or client-side compromise.
+            </p>
+
+            <h4 className="text-md font-semibold text-slate-900 mb-2">
+                Non-Browser Clients
+            </h4>
+
+            <p className="text-slate-600 mb-6 leading-relaxed">
+                For non-browser clients such as mobile applications, desktop clients,
+                or backend services, refresh tokens are returned directly in the API
+                response payload. Subsequent refresh requests must include the refresh
+                token explicitly in the request body.
+            </p>
+
+            <p className="text-slate-600 mb-8 leading-relaxed">
+                This mode is intended only for environments where secure storage of
+                tokens is handled by the client platform itself.
+            </p>
+
+            <h4 className="text-md font-semibold text-slate-900 mb-2">
+                Forcing API Mode
+            </h4>
+
+            <p className="text-slate-600 mb-4 leading-relaxed">
+                In certain edge cases—such as React Native or Electron-based
+                applications—the client may be incorrectly detected as a browser.
+                In such scenarios, token handling can be explicitly forced to API mode
+                by setting the following request header:
+            </p>
+
+            <ApiDoc.Body
+                title="Force API Client Mode"
+                language="bash"
+                code={`X-Client-Type: api`}
+            />
+
+            <ApiDoc.Warning title="Restricted Usage">
+                Forcing API mode bypasses browser-level protections and exposes
+                refresh tokens directly to the client. This option should be used
+                only when absolutely necessary and only in trusted environments.
+                Misuse may lead to token leakage, unauthorized access, or account
+                compromise.
+            </ApiDoc.Warning>
+
+            <p className="text-slate-600 leading-relaxed">
+                Jiroshi reserves the right to introduce additional validation,
+                restrictions, or rate limits on forced API mode usage to prevent abuse.
+            </p>
+
+            <hr className="mt-12 border-slate-100" />
+        </div>
+
+    )
+}
+
+export default AuthTransport

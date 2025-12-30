@@ -12,6 +12,8 @@ import SelectionsAndFilters from './components/introduction/SelectionsAndFilters
 import GetInstructorProfile from './components/instructor/GetInstructorProfile';
 import GetInstructorKPI from './components/instructor/GetInstructorKPI';
 import AuthIntro from './components/authentication/AuthIntro';
+import AuthTransport from './components/authentication/AuthTransport';
+import Signup from './components/authentication/Signup';
 
 
 
@@ -36,14 +38,15 @@ const sections: ApiSectionLink[] = [
     ]
   },
   {
-    title: 'Authentication',
+    title: 'Student Authentication',
     items: [
       { id: 'authentication-intro', title: 'Introduction' },
+      { id: 'authentication-transport', title: 'Auth Transport and Client Detection' },
       { id: 'signup', title: 'Signup' },
       { id: 'login', title: 'Login' },
       { id: 'refresh-token', title: 'Refresh Token' },
       { id: 'logout', title: 'Logout' },
-      { id: 'me-call', title: 'Student Profile Call' },
+      { id: 'me-call', title: 'Student Profile Details' },
       { id: 'update-student-details', title: 'Update Student Details' },
       { id: 'student-identifier-lookup', title: 'Student Identifier Lookup' }
     ]
@@ -108,6 +111,8 @@ const ApiDocumentationPage = () => {
 
             {/* Authentication */}
             <AuthIntro />
+            <AuthTransport />
+            <Signup />
 
             {/* List Course Catalogue */}
             <ApiDoc.Root id="list-course-catalogue">

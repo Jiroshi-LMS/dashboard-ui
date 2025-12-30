@@ -4,7 +4,7 @@ import ApiParameterTable, { ApiParameter } from './ApiParameterTable';
 import ApiCodeBlock from './ApiCodeBlock';
 import ApiDocHeaderClient from './ApiDocHeaderClient';
 import { cn } from '@/lib/utils';
-import { Lock, Globe } from 'lucide-react';
+import { Lock, Globe, Info as InfoIcon, AlertTriangle, AlertCircle } from 'lucide-react';
 
 // --- Types ---
 
@@ -42,6 +42,12 @@ interface ApiDocCodeProps {
 
 interface ApiDocCustomProps {
     children: React.ReactNode;
+    className?: string;
+}
+
+interface ApiDocAlertProps {
+    children: React.ReactNode;
+    title?: string;
     className?: string;
 }
 
@@ -127,6 +133,45 @@ const Custom: React.FC<ApiDocCustomProps> = ({ children, className }) => {
     );
 };
 
+const Info: React.FC<ApiDocAlertProps> = ({ children, title = "Information", className }) => {
+    return (
+        <div className={cn("bg-blue-50 border border-blue-100 rounded-xl p-4 flex gap-3 text-blue-800 text-sm my-6", className)}>
+            <div>
+                {title && <p className="font-bold mb-1 tracking-tight">{title}</p>}
+                <div className="text-blue-700 leading-relaxed">
+                    {children}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const Warning: React.FC<ApiDocAlertProps> = ({ children, title = "Warning", className }) => {
+    return (
+        <div className={cn("bg-amber-50 border border-amber-100 rounded-xl p-4 flex gap-3 text-amber-800 text-sm my-6", className)}>
+            <div>
+                {title && <p className="font-bold mb-1 tracking-tight">{title}</p>}
+                <div className="text-amber-700 leading-relaxed">
+                    {children}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const Danger: React.FC<ApiDocAlertProps> = ({ children, title = "Danger", className }) => {
+    return (
+        <div className={cn("bg-rose-50 border border-rose-100 rounded-xl p-4 flex gap-3 text-rose-800 text-sm my-6", className)}>
+            <div>
+                {title && <p className="font-bold mb-1 tracking-tight">{title}</p>}
+                <div className="text-rose-700 leading-relaxed">
+                    {children}
+                </div>
+            </div>
+        </div>
+    );
+};
+
 // --- Export ---
 
 export const ApiDoc = {
@@ -137,4 +182,7 @@ export const ApiDoc = {
     Body,
     Response,
     Custom,
+    Info,
+    Warning,
+    Danger,
 };
