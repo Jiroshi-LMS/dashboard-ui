@@ -15,6 +15,7 @@ import AuthIntro from './components/authentication/AuthIntro';
 import AuthTransport from './components/authentication/AuthTransport';
 import Signup from './components/authentication/Signup';
 import Login from './components/authentication/Login';
+import RefreshToken from './components/authentication/RefreshToken';
 
 
 
@@ -115,6 +116,7 @@ const ApiDocumentationPage = () => {
             <AuthTransport />
             <Signup />
             <Login />
+            <RefreshToken />
 
             {/* List Course Catalogue */}
             <ApiDoc.Root id="list-course-catalogue">
