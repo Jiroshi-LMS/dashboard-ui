@@ -18,6 +18,7 @@ import Login from './components/authentication/Login';
 import RefreshToken from './components/authentication/RefreshToken';
 import Logout from './components/authentication/Logout';
 import StudentProfileDetails from './components/authentication/StudentProfileDetails';
+import StudentUpdateDetails from './components/authentication/StudentUpdateDetails';
 
 
 
@@ -51,7 +52,7 @@ const sections: ApiSectionLink[] = [
       { id: 'refresh-token', title: 'Refresh Token' },
       { id: 'logout', title: 'Logout' },
       { id: 'student-profile-details', title: 'Student Profile Details' },
-      { id: 'update-student-details', title: 'Update Student Details' },
+      { id: 'update-student-account', title: 'Update Student Details' },
       { id: 'student-identifier-lookup', title: 'Student Identifier Lookup' }
     ]
   },
@@ -121,6 +122,7 @@ const ApiDocumentationPage = () => {
             <RefreshToken />
             <Logout />
             <StudentProfileDetails />
+            <StudentUpdateDetails />
 
             {/* List Course Catalogue */}
             <ApiDoc.Root id="list-course-catalogue">
