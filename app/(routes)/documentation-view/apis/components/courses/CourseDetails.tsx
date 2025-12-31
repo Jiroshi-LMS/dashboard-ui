@@ -13,6 +13,7 @@ const CourseDetails = () => {
             <ApiDoc.Description>
                 Retrieves detailed information about a specific course.
             </ApiDoc.Description>
+
             <ApiDoc.Parameters
                 title="Path Parameters"
                 parameters={[

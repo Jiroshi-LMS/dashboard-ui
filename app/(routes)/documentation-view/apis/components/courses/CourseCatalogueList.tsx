@@ -14,7 +14,7 @@ const CourseCatalogueList = () => {
             <ApiDoc.Description>
                 Retrieves a paginated list of available courses under the instructor
                 tenant. This endpoint supports selections, searching, ordering, date
-                range filtering, and cursor-based pagination.
+                range filtering, and pagination.
             </ApiDoc.Description>
 
             <ApiDoc.Warning title='Authenticated Student Use-Case (Important)'>
@@ -120,8 +120,8 @@ const CourseCatalogueList = () => {
             <ApiDoc.Parameters
                 title="Date Range Filters:"
                 parameters={[
-                    { name: 'created_at_after', type: 'string', description: 'Filters the results to include only courses created after the specified date.' },
-                    { name: 'created_at_before', type: 'string', description: 'Filters the results to include only courses created before the specified date.' }
+                    { name: 'created_at_after', type: 'string', description: 'Filters the results to include only courses created after the specified date (IN UTC DATETIME FORMAT).' },
+                    { name: 'created_at_before', type: 'string', description: 'Filters the results to include only courses created before the specified date (IN UTC DATETIME FORMAT).' }
                 ]}
             />
 
