@@ -25,6 +25,7 @@ import CourseDetails from './components/courses/CourseDetails';
 import LessonList from './components/courses/LessonList';
 import EnrollToCourse from './components/courses/EnrollToCourse';
 import LessonDetails from './components/courses/LessonDetails';
+import LessonResources from './components/courses/LessonResources';
 
 
 
@@ -69,7 +70,7 @@ const sections: ApiSectionLink[] = [
       { id: 'get-course-details', title: 'Get Course Details' },
       { id: 'list-course-lessons', title: 'List Course Lessons' },
       { id: 'enroll-to-course', title: 'Enroll to Course' },
-      { id: 'get-lesson', title: 'Get Lesson' },
+      { id: 'get-lesson', title: 'Get Lesson Details' },
       { id: 'lesson-resources', title: 'Lesson Extra Resources' },
       { id: 'student-enrolled-courses', title: 'Student Enrolled Courses' }
     ]
@@ -137,6 +138,7 @@ const ApiDocumentationPage = () => {
             <LessonList />
             <EnrollToCourse />
             <LessonDetails />
+            <LessonResources />
 
           </div>
         </main>
