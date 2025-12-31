@@ -26,6 +26,7 @@ import LessonList from './components/courses/LessonList';
 import EnrollToCourse from './components/courses/EnrollToCourse';
 import LessonDetails from './components/courses/LessonDetails';
 import LessonResources from './components/courses/LessonResources';
+import EnrolledCourseList from './components/courses/EnrolledCourseList';
 
 
 
@@ -139,6 +140,7 @@ const ApiDocumentationPage = () => {
             <EnrollToCourse />
             <LessonDetails />
             <LessonResources />
+            <EnrolledCourseList />
 
           </div>
         </main>
