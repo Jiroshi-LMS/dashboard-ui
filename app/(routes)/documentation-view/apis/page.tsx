@@ -23,6 +23,7 @@ import StudentIdentifierLookup from './components/authentication/StudentIdentifi
 import CourseCatalogueList from './components/courses/CourseCatalogueList';
 import CourseDetails from './components/courses/CourseDetails';
 import LessonList from './components/courses/LessonList';
+import EnrollToCourse from './components/courses/EnrollToCourse';
 
 
 
@@ -133,6 +134,7 @@ const ApiDocumentationPage = () => {
             <CourseCatalogueList />
             <CourseDetails />
             <LessonList />
+            <EnrollToCourse />
 
           </div>
         </main>
