@@ -21,6 +21,7 @@ import StudentProfileDetails from './components/authentication/StudentProfileDet
 import StudentUpdateDetails from './components/authentication/StudentUpdateDetails';
 import StudentIdentifierLookup from './components/authentication/StudentIdentifierLookup';
 import CourseCatalogueList from './components/courses/CourseCatalogueList';
+import CourseDetails from './components/courses/CourseDetails';
 
 
 
@@ -129,40 +130,7 @@ const ApiDocumentationPage = () => {
 
             {/* Courses */}
             <CourseCatalogueList />
-
-            {/* Get Course Details */}
-            <ApiDoc.Root id="get-course-details">
-              <ApiDoc.Header
-                title="Get Course Details"
-                method="GET"
-                url="/courses/course-catalogue/{courseId}/"
-                authKeyType="public"
-              />
-              <ApiDoc.Description>
-                Retrieves detailed information about a specific course.
-              </ApiDoc.Description>
-              <ApiDoc.Parameters
-                title="Path Parameters"
-                parameters={[
-                  { name: 'courseId', type: 'string', required: true, description: 'The unique identifier of the course.' },
-                ]}
-              />
-              <ApiDoc.Response
-                code={JSON.stringify({
-                  success: true,
-                  data: {
-                    id: "course_1",
-                    title: "Advanced React Patterns",
-                    description: "Master React with advanced patterns.",
-                    price: 49.99,
-                    modules: [
-                      { title: "Introduction", duration: "10m" },
-                      { title: "HOCs and Render Props", duration: "45m" }
-                    ]
-                  }
-                }, null, 2)}
-              />
-            </ApiDoc.Root>
+            <CourseDetails />
 
           </div>
         </main>

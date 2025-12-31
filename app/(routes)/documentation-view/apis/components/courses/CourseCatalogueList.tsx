@@ -17,7 +17,7 @@ const CourseCatalogueList = () => {
                 range filtering, and cursor-based pagination.
             </ApiDoc.Description>
 
-            <ApiDoc.Warning title='Important Use-Case'>
+            <ApiDoc.Warning title='Authenticated Student Use-Case (Important)'>
                 If a valid student access token is provided (from authorization header), the response also indicates
                 whether the student is enrolled in each course or not via
                 <code className="mx-1 font-mono text-slate-900 bg-slate-100 px-1.5 py-0.5 rounded">is_enrolled</code> field.
