@@ -5,7 +5,7 @@ const Pagination = () => {
     return (
         <div id="pagination" className="mb-16 scroll-mt-32">
             <h2 className="text-2xl font-bold text-slate-900 mb-6">
-                Working with Pagination
+                Pagination Usage
             </h2>
 
             <p className="text-slate-600 mb-6 leading-relaxed">

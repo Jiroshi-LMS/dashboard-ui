@@ -3,7 +3,7 @@ import React from 'react';
 export interface ApiParameter {
     name: string;
     type: string;
-    required: boolean;
+    required?: boolean;
     description: string;
 }
 
@@ -27,7 +27,7 @@ const ApiParameterTable: React.FC<ApiParameterTableProps> = ({ parameters, title
                         <tr>
                             <th scope="col" className="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase tracking-wider">Name</th>
                             <th scope="col" className="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase tracking-wider">Type</th>
-                            <th scope="col" className="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase tracking-wider">Required</th>
+                            {parameters[0].required !== undefined && <th scope="col" className="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase tracking-wider">Required</th>}
                             <th scope="col" className="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase tracking-wider">Description</th>
                         </tr>
                     </thead>
@@ -38,13 +38,13 @@ const ApiParameterTable: React.FC<ApiParameterTableProps> = ({ parameters, title
                                 <td className="px-4 py-3.5 text-xs text-slate-500 font-mono">
                                     <span className="bg-slate-100 px-1.5 py-0.5 rounded text-[10px]">{param.type}</span>
                                 </td>
-                                <td className="px-4 py-3.5 text-xs">
+                                {param.required !== undefined && <td className="px-4 py-3.5 text-xs">
                                     {param.required ? (
                                         <span className="text-rose-600 font-bold text-[10px] uppercase bg-rose-50 px-1.5 py-0.5 rounded border border-rose-100">Yes</span>
                                     ) : (
                                         <span className="text-slate-400 text-[10px] uppercase bg-slate-50 px-1.5 py-0.5 rounded border border-slate-100">No</span>
                                     )}
-                                </td>
+                                </td>}
                                 <td className="px-4 py-3.5 text-xs text-slate-600 leading-relaxed font-body">{param.description}</td>
                             </tr>
                         ))}

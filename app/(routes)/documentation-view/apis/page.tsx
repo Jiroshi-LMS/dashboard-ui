@@ -20,6 +20,7 @@ import Logout from './components/authentication/Logout';
 import StudentProfileDetails from './components/authentication/StudentProfileDetails';
 import StudentUpdateDetails from './components/authentication/StudentUpdateDetails';
 import StudentIdentifierLookup from './components/authentication/StudentIdentifierLookup';
+import CourseCatalogueList from './components/courses/CourseCatalogueList';
 
 
 
@@ -32,7 +33,7 @@ const sections: ApiSectionLink[] = [
       { id: 'api-key-usage', title: 'API Key Usage' },
       { id: 'response-format', title: 'Response Format' },
       { id: 'error-codes', title: 'Error Codes' },
-      { id: 'pagination', title: 'Working with Pagination' },
+      { id: 'pagination', title: 'Pagination Usage' },
       { id: 'selections-and-filtering-options', title: 'Selections & Filters' }
     ]
   },
@@ -60,7 +61,7 @@ const sections: ApiSectionLink[] = [
   {
     title: 'Courses',
     items: [
-      { id: 'list-course-catalogue', title: 'List Catalogue' },
+      { id: 'list-course-catalogue', title: 'List Courses' },
       { id: 'get-course-details', title: 'Get Course Details' },
       { id: 'list-course-lessons', title: 'List Course Lessons' },
       { id: 'enroll-to-course', title: 'Enroll to Course' },
@@ -126,37 +127,8 @@ const ApiDocumentationPage = () => {
             <StudentUpdateDetails />
             <StudentIdentifierLookup />
 
-            {/* List Course Catalogue */}
-            <ApiDoc.Root id="list-course-catalogue">
-              <ApiDoc.Header
-                title="List Course Catalogue"
-                method="GET"
-                url="/courses/course-catalogue/"
-                authKeyType="public"
-              />
-              <ApiDoc.Description>
-                Returns a list of available courses in the catalogue.
-              </ApiDoc.Description>
-              <ApiDoc.Response
-                code={JSON.stringify({
-                  success: true,
-                  data: [
-                    {
-                      id: "course_1",
-                      title: "Advanced React Patterns",
-                      description: "Master React with advanced patterns.",
-                      price: 49.99
-                    },
-                    {
-                      id: "course_2",
-                      title: "Node.js Microservices",
-                      description: "Build scalable microservices with Node.js.",
-                      price: 59.99
-                    }
-                  ]
-                }, null, 2)}
-              />
-            </ApiDoc.Root>
+            {/* Courses */}
+            <CourseCatalogueList />
 
             {/* Get Course Details */}
             <ApiDoc.Root id="get-course-details">
