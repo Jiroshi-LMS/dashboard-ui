@@ -8,6 +8,9 @@ import NextTopLoaderProvider from '@/app/components/providers/NextTopLoaderProvi
 export const metadata: Metadata = {
   title: "Jiroshi",
   description: "A Headless LMS Dashboard",
+  icons: {
+    icon: "/icon.png",
+  },
 };
 
 export default function RootLayout({
