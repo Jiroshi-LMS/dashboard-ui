@@ -11,8 +11,8 @@
 
 # API Docs
 
-- [] API Key Usage Docs
-- [] API Docs Pages
+- [X] API Key Usage Docs
+- [X] API Docs Pages
 
 # POST MVP
 
