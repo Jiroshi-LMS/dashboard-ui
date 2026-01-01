@@ -12,6 +12,9 @@ import {
   KeyIcon,
   BookOpenIcon,
   UserPlusIcon,
+  HeadsetIcon,
+  FormInputIcon,
+  AlertCircle,
 } from "lucide-react";
 
 import {
@@ -60,6 +63,24 @@ const utilItems = [
     title: "Documentation",
     url: "/documentation-view/apis",
     icon: BookOpenIcon,
+    target: "_blank",
+  },
+  {
+    title: "Report Issue",
+    url: "https://mail.google.com/mail/?view=cm&fs=1&to=app.jiroshi@gmail.com&su=Bug%20Report%20-%20Jiroshi&body=Please%20describe%20the%20issue%20below:%0A%0A---%0AIssue%20Summary:%0A%0ASteps%20to%20Reproduce:%0A1.%20%0A2.%20%0A3.%20%0A%0AExpected%20Behavior:%0A%0AActual%20Behavior:%0A%0AAPI%20Endpoint%20(if%20any):%0A%0AAdditional%20Details:%0AScreenshots%20(if%20any):%0A---",
+    icon: AlertCircle,
+    target: "_blank",
+  },
+  {
+    title: "Support",
+    url: "https://mail.google.com/mail/?view=cm&fs=1&to=app.jiroshi@gmail.com&su=Jiroshi Pilot Program Application&body=Hi Jiroshi Team,%0D%0A%0D%0AI'm interested in the free Pilot Program. Here is some information about my platform:%0D%0A%0D%0A- Name:%0D%0A- Course Topic:%0D%0A- Contact Information:%0D%0A- Existing Website (if any):%0D%0A%0D%0AThank you!",
+    icon: HeadsetIcon,
+    target: "_blank",
+  },
+  {
+    title: "Feedback",
+    url: "https://forms.gle/cNtkxWTjX1jiXMe88",
+    icon: FormInputIcon,
     target: "_blank",
   }
 ];
