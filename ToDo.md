@@ -1,5 +1,5 @@
 # Improvements
-- [] Landing Page Textual Fixes
+- [X] Landing Page Textual Fixes
 - [X] Landing Page UI Fixes
 - [] Redirection if authenticated
 
