@@ -1,13 +1,13 @@
 # Improvements
 - [] Landing Page Textual Fixes
-- [] Landing Page UI Fixes
+- [X] Landing Page UI Fixes
 - [] Redirection if authenticated
 
 # Feedback Page
 
-- [] Add User Feedback Google Form
-- [] Add Bug Report Google Form
-- [] Raise a ticket google form
+- [X] Add User Feedback Google Form
+- [X] Add Bug Report Google Form
+- [X] Raise a ticket google form
 
 # API Docs
 

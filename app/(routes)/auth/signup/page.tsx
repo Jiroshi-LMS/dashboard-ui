@@ -13,8 +13,10 @@ const RegisterPage = () => {
         <aside className="w-[40%] flex flex-col items-start justify-center bg-teal-700 text-white p-10">
           <h2 className="text-3xl font-bold mb-4">What is Jiroshi?</h2>
           <p className="text-lg leading-relaxed text-left">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum exercitationem earum sequi
-            dicta atque deleniti, aliquid nesciunt suscipit consectetur fuga beatae magnam!
+            <strong>Jiroshi is a headless learning platform that lets you build and run your own course system using flexible APIs and tools.</strong>
+            <br />
+            <br />
+            You handle the experience — Jiroshi handles the backend.
           </p>
         </aside>
 

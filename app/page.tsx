@@ -130,7 +130,7 @@ export default function Home() {
 
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-4">
-              <Link href="/login" className="text-sm font-medium text-slate-600 hover:text-primary transition-colors hidden sm:block">
+              <Link href="/auth/login" className="text-sm font-medium text-slate-600 hover:text-primary transition-colors hidden sm:block">
                 Login
               </Link>
               <Link href="/instructor/dashboard">
@@ -202,7 +202,7 @@ export default function Home() {
 
               {/* Headline */}
               <motion.h1
-                className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 leading-[1.1] text-slate-900"
+                className="text-3xl md:text-4xl lg:text-6xl font-bold tracking-tight mb-8 leading-[1.1] text-slate-900"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.1 }}
@@ -212,7 +212,7 @@ export default function Home() {
                 <span className="relative inline-block">
                   <span className="absolute -inset-2 bg-gradient-to-r from-primary/20 to-teal-200/50 blur-2xl opacity-50"></span>
                   <span className="relative bg-clip-text text-transparent bg-gradient-to-r from-primary to-teal-600">
-                    built for Developers
+                    built for modern learning platforms
                   </span>
                 </span>
               </motion.h1>
@@ -671,25 +671,36 @@ export default function Home() {
             <div>
               <h4 className="font-semibold mb-4 text-slate-900">Platform</h4>
               <ul className="space-y-2 text-sm text-slate-500">
-                <li><Link href="/" className="hover:text-primary transition-colors">Landing</Link></li>
-                <li><Link href="#features" className="hover:text-primary transition-colors">Features</Link></li>
-                <li><Link href="#how-it-works" className="hover:text-primary transition-colors">How it works</Link></li>
-                <li><Link href="/instructor/dashboard" className="hover:text-primary transition-colors">API</Link></li>
-                <li><Link href="/documentation-view/apis" className="hover:text-primary transition-colors">Documentation</Link></li>
+                <li><Link href="/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Landing</Link></li>
+                <li><Link href="#features" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Features</Link></li>
+                <li><Link href="#how-it-works" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">How it works</Link></li>
+                <li><Link href="/instructor/dashboard" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">API</Link></li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-4 text-slate-900">Support</h4>
               <ul className="space-y-2 text-sm text-slate-500">
-                <li><a href="mailto:app.jiroshi@gmail.com" className="hover:text-primary transition-colors">Contact</a></li>
-                <li><Link href="#" className="hover:text-primary transition-colors">Feedback</Link></li>
+                <li><a href="https://forms.gle/S6Gn7Aw6gR5bbyCU9" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Contact</a></li>
+                <li>
+                  <a
+                    href="https://mail.google.com/mail/?view=cm&fs=1&to=app.jiroshi@gmail.com&su=Bug%20Report%20-%20Jiroshi&body=Please%20describe%20the%20issue%20below:%0A%0A---%0AIssue%20Summary:%0A%0ASteps%20to%20Reproduce:%0A1.%20%0A2.%20%0A3.%20%0A%0AExpected%20Behavior:%0A%0AActual%20Behavior:%0A%0AAPI%20Endpoint%20(if%20any):%0A%0AAdditional%20Details:%0AScreenshots%20(if%20any):%0A---"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-primary transition-colors"
+                  >
+                    Report a bug / issue
+                  </a>
+                </li>
+
+                <li><Link href="https://forms.gle/cNtkxWTjX1jiXMe88" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Feedback</Link></li>
+                <li><Link href="/documentation-view/apis" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Documentation</Link></li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-4 text-slate-900">Legal</h4>
               <ul className="space-y-2 text-sm text-slate-500">
-                <li><Link href="/legal/privacy-policy" className="hover:text-primary transition-colors">Privacy Policies</Link></li>
-                <li><Link href="/legal/terms-conditions" className="hover:text-primary transition-colors">Terms & Conditions</Link></li>
+                <li><Link href="/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Privacy Policies</Link></li>
+                <li><Link href="/legal/terms-conditions" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Terms & Conditions</Link></li>
               </ul>
             </div>
           </div>
