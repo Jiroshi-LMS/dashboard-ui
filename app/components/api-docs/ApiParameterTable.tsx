@@ -37,8 +37,8 @@ const ApiParameterTable: React.FC<ApiParameterTableProps> = ({ parameters, title
                                 <td className="px-6 py-5 text-sm font-bold text-slate-900 font-mono tracking-tight">
                                     <span className="bg-slate-50 group-hover/row:bg-white px-2 py-1 rounded-md border border-slate-100 transition-colors">{param.name}</span>
                                 </td>
-                                <td className="px-6 py-5 text-xs text-slate-500 font-mono">
-                                    <span className="bg-teal-50/50 text-teal-700 px-2 py-1 rounded-md border border-teal-100/50 font-bold">{param.type}</span>
+                                <td className="px-6 py-5 text-xs text-slate-500 font-mono w-40">
+                                    <span className="bg-teal-50/50 text-teal-700 px-2 py-1 rounded-md border border-teal-100/50 font-bold whitespace-nowrap">{param.type}</span>
                                 </td>
                                 {param.required !== undefined && <td className="px-6 py-5 text-xs">
                                     {param.required ? (

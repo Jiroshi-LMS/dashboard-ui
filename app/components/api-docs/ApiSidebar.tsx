@@ -106,7 +106,7 @@ const ApiSidebar: React.FC<ApiSidebarProps> = ({ sections, className }) => {
     };
 
     return (
-        <nav className={cn("w-72 hidden lg:block flex-shrink-0 sticky top-28 h-[calc(100vh-8rem)] overflow-y-auto pr-6 scrollbar-hide", className)}>
+        <nav className={cn("w-64 hidden lg:block flex-shrink-0 sticky top-28 h-[calc(100vh-8rem)] overflow-y-auto pr-6 scrollbar-hide", className)}>
             <div className="mb-8 px-1">
                 <h3 className="text-[11px] font-black text-slate-900 uppercase tracking-[0.25em] mb-4 flex items-center gap-2">
                     <div className="w-1.5 h-1.5 bg-teal-500 rounded-full" />

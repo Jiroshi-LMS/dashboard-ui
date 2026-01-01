@@ -101,13 +101,13 @@ const ApiDocumentationPage = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-6 max-w-7xl flex gap-12 py-12">
+      <div className="container mx-auto px-6 max-w-7xl flex gap-8 py-12">
         {/* Sidebar */}
         <ApiSidebar sections={sections} />
 
         {/* Main Content */}
         <main className="flex-1 min-w-0 pb-24">
-          <div className="max-w-4xl">
+          <div className="max-w-5xl">
 
             {/* Introduction */}
             <Introduction />
