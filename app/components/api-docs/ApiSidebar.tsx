@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { Turtle } from 'lucide-react';
 
 export interface ApiSectionLink {
     id?: string;
@@ -106,7 +107,17 @@ const ApiSidebar: React.FC<ApiSidebarProps> = ({ sections, className }) => {
     };
 
     return (
-        <nav className={cn("w-64 hidden lg:block flex-shrink-0 sticky top-28 h-[calc(100vh-8rem)] overflow-y-auto pr-6 scrollbar-hide", className)}>
+        <nav className={cn("w-64 hidden lg:block flex-shrink-0 sticky top-3 h-[calc(100vh-8rem)] overflow-y-auto pr-6 scrollbar-hidden", className)}>
+            <header>
+                <h3 className="text-md font-bold p-3 px-1 text-teal-600">
+                    <Link className="flex items-center gap-2" href="/instructor/dashboard">
+                        <div className="w-6 h-6 rounded-full bg-gradient-to-br from-primary to-teal-600 flex items-center justify-center text-white shadow-md shadow-primary/20">
+                            <Turtle size={12} />
+                        </div>
+                        Jiroshi
+                    </Link>
+                </h3>
+            </header>
             <div className="mb-8 px-1">
                 <h3 className="text-[11px] font-black text-slate-900 uppercase tracking-[0.25em] mb-4 flex items-center gap-2">
                     <div className="w-1.5 h-1.5 bg-teal-500 rounded-full" />

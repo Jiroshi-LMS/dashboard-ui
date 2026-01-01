@@ -7,12 +7,16 @@ import Link from "next/link"
 import Image from "next/image"
 import { Instructor } from "@/feature/instructor/instructorTypes"
 import { staticFiles } from "@/lib/constants/FileConstants"
+import { Turtle } from "lucide-react"
 
 export const SidebarHeaderContent = () => {
   return (
     <header>
       <h3 className="text-md font-bold p-3 text-teal-600">
-        <Link href="/instructor/dashboard">
+        <Link className="flex items-center gap-2" href="/instructor/dashboard">
+          <div className="w-6 h-6 rounded-full bg-gradient-to-br from-primary to-teal-600 flex items-center justify-center text-white shadow-md shadow-primary/20">
+            <Turtle size={12} />
+          </div>
           Jiroshi Dashboard
         </Link>
       </h3>
