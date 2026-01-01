@@ -659,7 +659,7 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
             <div className="col-span-2 md:col-span-1">
               <div className="flex items-center gap-2 font-bold text-lg mb-4 text-slate-900">
-                <div className="w-6 h-6 rounded-f bg-primary flex items-center justify-center text-white">
+                <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-white">
                   <Turtle size={14} />
                 </div>
                 JIROSHI
@@ -669,27 +669,27 @@ export default function Home() {
               </p>
             </div>
             <div>
-              <h4 className="font-semibold mb-4 text-slate-900">Product</h4>
+              <h4 className="font-semibold mb-4 text-slate-900">Platform</h4>
               <ul className="space-y-2 text-sm text-slate-500">
-                <li><Link href="#" className="hover:text-primary transition-colors">Features</Link></li>
-                <li><Link href="#" className="hover:text-primary transition-colors">Pricing</Link></li>
-                <li><Link href="#" className="hover:text-primary transition-colors">API</Link></li>
+                <li><Link href="/" className="hover:text-primary transition-colors">Landing</Link></li>
+                <li><Link href="#features" className="hover:text-primary transition-colors">Features</Link></li>
+                <li><Link href="#how-it-works" className="hover:text-primary transition-colors">How it works</Link></li>
+                <li><Link href="/instructor/dashboard" className="hover:text-primary transition-colors">API</Link></li>
+                <li><Link href="/documentation-view/apis" className="hover:text-primary transition-colors">Documentation</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4 text-slate-900">Resources</h4>
+              <h4 className="font-semibold mb-4 text-slate-900">Support</h4>
               <ul className="space-y-2 text-sm text-slate-500">
-                <li><Link href="#" className="hover:text-primary transition-colors">Documentation</Link></li>
-                <li><Link href="#" className="hover:text-primary transition-colors">Guides</Link></li>
-                <li><Link href="#" className="hover:text-primary transition-colors">Community</Link></li>
+                <li><a href="mailto:app.jiroshi@gmail.com" className="hover:text-primary transition-colors">Contact</a></li>
+                <li><Link href="#" className="hover:text-primary transition-colors">Feedback</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4 text-slate-900">Company</h4>
+              <h4 className="font-semibold mb-4 text-slate-900">Legal</h4>
               <ul className="space-y-2 text-sm text-slate-500">
-                <li><Link href="#" className="hover:text-primary transition-colors">About</Link></li>
-                <li><Link href="#" className="hover:text-primary transition-colors">Blog</Link></li>
-                <li><Link href="#" className="hover:text-primary transition-colors">Careers</Link></li>
+                <li><Link href="/legal/privacy-policy" className="hover:text-primary transition-colors">Privacy Policies</Link></li>
+                <li><Link href="/legal/terms-conditions" className="hover:text-primary transition-colors">Terms & Conditions</Link></li>
               </ul>
             </div>
           </div>
