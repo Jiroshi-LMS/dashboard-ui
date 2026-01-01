@@ -28,9 +28,9 @@ const Login = () => {
                 <strong>Filters:</strong> Not supported
             </ApiDoc.Description>
 
-            <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
+            <ApiDoc.SubHeader>
                 Request Body
-            </h4>
+            </ApiDoc.SubHeader>
 
             <ApiDoc.Body
                 title="Login Payload"
@@ -50,9 +50,9 @@ const Login = () => {
                 must be unique within the instructor tenant.
             </ApiDoc.Description>
 
-            <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
+            <ApiDoc.SubHeader>
                 Response (Browser Environment)
-            </h4>
+            </ApiDoc.SubHeader>
 
             <ApiDoc.Body
                 title="Browser Response"
@@ -72,9 +72,9 @@ const Login = () => {
                 JavaScript.
             </ApiDoc.Description>
 
-            <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
+            <ApiDoc.SubHeader>
                 Response (Non-Browser / Forced API Mode)
-            </h4>
+            </ApiDoc.SubHeader>
 
             <ApiDoc.Body
                 title="API Client Response"

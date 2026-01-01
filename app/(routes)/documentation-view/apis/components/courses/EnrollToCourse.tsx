@@ -68,9 +68,9 @@ const EnrollToCourse = () => {
                 instructor tenant.
             </ApiDoc.Description>
 
-            <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
+            <ApiDoc.SubHeader>
                 Response
-            </h4>
+            </ApiDoc.SubHeader>
 
             <ApiDoc.Body
                 title="Enrollment Response"

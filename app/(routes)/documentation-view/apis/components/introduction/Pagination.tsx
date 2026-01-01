@@ -4,9 +4,9 @@ import React from 'react'
 const Pagination = () => {
     return (
         <div id="pagination" className="mb-16 scroll-mt-32">
-            <h2 className="text-2xl font-bold text-slate-900 mb-6">
+            <ApiDoc.OverviewHeader>
                 Pagination Usage
-            </h2>
+            </ApiDoc.OverviewHeader>
 
             <p className="text-slate-600 mb-6 leading-relaxed">
                 Pagination is applied to all listing APIs in Jiroshi. By default, the API
@@ -37,9 +37,9 @@ const Pagination = () => {
                 performance, cursor-based pagination is strongly recommended.
             </ApiDoc.Warning>
 
-            <h3 className="text-lg font-semibold text-slate-900 mb-3">
+            <ApiDoc.SubHeader>
                 Cursor-Based Pagination Response
-            </h3>
+            </ApiDoc.SubHeader>
 
             <p className="text-slate-600 mb-4 leading-relaxed">
                 When using cursor-based pagination, the response includes navigation URLs
@@ -112,9 +112,9 @@ const Pagination = () => {
             </p>
 
             <div id="cursor-pagination-usage" className="mb-16 scroll-mt-32">
-                <h3 className="text-md font-semibold text-slate-900 my-3">
+                <ApiDoc.SubHeader>
                     Using Cursor Parameters
-                </h3>
+                </ApiDoc.SubHeader>
 
                 <p className="text-slate-600 mb-6 leading-relaxed">
                     Cursor-based pagination uses encoded cursor values to determine the
@@ -130,9 +130,9 @@ const Pagination = () => {
                     request using the corresponding cursor value.
                 </p>
 
-                <h5 className="text-sm font-semibold text-slate-900 mb-2">
+                <ApiDoc.SubHeader>
                     Fetching the Next Page
-                </h5>
+                </ApiDoc.SubHeader>
 
                 <ApiDoc.Body
                     title="Next Page Request"
@@ -147,9 +147,9 @@ const Pagination = () => {
                     <code className="mx-1 font-mono">null</code>, no further pages are available.
                 </p>
 
-                <h5 className="text-sm font-semibold text-slate-900 mb-2">
+                <ApiDoc.SubHeader>
                     Fetching the Previous Page
-                </h5>
+                </ApiDoc.SubHeader>
 
                 <ApiDoc.Body
                     title="Previous Page Request"
@@ -165,9 +165,9 @@ const Pagination = () => {
                     page.
                 </p>
 
-                <h5 className="text-sm font-semibold text-slate-900 mb-2">
+                <ApiDoc.SubHeader>
                     Important Notes
-                </h5>
+                </ApiDoc.SubHeader>
 
                 <ul className="list-disc pl-6 text-slate-600 space-y-2">
                     <li>
@@ -197,9 +197,9 @@ const Pagination = () => {
             </div>
 
             <div id="page-pagination" className="mb-16 scroll-mt-32">
-                <h3 className="text-lg font-semibold text-slate-900 mb-3">
+                <ApiDoc.SubHeader>
                     Page-Based (Offset) Pagination
-                </h3>
+                </ApiDoc.SubHeader>
 
                 <p className="text-slate-600 mb-6 leading-relaxed">
                     In addition to cursor-based pagination, Jiroshi APIs support traditional
@@ -215,9 +215,9 @@ const Pagination = () => {
                     trade-offs.
                 </p>
 
-                <h4 className="text-md font-semibold text-slate-900 mb-2">
+                <ApiDoc.SubHeader>
                     Enabling Page-Based Pagination
-                </h4>
+                </ApiDoc.SubHeader>
 
                 <ApiDoc.Body
                     title="Page-Based Pagination Request"
@@ -239,9 +239,9 @@ const Pagination = () => {
                     </li>
                 </ul>
 
-                <h4 className="text-md font-semibold text-slate-900 mb-2">
+                <ApiDoc.SubHeader>
                     Page-Based Pagination Response
-                </h4>
+                </ApiDoc.SubHeader>
 
                 <ApiDoc.Body
                     title="Page-Based Pagination Response"
@@ -274,9 +274,9 @@ const Pagination = () => {
                     })}
                 />
 
-                <h4 className="text-md font-semibold text-slate-900 mb-2">
+                <ApiDoc.SubHeader>
                     Pagination Fields
-                </h4>
+                </ApiDoc.SubHeader>
 
                 <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-8">
                     <li>
@@ -315,9 +315,9 @@ const Pagination = () => {
                     </ul>
                 </ApiDoc.Warning>
 
-                <h4 className="text-md font-semibold text-slate-900 mb-2">
+                <ApiDoc.SubHeader>
                     When to Use Page-Based Pagination
-                </h4>
+                </ApiDoc.SubHeader>
 
                 <ul className="list-disc pl-6 text-slate-600 space-y-2">
                     <li>

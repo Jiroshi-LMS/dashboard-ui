@@ -73,9 +73,9 @@ const StudentUpdateDetails = () => {
                 </ul>
             </ApiDoc.Warning>
 
-            <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
+            <ApiDoc.SubHeader>
                 Response
-            </h4>
+            </ApiDoc.SubHeader>
 
             <ApiDoc.Body
                 title="Update Response"

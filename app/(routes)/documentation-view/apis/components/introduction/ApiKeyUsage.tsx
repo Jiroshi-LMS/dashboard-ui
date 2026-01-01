@@ -4,7 +4,9 @@ import React from 'react'
 const ApiKeyUsage = () => {
     return (
         <div id="api-key-usage" className="mb-16 scroll-mt-32">
-            <h2 className="text-2xl font-bold text-slate-900 mb-6">API Key Usage</h2>
+            <ApiDoc.OverviewHeader>
+                API Key Usage
+            </ApiDoc.OverviewHeader>
 
             <p className="text-slate-600 mb-4 leading-relaxed">
                 All authenticated requests to the Jiroshi API must include a valid API key
@@ -24,9 +26,9 @@ const ApiKeyUsage = () => {
                 language="bash"
             />
 
-            <h3 className="text-lg font-semibold text-slate-900 mt-8 mb-3">
+            <ApiDoc.SubHeader>
                 Key Validation Rules
-            </h3>
+            </ApiDoc.SubHeader>
 
             <p className="text-slate-600 mb-4 leading-relaxed">
                 The Jiroshi API performs strict validation on every API key provided with
@@ -44,9 +46,9 @@ const ApiKeyUsage = () => {
                 </li>
             </ul>
 
-            <h3 className="text-lg font-semibold text-slate-900 mb-3">
+            <ApiDoc.SubHeader>
                 API Key Errors
-            </h3>
+            </ApiDoc.SubHeader>
 
             <p className="text-slate-600 mb-4 leading-relaxed">
                 All errors related to API key authentication and validation use the
@@ -77,9 +79,9 @@ const ApiKeyUsage = () => {
             />
             {/* Placeholder: Add retry behavior and best practices */}
             <section className="mb-8">
-                <h3 className="text-lg font-semibold text-slate-900 mb-3">
+                <ApiDoc.SubHeader>
                     Retry Behavior & Best Practices
-                </h3>
+                </ApiDoc.SubHeader>
 
                 <p className="text-slate-600 mb-3 leading-relaxed">
                     Requests that fail due to API key errors should not be retried automatically.
@@ -102,9 +104,9 @@ const ApiKeyUsage = () => {
 
             {/* Placeholder: Add rate limiting interaction with API keys */}
             <section className="mb-8">
-                <h3 className="text-lg font-semibold text-slate-900 mb-3">
+                <ApiDoc.SubHeader>
                     Rate Limiting & API Keys
-                </h3>
+                </ApiDoc.SubHeader>
 
                 <p className="text-slate-600 mb-3 leading-relaxed">
                     API requests are rate-limited on a per-API-key basis to protect the platform

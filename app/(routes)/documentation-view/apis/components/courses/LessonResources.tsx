@@ -48,9 +48,9 @@ const LessonResources = () => {
                 ]}
             />
 
-            <h4 className="text-xs font-semibold text-slate-900 mt-6 mb-2">
+            <ApiDoc.SubHeader>
                 Selections Usage Example
-            </h4>
+            </ApiDoc.SubHeader>
 
             <ApiDoc.Body
                 title="Selections Usage Example"
@@ -136,9 +136,9 @@ const LessonResources = () => {
                 }
             />
 
-            <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
+            <ApiDoc.SubHeader>
                 Pagination
-            </h4>
+            </ApiDoc.SubHeader>
 
             <ApiDoc.Description>
                 Pagination is applied to the list of file resources.
@@ -149,9 +149,9 @@ const LessonResources = () => {
                 </code>in query params.
             </ApiDoc.Description>
 
-            <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
+            <ApiDoc.SubHeader>
                 Response
-            </h4>
+            </ApiDoc.SubHeader>
 
             <ApiDoc.Response
                 code={JSON.stringify({

@@ -28,9 +28,9 @@ const Signup = () => {
                 <strong>Filters:</strong> Not supported
             </ApiDoc.Description>
 
-            <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
+            <ApiDoc.SubHeader>
                 Request Body
-            </h4>
+            </ApiDoc.SubHeader>
 
             <ApiDoc.Body
                 title="Signup Payload"
@@ -51,9 +51,9 @@ const Signup = () => {
                 identifier scheme required by the instructor.
             </ApiDoc.Description>
 
-            <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
+            <ApiDoc.SubHeader>
                 Server-Side Validation Rules
-            </h4>
+            </ApiDoc.SubHeader>
 
             <ApiDoc.Warning title="Server-side Validations">
                 The server performs only minimal validation during signup:
@@ -79,9 +79,9 @@ const Signup = () => {
                 plain text.
             </ApiDoc.Description>
 
-            <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
+            <ApiDoc.SubHeader>
                 Response (Browser Environment)
-            </h4>
+            </ApiDoc.SubHeader>
 
             <ApiDoc.Body
                 title="Browser Response"
@@ -101,9 +101,9 @@ const Signup = () => {
                 JavaScript.
             </ApiDoc.Description>
 
-            <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
+            <ApiDoc.SubHeader>
                 Response (Non-Browser / Forced API Mode)
-            </h4>
+            </ApiDoc.SubHeader>
 
             <ApiDoc.Body
                 title="API Client Response"

@@ -40,9 +40,9 @@ const LessonDetails = () => {
                 ]}
             />
 
-            <h4 className="text-xs font-semibold text-slate-900 mt-6 mb-2">
+            <ApiDoc.SubHeader>
                 Selections Usage Example
-            </h4>
+            </ApiDoc.SubHeader>
 
             <ApiDoc.Body
                 title="Selections Usage Example"
@@ -52,9 +52,9 @@ const LessonDetails = () => {
                 }
             />
 
-            <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
+            <ApiDoc.SubHeader>
                 Response
-            </h4>
+            </ApiDoc.SubHeader>
 
             <ApiDoc.Response
                 code={JSON.stringify({

@@ -36,9 +36,9 @@ const EnrolledCourseList = () => {
                 ]}
             />
 
-            <h4 className="text-xs font-semibold text-slate-900 mt-6 mb-2">
+            <ApiDoc.SubHeader>
                 Selections Usage Example
-            </h4>
+            </ApiDoc.SubHeader>
 
             <ApiDoc.Body
                 title="Selections Usage Example"
@@ -56,9 +56,9 @@ const EnrolledCourseList = () => {
                 ]}
             />
 
-            <h4 className="text-xs font-semibold text-slate-900 mt-6 mb-2">
+            <ApiDoc.SubHeader>
                 Search Filter Usage Example
-            </h4>
+            </ApiDoc.SubHeader>
 
             <ApiDoc.Body
                 title="Usage Example"
@@ -77,9 +77,9 @@ const EnrolledCourseList = () => {
                 ]}
             />
 
-            <h4 className="text-xs font-semibold text-slate-900 mt-6 mb-2">
+            <ApiDoc.SubHeader>
                 Ordering Usage Example
-            </h4>
+            </ApiDoc.SubHeader>
 
             <ApiDoc.Body
                 title="Usage Example"
@@ -114,9 +114,9 @@ const EnrolledCourseList = () => {
                 ]}
             />
 
-            <h4 className="text-xs font-semibold text-slate-900 mt-6 mb-2">
+            <ApiDoc.SubHeader>
                 Date Range Filter Usage Example
-            </h4>
+            </ApiDoc.SubHeader>
 
             <ApiDoc.Body
                 title="Date Range Filter Usage Example"
@@ -126,9 +126,9 @@ const EnrolledCourseList = () => {
                 }
             />
 
-            <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
+            <ApiDoc.SubHeader>
                 Pagination
-            </h4>
+            </ApiDoc.SubHeader>
 
             <ApiDoc.Description>
                 Pagination is supported and defaults to cursor-based pagination. Page-based
@@ -138,9 +138,9 @@ const EnrolledCourseList = () => {
                 </code>in query params.
             </ApiDoc.Description>
 
-            <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
+            <ApiDoc.SubHeader>
                 Response
-            </h4>
+            </ApiDoc.SubHeader>
 
             <ApiDoc.Body
                 title="Course List Response"

@@ -27,9 +27,9 @@ const RefreshToken = () => {
                 <strong>Filters:</strong> Not supported
             </ApiDoc.Description>
 
-            <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
+            <ApiDoc.SubHeader>
                 Request Body (Browser Environment)
-            </h4>
+            </ApiDoc.SubHeader>
 
             <ApiDoc.Description>
                 No request body is required when the client is detected as a browser.
@@ -37,9 +37,9 @@ const RefreshToken = () => {
                 <strong> HTTP-only cookie</strong>.
             </ApiDoc.Description>
 
-            <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
+            <ApiDoc.SubHeader>
                 Request Body (Non-Browser / Forced API Mode)
-            </h4>
+            </ApiDoc.SubHeader>
 
             <ApiDoc.Body
                 title="Refresh Token Payload"
@@ -58,9 +58,9 @@ const RefreshToken = () => {
                 in the request body.
             </ApiDoc.Description>
 
-            <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
+            <ApiDoc.SubHeader>
                 Response (Browser Environment)
-            </h4>
+            </ApiDoc.SubHeader>
 
             <ApiDoc.Body
                 title="Browser Response"
@@ -79,9 +79,9 @@ const RefreshToken = () => {
                 token becomes invalid immediately after rotation.
             </ApiDoc.Description>
 
-            <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
+            <ApiDoc.SubHeader>
                 Response (Non-Browser / Forced API Mode)
-            </h4>
+            </ApiDoc.SubHeader>
 
             <ApiDoc.Body
                 title="API Client Response"
@@ -101,9 +101,9 @@ const RefreshToken = () => {
                 returned in the response payload.
             </ApiDoc.Description>
 
-            <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
+            <ApiDoc.SubHeader>
                 Token Lifetime & Rotation Rules
-            </h4>
+            </ApiDoc.SubHeader>
 
             <ApiDoc.Description>
                 <ul>

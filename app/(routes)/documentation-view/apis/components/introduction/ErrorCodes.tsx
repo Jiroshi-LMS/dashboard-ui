@@ -4,9 +4,9 @@ import React from 'react'
 const ErrorCodes = () => {
     return (
         <div id="error-codes" className="mb-16 scroll-mt-32">
-            <h2 className="text-2xl font-bold text-slate-900 mb-6">
+            <ApiDoc.OverviewHeader>
                 Error Codes
-            </h2>
+            </ApiDoc.OverviewHeader>
 
             <p className="text-slate-600 mb-6 leading-relaxed">
                 Jiroshi APIs use standardized error codes to help clients reliably identify
@@ -21,9 +21,9 @@ const ErrorCodes = () => {
                 appropriate HTTP status code and message.
             </p>
 
-            <h3 className="text-lg font-semibold text-slate-900 mb-3">
+            <ApiDoc.SubHeader>
                 Data & Validation Errors
-            </h3>
+            </ApiDoc.SubHeader>
 
             <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-8">
                 <li>
@@ -58,9 +58,9 @@ const ErrorCodes = () => {
                 </li>
             </ul>
 
-            <h3 className="text-lg font-semibold text-slate-900 mb-3">
+            <ApiDoc.SubHeader>
                 Authentication & Authorization Errors
-            </h3>
+            </ApiDoc.SubHeader>
 
             <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-8">
                 <li>
@@ -110,9 +110,9 @@ const ErrorCodes = () => {
                 </li>
             </ul>
 
-            <h3 className="text-lg font-semibold text-slate-900 mb-3">
+            <ApiDoc.SubHeader>
                 Resource State Errors
-            </h3>
+            </ApiDoc.SubHeader>
 
             <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-8">
                 <li>
@@ -146,9 +146,9 @@ const ErrorCodes = () => {
                 </li>
             </ul>
 
-            <h3 className="text-lg font-semibold text-slate-900 mb-3">
+            <ApiDoc.SubHeader>
                 Server Errors
-            </h3>
+            </ApiDoc.SubHeader>
 
             <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-8">
                 <li>

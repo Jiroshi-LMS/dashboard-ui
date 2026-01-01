@@ -4,7 +4,9 @@ import React from 'react'
 const ApiKeys = () => {
     return (
         <div id="api-keys" className="mb-16 scroll-mt-32">
-            <h2 className="text-2xl font-bold text-slate-900 mb-6">API Keys</h2>
+            <ApiDoc.OverviewHeader>
+                API Keys
+            </ApiDoc.OverviewHeader>
 
             <p className="text-slate-600 mb-4 leading-relaxed">
                 Jiroshi uses API keys to authenticate and authorize access to its REST API.
@@ -19,9 +21,9 @@ const ApiKeys = () => {
                 contexts.
             </p>
 
-            <h3 className="text-lg font-semibold text-slate-900 mb-3">
+            <ApiDoc.SubHeader>
                 Creating an API Key
-            </h3>
+            </ApiDoc.SubHeader>
 
             <p className="text-slate-600 mb-4 leading-relaxed">
                 To generate a new API key, navigate to the
@@ -48,9 +50,9 @@ const ApiKeys = () => {
                 </p>
             </div>
 
-            <h3 className="text-lg font-semibold text-slate-900 mb-3">
+            <ApiDoc.SubHeader>
                 Public vs Secret Keys
-            </h3>
+            </ApiDoc.SubHeader>
 
             <p className="text-slate-600 mb-4 leading-relaxed">
                 Jiroshi distinguishes between public and secret API keys to enforce
@@ -91,9 +93,9 @@ const ApiKeys = () => {
                 </p>
             </div>
 
-            <h3 className="text-lg font-semibold text-slate-900 mb-3">
+            <ApiDoc.SubHeader>
                 Current Usage
-            </h3>
+            </ApiDoc.SubHeader>
 
             <p className="text-slate-600 mb-6 leading-relaxed">
                 At present, all documented API endpoints require only the use of the
@@ -117,9 +119,9 @@ const ApiKeys = () => {
             </div>
 
             {/* Placeholder: Add key revocation behavior and propagation delay */}
-            <h3 className="text-lg font-semibold text-slate-900 mb-3">
+            <ApiDoc.SubHeader>
                 Key Revocation Behavior
-            </h3>
+            </ApiDoc.SubHeader>
 
             <p className="text-slate-600 mb-6 leading-relaxed">
                 API keys are revokable. When a key is revoked, it is no longer valid and

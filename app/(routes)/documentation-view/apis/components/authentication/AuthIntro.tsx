@@ -4,9 +4,9 @@ import React from 'react'
 const AuthIntro = () => {
     return (
         <div id="authentication-intro" className="mb-16 scroll-mt-32">
-            <h2 className="text-2xl font-bold text-slate-900 mb-6">
-                Student Authentication ( Introduction )
-            </h2>
+            <ApiDoc.OverviewHeader subTitle="Introduction">
+                Student Authentication
+            </ApiDoc.OverviewHeader>
 
             <p className="text-slate-600 mb-6 leading-relaxed">
                 Jiroshi currently only supports standard JWT-based authentication mechanism

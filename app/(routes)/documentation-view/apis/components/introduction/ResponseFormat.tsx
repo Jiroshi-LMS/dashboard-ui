@@ -4,9 +4,9 @@ import React from 'react'
 const ResponseFormat = () => {
     return (
         <div id="response-format" className="mb-16 scroll-mt-32">
-            <h2 className="text-2xl font-bold text-slate-900 mb-6">
+            <ApiDoc.OverviewHeader>
                 Response Format
-            </h2>
+            </ApiDoc.OverviewHeader>
 
             <p className="text-slate-600 mb-6 leading-relaxed">
                 All Jiroshi API responses follow a consistent, envelope-based JSON structure.
@@ -52,9 +52,9 @@ const ResponseFormat = () => {
                 </li>
             </ul>
 
-            <h3 className="text-lg font-semibold text-slate-900 mb-3">
+            <ApiDoc.SubHeader>
                 Paginated Response Structure
-            </h3>
+            </ApiDoc.SubHeader>
 
             <p className="text-slate-600 mb-4 leading-relaxed">
                 Endpoints that return collections use a paginated response format.
@@ -119,9 +119,9 @@ const ResponseFormat = () => {
                 </li>
             </ul>
 
-            <h3 className="text-lg font-semibold text-slate-900 mb-3">
+            <ApiDoc.SubHeader>
                 Error Response Structure
-            </h3>
+            </ApiDoc.SubHeader>
 
             <p className="text-slate-600 leading-relaxed">
                 Error responses use the same envelope structure, with

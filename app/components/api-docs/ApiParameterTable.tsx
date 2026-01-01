@@ -16,36 +16,38 @@ const ApiParameterTable: React.FC<ApiParameterTableProps> = ({ parameters, title
     if (!parameters || parameters.length === 0) return null;
 
     return (
-        <div className="mt-8">
-            <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+        <div className="mt-10 overflow-hidden">
+            <h4 className="text-sm font-bold text-slate-400 uppercase tracking-[0.2em] mb-5 flex items-center gap-3">
+                <span className="w-2 h-2 rounded-full bg-teal-500 shadow-[0_0_8px_rgba(20,184,166,0.6)]"></span>
                 {title}
             </h4>
-            <div className="overflow-hidden border border-slate-200 rounded-xl shadow-sm bg-white">
-                <table className="min-w-full divide-y divide-slate-200">
-                    <thead className="bg-slate-50/50">
+            <div className="overflow-x-auto border border-slate-200/60 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] bg-white/50 backdrop-blur-sm">
+                <table className="min-w-full divide-y divide-slate-100">
+                    <thead className="bg-slate-50/80">
                         <tr>
-                            <th scope="col" className="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase tracking-wider">Name</th>
-                            <th scope="col" className="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase tracking-wider">Type</th>
-                            {parameters[0].required !== undefined && <th scope="col" className="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase tracking-wider">Required</th>}
-                            <th scope="col" className="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase tracking-wider">Description</th>
+                            <th scope="col" className="px-6 py-4 text-left text-[11px] font-bold text-slate-500 uppercase tracking-widest">Name</th>
+                            <th scope="col" className="px-6 py-4 text-left text-[11px] font-bold text-slate-500 uppercase tracking-widest">Type</th>
+                            {parameters[0].required !== undefined && <th scope="col" className="px-6 py-4 text-left text-[11px] font-bold text-slate-500 uppercase tracking-widest">Required</th>}
+                            <th scope="col" className="px-6 py-4 text-left text-[11px] font-bold text-slate-500 uppercase tracking-widest">Description</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-100 italic-last-child">
+                    <tbody className="divide-y divide-slate-100">
                         {parameters.map((param, index) => (
-                            <tr key={index} className="hover:bg-slate-50/50 transition-colors">
-                                <td className="px-4 py-3.5 text-xs font-bold text-slate-900 font-mono tracking-tight">{param.name}</td>
-                                <td className="px-4 py-3.5 text-xs text-slate-500 font-mono">
-                                    <span className="bg-slate-100 px-1.5 py-0.5 rounded text-[10px]">{param.type}</span>
+                            <tr key={index} className="hover:bg-teal-50/30 transition-colors group/row">
+                                <td className="px-6 py-5 text-sm font-bold text-slate-900 font-mono tracking-tight">
+                                    <span className="bg-slate-50 group-hover/row:bg-white px-2 py-1 rounded-md border border-slate-100 transition-colors">{param.name}</span>
                                 </td>
-                                {param.required !== undefined && <td className="px-4 py-3.5 text-xs">
+                                <td className="px-6 py-5 text-xs text-slate-500 font-mono">
+                                    <span className="bg-teal-50/50 text-teal-700 px-2 py-1 rounded-md border border-teal-100/50 font-bold">{param.type}</span>
+                                </td>
+                                {param.required !== undefined && <td className="px-6 py-5 text-xs">
                                     {param.required ? (
-                                        <span className="text-rose-600 font-bold text-[10px] uppercase bg-rose-50 px-1.5 py-0.5 rounded border border-rose-100">Yes</span>
+                                        <span className="text-rose-600 font-bold text-[10px] uppercase bg-rose-50 px-2 py-1 rounded-full border border-rose-100 shadow-sm">Required</span>
                                     ) : (
-                                        <span className="text-slate-400 text-[10px] uppercase bg-slate-50 px-1.5 py-0.5 rounded border border-slate-100">No</span>
+                                        <span className="text-slate-400 text-[10px] uppercase bg-slate-50 px-2 py-1 rounded-full border border-slate-100">Optional</span>
                                     )}
                                 </td>}
-                                <td className="px-4 py-3.5 text-xs text-slate-600 leading-relaxed font-body">{param.description}</td>
+                                <td className="px-6 py-5 text-sm text-slate-600 leading-relaxed font-light">{param.description}</td>
                             </tr>
                         ))}
                     </tbody>

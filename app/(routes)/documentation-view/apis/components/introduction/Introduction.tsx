@@ -5,7 +5,9 @@ import React from 'react'
 const Introduction = () => {
     return (
         <div id="introduction" className="mb-16 scroll-mt-32">
-            <h2 className="text-2xl font-bold text-slate-900 mb-6">Introduction</h2>
+            <ApiDoc.OverviewHeader>
+                Introduction
+            </ApiDoc.OverviewHeader>
 
             <p className="text-slate-600 mb-4 leading-relaxed">
                 The Jiroshi REST API provides programmatic access to all core platform

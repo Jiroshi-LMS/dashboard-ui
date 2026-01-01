@@ -4,9 +4,9 @@ import React from 'react'
 const SelectionsAndFilters = () => {
     return (
         <div id="selections-and-filtering-options" className="mb-16 scroll-mt-32">
-            <h2 className="text-2xl font-bold text-slate-900 mb-6">
+            <ApiDoc.OverviewHeader>
                 Selections & Filters
-            </h2>
+            </ApiDoc.OverviewHeader>
 
             <p className="text-slate-600 mb-6 leading-relaxed">
                 Jiroshi APIs provide selection and filtering mechanisms to optimize data
@@ -16,9 +16,9 @@ const SelectionsAndFilters = () => {
 
             {/* ===================== Selections ===================== */}
 
-            <h3 className="text-lg font-semibold text-slate-900 mb-3">
+            <ApiDoc.SubHeader>
                 Selections
-            </h3>
+            </ApiDoc.SubHeader>
 
             <p className="text-slate-600 mb-4 leading-relaxed">
                 Selections allow clients to explicitly specify which fields should be
@@ -62,9 +62,9 @@ const SelectionsAndFilters = () => {
 
             {/* ===================== Filters ===================== */}
 
-            <h3 className="text-lg font-semibold text-slate-900 mb-3">
+            <ApiDoc.SubHeader>
                 Filters (Listing APIs Only)
-            </h3>
+            </ApiDoc.SubHeader>
 
             <p className="text-slate-600 mb-6 leading-relaxed">
                 Listing APIs support a set of generic filters that allow clients to
@@ -73,9 +73,9 @@ const SelectionsAndFilters = () => {
 
             {/* ---------- Search ---------- */}
 
-            <h4 className="text-md font-semibold text-slate-900 mb-2">
+            <ApiDoc.SubHeader>
                 Search
-            </h4>
+            </ApiDoc.SubHeader>
 
             <p className="text-slate-600 mb-4 leading-relaxed">
                 To perform a generic search across all searchable fields, use the
@@ -106,9 +106,9 @@ const SelectionsAndFilters = () => {
 
             {/* ---------- Ordering ---------- */}
 
-            <h4 className="text-md font-semibold text-slate-900 mb-2">
+            <ApiDoc.SubHeader>
                 Ordering
-            </h4>
+            </ApiDoc.SubHeader>
 
             <p className="text-slate-600 mb-4 leading-relaxed">
                 All listing APIs apply a default ordering of
@@ -133,9 +133,9 @@ GET /courses/?ordering=-duration`}
 
             {/* ---------- Date Range ---------- */}
 
-            <h4 className="text-md font-semibold text-slate-900 mb-2">
+            <ApiDoc.SubHeader>
                 Date Range Filters
-            </h4>
+            </ApiDoc.SubHeader>
 
             <p className="text-slate-600 mb-4 leading-relaxed">
                 Date range filtering follows a consistent naming convention for all

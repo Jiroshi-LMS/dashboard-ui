@@ -4,9 +4,9 @@ import React from 'react'
 const AuthTransport = () => {
     return (
         <div id="authentication-transport" className="mb-16 scroll-mt-32">
-            <h2 className="text-2xl font-bold text-slate-900 mb-6">
+            <ApiDoc.OverviewHeader>
                 Authentication Transport & Client Detection
-            </h2>
+            </ApiDoc.OverviewHeader>
 
             <p className="text-slate-600 mb-6 leading-relaxed">
                 Jiroshi adapts its authentication token handling based on the detected
@@ -14,9 +14,9 @@ const AuthTransport = () => {
                 application types.
             </p>
 
-            <h4 className="text-md font-semibold text-slate-900 mb-2">
+            <ApiDoc.SubHeader>
                 Browser-Based Clients
-            </h4>
+            </ApiDoc.SubHeader>
 
             <p className="text-slate-600 mb-6 leading-relaxed">
                 When a request is identified as originating from a browser environment,
@@ -32,9 +32,9 @@ const AuthTransport = () => {
                 theft via XSS or client-side compromise.
             </p>
 
-            <h4 className="text-md font-semibold text-slate-900 mb-2">
+            <ApiDoc.SubHeader>
                 Non-Browser Clients
-            </h4>
+            </ApiDoc.SubHeader>
 
             <p className="text-slate-600 mb-6 leading-relaxed">
                 For non-browser clients such as mobile applications, desktop clients,
@@ -48,9 +48,9 @@ const AuthTransport = () => {
                 tokens is handled by the client platform itself.
             </p>
 
-            <h4 className="text-md font-semibold text-slate-900 mb-2">
+            <ApiDoc.SubHeader>
                 Forcing API Mode
-            </h4>
+            </ApiDoc.SubHeader>
 
             <p className="text-slate-600 mb-4 leading-relaxed">
                 In certain edge cases—such as React Native or Electron-based
