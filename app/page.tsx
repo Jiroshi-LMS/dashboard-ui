@@ -591,7 +591,7 @@ export default function Home() {
                       Pilot Program
                     </div>
                     <p className="text-teal-100 font-medium mb-2 italic">
-                      "We want you to succeed."
+                      &quot;We want you to succeed.&quot;
                     </p>
                     <p className="text-slate-300 text-sm mb-4">
                       For the first few instructors, we are offering to <strong>setup and pilot your platform for absolutely free</strong>. Use our infrastructure as a service while we help you launch your dream system.

@@ -15,6 +15,18 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "jiroshi-static-dev.s3.ap-south-1.amazonaws.com"
+      },
+      {
+        protocol: "https",
+        hostname: "jiroshi-media-dev.s3.ap-south-1.amazonaws.com"
+      },
+      {
+        protocol: "https",
+        hostname: "jiroshi-static-prod.s3.ap-south-1.amazonaws.com"
+      },
+      {
+        protocol: "https",
+        hostname: "jiroshi-media-prod.s3.ap-south-1.amazonaws.com"
       }
     ],
   },
