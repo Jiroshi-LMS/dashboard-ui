@@ -99,7 +99,7 @@ export default function LandingPageClient() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     return (
-        <div className="min-h-screen bg-white text-slate-900 overflow-x-hidden selection:bg-primary/20 selection:text-primary font-sans">
+        <div className="w-full min-h-screen bg-white text-slate-900 overflow-x-hidden selection:bg-primary/20 selection:text-primary font-sans">
             <AnimatedGrid />
 
             {/* Floating Navbar */}
