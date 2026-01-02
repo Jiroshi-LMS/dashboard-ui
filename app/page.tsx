@@ -288,7 +288,7 @@ export default function Home() {
                     <div className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
                     <div className="w-3 h-3 rounded-full bg-[#27C93F]" />
                   </div>
-                  <div className="text-xs text-slate-400 font-mono ml-2 flex-1 text-center">dashboard.jiroshi.com</div>
+                  <div className="text-xs text-slate-400 font-mono ml-2 flex-1 text-center">api.jiroshi.com</div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-0 min-h-[400px]">
                   {/* Sidebar Mock */}
