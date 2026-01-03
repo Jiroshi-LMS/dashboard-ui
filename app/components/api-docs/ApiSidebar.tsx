@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { Turtle } from 'lucide-react';
+import { Turtle, X } from 'lucide-react';
 
 export interface ApiSectionLink {
     id?: string;
@@ -14,9 +14,11 @@ export interface ApiSectionLink {
 interface ApiSidebarProps {
     sections: ApiSectionLink[];
     className?: string;
+    isOpen?: boolean;
+    onClose?: () => void;
 }
 
-const ApiSidebar: React.FC<ApiSidebarProps> = ({ sections, className }) => {
+const ApiSidebar: React.FC<ApiSidebarProps> = ({ sections, className, isOpen, onClose }) => {
     const [activeSection, setActiveSection] = useState<string>('');
     const [searchQuery, setSearchQuery] = useState('');
 
@@ -84,7 +86,10 @@ const ApiSidebar: React.FC<ApiSidebarProps> = ({ sections, className }) => {
                                         ? "border-teal-500 text-teal-600 font-bold bg-teal-50/30"
                                         : "border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-200 hover:bg-slate-50/50"
                                 )}
-                                onClick={() => setActiveSection(section.id!)}
+                                onClick={() => {
+                                    setActiveSection(section.id!);
+                                    if (onClose) onClose();
+                                }}
                             >
                                 {section.title}
                                 {activeSection === section.id && (
@@ -107,37 +112,66 @@ const ApiSidebar: React.FC<ApiSidebarProps> = ({ sections, className }) => {
     };
 
     return (
-        <nav className={cn("w-64 hidden lg:block flex-shrink-0 sticky top-3 h-[calc(100vh-8rem)] overflow-y-auto pr-6 scrollbar-hidden", className)}>
-            <header>
-                <h3 className="text-md font-bold p-3 px-1 text-teal-600">
+        <>
+            {/* Mobile Overlay */}
+            {isOpen && (
+                <div
+                    className="fixed inset-0 bg-slate-900/40 backdrop-blur-[2px] z-[90] lg:hidden transition-opacity duration-300"
+                    onClick={onClose}
+                />
+            )}
+
+            <nav className={cn(
+                "fixed inset-y-0 left-0 z-[100] w-72 bg-white border-r border-slate-200 transform md:transform-none md:static md:block md:w-64 flex-shrink-0 md:sticky md:top-3 md:h-[calc(100vh-2rem)] overflow-y-auto pr-6 md:pr-6 pl-6 md:pl-0 transition-all duration-300 ease-in-out custom-scrollbar",
+                isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
+                className
+            )}>
+                <header className="md:hidden py-6 mb-4 flex items-center justify-between">
                     <Link className="flex items-center gap-2" href="/instructor/dashboard">
-                        <div className="w-6 h-6 rounded-full bg-gradient-to-br from-primary to-teal-600 flex items-center justify-center text-white shadow-md shadow-primary/20">
-                            <Turtle size={12} />
+                        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-white shadow-lg shadow-teal-500/20">
+                            <Turtle size={18} />
                         </div>
-                        Jiroshi
+                        <span className="font-black text-slate-800 text-xl tracking-tight">Jiroshi Docs</span>
                     </Link>
-                </h3>
-            </header>
-            <div className="mb-8 px-1">
-                <h3 className="text-[11px] font-black text-slate-900 uppercase tracking-[0.25em] mb-4 flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 bg-teal-500 rounded-full" />
-                    Documentation
-                </h3>
-                <div className="relative group">
-                    <input
-                        type="text"
-                        placeholder="Search API..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 transition-all placeholder:text-slate-400"
-                    />
-                    <kbd className="absolute right-3 top-1/2 -translate-y-1/2 px-1.5 py-0.5 rounded border border-slate-200 bg-white text-[10px] text-slate-400 font-sans pointer-events-none group-focus-within:hidden">
-                        /
-                    </kbd>
+                    <button
+                        onClick={onClose}
+                        className="p-2 -mr-2 text-slate-400 hover:text-slate-600 md:hidden bg-slate-100 rounded-full transition-colors"
+                    >
+                        <X size={18} />
+                    </button>
+                </header>
+
+                <header className="hidden md:block py-6">
+                    <h3 className="text-md font-bold px-1 text-teal-600">
+                        <Link className="flex items-center gap-2" href="/instructor/dashboard">
+                            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-white shadow-md shadow-teal-500/10">
+                                <Turtle size={14} />
+                            </div>
+                            <span className="font-black text-slate-900 tracking-tight">Jiroshi</span>
+                        </Link>
+                    </h3>
+                </header>
+                <div className="mb-8 px-1">
+                    <h3 className="text-[11px] font-black text-slate-900 uppercase tracking-[0.25em] mb-4 flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 bg-teal-500 rounded-full" />
+                        Documentation
+                    </h3>
+                    <div className="relative group">
+                        <input
+                            type="text"
+                            placeholder="Search..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="w-full bg-slate-100 border-none rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:bg-white focus:shadow-inner transition-all placeholder:text-slate-400"
+                        />
+                        <kbd className="absolute right-3 top-1/2 -translate-y-1/2 px-1.5 py-0.5 rounded border border-slate-200 bg-white text-[9px] text-slate-400 font-sans pointer-events-none group-focus-within:hidden md:block hidden shadow-sm">
+                            /
+                        </kbd>
+                    </div>
                 </div>
-            </div>
-            {renderItems(filteredSections)}
-        </nav>
+                {renderItems(filteredSections)}
+            </nav>
+        </>
     );
 };
 

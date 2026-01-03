@@ -42,7 +42,7 @@ const Introduction = () => {
                     <p className="font-semibold mb-1">Base URL</p>
                     <p>
                         All API requests should be made to{" "}
-                        <code className="bg-blue-100 px-1.5 py-0.5 rounded text-blue-900 font-mono">
+                        <code className="bg-blue-100 px-1.5 py-0.5 rounded text-blue-900 font-mono break-all">
                             https://api.jiroshi.com/api/v1/public
                         </code>
                     </p>

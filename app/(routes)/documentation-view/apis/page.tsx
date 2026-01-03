@@ -1,7 +1,11 @@
+"use client"
+
 import React from 'react';
 import { ApiDoc } from '@/app/components/api-docs/ApiDoc';
 import ApiSidebar, { ApiSectionLink } from '@/app/components/api-docs/ApiSidebar';
-import { AlertCircle, Info } from 'lucide-react';
+import { AlertCircle, Info, Menu, Turtle } from 'lucide-react';
+import Link from 'next/link';
+import { SidebarInset } from "@/components/ui/sidebar";
 import Introduction from './components/introduction/Introduction';
 import ApiKeys from './components/introduction/ApiKeys';
 import ApiKeyUsage from './components/introduction/ApiKeyUsage';
@@ -79,72 +83,94 @@ const sections: ApiSectionLink[] = [
 ];
 
 const ApiDocumentationPage = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
+
   return (
-    <div className="min-h-screen bg-white font-sans text-slate-900">
-      {/* Header Section */}
-      <div className="bg-white border-b border-slate-200 pt-24 pb-12">
-        <div className="container mx-auto px-6 max-w-7xl">
-          <div className="max-w-3xl">
-            <h1 className="text-4xl font-bold text-slate-900 mb-4 tracking-tight"><span className="text-teal-500">Jiroshi V1</span> API Reference</h1>
-            <p className="text-sm text-slate-600 leading-relaxed">
-              The Jiroshi REST API provides a secure, scalable interface for managing instructors,
-              students, courses, enrollments, and related platform operations.
-              It is designed around standard REST principles, uses JSON for request and response
-              payloads, and enforces strict authentication and authorization at every layer.
-              The API is built to support multi-tenant instructor workflows, fine-grained access
-              control, and extensibility for future features such as payments, analytics, and
-              integrations.
-              This documentation serves as a technical reference for developers integrating with
-              Jiroshi or building internal services on top of its API layer.
-            </p>
+    <div className="w-full min-h-screen bg-white font-sans text-slate-900 selection:bg-teal-100 selection:text-teal-900">
+      {/* Mobile/Tablet Header */}
+      <div className="md:hidden fixed top-0 left-0 right-0 z-[80] bg-white/90 backdrop-blur-xl border-b border-slate-200/60 px-6 h-16 flex items-center justify-between shadow-[0_1px_10px_-5px_rgba(0,0,0,0.1)]">
+        <Link className="flex items-center gap-2" href="/instructor/dashboard">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-white shadow-md shadow-teal-500/20">
+            <Turtle size={16} />
+          </div>
+          <span className="font-black text-slate-800 tracking-tight">Jiroshi Docs</span>
+        </Link>
+        <button
+          onClick={() => setIsSidebarOpen(true)}
+          className="p-2 -mr-2 text-slate-500 hover:text-teal-600 bg-slate-50 rounded-lg transition-all"
+        >
+          <Menu size={20} />
+        </button>
+      </div>
+      <SidebarInset className="w-full max-w-full bg-white">
+        {/* Hero Header Section */}
+        <div className="bg-[#fafafa] border-b border-slate-200/60 pt-28 md:pt-20 pb-12 overflow-x-hidden relative">
+          <div className="w-full max-w-7xl mx-auto px-6 md:px-10 lg:px-12 relative z-10">
+            <div className="max-w-3xl">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="px-2 py-0.5 rounded-full bg-teal-50 text-teal-600 text-[10px] font-bold uppercase tracking-widest border border-teal-100 italic">V1.0 Stable</span>
+              </div>
+              <h1 className="text-3xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight break-words leading-tight">
+                API <span className="text-teal-600 underline decoration-teal-200 underline-offset-8">Reference</span>
+              </h1>
+              <p className="text-sm md:text-base text-slate-500 leading-relaxed font-medium max-w-2xl">
+                Build powerful integrations with Jiroshi's professional LMS engine.
+                Our REST API is designed for reliability, speed, and seamless multi-tenant operations.
+              </p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="container mx-auto px-6 max-w-7xl flex gap-8 py-12">
-        {/* Sidebar */}
-        <ApiSidebar sections={sections} />
+        <div className="w-full max-w-7xl mx-auto px-4 md:px-10 flex flex-col md:flex-row gap-8 py-10 relative">
+          {/* Sidebar */}
+          <ApiSidebar
+            sections={sections}
+            isOpen={isSidebarOpen}
+            onClose={() => setIsSidebarOpen(false)}
+          />
 
-        {/* Main Content */}
-        <main className="flex-1 min-w-0 pb-24">
-          <div className="max-w-5xl">
+          {/* Main Content */}
+          <main className="flex-1 min-w-0 pb-24 overflow-x-hidden">
+            <div className="w-full max-w-full md:max-w-6xl overflow-x-hidden">
+              {/* Introduction */}
+              <Introduction />
+              <ApiKeys />
+              <ApiKeyUsage />
+              <ResponseFormat />
+              <ErrorCodes />
+              <Pagination />
+              <SelectionsAndFilters />
 
-            {/* Introduction */}
-            <Introduction />
-            <ApiKeys />
-            <ApiKeyUsage />
-            <ResponseFormat />
-            <ErrorCodes />
-            <Pagination />
-            <SelectionsAndFilters />
+              {/* Instructor */}
+              <div className="h-12 md:h-20" />
+              <GetInstructorProfile />
+              <GetInstructorKPI />
 
-            {/* Instructor */}
-            <GetInstructorProfile />
-            <GetInstructorKPI />
+              {/* Authentication */}
+              <div className="h-12 md:h-20" />
+              <AuthIntro />
+              <AuthTransport />
+              <Signup />
+              <Login />
+              <RefreshToken />
+              <Logout />
+              <StudentProfileDetails />
+              <StudentUpdateDetails />
+              <StudentIdentifierLookup />
 
-            {/* Authentication */}
-            <AuthIntro />
-            <AuthTransport />
-            <Signup />
-            <Login />
-            <RefreshToken />
-            <Logout />
-            <StudentProfileDetails />
-            <StudentUpdateDetails />
-            <StudentIdentifierLookup />
-
-            {/* Courses */}
-            <CourseCatalogueList />
-            <CourseDetails />
-            <LessonList />
-            <EnrollToCourse />
-            <LessonDetails />
-            <LessonResources />
-            <EnrolledCourseList />
-
-          </div>
-        </main>
-      </div>
+              {/* Courses */}
+              <div className="h-12 md:h-20" />
+              <CourseCatalogueList />
+              <CourseDetails />
+              <LessonList />
+              <EnrollToCourse />
+              <LessonDetails />
+              <LessonResources />
+              <EnrolledCourseList />
+            </div>
+          </main>
+        </div>
+      </SidebarInset>
     </div>
   );
 };
