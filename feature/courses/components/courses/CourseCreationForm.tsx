@@ -19,7 +19,7 @@ import { createCourseService } from "../../courseServices";
 import { page } from "@/lib/constants/RouteConstants";
 import Loader from "@/app/components/atoms/Loader";
 import Image from "next/image";
-import { UploadIcon } from "lucide-react";
+import { AlertCircle, UploadIcon } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -61,22 +61,22 @@ const CourseCreationForm = () => {
   });
 
   useEffect(() => {
-      const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-        if (!thumbnailFile) return;
-          e.preventDefault()
-          e.returnValue = "" // required for Chrome to trigger the prompt
-      }
-      window.addEventListener("beforeunload", handleBeforeUnload)
-      return () => {
-          window.removeEventListener("beforeunload", handleBeforeUnload)
-      }
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (!thumbnailFile) return;
+      e.preventDefault()
+      e.returnValue = "" // required for Chrome to trigger the prompt
+    }
+    window.addEventListener("beforeunload", handleBeforeUnload)
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload)
+    }
   }, [])
 
   useEffect(() => {
     const uploadProgressTimeout = setTimeout(() => {
       if (thumbnailUploadProgress === 100) setThumbnailUploadProgress(0)
     }, 500)
-    return () => {clearTimeout(uploadProgressTimeout)}
+    return () => { clearTimeout(uploadProgressTimeout) }
   }, [thumbnailUploadProgress, setThumbnailUploadProgress])
 
   const thumbnailImageChange = async (file: File | undefined) => {
@@ -122,7 +122,7 @@ const CourseCreationForm = () => {
       setIsLoading(false);
       toast.error(
         err?.message ||
-          "Couldn't create your course! Please try again later."
+        "Couldn't create your course! Please try again later."
       );
     }
   };
@@ -139,59 +139,59 @@ const CourseCreationForm = () => {
         </p>
         {
           thumbnailUploadProgress > 0 ?
-          <div className="flex justify-center items-center h-[40vh] w-full mx-auto
+            <div className="flex justify-center items-center h-[40vh] w-full mx-auto
           border-2 border-dashed border-gray-200 rounded-md gap-3 font-semibold text-[14px] 
           text-gray-600 cursor-pointer">
-            <Progress value={thumbnailUploadProgress} className="w-[60%]" />
-          </div> 
-        :
-        <div
-          onClick={() => {
-            thumbnailUploadRef?.current?.click();
-          }}
-          onDragOver={(e) => {
-            e.preventDefault();
-            setIsDragging(true);
-          }}
-          onDragLeave={(e) => {
-            e.preventDefault();
-            setIsDragging(false);
-          }}
-          onDrop={(e) => {
-            e.preventDefault();
-            setIsDragging(false);
-            thumbnailImageChange(e.dataTransfer.files?.[0]);
-          }}
-          className="flex justify-center items-center h-[40vh] w-full mx-auto
+              <Progress value={thumbnailUploadProgress} className="w-[60%]" />
+            </div>
+            :
+            <div
+              onClick={() => {
+                thumbnailUploadRef?.current?.click();
+              }}
+              onDragOver={(e) => {
+                e.preventDefault();
+                setIsDragging(true);
+              }}
+              onDragLeave={(e) => {
+                e.preventDefault();
+                setIsDragging(false);
+              }}
+              onDrop={(e) => {
+                e.preventDefault();
+                setIsDragging(false);
+                thumbnailImageChange(e.dataTransfer.files?.[0]);
+              }}
+              className="flex justify-center items-center h-[40vh] w-full mx-auto
           border-2 border-dashed border-gray-200 rounded-md gap-3 font-semibold text-[14px] 
           text-gray-600 cursor-pointer"
-        >
-          <input
-            type="file"
-            className="hidden"
-            accept=".png,.jpg,.jpeg"
-            ref={(e) => {
-              thumbnailUploadRef.current = e;
-            }}
-            onChange={(e) => thumbnailImageChange(e.target.files?.[0])}
-          />
-          {thumbnailFile ? (
-            <Image
-              src={URL.createObjectURL(thumbnailFile)}
-              height={400}
-              width={600}
-              className="h-full w-auto bg-black"
-              alt="Selected Thumbnail File"
-            />
-          ) : (
-            <p className="flex">
-              {isDragging
-                ? "Drop Here ..."
-                : `Drag n Drop or Click to upload image (Max ${allowedFileSize}MB)`}
-              <UploadIcon className="h-5 w-5 ml-2" />
-            </p>
-          )}
-        </div>
+            >
+              <input
+                type="file"
+                className="hidden"
+                accept=".png,.jpg,.jpeg"
+                ref={(e) => {
+                  thumbnailUploadRef.current = e;
+                }}
+                onChange={(e) => thumbnailImageChange(e.target.files?.[0])}
+              />
+              {thumbnailFile ? (
+                <Image
+                  src={URL.createObjectURL(thumbnailFile)}
+                  height={400}
+                  width={600}
+                  className="h-full w-auto bg-black"
+                  alt="Selected Thumbnail File"
+                />
+              ) : (
+                <p className="flex">
+                  {isDragging
+                    ? "Drop Here ..."
+                    : `Drag n Drop or Click to upload image (Max ${allowedFileSize}MB)`}
+                  <UploadIcon className="h-5 w-5 ml-2" />
+                </p>
+              )}
+            </div>
         }
       </div>
 
@@ -249,6 +249,19 @@ const CourseCreationForm = () => {
             </div>
           </form>
         </Form>
+
+        {/* Course Creation Status Legend/Warning */}
+        <div className="mt-8 bg-amber-50 border border-amber-100 rounded-xl p-4 flex gap-3 text-amber-800 shadow-sm">
+          <AlertCircle className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+          <div className="space-y-1">
+            <h4 className="text-[11px] font-black uppercase tracking-wider text-amber-900">Course Visibility Note</h4>
+            <p className="text-xs leading-relaxed font-medium">
+              Upon creation, your course starts as a <span className="font-bold underline decoration-amber-200 decoration-2 underline-offset-2">Draft</span>.
+              Once you upload your first lesson, it automatically becomes <span className="font-bold underline decoration-amber-200 decoration-2 underline-offset-2">Inactive</span>,
+              to prevent it from going live instantly. You can manually <span className="font-bold underline decoration-amber-200 decoration-2 underline-offset-2">Activate</span> your course from the dashboard when it's ready for students.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );
