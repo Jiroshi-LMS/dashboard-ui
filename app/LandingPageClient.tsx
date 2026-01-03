@@ -170,7 +170,7 @@ export default function LandingPageClient() {
                             ))}
                             <div className="h-px bg-slate-100 my-2" />
                             <Link
-                                href="/login"
+                                href="/auth/login"
                                 onClick={() => setIsMobileMenuOpen(false)}
                                 className="text-lg font-medium text-slate-600 hover:text-primary transition-colors"
                             >
