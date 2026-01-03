@@ -4,7 +4,7 @@ import StudentListData from '@/feature/students/components/StudentListData'
 const studentManagementPage = () => {
   return (
     <main className='main-container'>
-      <h1 className='page-title'>Instructor Dashboard</h1>
+      <h1 className='page-title'>All Student Signups</h1>
       <StudentListData />
     </main>
   )

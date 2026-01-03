@@ -223,7 +223,7 @@ export default function LandingPageClient() {
                                 transition={{ duration: 0.7, delay: 0.2 }}
                             >
                                 Build your own course platform using clean, flexible APIs.
-                                Manage content, users, and enrollments — without building an LMS from scratch.
+                                Manage content, users, and enrollments - without building an LMS from scratch.
                             </motion.p>
 
                             {/* Buttons */}
@@ -548,7 +548,7 @@ export default function LandingPageClient() {
                                 <ShieldCheck size={120} className="text-teal-500" />
                             </div>
                             <h2 className="text-3xl font-bold mb-8 text-slate-900">
-                                Payments are coming — but you can sell today
+                                Payments are coming - but you can sell today
                             </h2>
                             <div className="space-y-6 text-slate-600 text-lg leading-relaxed">
                                 <p>
@@ -558,7 +558,7 @@ export default function LandingPageClient() {
                                     Many instructors collect payments using payment links, QR codes, or direct transfers. Once payment is confirmed, student accounts are created and enrollments are handled via Jiroshi APIs.
                                 </p>
                                 <p className="font-medium text-teal-700">
-                                    When built-in payments are released, enrollments will automatically be protected by payment checks — without breaking changes.
+                                    When built-in payments are released, enrollments will automatically be protected by payment checks - without breaking changes.
                                 </p>
                             </div>
                         </div>

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Jiroshi Team" }],
   openGraph: {
     title: "Jiroshi | The Headless LMS for Modern Learning Platforms",
-    description: "Build your own course platform using clean, flexible APIs. Manage content, users, and enrollments — without building an LMS from scratch.",
+    description: "Build your own course platform using clean, flexible APIs. Manage content, users, and enrollments - without building an LMS from scratch.",
     url: "https://jiroshi.com",
     siteName: "Jiroshi",
     images: [
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Jiroshi | The Headless LMS for Modern Learning Platforms",
-    description: "Build your own course platform using clean, flexible APIs. Manage content, users, and enrollments — without building an LMS from scratch.",
+    description: "Build your own course platform using clean, flexible APIs. Manage content, users, and enrollments - without building an LMS from scratch.",
     images: ["https://jiroshi-static-prod.s3.ap-south-1.amazonaws.com/website/landing-og-image.png"],
     creator: "@jiroshi_app",
   },

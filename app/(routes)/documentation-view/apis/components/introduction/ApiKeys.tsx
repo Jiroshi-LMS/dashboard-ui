@@ -61,7 +61,7 @@ const ApiKeys = () => {
 
             <ul className="list-disc pl-6 text-slate-600 mb-6 space-y-2">
                 <li>
-                    <strong>Public Key (pk)</strong> — Safe to use in client-side
+                    <strong>Public Key (pk)</strong> - Safe to use in client-side
                     applications such as web or mobile frontends. Required for all
                     public-facing API calls.
 
@@ -72,7 +72,7 @@ const ApiKeys = () => {
                     />
                 </li>
                 <li>
-                    <strong>Secret Key (sk)</strong> — Must never be exposed on the
+                    <strong>Secret Key (sk)</strong> - Must never be exposed on the
                     frontend. Intended strictly for secure server-to-server operations,
                     such as payment processing or privileged administrative actions.
 

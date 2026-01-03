@@ -70,7 +70,7 @@ export default function PrivacyPage() {
                                         <li>Enrollment and access data</li>
                                     </ul>
                                     <p className="text-sm mt-3 bg-slate-50 p-3 rounded-lg border border-slate-100 italic">
-                                        Jiroshi does not determine the identifier format or student data schema — this is controlled by the instructor.
+                                        Jiroshi does not determine the identifier format or student data schema - this is controlled by the instructor.
                                     </p>
                                 </div>
 

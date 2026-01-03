@@ -44,7 +44,7 @@ export default function RootLayout({
             position="top-right"
             reverseOrder={false}
           />
-          <SidebarProvider>
+          <SidebarProvider defaultOpen={false}>
             {children}
           </SidebarProvider>
         </ReduxProvider>

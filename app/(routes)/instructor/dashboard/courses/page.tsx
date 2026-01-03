@@ -4,7 +4,7 @@ import CourseListData from "@/feature/courses/components/courses/CourseListData"
 const courseManagementPage = () => {
   return (
     <main className="main-container">
-      <h1 className="page-title">Instructor Dashboard</h1>
+      <h1 className="page-title">All your courses</h1>
       <CourseListData />
     </main>
   );

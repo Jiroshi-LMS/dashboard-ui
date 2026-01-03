@@ -14,7 +14,6 @@ import DashboardKPI from '@/feature/dashboard/components/DashboardKPI'
 const DashboardHome = () => {
   return (
     <main className="main-container">
-      <h1 className="page-title">Instructor Dashboard</h1>
 
       {/* KPI Section */}
       <section>

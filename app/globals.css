@@ -170,11 +170,11 @@
 @layer utilities {
 
   .main-container {
-    @apply p-6 w-full;
+    @apply px-3 pb-6 w-full;
   }
 
   .page-title {
-    @apply text-2xl font-bold my-5;
+    @apply text-2xl font-bold my-3;
   }
 
   .section-title {

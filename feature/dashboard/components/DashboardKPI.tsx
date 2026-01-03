@@ -34,7 +34,7 @@ const DashboardKPI = () => {
 
     if (isLoading) return <Loader className="h-[30vh]" />;
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
             {[
                 {
                     title: 'Total Courses',

@@ -53,8 +53,8 @@ const AuthTransport = () => {
             </ApiDoc.SubHeader>
 
             <p className="text-slate-600 mb-4 leading-relaxed">
-                In certain edge cases—such as React Native or Electron-based
-                applications—the client may be incorrectly detected as a browser.
+                In certain edge cases-such as React Native or Electron-based
+                applications-the client may be incorrectly detected as a browser.
                 In such scenarios, token handling can be explicitly forced to API mode
                 by setting the following request header:
             </p>

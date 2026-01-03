@@ -6,9 +6,9 @@ import { SidebarFooterContent, SidebarHeaderContent } from "../../molecules/Inst
 import { SiderbarMenuContent } from "../../molecules/InstructorDashboard/SidebarMenu"
 import { Instructor } from "@/feature/instructor/instructorTypes";
 
-export function DashboardSidebar({profile} :{profile: Instructor | null}) {
+export function DashboardSidebar({ profile }: { profile: Instructor | null }) {
   return (
-    <Sidebar>
+    <Sidebar collapsible="icon" className="z-40 [&_[data-slot=sidebar-gap]]:w-(--sidebar-width-icon)!">
       <SidebarHeaderContent />
       <SidebarContent>
         <SiderbarMenuContent />

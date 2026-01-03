@@ -24,6 +24,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { page } from "@/lib/constants/RouteConstants";
 
@@ -87,6 +88,7 @@ const utilItems = [
 
 export function SiderbarMenuContent() {
   const pathname = usePathname();
+  const { setOpen } = useSidebar();
   return (
     <>
       <SidebarGroup>
@@ -97,9 +99,14 @@ export function SiderbarMenuContent() {
               return (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <Link href={item.url} className={isActive ? "bg-teal-500 text-white hover:bg-teal-500 hover:text-white" : ""} {...(item.target && { target: "_blank" })}>
-                      <item.icon />
-                      <span>{item.title}</span>
+                    <Link
+                      href={item.url}
+                      onClick={() => setOpen(false)}
+                      className={isActive ? "bg-teal-500 text-white hover:bg-teal-500 hover:text-white" : ""}
+                      {...(item.target && { target: "_blank" })}
+                    >
+                      <item.icon className="shrink-0" />
+                      <span className="group-data-[collapsible=icon]:hidden whitespace-nowrap overflow-hidden">{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

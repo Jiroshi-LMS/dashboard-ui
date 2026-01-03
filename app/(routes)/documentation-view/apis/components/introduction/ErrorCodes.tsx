@@ -27,7 +27,7 @@ const ErrorCodes = () => {
 
             <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-8">
                 <li>
-                    <strong>INTEGRITY_ERR</strong> — Database integrity constraint violations,
+                    <strong>INTEGRITY_ERR</strong> - Database integrity constraint violations,
                     such as foreign key or uniqueness mismatches.
                     <ApiDoc.Body
                         title="INTEGRITY_ERR"
@@ -42,7 +42,7 @@ const ErrorCodes = () => {
                     />
                 </li>
                 <li>
-                    <strong>VALIDATION_ERR</strong> — Invalid input data or failed validation
+                    <strong>VALIDATION_ERR</strong> - Invalid input data or failed validation
                     rules based on the request payload.
                     <ApiDoc.Body
                         title="VALIDATION_ERR"
@@ -64,7 +64,7 @@ const ErrorCodes = () => {
 
             <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-8">
                 <li>
-                    <strong>API_KEY_ERR</strong> — Issues related to API key authentication,
+                    <strong>API_KEY_ERR</strong> - Issues related to API key authentication,
                     including missing, invalid, malformed, or expired API keys.
                     <ApiDoc.Body
                         title="API_KEY_ERR"
@@ -79,7 +79,7 @@ const ErrorCodes = () => {
                     />
                 </li>
                 <li>
-                    <strong>INVALID_TOKEN_ERR</strong> — Student authentication failures due
+                    <strong>INVALID_TOKEN_ERR</strong> - Student authentication failures due
                     to missing, invalid, malformed, or expired access or refresh tokens.
                     <ApiDoc.Body
                         title="INVALID_TOKEN_ERR"
@@ -94,7 +94,7 @@ const ErrorCodes = () => {
                     />
                 </li>
                 <li>
-                    <strong>ACCESS_DENIED_ERR</strong> — Unauthorized access attempts to
+                    <strong>ACCESS_DENIED_ERR</strong> - Unauthorized access attempts to
                     resources that do not belong to the requesting tenant.
                     <ApiDoc.Body
                         title="ACCESS_DENIED_ERR"
@@ -116,7 +116,7 @@ const ErrorCodes = () => {
 
             <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-8">
                 <li>
-                    <strong>ALREADY_EXISTS_ERR</strong> — Attempt to create a resource that
+                    <strong>ALREADY_EXISTS_ERR</strong> - Attempt to create a resource that
                     already exists.
                     <ApiDoc.Body
                         title="ALREADY_EXISTS_ERR"
@@ -131,7 +131,7 @@ const ErrorCodes = () => {
                     />
                 </li>
                 <li>
-                    <strong>NOT_FOUND_ERR</strong> — Requested resource could not be found.
+                    <strong>NOT_FOUND_ERR</strong> - Requested resource could not be found.
                     <ApiDoc.Body
                         title="NOT_FOUND_ERR"
                         code={`{
@@ -152,7 +152,7 @@ const ErrorCodes = () => {
 
             <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-8">
                 <li>
-                    <strong>INTERNAL_ERR</strong> — An unhandled server-side exception.
+                    <strong>INTERNAL_ERR</strong> - An unhandled server-side exception.
                     If this error is encountered, please report it with request details
                     as soon as possible.
                     <ApiDoc.Body

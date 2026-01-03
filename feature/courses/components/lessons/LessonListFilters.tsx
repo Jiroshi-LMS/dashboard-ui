@@ -125,9 +125,8 @@ const LessonListFilters = ({
                     <Button
                       key={key}
                       variant={isActive ? "default" : "outline"}
-                      className={`w-full justify-between text-sm ${
-                        isActive ? "bg-teal-500 text-white" : ""
-                      }`}
+                      className={`w-full justify-between text-sm ${isActive ? "bg-teal-500 text-white" : ""
+                        }`}
                       onClick={() => {
                         let newOrder: string | null = key;
                         if (isActive && !isDesc) newOrder = `-${key}`;
@@ -144,7 +143,7 @@ const LessonListFilters = ({
                           <span className="text-xs text-gray-100">↑ Asc</span>
                         )
                       ) : (
-                        <span className="text-xs text-gray-500">—</span>
+                        <span className="text-xs text-gray-500">-</span>
                       )}
                     </Button>
                   );

@@ -89,19 +89,19 @@ const Pagination = () => {
 
             <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-8">
                 <li>
-                    <strong>next</strong> — Fully constructed URL to fetch the next page
+                    <strong>next</strong> - Fully constructed URL to fetch the next page
                     of results, if available.
                 </li>
                 <li>
-                    <strong>previous</strong> — Fully constructed URL to fetch the previous
+                    <strong>previous</strong> - Fully constructed URL to fetch the previous
                     page of results, if available.
                 </li>
                 <li>
-                    <strong>next_cursor</strong> — Encoded cursor value for fetching the
+                    <strong>next_cursor</strong> - Encoded cursor value for fetching the
                     next set of results programmatically.
                 </li>
                 <li>
-                    <strong>previous_cursor</strong> — Encoded cursor value for fetching
+                    <strong>previous_cursor</strong> - Encoded cursor value for fetching
                     the previous set of results.
                 </li>
             </ul>
@@ -227,15 +227,15 @@ const Pagination = () => {
 
                 <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-8">
                     <li>
-                        <strong>pagination</strong> — Must be set to
+                        <strong>pagination</strong> - Must be set to
                         <code className="mx-1 font-mono">page</code> to enable page-based
                         pagination.
                     </li>
                     <li>
-                        <strong>page</strong> — The page number to fetch.
+                        <strong>page</strong> - The page number to fetch.
                     </li>
                     <li>
-                        <strong>page_size</strong> — Number of items to return per page <b>(Max allowed is 150)</b>.
+                        <strong>page_size</strong> - Number of items to return per page <b>(Max allowed is 150)</b>.
                     </li>
                 </ul>
 
@@ -280,21 +280,21 @@ const Pagination = () => {
 
                 <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-8">
                     <li>
-                        <strong>count</strong> — Total number of items available.
+                        <strong>count</strong> - Total number of items available.
                     </li>
                     <li>
-                        <strong>total_pages</strong> — Total number of pages based on the
+                        <strong>total_pages</strong> - Total number of pages based on the
                         current <code className="ml-1 bg-slate-100 px-1.5 py-0.5 rounded font-mono">page_size</code>.
                     </li>
                     <li>
-                        <strong>current_page</strong> — The currently requested page number.
+                        <strong>current_page</strong> - The currently requested page number.
                     </li>
                     <li>
-                        <strong>next</strong> — URL to fetch the next page, or
+                        <strong>next</strong> - URL to fetch the next page, or
                         <code className="mx-1 font-mono">null</code> if no further pages exist.
                     </li>
                     <li>
-                        <strong>previous</strong> — URL to fetch the previous page, or
+                        <strong>previous</strong> - URL to fetch the previous page, or
                         <code className="mx-1 font-mono">null</code> if the current page is the
                         first page.
                     </li>

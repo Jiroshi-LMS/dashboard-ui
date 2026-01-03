@@ -98,7 +98,7 @@ const StudentListData = () => {
             </section>
 
             <TabularDataList
-                title="All Students"
+                title=""
                 data={studentList}
                 loading={!studentList}
                 emptyMessage="No students enrolled yet."

@@ -33,21 +33,21 @@ const ResponseFormat = () => {
 
             <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-8">
                 <li>
-                    <strong>status</strong> — Indicates whether the request was successfully
+                    <strong>status</strong> - Indicates whether the request was successfully
                     processed (<code>true</code>) or failed (<code>false</code>).
                 </li>
                 <li>
-                    <strong>results</strong> — Indicates whether the
+                    <strong>results</strong> - Indicates whether the
                     <code className="mx-1 font-mono">data</code> field is non-null.
                 </li>
                 <li>
-                    <strong>message</strong> — A human-readable success or error message.
+                    <strong>message</strong> - A human-readable success or error message.
                 </li>
                 <li>
-                    <strong>data</strong> — The response payload containing resource data.
+                    <strong>data</strong> - The response payload containing resource data.
                 </li>
                 <li>
-                    <strong>error_code</strong> — A machine-readable error identifier, or
+                    <strong>error_code</strong> - A machine-readable error identifier, or
                     <code className="mx-1 font-mono">null</code> for successful responses.
                 </li>
             </ul>
@@ -112,10 +112,10 @@ const ResponseFormat = () => {
 
             <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-8">
                 <li>
-                    <strong>results</strong> — A list of resource objects for the current page.
+                    <strong>results</strong> - A list of resource objects for the current page.
                 </li>
                 <li>
-                    <strong>pagination</strong> — Metadata used to navigate large result sets.
+                    <strong>pagination</strong> - Metadata used to navigate large result sets.
                 </li>
             </ul>
 

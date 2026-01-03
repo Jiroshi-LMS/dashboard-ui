@@ -144,11 +144,11 @@ GET /courses/?ordering=-duration`}
 
             <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-6">
                 <li>
-                    <code className="font-mono">&lt;field&gt;_after</code> — Filters records
+                    <code className="font-mono">&lt;field&gt;_after</code> - Filters records
                     after the specified date.
                 </li>
                 <li>
-                    <code className="font-mono">&lt;field&gt;_before</code> — Filters records
+                    <code className="font-mono">&lt;field&gt;_before</code> - Filters records
                     before the specified date.
                 </li>
             </ul>

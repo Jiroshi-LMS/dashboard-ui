@@ -105,7 +105,7 @@ const CourseListData = () => {
       </section>
 
       <TabularDataList
-        title="All Courses"
+        title=""
         data={courseList}
         loading={!courseList}
         emptyMessage="Nothing to show! Try creating a course."

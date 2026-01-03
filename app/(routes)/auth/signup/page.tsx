@@ -16,7 +16,7 @@ const RegisterPage = () => {
             <strong>Jiroshi is a headless learning platform that lets you build and run your own course system using flexible APIs and tools.</strong>
             <br />
             <br />
-            You handle the experience — Jiroshi handles the backend.
+            You handle the experience - Jiroshi handles the backend.
           </p>
         </aside>
 
