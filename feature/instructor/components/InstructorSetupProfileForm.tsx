@@ -23,6 +23,7 @@ import { Button } from "@/components/ui/button"
 import { units } from "@/lib/constants/common"
 import Loader from "@/app/components/atoms/Loader"
 import { Progress } from "@/components/ui/progress"
+import { Camera } from "lucide-react"
 
 const InstructorSetupProfileForm = () => {
     const router = useRouter()
@@ -121,14 +122,23 @@ const InstructorSetupProfileForm = () => {
                                         ref={(el) => { profileImageInput.current = el; }}
                                         onChange={profileImageChange} accept=".png,.jpg,.jpeg" />
                                     <div className="flex flex-col justify-center items-center gap-4">
-                                        <Image
-                                            src={(imageFile) ? URL.createObjectURL(imageFile) :
-                                                ((instructor?.profile?.profile_picture_url) ? instructor?.profile?.profile_picture_url :
-                                                    staticFiles.PROFILE_PLACEHOLDER)}
-                                            alt="instructor profile" height={160} width={160}
-                                            className="rounded-full border-2 border-teal-700 object-cover w-40 h-40 min-w-40 min-h-40 aspect-square shrink-0 shadow-sm"
-                                            onClick={() => { profileImageInput?.current?.click() }}
-                                            priority />
+                                        <div className="relative group">
+                                            <Image
+                                                src={(imageFile) ? URL.createObjectURL(imageFile) :
+                                                    ((instructor?.profile?.profile_picture_url) ? instructor?.profile?.profile_picture_url :
+                                                        staticFiles.PROFILE_PLACEHOLDER)}
+                                                alt="instructor profile" height={160} width={160}
+                                                className="rounded-full border-2 border-teal-700 object-cover w-40 h-40 min-w-40 min-h-40 aspect-square shrink-0 shadow-sm"
+                                                priority />
+                                            <button
+                                                type="button"
+                                                onClick={() => profileImageInput?.current?.click()}
+                                                className="absolute bottom-1 right-1 bg-teal-700 text-white p-2.5 rounded-full shadow-lg hover:bg-teal-800 transition-all transform hover:scale-110 active:scale-95 z-10 border-2 border-white"
+                                                title="Upload Profile Picture"
+                                            >
+                                                <Camera size={20} />
+                                            </button>
+                                        </div>
                                         <div className="flex flex-col justify-center items-center">
                                             {
                                                 (profileUploadProgress > 0) ?
