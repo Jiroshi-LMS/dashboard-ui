@@ -90,7 +90,7 @@ const navMenuItems = [
         target: "_blank",
     },
     {
-        name: "Pilot Program",
+        name: "Not a Developer?",
         href: "#pilot-program",
     }
 ];
