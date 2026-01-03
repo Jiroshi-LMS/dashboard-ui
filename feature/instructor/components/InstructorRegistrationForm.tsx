@@ -16,6 +16,8 @@ import { instructorRegistrationSchema } from "@/feature/instructor/instructorSch
 import { page } from "@/lib/constants/RouteConstants"
 import { useAppDispatch } from "@/hooks/useRedux"
 import { fetchInstructor } from "../instructorSlice"
+import { useState } from "react"
+import Loader from "@/app/components/atoms/Loader"
 
 
 const InstructorRegistrationForm = () => {
@@ -24,16 +26,19 @@ const InstructorRegistrationForm = () => {
     const form = useForm<z.infer<typeof instructorRegistrationSchema>>({
         resolver: zodResolver(instructorRegistrationSchema),
         defaultValues: {
-        fullName: "",
-        username: "",
-        email: "",
-        password: "",
-        phoneNumber: "",
+            fullName: "",
+            username: "",
+            email: "",
+            password: "",
+            phoneNumber: "",
         },
     })
 
+    const [isLoading, setIsLoading] = useState(false)
+
     const onSubmit = async (values: z.infer<typeof instructorRegistrationSchema>) => {
         try {
+            setIsLoading(true)
             const resp = await registerInstructorService(values)
             if (resp?.status && resp.response['access_token']) {
                 localStorage.setItem(authLiterals.ACCESS, resp.response['access_token'])
@@ -46,112 +51,116 @@ const InstructorRegistrationForm = () => {
             }
         } catch (err: any) {
             toast.error(err?.response?.data?.msg ?? standardErrors.UNKNOWN)
+        } finally {
+            setIsLoading(false)
         }
 
     }
 
-  return (
-    <div className="w-full max-w-md space-y-8">
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            {/* Full Name */}
-            <FormField
-                control={form.control}
-                name="fullName"
-                render={({ field }) => (
-                <FormItem>
-                    <FormLabel>Full Name</FormLabel>
-                    <FormControl>
-                    <Input placeholder="Jiroshi Instructor" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                </FormItem>
-                )}
-            />
+    if (isLoading) return <Loader />
 
-            {/* Username */}
-            <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                <FormItem>
-                    <FormLabel>Username</FormLabel>
-                    <FormControl>
-                    <Input placeholder="jiroshi.instructor" {...field} />
-                    </FormControl>
-                    <FormDescription>This will be your public display name.</FormDescription>
-                    <FormMessage />
-                </FormItem>
-                )}
-            />
+    return (
+        <div className="w-full max-w-md space-y-8">
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                    {/* Full Name */}
+                    <FormField
+                        control={form.control}
+                        name="fullName"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Full Name</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Jiroshi Instructor" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
 
-            {/* Email */}
-            <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                    <Input type="email" placeholder="you@example.com" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                </FormItem>
-                )}
-            />
+                    {/* Username */}
+                    <FormField
+                        control={form.control}
+                        name="username"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Username</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="jiroshi.instructor" {...field} />
+                                </FormControl>
+                                <FormDescription>This will be your public display name.</FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
 
-            {/* Password */}
-            <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                    <Input type="password" placeholder="••••••••" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                </FormItem>
-                )}
-            />
+                    {/* Email */}
+                    <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Email</FormLabel>
+                                <FormControl>
+                                    <Input type="email" placeholder="you@example.com" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
 
-            {/* Phone */}
-            <div className="flex gap-2">
-                {/* Country Code (Locked) */}
-                <div className="w-20">
-                <FormItem>
-                    <FormLabel>Code</FormLabel>
-                    <FormControl>
-                    <Input value="+91" disabled className="bg-gray-100 text-gray-600" />
-                    </FormControl>
-                </FormItem>
-                </div>
+                    {/* Password */}
+                    <FormField
+                        control={form.control}
+                        name="password"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Password</FormLabel>
+                                <FormControl>
+                                    <Input type="password" placeholder="••••••••" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
 
-                {/* Phone Number */}
-                <FormField
-                control={form.control}
-                name="phoneNumber"
-                render={({ field }) => (
-                    <FormItem className="flex-1">
-                    <FormLabel>Phone Number</FormLabel>
-                    <FormControl>
-                        <Input type="tel" placeholder="9876543210" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                    </FormItem>
-                )}
-                />
-            </div>
+                    {/* Phone */}
+                    <div className="flex gap-2">
+                        {/* Country Code (Locked) */}
+                        <div className="w-20">
+                            <FormItem>
+                                <FormLabel>Code</FormLabel>
+                                <FormControl>
+                                    <Input value="+91" disabled className="bg-gray-100 text-gray-600" />
+                                </FormControl>
+                            </FormItem>
+                        </div>
 
-            {/* Submit */}
-            <Button type="submit" className="w-full bg-teal-600 hover:bg-teal-700 cursor-pointer text-white">
-                Register
-            </Button>
-            <p className="text-sm text-gray-500">Already have an account? <Link href="/auth/login" className="text-primary">Sign In</Link></p>
-            </form>
-        </Form>
-    </div>
-  )
+                        {/* Phone Number */}
+                        <FormField
+                            control={form.control}
+                            name="phoneNumber"
+                            render={({ field }) => (
+                                <FormItem className="flex-1">
+                                    <FormLabel>Phone Number</FormLabel>
+                                    <FormControl>
+                                        <Input type="tel" placeholder="9876543210" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+
+                    {/* Submit */}
+                    <Button type="submit" className="w-full bg-teal-600 hover:bg-teal-700 cursor-pointer text-white">
+                        Register
+                    </Button>
+                    <p className="text-sm text-gray-500">Already have an account? <Link href="/auth/login" className="text-primary">Sign In</Link></p>
+                </form>
+            </Form>
+        </div>
+    )
 }
 
 export default InstructorRegistrationForm
