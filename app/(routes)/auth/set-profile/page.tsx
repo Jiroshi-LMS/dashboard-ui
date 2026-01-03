@@ -18,7 +18,7 @@ const SetProfilePage = () => {
 
         {/* Right Section */}
         <section className="w-full lg:w-[60%] flex flex-col items-center justify-center p-6 lg:p-12 pt-24 lg:pt-12 bg-white">
-          <div className="w-full max-w-md">
+          <div className="w-full">
             <InstructorSetupProfileForm />
           </div>
         </section>
