@@ -4,8 +4,11 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import { ArrowRight, Code2, Layers, LayoutDashboard, Zap, Globe, ShieldCheck, Rocket, Terminal, Turtle, Check, Menu, X, Plus } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
+import { fetchInstructor } from "@/feature/instructor/instructorSlice";
+import { authLiterals } from "@/lib/constants/common";
 
 // --- Components ---
 
@@ -97,6 +100,15 @@ const navMenuItems = [
 
 export default function LandingPageClient() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const dispatch = useAppDispatch();
+    const { loggedIn, status } = useAppSelector((state) => state.instructor);
+
+    useEffect(() => {
+        const token = localStorage.getItem(authLiterals.ACCESS);
+        if (token && !loggedIn && status === 'idle') {
+            dispatch(fetchInstructor());
+        }
+    }, [dispatch, loggedIn, status]);
 
     return (
         <div className="w-full min-h-screen bg-white text-slate-900 overflow-x-hidden selection:bg-primary/20 selection:text-primary font-sans">
@@ -128,14 +140,24 @@ export default function LandingPageClient() {
 
                     <div className="flex items-center gap-2">
                         <div className="flex items-center gap-4">
-                            <Link href="/auth/login" className="text-sm font-medium text-slate-600 hover:text-primary transition-colors hidden sm:block">
-                                Login
-                            </Link>
-                            <Link href="/instructor/dashboard">
-                                <Button size="sm" className="rounded-full bg-slate-900 text-white hover:bg-slate-800 font-semibold px-6 shadow-lg shadow-slate-900/20">
-                                    Get Started
-                                </Button>
-                            </Link>
+                            {!loggedIn && (
+                                <Link href="/auth/login" className="text-sm font-medium text-slate-600 hover:text-primary transition-colors hidden sm:block">
+                                    Login
+                                </Link>
+                            )}
+                            {loggedIn ? (
+                                <Link href="/instructor/dashboard">
+                                    <Button size="sm" className="rounded-full bg-slate-900 text-white hover:bg-slate-800 font-semibold px-6 shadow-lg shadow-slate-900/20">
+                                        Dashboard
+                                    </Button>
+                                </Link>
+                            ) : (
+                                <Link href="/auth/signup">
+                                    <Button size="sm" className="rounded-full bg-slate-900 text-white hover:bg-slate-800 font-semibold px-6 shadow-lg shadow-slate-900/20">
+                                        Get Started
+                                    </Button>
+                                </Link>
+                            )}
                         </div>
 
                         {/* Mobile Menu Toggle */}
@@ -169,13 +191,23 @@ export default function LandingPageClient() {
                                 </Link>
                             ))}
                             <div className="h-px bg-slate-100 my-2" />
-                            <Link
-                                href="/auth/login"
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                className="text-lg font-medium text-slate-600 hover:text-primary transition-colors"
-                            >
-                                Login
-                            </Link>
+                            {!loggedIn ? (
+                                <Link
+                                    href="/auth/login"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="text-lg font-medium text-slate-600 hover:text-primary transition-colors"
+                                >
+                                    Login
+                                </Link>
+                            ) : (
+                                <Link
+                                    href="/instructor/dashboard"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="text-lg font-medium text-primary transition-colors"
+                                >
+                                    Go to Dashboard
+                                </Link>
+                            )}
                         </div>
                     </motion.div>
                 )}
@@ -544,7 +576,7 @@ export default function LandingPageClient() {
                                 </ul>
                                 <Link href="/instructor/dashboard">
                                     <Button className="w-full h-12 rounded-full bg-slate-900 text-white hover:bg-slate-800">
-                                        Get Started
+                                        {loggedIn ? "Go to Dashboard" : "Get Started"}
                                     </Button>
                                 </Link>
                             </SpotlightCard>
