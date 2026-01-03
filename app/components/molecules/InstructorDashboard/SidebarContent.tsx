@@ -11,14 +11,17 @@ import { staticFiles } from "@/lib/constants/FileConstants"
 import { Turtle } from "lucide-react"
 
 export const SidebarHeaderContent = () => {
-  const { setOpen } = useSidebar();
+  const { setOpen, setOpenMobile } = useSidebar();
   return (
     <header>
       <h3 className="text-md font-bold p-3 text-teal-600">
         <Link
           className="flex items-center gap-2"
           href="/instructor/dashboard"
-          onClick={() => setOpen(false)}
+          onClick={() => {
+            setOpen(false);
+            setOpenMobile(false);
+          }}
         >
           <div className="w-6 h-6 rounded-full bg-gradient-to-br from-primary to-teal-600 flex items-center justify-center text-white shadow-md shadow-primary/20 shrink-0">
             <Turtle size={12} />
@@ -31,14 +34,17 @@ export const SidebarHeaderContent = () => {
 }
 
 export const SidebarFooterContent = ({ profile }: { profile: Instructor | null }) => {
-  const { setOpen } = useSidebar();
+  const { setOpen, setOpenMobile } = useSidebar();
 
   return (
     <footer className="flex justify-start items-center p-3 gap-3">
       <Link
         href={`/instructor/dashboard/profile`}
         className="shrink-0"
-        onClick={() => setOpen(false)}
+        onClick={() => {
+          setOpen(false);
+          setOpenMobile(false);
+        }}
       >
         <Avatar>
           <AvatarImage

@@ -88,7 +88,7 @@ const utilItems = [
 
 export function SiderbarMenuContent() {
   const pathname = usePathname();
-  const { setOpen } = useSidebar();
+  const { setOpen, setOpenMobile } = useSidebar();
   return (
     <>
       <SidebarGroup>
@@ -101,7 +101,10 @@ export function SiderbarMenuContent() {
                   <SidebarMenuButton asChild>
                     <Link
                       href={item.url}
-                      onClick={() => setOpen(false)}
+                      onClick={() => {
+                        setOpen(false);
+                        setOpenMobile(false);
+                      }}
                       className={isActive ? "bg-teal-500 text-white hover:bg-teal-500 hover:text-white" : ""}
                       {...(item.target && { target: "_blank" })}
                     >
