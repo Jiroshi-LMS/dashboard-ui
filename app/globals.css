@@ -170,7 +170,7 @@
 @layer utilities {
 
   .main-container {
-    @apply px-3 pb-6 w-full;
+    @apply px-3 pb-6 pt-1 w-full;
   }
 
   .page-title {

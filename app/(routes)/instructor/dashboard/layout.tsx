@@ -41,7 +41,7 @@ export default function DashboardLayout({
   return (
     <>
       <DashboardSidebar profile={instructor} />
-      <SidebarInset>
+      <SidebarInset className="overflow-x-hidden">
         <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 lg:hidden">
           <SidebarTrigger className="-ml-1" />
           <div className="h-4 w-px bg-border mx-2" />

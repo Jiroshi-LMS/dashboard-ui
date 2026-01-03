@@ -15,7 +15,7 @@ const LessonDetailsPage = ({ params }: LessonDetailsPageProps) => {
   const { courseId, lessonId } = React.use(params);
 
   return (
-    <main className="mx-auto py-10 px-4 space-y-8 w-[80%]">
+    <main className="mx-auto py-10 px-4 space-y-8">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold tracking-tight text-gray-900">
           Lesson Details
@@ -23,7 +23,7 @@ const LessonDetailsPage = ({ params }: LessonDetailsPageProps) => {
       </div>
 
       <LessonRetrieveView courseId={courseId} lessonId={lessonId} />
-      
+
     </main>
   );
 };
