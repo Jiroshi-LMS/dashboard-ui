@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
-import { ArrowRight, Code2, Layers, LayoutDashboard, Zap, Globe, ShieldCheck, Rocket, Terminal, Turtle, Check, Menu, X } from "lucide-react";
+import { ArrowRight, Code2, Layers, LayoutDashboard, Zap, Globe, ShieldCheck, Rocket, Terminal, Turtle, Check, Menu, X, Plus } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -286,38 +286,80 @@ export default function LandingPageClient() {
                                         <div className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
                                         <div className="w-3 h-3 rounded-full bg-[#27C93F]" />
                                     </div>
-                                    <div className="text-xs text-slate-400 font-mono ml-2 flex-1 text-center">api.jiroshi.com</div>
+                                    <div className="text-xs text-slate-400 font-mono ml-2 flex-1 text-center">jiroshi.com</div>
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-12 gap-0 min-h-[400px]">
                                     {/* Sidebar Mock */}
-                                    <div className="hidden md:block col-span-2 border-r border-slate-100 p-4 space-y-4 bg-slate-50/30">
-                                        <div className="h-8 w-full bg-slate-200 rounded animate-pulse" />
-                                        <div className="space-y-2">
-                                            {[1, 2, 3, 4].map(i => (
-                                                <div key={i} className="h-6 w-full bg-slate-100 rounded animate-pulse" />
+                                    <div className="hidden md:flex col-span-2 border-r border-slate-100 p-4 flex-col gap-6 bg-slate-50/30">
+                                        <div className="flex items-center gap-2 px-2">
+                                            <div className="w-2 h-2 rounded-full bg-primary" />
+                                            <div className="h-4 w-16 bg-slate-200 rounded" />
+                                        </div>
+                                        <div className="space-y-4">
+                                            {[
+                                                { icon: <LayoutDashboard size={14} />, label: "Dashboard" },
+                                                { icon: <Layers size={14} />, label: "Courses" },
+                                                { icon: <Globe size={14} />, label: "API Keys" },
+                                                { icon: <Zap size={14} />, label: "Analytics" }
+                                            ].map((item, i) => (
+                                                <div key={i} className={cn(
+                                                    "flex items-center gap-3 px-2 py-1.5 rounded-md transition-colors",
+                                                    i === 0 ? "bg-white shadow-sm border border-slate-100 text-primary" : "text-slate-400"
+                                                )}>
+                                                    {item.icon}
+                                                    <span className="text-[10px] font-medium">{item.label}</span>
+                                                </div>
                                             ))}
                                         </div>
                                     </div>
                                     {/* Main Content Mock */}
-                                    <div className="col-span-12 md:col-span-10 p-8 bg-white">
-                                        <div className="flex justify-between items-center mb-8">
-                                            <div className="space-y-2">
-                                                <div className="h-8 w-48 bg-slate-100 rounded animate-pulse" />
-                                                <div className="h-4 w-64 bg-slate-50 rounded animate-pulse" />
+                                    <div className="col-span-12 md:col-span-10 p-4 md:p-8 bg-white">
+                                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+                                            <div className="space-y-1">
+                                                <h3 className="text-xl font-bold text-slate-900">Instructor Dashboard</h3>
+                                                <p className="text-xs text-slate-500">Welcome back, Instructor!</p>
                                             </div>
-                                            <div className="h-10 w-32 bg-primary/10 rounded animate-pulse" />
+                                            <Button size="sm" className="rounded-full bg-primary text-white text-xs h-8 px-4">
+                                                <Plus className="w-3 h-3 mr-1.5" />
+                                                Create Course
+                                            </Button>
                                         </div>
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                                            {[1, 2, 3].map(i => (
-                                                <div key={i} className={`h-32 rounded-xl bg-slate-50 border border-slate-100 p-4 space-y-3 ${i === 3 ? 'sm:hidden lg:block' : ''}`}>
-                                                    <div className="h-8 w-8 rounded-full bg-slate-200" />
-                                                    <div className="h-6 w-24 bg-slate-200 rounded" />
-                                                    <div className="h-8 w-16 bg-slate-200 rounded" />
+                                        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                                            {[
+                                                { label: "Total Courses", value: "5", color: "text-blue-600", bg: "bg-blue-50" },
+                                                { label: "Total Signups", value: "100", color: "text-green-600", bg: "bg-green-50" },
+                                                { label: "Total Enrollments", value: "150", color: "text-primary", bg: "bg-teal-50" }
+                                            ].map((stat, i) => (
+                                                <div key={i} className={`rounded-xl border border-slate-100 p-4 space-y-1 ${i === 2 ? 'hidden lg:block' : ''}`}>
+                                                    <div className="text-[10px] font-medium text-slate-500 uppercase tracking-wider">{stat.label}</div>
+                                                    <div className={`text-xl font-bold ${stat.color}`}>{stat.value}</div>
+                                                    <div className="text-[10px] text-slate-400">+12 from last month</div>
                                                 </div>
                                             ))}
                                         </div>
-                                        <div className="h-64 rounded-xl bg-slate-50 border border-slate-100 relative overflow-hidden">
-                                            <div className="absolute inset-0 bg-gradient-to-t from-slate-100/50 to-transparent" />
+                                        <div className="space-y-4">
+                                            <div className="flex items-center justify-between">
+                                                <h4 className="text-sm font-bold text-slate-900">Recent Courses</h4>
+                                                <Button variant="ghost" size="sm" className="text-[10px] text-primary h-7">View All</Button>
+                                            </div>
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                                {[
+                                                    { title: "Next.js for Beginners", students: "450 Students", color: "bg-blue-100/50" },
+                                                    { title: "Advanced Backend Systems", students: "280 Students", color: "bg-purple-100/50" },
+                                                    { title: "UI Design Principles", students: "890 Students", color: "bg-teal-100/50" },
+                                                    { title: "Python for Data Science", students: "1.2k Students", color: "bg-orange-100/50" }
+                                                ].map((course, i) => (
+                                                    <div key={i} className={`flex items-center gap-3 p-3 rounded-xl border border-slate-100 bg-white shadow-sm hover:border-primary/20 transition-colors ${i > 1 ? 'hidden sm:flex' : ''}`}>
+                                                        <div className={`w-10 h-10 rounded-lg ${course.color} flex items-center justify-center`}>
+                                                            <Layers size={18} className="text-slate-600" />
+                                                        </div>
+                                                        <div className="min-w-0">
+                                                            <p className="text-[11px] font-bold text-slate-900 truncate">{course.title}</p>
+                                                            <p className="text-[9px] text-slate-500">{course.students}</p>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
