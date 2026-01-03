@@ -26,6 +26,7 @@ export const route = {
     UPDATE_COURSE: (courseId: string) => `/courses/views/${courseId}/`,
     RETRIEVE_COURSE: (courseId: string) => `/courses/views/${courseId}/`,
     DELETE_COURSE: (courseId: string) => `/courses/views/${courseId}/`,
+    TOGGLE_COURSE_STATUS: (courseId: string) => `/courses/views/${courseId}/toggle-status/`,
 
     // Enrollments
     LIST_ENROLLMENTS: "/courses/enrollments/",

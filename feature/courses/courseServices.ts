@@ -12,71 +12,76 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 
 
 export const createCourseService = async (
-    values: z.infer<typeof courseCreationFormSchema>
+  values: z.infer<typeof courseCreationFormSchema>
 ): Promise<StandardResponse> => {
   const { data } = await api.post(route.CREATE_COURSE, values)
   return data as StandardResponse
 }
 
 export const updateCourseService = async (
-    courseId: string, values: z.infer<typeof updateCourseFormSchema>
+  courseId: string, values: z.infer<typeof updateCourseFormSchema>
 ): Promise<StandardResponse> => {
   const { data } = await api.put(route.UPDATE_COURSE(courseId), values)
   return data as StandardResponse
 }
 
 export const retrieveCourseService = async (courseId: string): Promise<StandardResponse> => {
-    const { data } = await api.get(route.RETRIEVE_COURSE(courseId))
-    return data as StandardResponse
+  const { data } = await api.get(route.RETRIEVE_COURSE(courseId))
+  return data as StandardResponse
 }
 
 export const deleteCourseService = async (courseId: string): Promise<StandardResponse> => {
-    const { data } = await api.delete(route.DELETE_COURSE(courseId))
-    return data as StandardResponse
+  const { data } = await api.delete(route.DELETE_COURSE(courseId))
+  return data as StandardResponse
+}
+
+export const toggleCourseStatusService = async (courseId: string): Promise<StandardResponse> => {
+  const { data } = await api.patch(route.TOGGLE_COURSE_STATUS(courseId))
+  return data as StandardResponse
 }
 
 export const fetchCourseById = async (
-    courseId: string, 
-    setCourse: React.Dispatch<SetStateAction<Course | null>>,
-    setLoading: React.Dispatch<SetStateAction<boolean>>
+  courseId: string,
+  setCourse: React.Dispatch<SetStateAction<Course | null>>,
+  setLoading: React.Dispatch<SetStateAction<boolean>>
 ) => {
-    try {
-      const resp = await retrieveCourseService(courseId);
-      const courseData = resp?.response;
-      if (courseData) {
-        const dateObject = new Date(courseData.created_at);
-        const formattedCourseData: Course = {
-          ...courseData,
-          created_at: dateObject.toLocaleString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          }),
-        };
-        setCourse(formattedCourseData);
-      } else toast.error(standardErrors.UNKNOWN);
-      setLoading(false);
-    } catch (err: any) {
-      toast.error("Failed to fetch course! Try again.");
-      setLoading(false);
-    }
-  };
+  try {
+    const resp = await retrieveCourseService(courseId);
+    const courseData = resp?.response;
+    if (courseData) {
+      const dateObject = new Date(courseData.created_at);
+      const formattedCourseData: Course = {
+        ...courseData,
+        created_at: dateObject.toLocaleString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
+      };
+      setCourse(formattedCourseData);
+    } else toast.error(standardErrors.UNKNOWN);
+    setLoading(false);
+  } catch (err: any) {
+    toast.error("Failed to fetch course! Try again.");
+    setLoading(false);
+  }
+};
 
 
 export const CreateLessonWithDetails = async (
   values: z.infer<typeof VideoDetailsFormSchema>,
-): Promise<{success: boolean, lesson_uuid: string | null}> => {
+): Promise<{ success: boolean, lesson_uuid: string | null }> => {
   try {
     const resp: StandardResponse = await createLessonDetailsService(values)
     if (resp?.status) {
       toast.success("Lesson Created Successfully !")
-      return {success: true, lesson_uuid: resp?.response?.lesson_id}
+      return { success: true, lesson_uuid: resp?.response?.lesson_id }
     }
     toast.error(resp?.msg || "Lesson Creation Failed !")
-    return {success: false, lesson_uuid: null}
+    return { success: false, lesson_uuid: null }
   } catch (err: any) {
     toast.error(err?.response?.data?.msg || err?.message || standardErrors.UNKNOWN)
-    return {success: false, lesson_uuid: null}
+    return { success: false, lesson_uuid: null }
   }
 }
 
@@ -84,16 +89,16 @@ export const CreateLessonWithDetails = async (
 export const CreateLessonReferenceMaterialService = async (
   values: LessonReferenceMaterial,
   lessonId: string
-): Promise<{success: boolean, response: {resource_id: string} | null}> => {
+): Promise<{ success: boolean, response: { resource_id: string } | null }> => {
   try {
     const resp: StandardResponse = await createLessonReferenceMaterialRepository(values, lessonId)
     if (resp?.status) {
-      return {success: true, response: resp?.response}
+      return { success: true, response: resp?.response }
     }
-    return {success: false, response: null}
+    return { success: false, response: null }
   } catch (err: any) {
     toast.error(err?.response?.data?.msg || err?.message || standardErrors.UNKNOWN)
-    return {success: false, response: null}
+    return { success: false, response: null }
   }
 }
 
@@ -115,23 +120,23 @@ export const UpdateLessonMediaService = async (
   lessonId: string,
   mediaData: LessonMediaData,
   uploadFile: (
-    file: File, 
-    contentType: string, 
+    file: File,
+    contentType: string,
     setUploadProgress?: React.Dispatch<SetStateAction<number>>
-    ) => Promise<PresignedUploadReturnState>,
-    setFileUploadProgress: React.Dispatch<SetStateAction<number>>
+  ) => Promise<PresignedUploadReturnState>,
+  setFileUploadProgress: React.Dispatch<SetStateAction<number>>
 ): Promise<boolean> => {
   try {
     if (!mediaData.file || !mediaData.duration) return false
-    const {objectKey, isCancelled } = await uploadFile(
+    const { objectKey, isCancelled } = await uploadFile(
       mediaData.file,
       mediaData.file.type,
       setFileUploadProgress
     )
     if (!objectKey || isCancelled.current) {
-        isCancelled.current = false;
-        setFileUploadProgress(0);
-        throw new Error("Upload cancelled!.")
+      isCancelled.current = false;
+      setFileUploadProgress(0);
+      throw new Error("Upload cancelled!.")
     }
     const resp = await updateLessonMediaRepository(lessonId, objectKey, mediaData.duration, mediaData.file.size)
     if (resp?.status) {
@@ -141,8 +146,8 @@ export const UpdateLessonMediaService = async (
     throw new Error("Unable to update lesson media! Please try again later.")
   } catch (err: any) {
     toast.error(
-      err?.response?.data?.msg || 
-      err?.message || 
+      err?.response?.data?.msg ||
+      err?.message ||
       standardErrors.UNKNOWN
     )
     setFileUploadProgress(0);
@@ -160,21 +165,21 @@ export const FetchLessonByIdService = async (
   try {
     const resp: StandardResponse = await fetchLessonByIdRepository(lessonId)
     const lessonData = resp?.response;
-      if (resp?.status && lessonData) {
-        const dateObject = new Date(lessonData.created_at);
-        const formattedLessonData: Lesson = {
-          ...lessonData,
-          created_at: dateObject.toLocaleString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          }),
-        };
-        setLesson(formattedLessonData);
-        if (setLoading) setLoading(false)
-        return true
-      }
-      toast.error(resp?.msg || "Unable to retrieve lesson data! Please try again later.");
+    if (resp?.status && lessonData) {
+      const dateObject = new Date(lessonData.created_at);
+      const formattedLessonData: Lesson = {
+        ...lessonData,
+        created_at: dateObject.toLocaleString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
+      };
+      setLesson(formattedLessonData);
+      if (setLoading) setLoading(false)
+      return true
+    }
+    toast.error(resp?.msg || "Unable to retrieve lesson data! Please try again later.");
   } catch (err: any) {
     toast.error(err?.response?.data?.msg || err?.message || standardErrors.UNKNOWN)
   }
@@ -206,35 +211,35 @@ export const FetchLessonResourcesService = async (
 }
 
 
-export const DeleteLessonService = async(
+export const DeleteLessonService = async (
   courseId: string,
   lessonId: string,
   router: AppRouterInstance
 ) => {
-    try {
-      const resp = await deleteLessonRepository(lessonId)
-      if (resp?.status){
-        toast.success("Course has been removed successfully !")
-        router.replace(page.RETRIEVE_COURSE(courseId))
-      }
-      else toast.error(resp?.msg || "Could not delete course! Please try again later.")
-    } catch (err: any) {
-      toast.error(
-        err?.response?.data?.msg ||
-        err?.message ||
-        standardErrors.UNKNOWN
-      )
+  try {
+    const resp = await deleteLessonRepository(lessonId)
+    if (resp?.status) {
+      toast.success("Course has been removed successfully !")
+      router.replace(page.RETRIEVE_COURSE(courseId))
     }
+    else toast.error(resp?.msg || "Could not delete course! Please try again later.")
+  } catch (err: any) {
+    toast.error(
+      err?.response?.data?.msg ||
+      err?.message ||
+      standardErrors.UNKNOWN
+    )
   }
+}
 
 
-export const UpdateLessonDetailsService = async(
+export const UpdateLessonDetailsService = async (
   lessonId: string,
   values: z.infer<typeof LessonDetailsUpdateFormSchema>
 ) => {
   try {
     const resp = await updateVideoDetailsRepository(lessonId, values)
-    if (resp?.status){
+    if (resp?.status) {
       toast.success("Course has been removed successfully !")
       return true
     }
