@@ -67,7 +67,7 @@ const ApiKeys = () => {
 
                     <ApiDoc.Body
                         title="Sample Public Key (pk)"
-                        code={`pk~~12a3b456-1ab2-3c45-4d67-21f72ad886f3~~RK07B89pGD4J3-VypELpwDX4z1ZX0yF1R_0au6EZibU=`}
+                        code={`pk:12a3b456-1ab2-3c45-4d67-21f72ad886f3:RK07B89pGD4J3-VypELpwDX4z1ZX0yF1R_0au6EZibU=`}
                         language="bash"
                     />
                 </li>
@@ -78,7 +78,7 @@ const ApiKeys = () => {
 
                     <ApiDoc.Body
                         title="Sample Secret Key (sk)"
-                        code={`sk~~12a3b456-1ab2-3c45-4d67-21f72ad886f3~~RK07B89pGD4J3-VypELpwDX4z1ZX0yF1R_0au6EZibU=`}
+                        code={`sk:12a3b456-1ab2-3c45-4d67-21f72ad886f3:RK07B89pGD4J3-VypELpwDX4z1ZX0yF1R_0au6EZibU=`}
                         language="bash"
                     />
                 </li>
