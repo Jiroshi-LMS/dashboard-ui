@@ -49,6 +49,29 @@ const AuthTransport = () => {
             </p>
 
             <ApiDoc.SubHeader>
+                Development Mode
+            </ApiDoc.SubHeader>
+
+            <p className="text-slate-600 mb-4 leading-relaxed">
+                During local development, strict cookie policies (SameSite, Secure) can sometimes
+                hinder testing on localhost. You can switch to a developer-friendly mode by
+                setting the following header:
+            </p>
+
+            <ApiDoc.Body
+                title="Force Development Mode"
+                language="bash"
+                code={`X-Client-Type: dev`}
+            />
+
+            <p className="text-slate-600 mb-8 leading-relaxed">
+                <strong>Effect:</strong> In this mode, just like with non-browser clients,
+                the refresh token is transported via the <strong>request and response payloads </strong>
+                instead of cookies. This makes it easier to inspect and manage tokens manually
+                during development.
+            </p>
+
+            <ApiDoc.SubHeader>
                 Forcing API Mode
             </ApiDoc.SubHeader>
 
@@ -62,7 +85,7 @@ const AuthTransport = () => {
             <ApiDoc.Body
                 title="Force API Client Mode"
                 language="bash"
-                code={`X-Client-Type: api`}
+                code={`X-Client-Type: non-browser`}
             />
 
             <ApiDoc.Warning title="Restricted Usage">
