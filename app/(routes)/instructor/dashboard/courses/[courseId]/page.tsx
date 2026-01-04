@@ -28,14 +28,14 @@ interface CourseDetailsPageProps {
 }
 
 
-const courseDetailsPage = ({params}: CourseDetailsPageProps) => {
+const courseDetailsPage = ({ params }: CourseDetailsPageProps) => {
   const router = useRouter()
   const { courseId } = React.use(params)
 
-  const handleCourseDeletion = async() => {
+  const handleCourseDeletion = async () => {
     try {
       const resp = await deleteCourseService(courseId)
-      if (resp?.status){
+      if (resp?.status) {
         toast.success("Course has been removed successfully !")
         router.replace(page.LIST_COURSE)
       }
@@ -76,15 +76,14 @@ const courseDetailsPage = ({params}: CourseDetailsPageProps) => {
             <AlertDialogHeader>
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete your course
-                and remove your data from our servers.
+                This action cannot be undone. This will permanently delete your course.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction 
-              onClick={handleCourseDeletion}
-              className="bg-red-400 hover:bg-red-500 cursor-pointer text-white">
+              <AlertDialogAction
+                onClick={handleCourseDeletion}
+                className="bg-red-400 hover:bg-red-500 cursor-pointer text-white">
                 Continue
               </AlertDialogAction>
             </AlertDialogFooter>
