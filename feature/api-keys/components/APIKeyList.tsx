@@ -51,11 +51,13 @@ const APIKeyList = ({ keys, setKeys, shouldFetchKeyList, setShouldFetchKeyList }
   };
 
   const confirmDelete = async () => {
+    setShowDeleteDialog(false);
+    setIsLoading(true)
     if (keyToDelete) {
       await DeleteAPIKeyService(keyToDelete)
       setShouldFetchKeyList(true)
     }
-    setShowDeleteDialog(false);
+    setIsLoading(false)
   };
 
   const fetchAPIKeysData = async () => {
@@ -220,8 +222,8 @@ const APIKeyList = ({ keys, setKeys, shouldFetchKeyList, setShouldFetchKeyList }
             <AlertDialogHeader>
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete your course
-                and remove your data from our servers.
+                This action cannot be undone. This will permanently delete your API Key
+                from our servers.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
