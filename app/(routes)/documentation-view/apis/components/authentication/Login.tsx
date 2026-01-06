@@ -73,7 +73,7 @@ const Login = () => {
             </ApiDoc.Description>
 
             <ApiDoc.SubHeader>
-                Response (Non-Browser / Forced API Mode)
+                Response (Non-Browser / Dev Mode / Forced API Mode)
             </ApiDoc.SubHeader>
 
             <ApiDoc.Body

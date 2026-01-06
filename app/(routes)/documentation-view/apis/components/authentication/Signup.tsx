@@ -51,6 +51,11 @@ const Signup = () => {
                 identifier scheme required by the instructor.
             </ApiDoc.Description>
 
+            <ApiDoc.Description>
+                <strong>Tip:</strong> You can use the <a href="#student-identifier-lookup" className="text-blue-600 hover:underline">Student Identifier Lookup</a> endpoint
+                to perform real-time, debounced availability checks for the identifier during the signup flow.
+            </ApiDoc.Description>
+
             <ApiDoc.SubHeader>
                 Server-Side Validation Rules
             </ApiDoc.SubHeader>
@@ -102,7 +107,7 @@ const Signup = () => {
             </ApiDoc.Description>
 
             <ApiDoc.SubHeader>
-                Response (Non-Browser / Forced API Mode)
+                Response (Non-Browser / Dev Mode / Forced API Mode)
             </ApiDoc.SubHeader>
 
             <ApiDoc.Body

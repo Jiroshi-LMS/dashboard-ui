@@ -35,6 +35,11 @@ const StudentUpdateDetails = () => {
                 request. Requests without a valid token will be rejected.
             </ApiDoc.Description>
 
+            <ApiDoc.Description>
+                <strong>Tip:</strong> You can use the <a href="#student-identifier-lookup" className="text-blue-600 hover:underline">Student Identifier Lookup</a> endpoint
+                to perform real-time, debounced availability checks for the identifier during the identifier update flow.
+            </ApiDoc.Description>
+
             <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
                 Request Body
             </h4>
