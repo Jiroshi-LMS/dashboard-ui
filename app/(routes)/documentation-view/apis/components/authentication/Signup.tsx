@@ -106,6 +106,11 @@ const Signup = () => {
                 JavaScript.
             </ApiDoc.Description>
 
+            <ApiDoc.Info title="Cross-Origin Requests">
+                For the browser to include these secure cookies in cross-origin API requests, you must set
+                <code> credentials: 'include'</code> (Fetch API) or <code>withCredentials: true</code> (Axios) in your request configuration.
+            </ApiDoc.Info>
+
             <ApiDoc.SubHeader>
                 Response (Non-Browser / Dev Mode / Forced API Mode)
             </ApiDoc.SubHeader>

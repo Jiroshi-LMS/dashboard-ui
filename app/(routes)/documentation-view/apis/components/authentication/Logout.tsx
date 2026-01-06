@@ -72,7 +72,8 @@ const Logout = () => {
             <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-6">
                 <li>
                     <strong>Browser Clients:</strong> Calling this endpoint invalidates
-                    the refresh token stored in the HTTP-only cookie. Clients should also
+                    the refresh token stored in the HTTP-only cookie. You must set <code> credentials: 'include'</code> (Fetch) or <code>withCredentials: true</code> (Axios)
+                    to ensure the cookie is sent. Clients should also
                     manually flush the <strong>access token</strong> from local storage.
                 </li>
                 <li>
