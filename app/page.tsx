@@ -55,7 +55,9 @@ export default function Home() {
     "description": "A Headless LMS built for modern learning platforms.",
     "sameAs": [
       "https://twitter.com/jiroshi_app",
-      "https://github.com/jiroshi-lms"
+      "https://github.com/jiroshi-lms",
+      "https://demo.jiroshi.com/",
+      "https://github.com/Jiroshi-LMS/demo-usage"
     ]
   };
 

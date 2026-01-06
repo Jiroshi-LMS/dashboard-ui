@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
-import { ArrowRight, Code2, Layers, LayoutDashboard, Zap, Globe, ShieldCheck, Rocket, Terminal, Turtle, Check, Menu, X, Plus } from "lucide-react";
+import { ArrowRight, Code2, Layers, LayoutDashboard, Zap, Globe, ShieldCheck, Rocket, Terminal, Turtle, Check, Menu, X, Plus, Github } from "lucide-react";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
@@ -530,6 +530,72 @@ export default function LandingPageClient() {
 }`}
                                         </pre>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* See it in Action Section */}
+                <section className="py-24 relative overflow-hidden bg-white">
+                    <div className="container mx-auto px-4">
+                        <div className="max-w-5xl mx-auto rounded-[2.5rem] bg-gradient-to-br from-slate-900 to-slate-800 p-8 md:p-16 relative overflow-hidden shadow-2xl">
+                            {/* Decorative background elements */}
+                            <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 blur-[100px] -mr-48 -mt-48 rounded-full"></div>
+                            <div className="absolute bottom-0 left-0 w-64 h-64 bg-teal-500/10 blur-[80px] -ml-32 -mb-32 rounded-full"></div>
+
+                            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                                <div>
+                                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-xs font-bold text-primary uppercase tracking-widest mb-6">
+                                        <Globe size={14} />
+                                        Live Demo
+                                    </div>
+                                    <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                                        See Jiroshi in <span className="text-primary italic underline decoration-primary/30 underline-offset-8">Action</span>
+                                    </h2>
+                                    <p className="text-slate-300 text-lg mb-10 leading-relaxed">
+                                        Experience the full power of our headless APIs. We&apos;ve built a complete
+                                        learning portal using Jiroshi to show you exactly what&apos;s possible.
+                                    </p>
+
+                                    <div className="flex flex-col sm:flex-row gap-4">
+                                        <a href="https://demo.jiroshi.com/" target="_blank" rel="noopener noreferrer">
+                                            <Button size="lg" className="h-14 px-8 rounded-full bg-primary hover:bg-primary/90 text-white font-bold w-full sm:w-auto shadow-lg shadow-primary/20 group">
+                                                Explore Live Demo
+                                                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                                            </Button>
+                                        </a>
+                                        <a href="https://github.com/Jiroshi-LMS/demo-usage" target="_blank" rel="noopener noreferrer">
+                                            <Button variant="outline" size="lg" className="h-14 px-8 rounded-full bg-white/5 border-white/10 text-white hover:bg-white/10 hover:border-white/20 w-full sm:w-auto">
+                                                <Github className="mr-2 w-5 h-5" />
+                                                View Demo Code
+                                            </Button>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div className="relative">
+                                    <div className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl transform lg:rotate-2 lg:scale-105 transition-transform hover:rotate-0 duration-500">
+                                        <img
+                                            src="https://jiroshi-static-prod.s3.ap-south-1.amazonaws.com/website/demo-with-jiroshi-landing-screenshot.png"
+                                            alt="Jiroshi Demo Preview"
+                                            className="w-full h-auto object-cover"
+                                        />
+                                    </div>
+                                    {/* Small floating card over image */}
+                                    <motion.div
+                                        animate={{ y: [0, -10, 0] }}
+                                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                                        className="absolute -bottom-6 -right-6 md:right-0 p-4 rounded-xl bg-white border border-slate-100 shadow-xl hidden sm:flex items-center gap-4"
+                                    >
+                                        <div className="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center text-primary">
+                                            <Turtle size={20} fill="currentColor" />
+                                        </div>
+                                        <div>
+                                            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Example Stack</div>
+                                            <div className="text-sm font-bold text-slate-900">Next.js + Jiroshi APIs</div>
+                                        </div>
+                                    </motion.div>
                                 </div>
                             </div>
                         </div>
