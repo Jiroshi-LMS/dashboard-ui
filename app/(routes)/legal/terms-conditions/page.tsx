@@ -31,118 +31,128 @@ export default function TermsPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <h1 className="text-4xl font-bold mb-4 text-slate-900 tracking-tight">Terms & Conditions</h1>
-                    <p className="text-slate-500 mb-12">Last Updated: {lastUpdated}</p>
+                    <h1 className="text-4xl font-bold mb-4 text-slate-900 tracking-tight text-center">Terms & Conditions</h1>
+                    <p className="text-slate-500 mb-12 text-center">Last Updated: {lastUpdated}</p>
 
                     <div className="prose prose-slate max-w-none space-y-12 text-slate-600 leading-relaxed">
                         <section>
-                            <p className="text-lg">
-                                These Terms & Conditions (“Terms”) govern your use of Jiroshi’s platform, APIs, and services. By accessing or using Jiroshi, you agree to these Terms.
+                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">1. Acceptance of Terms</h2>
+                            <p className="mt-4">
+                                Welcome to Jiroshi. By accessing or using our website and services, you agree to be bound by these Terms and Conditions ("Terms"). If you do not agree to these Terms, please do not use our services.
+                            </p>
+                            <p className="mt-4">
+                                "Jiroshi" refers to the platform and services provided by Jiroshi. "You" or "User" refers to the individual, organization, or entity using our Services.
                             </p>
                         </section>
 
                         <section className="space-y-4">
-                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">1. Eligibility</h2>
-                            <p>You must be legally capable of entering into a binding agreement to use the platform.</p>
+                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">2. Description of Services</h2>
+                            <p>
+                                Jiroshi is a software-as-a-service (SaaS) platform that provides infrastructure and tools for educators and organizations to create, manage, and operate online learning platforms and courses ("Services").
+                            </p>
+                            <p>
+                                We provide the tools to manage content, users, and enrollments. We do not create the course content itself, nor do we employ the instructors who use our platform.
+                            </p>
                         </section>
 
                         <section className="space-y-4">
-                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">2. Platform Overview</h2>
-                            <p>Jiroshi provides:</p>
+                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">3. User Eligibility and Account Responsibility</h2>
                             <ul className="list-disc pl-6 space-y-2">
-                                <li>API-based infrastructure for building course platforms</li>
-                                <li>Instructor dashboards</li>
-                                <li>Student authentication and enrollment systems</li>
-                            </ul>
-                            <p>Jiroshi does not provide a hosted frontend or marketplace.</p>
-                        </section>
-
-                        <section className="space-y-4">
-                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">3. Account Responsibility</h2>
-                            <p>You are responsible for:</p>
-                            <ul className="list-disc pl-6 space-y-2">
-                                <li>All activity under your account</li>
-                                <li>Maintaining accurate information</li>
-                                <li>Securing access credentials and API keys</li>
+                                <li><strong>Eligibility:</strong> You must be at least 18 years old or have legal parental/guardian consent to use our Services.</li>
+                                <li><strong>Account Security:</strong> You are responsible for maintaining the confidentiality of your account credentials and API keys. You are fully responsible for all activities that occur under your account.</li>
+                                <li><strong>Accuracy:</strong> You agree to provide accurate, current, and complete information during the registration process.</li>
                             </ul>
                         </section>
 
                         <section className="space-y-4">
-                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">4. API Keys & Security</h2>
-                            <p>API keys are unique credentials issued to instructors. You are solely responsible for maintaining API key confidentiality.</p>
-                            <p>Jiroshi is not liable for misuse, loss, or damage caused by compromised keys. Compromised keys must be rotated or revoked immediately.</p>
-                        </section>
-
-                        <section className="space-y-4">
-                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">5. Content & Intellectual Property</h2>
-                            <p>You retain ownership of content you upload. You grant Jiroshi a limited license to store and serve content for platform functionality.</p>
-                            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 mt-6">
-                                <h3 className="font-bold text-slate-900 mb-2 uppercase text-xs tracking-wider opacity-50">Content Protection Limitation</h3>
-                                <p className="mb-4 font-medium">Jiroshi does not guarantee protection against copying, downloading, or redistribution of content. Absolute prevention of content theft is not possible.</p>
-                                <p className="text-sm">Jiroshi shall not be held liable for unauthorized content use by third parties.</p>
+                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">4. Subscriptions, Payments, and Billing</h2>
+                            <p>
+                                Jiroshi operates on a subscription model. By subscribing to a plan, you agree to pay the fees associated with that plan.
+                            </p>
+                            <div className="bg-slate-50 border border-slate-100 p-6 rounded-xl">
+                                <h3 className="font-bold text-slate-900 mb-2">Payment Processing</h3>
+                                <p className="mb-4">
+                                    Payments for Jiroshi subscriptions are processed utilizing secure third-party payment gateway providers (such as Razorpay, Stripe, etc.).
+                                </p>
+                                <ul className="list-disc pl-6 space-y-1">
+                                    <li>Jiroshi <strong>does not</strong> directly collect or store your sensitive payment card or banking information.</li>
+                                    <li>All payment tracking is done via the transaction ID provided by the payment gateway.</li>
+                                    <li>You agree to the terms and conditions of the respective payment gateway used for the transaction.</li>
+                                </ul>
                             </div>
                         </section>
 
                         <section className="space-y-4">
-                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">6. Payments</h2>
-                            <p>Jiroshi does not currently process payments. Any payment handling is the sole responsibility of instructors. Future payment features may introduce additional terms.</p>
+                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">5. Refunds and Cancellations</h2>
+                            <p>
+                                Our policies regarding subscription cancellations and refunds are governed by our separate <strong>Refund & Cancellation Policy</strong>. Please refer to that document for detailed information on eligibility and processes for refunds.
+                            </p>
                         </section>
 
                         <section className="space-y-4">
-                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">7. Acceptable Use</h2>
-                            <p>You agree not to:</p>
+                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">6. Acceptable Use of the Platform</h2>
+                            <p>You agree not to use the platform for any unlawful purpose or any purpose prohibited under this clause. You agree not to:</p>
                             <ul className="list-disc pl-6 space-y-2">
-                                <li>Abuse or overload the platform</li>
-                                <li>Attempt unauthorized access</li>
-                                <li>Use the platform for illegal or harmful activities</li>
-                                <li>Circumvent rate limits or security controls</li>
+                                <li>Host, display, upload, modify, publish, transmit, store, update or share any information that belongs to another person and to which you do not have any right.</li>
+                                <li>Upload content that is defamatory, obscene, pornographic, pedophilic, invasive of another's privacy, or otherwise unlawful.</li>
+                                <li>Interfere with or disrupt the integrity or performance of the platform.</li>
+                                <li>Attempt to gain unauthorized access to the platform or related systems.</li>
                             </ul>
                         </section>
 
                         <section className="space-y-4">
-                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">8. Platform Availability</h2>
-                            <p>The platform is provided “as is” and “as available.”</p>
-                            <ul className="list-disc pl-6 space-y-2">
-                                <li>No guarantee of uptime, availability, or uninterrupted access</li>
-                                <li>Features may change, evolve, or be discontinued during the MVP phase</li>
-                            </ul>
+                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">7. Intellectual Property Rights</h2>
+                            <p>
+                                <strong>Your Content:</strong> You retain ownership of all course content, videos, and materials you upload to Jiroshi. You grant us a limited license to store, process, and display this content solely for the purpose of providing the Services.
+                            </p>
+                            <p>
+                                <strong>Our IP:</strong> Jiroshi retains all rights, title, and interest in and to the platform, including our software, designs, trademarks, logos, and code.
+                            </p>
                         </section>
 
                         <section className="space-y-4">
-                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">9. Suspension & Termination</h2>
-                            <p>We reserve the right to:</p>
-                            <ul className="list-disc pl-6 space-y-2">
-                                <li>Suspend or terminate accounts for abuse, misuse, or security risks</li>
-                                <li>Restrict access without prior notice if necessary to protect the platform</li>
-                            </ul>
+                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">8. Limitation of Liability</h2>
+                            <p>
+                                To the maximum extent permitted by law, Jiroshi shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your access to or use of or inability to access or use the Services.
+                            </p>
                         </section>
 
                         <section className="space-y-4">
-                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">10. Limitation of Liability</h2>
-                            <p>To the maximum extent permitted by law, Jiroshi is not liable for indirect, incidental, or consequential damages. This includes data loss, revenue loss, or unauthorized access.</p>
+                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">9. Account Suspension or Termination</h2>
+                            <p>
+                                We may terminate or suspend your account immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms.
+                            </p>
+                            <p>
+                                Upon termination, your right to use the Services will immediately cease. If you wish to terminate your account, you may specificially request for account deletion or simply discontinue using the Service.
+                            </p>
                         </section>
 
                         <section className="space-y-4">
-                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">11. Indemnification</h2>
-                            <p>You agree to indemnify and hold Jiroshi harmless from claims arising from your use of the platform, your content, or violations of these Terms.</p>
+                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">10. Governing Law</h2>
+                            <p>
+                                These Terms shall be governed and construed in accordance with the laws of <strong>India</strong>, without regard to its conflict of law provisions. Any dispute arising out of or in connection with these Terms shall be subject to the exclusive jurisdiction of the courts in India.
+                            </p>
                         </section>
 
                         <section className="space-y-4">
-                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">12. Changes to Terms</h2>
-                            <p>We may update these Terms as the platform evolves. Continued use constitutes acceptance of updated Terms.</p>
-                        </section>
-
-                        <section className="space-y-4">
-                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">13. Governing Law</h2>
-                            <p>These Terms shall be governed by the laws of India.</p>
+                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">11. Changes to Terms</h2>
+                            <p>
+                                We reserve the right, at our sole discretion, to modify or replace these Terms at any time. By continuing to access or use our Service after those revisions become effective, you agree to be bound by the revised terms.
+                            </p>
                         </section>
 
                         <section className="pt-12 border-t border-slate-100">
-                            <h2 className="text-2xl font-bold text-slate-900 mb-6">14. Contact</h2>
-                            <div className="bg-slate-50 p-6 rounded-2xl space-y-2">
-                                <p><strong>Email:</strong> <a href="mailto:app.jiroshi@gmail.com" className="text-primary hover:underline">app.jiroshi@gmail.com</a></p>
-                                <p><strong>Company:</strong> Jiroshi</p>
-                                <p><strong>Website:</strong> <a href="https://jiroshi.com" className="text-primary hover:underline">jiroshi.com</a></p>
+                            <h2 className="text-2xl font-bold text-slate-900 mb-6">12. Contact Information</h2>
+                            <div className="bg-slate-50 p-6 rounded-2xl space-y-4">
+                                <p>If you have any questions about these Terms, please contact us:</p>
+                                <div>
+                                    <p className="font-bold text-slate-900">Email:</p>
+                                    <a href="mailto:app.jiroshi@gmail.com" className="text-primary hover:underline text-lg">app.jiroshi@gmail.com</a>
+                                </div>
+                                <div>
+                                    <p className="font-bold text-slate-900">Platform:</p>
+                                    <p>Jiroshi</p>
+                                </div>
                             </div>
                         </section>
                     </div>

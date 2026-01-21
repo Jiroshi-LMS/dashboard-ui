@@ -646,8 +646,7 @@ export default function LandingPageClient() {
                         <div>
                             <h4 className="font-semibold mb-4 text-slate-900">Support</h4>
                             <ul className="space-y-2 text-sm text-slate-500">
-                                <li><a href="mailto:app.jiroshi@gmail.com" className="hover:text-primary transition-colors">Contact Us</a></li>
-                                <li><Link href="#support" className="hover:text-primary transition-colors">Billing Support</Link></li>
+                                <li><Link href="/contact-us" className="hover:text-primary transition-colors">Contact Us</Link></li>
                                 <li><a href="https://forms.gle/cNtkxWTjX1jiXMe88" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Feedback</a></li>
                             </ul>
                         </div>
@@ -656,6 +655,7 @@ export default function LandingPageClient() {
                             <ul className="space-y-2 text-sm text-slate-500">
                                 <li><Link href="/legal/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link></li>
                                 <li><Link href="/legal/terms-conditions" className="hover:text-primary transition-colors">Terms & Conditions</Link></li>
+                                <li><Link href="/legal/refund-cancellation" className="hover:text-primary transition-colors">Refund Policy</Link></li>
                             </ul>
                         </div>
                     </div>
