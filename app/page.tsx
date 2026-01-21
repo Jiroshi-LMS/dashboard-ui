@@ -2,13 +2,13 @@ import { Metadata } from "next";
 import LandingPageClient from "./LandingPageClient";
 
 export const metadata: Metadata = {
-  title: "Jiroshi | The Headless LMS for Modern Learning Platforms",
-  description: "Build your own course platform using clean, flexible APIs. Jiroshi handles the heavy lifting of video hosting, user management, and payments.",
-  keywords: ["Headless LMS", "Learning Management System", "API-first LMS", "Course Platform", "e-learning API", "Jiroshi"],
+  title: "Jiroshi | Online Learning Platform for Educators and Organizations",
+  description: "Jiroshi is a software-as-a-service platform that helps educators and organizations create, manage, and operate online learning platforms. Subscription-based access with secure payment processing.",
+  keywords: ["Online Learning Platform", "Course Management", "Education Software", "Learning Management", "Online Courses", "Jiroshi", "SaaS Platform"],
   authors: [{ name: "Jiroshi Team" }],
   openGraph: {
-    title: "Jiroshi | The Headless LMS for Modern Learning Platforms",
-    description: "Build your own course platform using clean, flexible APIs. Manage content, users, and enrollments - without building an LMS from scratch.",
+    title: "Jiroshi | Online Learning Platform for Educators and Organizations",
+    description: "Create and manage your own online learning platform. Jiroshi helps educators deliver courses to students with simple tools for content management and student access.",
     url: "https://jiroshi.com",
     siteName: "Jiroshi",
     images: [
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
         url: "https://jiroshi-static-prod.s3.ap-south-1.amazonaws.com/website/landing-og-image.png",
         width: 1200,
         height: 630,
-        alt: "Jiroshi - Headless LMS Dashboard Preview",
+        alt: "Jiroshi - Online Learning Platform Dashboard",
       },
     ],
     locale: "en_US",
@@ -24,8 +24,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jiroshi | The Headless LMS for Modern Learning Platforms",
-    description: "Build your own course platform using clean, flexible APIs. Manage content, users, and enrollments - without building an LMS from scratch.",
+    title: "Jiroshi | Online Learning Platform for Educators and Organizations",
+    description: "Create and manage your own online learning platform. Jiroshi helps educators deliver courses to students with simple tools for content management and student access.",
     images: ["https://jiroshi-static-prod.s3.ap-south-1.amazonaws.com/website/landing-og-image.png"],
     creator: "@jiroshi_app",
   },
@@ -52,7 +52,7 @@ export default function Home() {
     "name": "Jiroshi",
     "url": "https://jiroshi.com",
     "logo": "https://jiroshi.com/icon.png",
-    "description": "A Headless LMS built for modern learning platforms.",
+    "description": "A software-as-a-service platform that helps educators and organizations create and manage online learning platforms.",
     "sameAs": [
       "https://twitter.com/jiroshi_app",
       "https://github.com/jiroshi-lms",
