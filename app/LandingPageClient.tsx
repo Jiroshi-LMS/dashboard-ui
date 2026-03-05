@@ -816,6 +816,14 @@ export default function LandingPageClient() {
                             </ul>
                         </div>
                         <div>
+                            <h4 className="font-semibold mb-4 text-slate-900">Legal</h4>
+                            <ul className="space-y-2 text-sm text-slate-500">
+                                <li><Link href="/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Privacy Policies</Link></li>
+                                <li><Link href="/legal/terms-conditions" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Terms & Conditions</Link></li>
+                                <li><Link href="/legal/bug-reporting" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Bug Reporting & Security</Link></li>
+                            </ul>
+                        </div>
+                        <div>
                             <h4 className="font-semibold mb-4 text-slate-900">Support</h4>
                             <ul className="space-y-2 text-sm text-slate-500">
                                 <li><a href="https://forms.gle/S6Gn7Aw6gR5bbyCU9" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Contact</a></li>
@@ -832,13 +840,6 @@ export default function LandingPageClient() {
 
                                 <li><Link href="https://forms.gle/cNtkxWTjX1jiXMe88" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Feedback</Link></li>
                                 <li><Link href="/documentation-view/apis" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Documentation</Link></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 className="font-semibold mb-4 text-slate-900">Legal</h4>
-                            <ul className="space-y-2 text-sm text-slate-500">
-                                <li><Link href="/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Privacy Policies</Link></li>
-                                <li><Link href="/legal/terms-conditions" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Terms & Conditions</Link></li>
                             </ul>
                         </div>
                     </div>
