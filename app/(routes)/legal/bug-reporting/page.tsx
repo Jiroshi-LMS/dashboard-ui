@@ -42,7 +42,8 @@ export default function BugReportingPage() {
                 1. How to Report Bugs or Security Issues
               </h2>
               <p className="mt-4">
-                If you notice any bugs, issues, or potential security vulnerabilities while using Jiroshi, we truly
+                If you notice any bugs, issues, or potential security vulnerabilities while{" "}
+                <span className="font-medium text-slate-800">using Jiroshi in normal, intended use</span>, we truly
                 appreciate you taking the time to let us know.
               </p>
               <p className="mt-4">
@@ -50,7 +51,8 @@ export default function BugReportingPage() {
                 <a href="mailto:app.jiroshi@gmail.com" className="text-primary hover:underline font-medium">
                   app.jiroshi@gmail.com
                 </a>
-                .
+                {". "}
+                Please see the sections below on what we do and do not authorize (including penetration testing).
               </p>
             </section>
 
@@ -111,21 +113,50 @@ export default function BugReportingPage() {
 
             <section>
               <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">
-                4. Responsible Behaviour
+                4. No Unauthorized Penetration Testing or Security Scanning
+              </h2>
+              <div className="mt-4 space-y-4">
+                <p>
+                  Jiroshi is an <span className="font-semibold text-slate-900">MVP</span>. The product has not yet been
+                  fully validated in the market, and we are not inviting or authorizing proactive security assessments
+                  at this stage.
+                </p>
+                <p>
+                  <span className="font-semibold text-slate-900">We do not authorize</span> penetration testing,
+                  vulnerability scanning, automated security probes, or any form of active security testing against our
+                  systems, APIs, or infrastructure unless we have explicitly agreed in writing beforehand.
+                </p>
+                <p>
+                  If you run such tests without our prior written consent, you may be in violation of applicable law and
+                  our Terms of Service. We reserve the right to take appropriate action, including blocking access and
+                  pursuing legal remedies.
+                </p>
+                <p>
+                  Once the product is validated and we are ready for formal security reviews, we may publish clear
+                  guidelines and, where appropriate, invite authorized testing. Until then, we ask that you limit your
+                  interaction to normal use and report only what you discover in that context.
+                </p>
+              </div>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">
+                5. Responsible Behaviour
               </h2>
               <p className="mt-4">
-                If you discover a security-related issue, please do not publicly disclose details before we have had a
-                reasonable opportunity to investigate and address it. Avoid any actions that could harm other users,
-                compromise data, or disrupt the platform.
+                Do not perform any penetration testing, scanning, or probing of our systems unless we have explicitly
+                authorized it in writing (see Section 4). If you discover a security-related issue during normal use,
+                please do not publicly disclose details before we have had a reasonable opportunity to investigate and
+                address it. Avoid any actions that could harm other users, compromise data, or disrupt the platform.
               </p>
               <p className="mt-4">
-                By reporting issues privately and responsibly, you help us improve the stability and safety of Jiroshi
-                for everyone.
+                By reporting issues privately and responsibly—and only from normal, authorized use—you help us improve
+                the stability and safety of Jiroshi for everyone.
               </p>
             </section>
 
             <section className="pt-6 border-t border-slate-100">
-              <h2 className="text-2xl font-bold text-slate-900 mb-4">5. Contact</h2>
+              <h2 className="text-2xl font-bold text-slate-900 mb-4">6. Contact</h2>
               <div className="bg-slate-50 p-6 rounded-2xl space-y-3">
                 <p className="text-slate-700">
                   For all bug reports, security concerns, or questions about this page, please write to:
