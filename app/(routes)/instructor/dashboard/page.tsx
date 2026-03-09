@@ -64,18 +64,18 @@ const DashboardHome = () => {
           ].map((item, i) => (
             <Card
               key={i}
-              className="border border-gray-200 hover:border-gray-300 transition-all shadow-sm hover:shadow-md rounded-xl"
+              className="border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-all shadow-sm hover:shadow-md rounded-xl bg-card text-card-foreground"
             >
               <CardHeader className="">
                 <div className="flex flex-col items-start justify-center">
                   <div className="flex items-center gap-2">
                     {item.icon}
-                    <CardTitle className="text-sm font-semibold text-gray-800 truncate px-2">
+                    <CardTitle className="text-sm font-semibold text-slate-800 dark:text-slate-100 truncate px-2">
                       {item.title}
                     </CardTitle>
                   </div>
                   <span
-                    className="whitespace-nowrap text-[10px] font-medium px-2 py-0.5 rounded-full border border-gray-300 text-gray-600 bg-gray-50 mt-2"
+                    className="whitespace-nowrap text-[10px] font-medium px-2 py-0.5 rounded-full border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-900/50 mt-2"
                     style={{ flexShrink: 0 }}
                   >
                     {item.tag}
@@ -83,7 +83,7 @@ const DashboardHome = () => {
                 </div>
               </CardHeader>
               <CardContent className="">
-                <p className="text-sm text-gray-600 leading-relaxed">
+                <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                   {item.desc}
                 </p>
               </CardContent>

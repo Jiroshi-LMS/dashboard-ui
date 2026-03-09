@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { fetchInstructor } from "@/feature/instructor/instructorSlice";
 import { authLiterals } from "@/lib/constants/common";
+import { ThemeToggle } from "@/app/components/atoms/ThemeToggle";
 
 // --- Components ---
 
@@ -25,7 +26,7 @@ function SpotlightCard({ children, className = "" }: { children: React.ReactNode
     return (
         <div
             className={cn(
-                "group relative border border-slate-200 bg-white overflow-hidden rounded-xl shadow-sm hover:shadow-md transition-shadow",
+                "group relative border border-slate-200 dark:border-slate-700 bg-white dark:bg-zinc-800/80 overflow-hidden rounded-xl shadow-sm hover:shadow-md transition-shadow",
                 className
             )}
             onMouseMove={handleMouseMove}
@@ -111,12 +112,12 @@ export default function LandingPageClient() {
     }, [dispatch, loggedIn, status]);
 
     return (
-        <div className="w-full min-h-screen bg-white text-slate-900 overflow-x-hidden selection:bg-primary/20 selection:text-primary font-sans">
+        <div className="w-full min-h-screen bg-background text-foreground overflow-x-hidden selection:bg-primary/20 selection:text-primary font-sans">
             <AnimatedGrid />
 
             {/* Floating Navbar */}
             <motion.nav
-                className="fixed top-0 left-0 right-0 md:top-6 md:left-1/2 md:-translate-x-1/2 z-50 w-full md:w-[90%] md:max-w-5xl md:rounded-full border-b md:border border-slate-200 bg-white/80 backdrop-blur-xl md:backdrop-blur-none shadow-lg shadow-slate-200/50"
+                className="fixed top-0 left-0 right-0 md:top-6 md:left-1/2 md:-translate-x-1/2 z-50 w-full md:w-[90%] md:max-w-5xl md:rounded-full border-b md:border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl md:backdrop-blur-none shadow-lg shadow-slate-200/50 dark:shadow-zinc-800/50"
                 initial={{ y: -100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
@@ -126,10 +127,10 @@ export default function LandingPageClient() {
                         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-teal-600 flex items-center justify-center text-white shadow-md shadow-primary/20">
                             <Turtle size={18} />
                         </div>
-                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700">JIROSHI</span>
+                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 dark:from-white to-slate-700 dark:to-slate-300">JIROSHI</span>
                     </div>
 
-                    <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+                    <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600 dark:text-slate-300">
                         {navMenuItems.map((item) => (
                             <Link key={item.name} href={item.href} target={item.target} className="hover:text-primary transition-colors relative group">
                                 {item.name}
@@ -138,10 +139,13 @@ export default function LandingPageClient() {
                         ))}
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-3">
+                        <div className="hidden md:flex">
+                            <ThemeToggle compact />
+                        </div>
                         <div className="flex items-center gap-4">
                             {!loggedIn && (
-                                <Link href="/auth/login" className="text-sm font-medium text-slate-600 hover:text-primary transition-colors hidden sm:block">
+                                <Link href="/auth/login" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary transition-colors hidden sm:block">
                                     Login
                                 </Link>
                             )}
@@ -162,7 +166,7 @@ export default function LandingPageClient() {
 
                         {/* Mobile Menu Toggle */}
                         <button
-                            className="md:hidden p-2 text-slate-600 hover:text-primary transition-colors"
+                            className="md:hidden p-2 text-slate-600 dark:text-slate-300 hover:text-primary transition-colors"
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         >
                             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -176,7 +180,7 @@ export default function LandingPageClient() {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden border-t border-slate-100 bg-white/95 backdrop-blur-xl rounded-b-[2rem] overflow-hidden"
+                        className="md:hidden border-t border-slate-100 dark:border-slate-800 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl rounded-b-[2rem] overflow-hidden"
                     >
                         <div className="flex flex-col p-6 gap-4">
                             {navMenuItems.map((item) => (
@@ -185,17 +189,17 @@ export default function LandingPageClient() {
                                     href={item.href}
                                     target={item.target}
                                     onClick={() => setIsMobileMenuOpen(false)}
-                                    className="text-lg font-medium text-slate-600 hover:text-primary transition-colors"
+                                    className="text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-primary transition-colors"
                                 >
                                     {item.name}
                                 </Link>
                             ))}
-                            <div className="h-px bg-slate-100 my-2" />
+                            <div className="h-px bg-slate-100 dark:bg-slate-800 my-2" />
                             {!loggedIn ? (
                                 <Link
                                     href="/auth/login"
                                     onClick={() => setIsMobileMenuOpen(false)}
-                                    className="text-lg font-medium text-slate-600 hover:text-primary transition-colors"
+                                    className="text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-primary transition-colors"
                                 >
                                     Login
                                 </Link>
@@ -224,7 +228,7 @@ export default function LandingPageClient() {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5 }}
-                                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-50 border border-teal-100 text-sm font-medium text-teal-700 mb-8 hover:bg-teal-100 transition-colors cursor-pointer"
+                                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-50 dark:bg-teal-900/30 border border-teal-100 dark:border-teal-800 text-sm font-medium text-teal-700 dark:text-teal-300 mb-8 hover:bg-teal-100 dark:hover:bg-teal-900/50 transition-colors cursor-pointer"
                             >
                                 <span className="flex h-2 w-2 rounded-full bg-primary shadow-[0_0_10px_#00bba7]"></span>
                                 Jiroshi v1.0 is now available
@@ -232,7 +236,7 @@ export default function LandingPageClient() {
 
                             {/* Headline */}
                             <motion.h1
-                                className="text-3xl md:text-4xl lg:text-6xl font-bold tracking-tight mb-8 leading-[1.1] text-slate-900"
+                                className="text-3xl md:text-4xl lg:text-6xl font-bold tracking-tight mb-8 leading-[1.1] text-slate-900 dark:text-white"
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.7, delay: 0.1 }}
@@ -249,7 +253,7 @@ export default function LandingPageClient() {
 
                             {/* Subtext */}
                             <motion.p
-                                className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-12 leading-relaxed"
+                                className="text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-12 leading-relaxed"
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.7, delay: 0.2 }}
@@ -266,19 +270,19 @@ export default function LandingPageClient() {
                                 transition={{ duration: 0.7, delay: 0.3 }}
                             >
                                 <Link href="/instructor/dashboard">
-                                    <Button size="lg" className="h-14 px-8 text-base rounded-full bg-primary hover:bg-primary/90 text-white shadow-[0_0_20px_-5px_rgba(0,187,167,0.4)] hover:shadow-[0_0_30px_-5px_rgba(0,187,167,0.5)] transition-all duration-300">
+                                    <Button size="lg" className="h-14 px-8 text-base rounded-full bg-primary dark:bg-primary hover:bg-primary/90 dark:hover:bg-primary/90 text-white dark:text-white shadow-[0_0_20px_-5px_rgba(0,187,167,0.4)] hover:shadow-[0_0_30px_-5px_rgba(0,187,167,0.5)] transition-all duration-300">
                                         Start Building with APIs
                                         <ArrowRight className="ml-2 w-5 h-5" />
                                     </Button>
                                 </Link>
                                 <Link href="/documentation-view/apis" target="_blank">
-                                    <Button variant="outline" size="lg" className="h-14 px-8 text-base rounded-full bg-white border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300">
+                                    <Button variant="outline" size="lg" className="h-14 px-8 text-base rounded-full bg-white dark:bg-zinc-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-zinc-700 hover:border-slate-300 dark:hover:border-slate-600">
                                         <Terminal className="mr-2 w-5 h-5" />
                                         Read API Documentation
                                     </Button>
                                 </Link>
                                 <Link href="#pilot-program">
-                                    <Button variant="ghost" size="lg" className="h-14 px-8 text-base rounded-full text-teal-600 hover:text-teal-700 hover:bg-teal-50 font-bold group">
+                                    <Button variant="ghost" size="lg" className="h-14 px-8 text-base rounded-full text-teal-600 hover:text-teal-700 hover:bg-teal-50 dark:hover:bg-teal-900/20 font-bold group">
                                         <Zap className="mr-2 w-5 h-5 group-hover:fill-teal-600 transition-all" />
                                         Join Pilot Plan
                                     </Button>
@@ -289,14 +293,14 @@ export default function LandingPageClient() {
                         {/* Floating Elements */}
                         <div className="absolute top-1/2 left-10 hidden lg:block pointer-events-none">
                             <FloatingElement delay={0} x={10} y={20}>
-                                <div className="p-4 rounded-2xl bg-white/80 border border-slate-200 backdrop-blur-md shadow-xl shadow-slate-200/50">
+                                <div className="p-4 rounded-2xl bg-white/80 dark:bg-zinc-800/80 border border-slate-200 dark:border-slate-700 backdrop-blur-md shadow-xl shadow-slate-200/50 dark:shadow-zinc-800/50">
                                     <Code2 className="w-8 h-8 text-blue-500" />
                                 </div>
                             </FloatingElement>
                         </div>
                         <div className="absolute top-1/3 right-10 hidden lg:block pointer-events-none">
                             <FloatingElement delay={1} x={-15} y={25}>
-                                <div className="p-4 rounded-2xl bg-white/80 border border-slate-200 backdrop-blur-md shadow-xl shadow-slate-200/50">
+                                <div className="p-4 rounded-2xl bg-white/80 dark:bg-zinc-800/80 border border-slate-200 dark:border-slate-700 backdrop-blur-md shadow-xl shadow-slate-200/50 dark:shadow-zinc-800/50">
                                     <ShieldCheck className="w-8 h-8 text-green-500" />
                                 </div>
                             </FloatingElement>
@@ -311,8 +315,8 @@ export default function LandingPageClient() {
                             style={{ perspective: "1000px" }}
                         >
                             <div className="absolute -inset-1 bg-gradient-to-r from-primary to-teal-400 rounded-2xl blur opacity-30"></div>
-                            <div className="relative rounded-xl border border-slate-200 bg-white shadow-2xl overflow-hidden">
-                                <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-100 bg-slate-50/50">
+                            <div className="relative rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-zinc-900 shadow-2xl overflow-hidden">
+                                <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-zinc-800/50">
                                     <div className="flex gap-1.5">
                                         <div className="w-3 h-3 rounded-full bg-[#FF5F56]" />
                                         <div className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
@@ -322,10 +326,10 @@ export default function LandingPageClient() {
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-12 gap-0 min-h-[400px]">
                                     {/* Sidebar Mock */}
-                                    <div className="hidden md:flex col-span-2 border-r border-slate-100 p-4 flex-col gap-6 bg-slate-50/30">
+                                    <div className="hidden md:flex col-span-2 border-r border-slate-100 dark:border-slate-800 p-4 flex-col gap-6 bg-slate-50/30 dark:bg-zinc-800/30">
                                         <div className="flex items-center gap-2 px-2">
                                             <div className="w-2 h-2 rounded-full bg-primary" />
-                                            <div className="h-4 w-16 bg-slate-200 rounded" />
+                                            <div className="h-4 w-16 bg-slate-200 dark:bg-slate-700 rounded" />
                                         </div>
                                         <div className="space-y-4">
                                             {[
@@ -336,7 +340,7 @@ export default function LandingPageClient() {
                                             ].map((item, i) => (
                                                 <div key={i} className={cn(
                                                     "flex items-center gap-3 px-2 py-1.5 rounded-md transition-colors",
-                                                    i === 0 ? "bg-white shadow-sm border border-slate-100 text-primary" : "text-slate-400"
+                                                    i === 0 ? "bg-white dark:bg-zinc-700 shadow-sm border border-slate-100 dark:border-slate-600 text-primary" : "text-slate-400 dark:text-slate-500"
                                                 )}>
                                                     {item.icon}
                                                     <span className="text-[10px] font-medium">{item.label}</span>
@@ -345,13 +349,13 @@ export default function LandingPageClient() {
                                         </div>
                                     </div>
                                     {/* Main Content Mock */}
-                                    <div className="col-span-12 md:col-span-10 p-4 md:p-8 bg-white">
+                                    <div className="col-span-12 md:col-span-10 p-4 md:p-8 bg-white dark:bg-zinc-900">
                                         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
                                             <div className="space-y-1">
-                                                <h3 className="text-xl font-bold text-slate-900">Instructor Dashboard</h3>
-                                                <p className="text-xs text-slate-500">Welcome back, Instructor!</p>
+                                                <h3 className="text-xl font-bold text-slate-900 dark:text-white">Instructor Dashboard</h3>
+                                                <p className="text-xs text-slate-500 dark:text-slate-400">Welcome back, Instructor!</p>
                                             </div>
-                                            <Button size="sm" className="rounded-full bg-primary text-white text-xs h-8 px-4">
+                                            <Button size="sm" className="rounded-full bg-primary dark:bg-primary text-white text-xs h-8 px-4">
                                                 <Plus className="w-3 h-3 mr-1.5" />
                                                 Create Course
                                             </Button>
@@ -362,8 +366,8 @@ export default function LandingPageClient() {
                                                 { label: "Total Signups", value: "100", color: "text-green-600", bg: "bg-green-50" },
                                                 { label: "Total Enrollments", value: "150", color: "text-primary", bg: "bg-teal-50" }
                                             ].map((stat, i) => (
-                                                <div key={i} className={`rounded-xl border border-slate-100 p-4 space-y-1 ${i === 2 ? 'hidden lg:block' : ''}`}>
-                                                    <div className="text-[10px] font-medium text-slate-500 uppercase tracking-wider">{stat.label}</div>
+                                                <div key={i} className={`rounded-xl border border-slate-100 dark:border-slate-800 p-4 space-y-1 ${i === 2 ? 'hidden lg:block' : ''}`}>
+                                                    <div className="text-[10px] font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">{stat.label}</div>
                                                     <div className={`text-xl font-bold ${stat.color}`}>{stat.value}</div>
                                                     <div className="text-[10px] text-slate-400">+12 from last month</div>
                                                 </div>
@@ -371,7 +375,7 @@ export default function LandingPageClient() {
                                         </div>
                                         <div className="space-y-4">
                                             <div className="flex items-center justify-between">
-                                                <h4 className="text-sm font-bold text-slate-900">Recent Courses</h4>
+                                                <h4 className="text-sm font-bold text-slate-900 dark:text-white">Recent Courses</h4>
                                                 <Button variant="ghost" size="sm" className="text-[10px] text-primary h-7">View All</Button>
                                             </div>
                                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -381,13 +385,13 @@ export default function LandingPageClient() {
                                                     { title: "UI Design Principles", students: "890 Students", color: "bg-teal-100/50" },
                                                     { title: "Python for Data Science", students: "1.2k Students", color: "bg-orange-100/50" }
                                                 ].map((course, i) => (
-                                                    <div key={i} className={`flex items-center gap-3 p-3 rounded-xl border border-slate-100 bg-white shadow-sm hover:border-primary/20 transition-colors ${i > 1 ? 'hidden sm:flex' : ''}`}>
+                                                    <div key={i} className={`flex items-center gap-3 p-3 rounded-xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-zinc-800 shadow-sm hover:border-primary/20 transition-colors ${i > 1 ? 'hidden sm:flex' : ''}`}>
                                                         <div className={`w-10 h-10 rounded-lg ${course.color} flex items-center justify-center`}>
-                                                            <Layers size={18} className="text-slate-600" />
+                                                            <Layers size={18} className="text-slate-600 dark:text-slate-300" />
                                                         </div>
                                                         <div className="min-w-0">
-                                                            <p className="text-[11px] font-bold text-slate-900 truncate">{course.title}</p>
-                                                            <p className="text-[9px] text-slate-500">{course.students}</p>
+                                                            <p className="text-[11px] font-bold text-slate-900 dark:text-white truncate">{course.title}</p>
+                                                            <p className="text-[9px] text-slate-500 dark:text-slate-400">{course.students}</p>
                                                         </div>
                                                     </div>
                                                 ))}
@@ -402,13 +406,13 @@ export default function LandingPageClient() {
 
                 {/* Features Section */}
                 <section id="features" className="py-32 relative">
-                    <div className="absolute inset-0 bg-gradient-to-b from-white via-teal-50/30 to-white -z-10" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-white dark:from-zinc-900 via-teal-50/30 dark:via-teal-900/10 to-white dark:to-zinc-900 -z-10" />
                     <div className="container mx-auto px-4">
                         <div className="text-center mb-20">
-                            <h2 className="text-3xl md:text-5xl font-bold mb-6 text-slate-900">
+                            <h2 className="text-3xl md:text-5xl font-bold mb-6 text-slate-900 dark:text-white">
                                 Everything you need to launch
                             </h2>
-                            <p className="text-slate-600 max-w-2xl mx-auto text-lg">
+                            <p className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto text-lg">
                                 Core features designed for API-first course platforms.
                             </p>
                         </div>
@@ -423,11 +427,11 @@ export default function LandingPageClient() {
                                 { icon: <Globe className="w-6 h-6" />, title: "Headless by Design", desc: "Bring your own frontend, framework, or mobile app." },
                             ].map((feature, i) => (
                                 <SpotlightCard key={i} className="p-8">
-                                    <div className="mb-6 p-3 rounded-xl bg-teal-50 w-fit border border-teal-100 text-primary">
+                                    <div className="mb-6 p-3 rounded-xl bg-teal-50 dark:bg-teal-900/30 w-fit border border-teal-100 dark:border-teal-800 text-primary">
                                         {feature.icon}
                                     </div>
-                                    <h3 className="text-xl font-bold mb-3 text-slate-900">{feature.title}</h3>
-                                    <p className="text-slate-600 leading-relaxed">
+                                    <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-white">{feature.title}</h3>
+                                    <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
                                         {feature.desc}
                                     </p>
                                 </SpotlightCard>
@@ -441,18 +445,18 @@ export default function LandingPageClient() {
                     <div className="container mx-auto px-4">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
                             <div>
-                                <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-tight text-slate-900">
+                                <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-tight text-slate-900 dark:text-white">
                                     Launch in hours, <br />
                                     <span className="text-primary">not months.</span>
                                 </h2>
-                                <p className="text-slate-600 text-lg mb-12">
+                                <p className="text-slate-600 dark:text-slate-300 text-lg mb-12">
                                     Stop reinventing the wheel. Jiroshi handles the heavy lifting of video hosting,
                                     user management, and payments.
                                 </p>
 
                                 <div className="space-y-12 relative">
                                     {/* Vertical Line */}
-                                    <div className="absolute left-[23px] top-4 bottom-4 w-[2px] bg-slate-200"></div>
+                                    <div className="absolute left-[23px] top-4 bottom-4 w-[2px] bg-slate-200 dark:bg-slate-700"></div>
 
                                     {[
                                         { num: "01", title: "Create Account", desc: "Get your API keys instantly." },
@@ -468,12 +472,12 @@ export default function LandingPageClient() {
                                             transition={{ delay: i * 0.2 }}
                                             className="flex gap-8 relative"
                                         >
-                                            <div className="flex-shrink-0 w-12 h-12 rounded-full bg-white border border-primary flex items-center justify-center font-bold text-primary z-10 shadow-lg shadow-primary/10">
+                                            <div className="flex-shrink-0 w-12 h-12 rounded-full bg-white dark:bg-zinc-900 border border-primary flex items-center justify-center font-bold text-primary z-10 shadow-lg shadow-primary/10">
                                                 {step.num}
                                             </div>
                                             <div>
-                                                <h3 className="text-xl font-bold mb-2 text-slate-900">{step.title}</h3>
-                                                <p className="text-slate-600">{step.desc}</p>
+                                                <h3 className="text-xl font-bold mb-2 text-slate-900 dark:text-white">{step.title}</h3>
+                                                <p className="text-slate-600 dark:text-slate-300">{step.desc}</p>
                                             </div>
                                         </motion.div>
                                     ))}
@@ -482,18 +486,18 @@ export default function LandingPageClient() {
 
                             <div className="relative group">
                                 <div className="absolute inset-0 bg-gradient-to-r from-primary to-teal-400 rounded-3xl blur-3xl opacity-20 group-hover:opacity-30 transition-opacity duration-500" />
-                                <div className="relative bg-white border border-slate-200 rounded-3xl p-8 shadow-2xl">
+                                <div className="relative bg-white dark:bg-zinc-900 border border-slate-200 dark:border-slate-700 rounded-3xl p-8 shadow-2xl">
                                     <div className="flex items-center justify-between mb-8">
                                         <div className="flex gap-2">
-                                            <div className="w-3 h-3 rounded-full bg-slate-200" />
-                                            <div className="w-3 h-3 rounded-full bg-slate-200" />
+                                            <div className="w-3 h-3 rounded-full bg-slate-200 dark:bg-slate-600" />
+                                            <div className="w-3 h-3 rounded-full bg-slate-200 dark:bg-slate-600" />
                                         </div>
                                         <div className="text-xs text-slate-400 font-mono">API Response</div>
                                     </div>
                                     <div className="space-y-4 font-mono text-sm">
-                                        <div className="text-purple-600">GET /api/v1/public/courses/</div>
-                                        <div className="text-slate-500">200 OK</div>
-                                        <pre className="text-slate-600 bg-slate-50 p-4 rounded-xl overflow-x-auto border border-slate-100">
+                                        <div className="text-purple-600 dark:text-purple-400">GET /api/v1/public/courses/</div>
+                                        <div className="text-slate-500 dark:text-slate-400">200 OK</div>
+                                        <pre className="text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-zinc-800 p-4 rounded-xl overflow-x-auto border border-slate-100 dark:border-slate-700">
                                             {`{
   "status": true,
   "results": true,
@@ -537,7 +541,7 @@ export default function LandingPageClient() {
                 </section>
 
                 {/* See it in Action Section */}
-                <section className="py-24 relative overflow-hidden bg-white">
+                <section className="py-24 relative overflow-hidden bg-background">
                     <div className="container mx-auto px-4">
                         <div className="max-w-5xl mx-auto rounded-[2.5rem] bg-gradient-to-br from-slate-900 to-slate-800 p-8 md:p-16 relative overflow-hidden shadow-2xl">
                             {/* Decorative background elements */}
@@ -560,7 +564,7 @@ export default function LandingPageClient() {
 
                                     <div className="flex flex-col sm:flex-row gap-4">
                                         <a href="https://demo.jiroshi.com/" target="_blank" rel="noopener noreferrer">
-                                            <Button size="lg" className="h-14 px-8 rounded-full bg-primary hover:bg-primary/90 text-white font-bold w-full sm:w-auto shadow-lg shadow-primary/20 group">
+                                            <Button size="lg" className="h-14 px-8 rounded-full bg-primary dark:bg-primary hover:bg-primary/90 dark:hover:bg-primary/90 text-white font-bold w-full sm:w-auto shadow-lg shadow-primary/20 group">
                                                 Explore Live Demo
                                                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                                             </Button>
@@ -586,14 +590,14 @@ export default function LandingPageClient() {
                                     <motion.div
                                         animate={{ y: [0, -10, 0] }}
                                         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                                        className="absolute -bottom-6 -right-6 md:right-0 p-4 rounded-xl bg-white border border-slate-100 shadow-xl hidden sm:flex items-center gap-4"
+                                        className="absolute -bottom-6 -right-6 md:right-0 p-4 rounded-xl bg-white dark:bg-zinc-800 border border-slate-100 dark:border-slate-700 shadow-xl hidden sm:flex items-center gap-4"
                                     >
-                                        <div className="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center text-primary">
+                                        <div className="w-10 h-10 rounded-full bg-teal-50 dark:bg-teal-900/30 flex items-center justify-center text-primary">
                                             <Turtle size={20} fill="currentColor" />
                                         </div>
                                         <div>
-                                            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Example Stack</div>
-                                            <div className="text-sm font-bold text-slate-900">Next.js + Jiroshi APIs</div>
+                                            <div className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Example Stack</div>
+                                            <div className="text-sm font-bold text-slate-900 dark:text-white">Next.js + Jiroshi APIs</div>
                                         </div>
                                     </motion.div>
                                 </div>
@@ -603,13 +607,13 @@ export default function LandingPageClient() {
                 </section>
 
                 {/* Pricing Section */}
-                <section id="pricing" className="py-32 relative bg-slate-50/50">
+                <section id="pricing" className="py-32 relative bg-slate-50/50 dark:bg-zinc-900/50">
                     <div className="container mx-auto px-4">
                         <div className="text-center mb-20">
-                            <h2 className="text-3xl md:text-5xl font-bold mb-6 text-slate-900">
+                            <h2 className="text-3xl md:text-5xl font-bold mb-6 text-slate-900 dark:text-white">
                                 Simple pricing, no lock-in
                             </h2>
-                            <p className="text-slate-600 max-w-2xl mx-auto text-lg">
+                            <p className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto text-lg">
                                 Start free. Pay only when you need advanced features.
                             </p>
                         </div>
@@ -619,11 +623,11 @@ export default function LandingPageClient() {
                             <SpotlightCard className="p-10 border-2 border-teal-500/20">
                                 <div className="flex justify-between items-start mb-8">
                                     <div>
-                                        <h3 className="text-2xl font-bold text-slate-900 mb-2">Free Plan</h3>
-                                        <p className="text-slate-500">Everything you need to launch your first course platform.</p>
+                                        <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Free Plan</h3>
+                                        <p className="text-slate-500 dark:text-slate-400">Everything you need to launch your first course platform.</p>
                                     </div>
                                     <div className="text-right">
-                                        <span className="text-4xl font-bold text-slate-900">₹0</span>
+                                        <span className="text-4xl font-bold text-slate-900 dark:text-white">₹0</span>
                                     </div>
                                 </div>
                                 <ul className="space-y-4 mb-10">
@@ -634,7 +638,7 @@ export default function LandingPageClient() {
                                         "Instructor dashboard",
                                         "Public & secret API keys"
                                     ].map((feature, i) => (
-                                        <li key={i} className="flex items-center gap-3 text-slate-600">
+                                        <li key={i} className="flex items-center gap-3 text-slate-600 dark:text-slate-300">
                                             <Check className="w-5 h-5 text-teal-500" />
                                             {feature}
                                         </li>
@@ -649,13 +653,13 @@ export default function LandingPageClient() {
 
                             {/* Pro Plan */}
                             <SpotlightCard className="p-10 opacity-80 group/pro">
-                                <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-amber-100 text-amber-700 text-[10px] font-bold uppercase tracking-wider">
+                                <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 text-[10px] font-bold uppercase tracking-wider">
                                     Pro (Coming Soon)
                                 </div>
                                 <div className="flex justify-between items-start mb-8">
                                     <div>
-                                        <h3 className="text-2xl font-bold text-slate-900 mb-2">Pro Plan</h3>
-                                        <p className="text-slate-500">Built for growing platforms and paid courses.</p>
+                                        <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Pro Plan</h3>
+                                        <p className="text-slate-500 dark:text-slate-400">Built for growing platforms and paid courses.</p>
                                     </div>
                                 </div>
                                 <ul className="space-y-4 mb-10 text-slate-400">
@@ -667,12 +671,12 @@ export default function LandingPageClient() {
                                         "Priority support"
                                     ].map((feature, i) => (
                                         <li key={i} className="flex items-center gap-3">
-                                            <Zap className="w-5 h-5 text-slate-300" />
+                                            <Zap className="w-5 h-5 text-slate-300 dark:text-slate-600" />
                                             {feature}
                                         </li>
                                     ))}
                                 </ul>
-                                <Button variant="outline" className="w-full h-12 rounded-full border-slate-200 text-slate-400 hover:bg-white hover:text-slate-400 cursor-not-allowed">
+                                <Button variant="outline" className="w-full h-12 rounded-full border-slate-200 dark:border-slate-700 text-slate-400 hover:bg-white dark:hover:bg-zinc-800 hover:text-slate-400 cursor-not-allowed">
                                     Join Waitlist
                                 </Button>
                             </SpotlightCard>
@@ -681,23 +685,23 @@ export default function LandingPageClient() {
                 </section>
 
                 {/* Payments Information Section */}
-                <section className="py-32 relative overflow-hidden bg-white">
+                <section className="py-32 relative overflow-hidden bg-background">
                     <div className="container mx-auto px-4 max-w-4xl">
-                        <div className="p-6 sm:p-12 rounded-3xl bg-teal-50/50 border border-teal-100/50 relative overflow-hidden">
+                        <div className="p-6 sm:p-12 rounded-3xl bg-teal-50/50 dark:bg-teal-900/10 border border-teal-100/50 dark:border-teal-800/50 relative overflow-hidden">
                             <div className="absolute top-0 right-0 p-8 opacity-10">
                                 <ShieldCheck size={120} className="text-teal-500" />
                             </div>
-                            <h2 className="text-3xl font-bold mb-8 text-slate-900">
+                            <h2 className="text-3xl font-bold mb-8 text-slate-900 dark:text-white">
                                 Payments are coming - but you can sell today
                             </h2>
-                            <div className="space-y-6 text-slate-600 text-lg leading-relaxed">
+                            <div className="space-y-6 text-slate-600 dark:text-slate-300 text-lg leading-relaxed">
                                 <p>
                                     Native payments are currently under development. Until then, Jiroshi is designed to work with real-world payment workflows.
                                 </p>
                                 <p>
                                     Many instructors collect payments using payment links, QR codes, or direct transfers. Once payment is confirmed, student accounts are created and enrollments are handled via Jiroshi APIs.
                                 </p>
-                                <p className="font-medium text-teal-700">
+                                <p className="font-medium text-teal-700 dark:text-teal-400">
                                     When built-in payments are released, enrollments will automatically be protected by payment checks - without breaking changes.
                                 </p>
                             </div>
@@ -715,11 +719,11 @@ export default function LandingPageClient() {
                             <div>
                                 <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
                                     Not a developer? <br />
-                                    <span className="text-primary text-3xl md:text-4xl">That’s okay.</span>
+                                    <span className="text-primary text-3xl md:text-4xl">That&apos;s okay.</span>
                                 </h2>
                                 <div className="space-y-6 text-slate-300 text-lg">
                                     <p>
-                                        Jiroshi is API-first, but you don’t need to write code to use it.
+                                        Jiroshi is API-first, but you don&apos;t need to write code to use it.
                                     </p>
                                     <p>
                                         Many instructors work with a developer, or empower themselves with AI tools like <span className="text-primary font-semibold">Cursor, Anti-Gravity, or ChatGPT</span> to build their own custom platforms using our pre-built APIs.
@@ -739,7 +743,7 @@ export default function LandingPageClient() {
                                             target="_blank"
                                             rel="noopener noreferrer"
                                         >
-                                            <Button size="sm" className="rounded-full bg-primary hover:bg-primary/90 text-white font-bold px-5 h-9 shadow-lg shadow-primary/20">
+                                            <Button size="sm" className="rounded-full bg-primary dark:bg-primary hover:bg-primary/90 dark:hover:bg-primary/90 text-white font-bold px-5 h-9 shadow-lg shadow-primary/20">
                                                 Apply for Free Pilot
                                             </Button>
                                         </a>
@@ -774,13 +778,13 @@ export default function LandingPageClient() {
                 {/* CTA */}
                 <section className="py-32 relative overflow-hidden">
                     <div className="absolute inset-0 bg-primary/5 -z-10" />
-                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/10 via-white to-white -z-10" />
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/10 via-white dark:via-zinc-900 to-white dark:to-zinc-900 -z-10" />
 
                     <div className="container mx-auto px-4 text-center">
-                        <h2 className="text-4xl md:text-6xl font-bold mb-8 tracking-tight text-slate-900">
+                        <h2 className="text-4xl md:text-6xl font-bold mb-8 tracking-tight text-slate-900 dark:text-white">
                             Ready to start building?
                         </h2>
-                        <p className="text-xl text-slate-600 mb-12 max-w-2xl mx-auto">
+                        <p className="text-xl text-slate-600 dark:text-slate-300 mb-12 max-w-2xl mx-auto">
                             Build your education platform without rebuilding the wheel.
                         </p>
                         <Link href="/instructor/dashboard">
@@ -792,23 +796,23 @@ export default function LandingPageClient() {
                 </section>
             </main>
 
-            <footer className="py-12 border-t border-slate-200 bg-slate-50">
+            <footer className="py-12 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-zinc-900">
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
                         <div className="col-span-2 md:col-span-1">
-                            <div className="flex items-center gap-2 font-bold text-lg mb-4 text-slate-900">
+                            <div className="flex items-center gap-2 font-bold text-lg mb-4 text-slate-900 dark:text-white">
                                 <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-white">
                                     <Turtle size={14} />
                                 </div>
                                 JIROSHI
                             </div>
-                            <p className="text-sm text-slate-500">
+                            <p className="text-sm text-slate-500 dark:text-slate-400">
                                 A headless LMS built for API-first teams.
                             </p>
                         </div>
                         <div>
-                            <h4 className="font-semibold mb-4 text-slate-900">Platform</h4>
-                            <ul className="space-y-2 text-sm text-slate-500">
+                            <h4 className="font-semibold mb-4 text-slate-900 dark:text-white">Platform</h4>
+                            <ul className="space-y-2 text-sm text-slate-500 dark:text-slate-400">
                                 <li><Link href="/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Landing</Link></li>
                                 <li><Link href="#features" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Features</Link></li>
                                 <li><Link href="#how-it-works" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">How it works</Link></li>
@@ -816,16 +820,16 @@ export default function LandingPageClient() {
                             </ul>
                         </div>
                         <div>
-                            <h4 className="font-semibold mb-4 text-slate-900">Legal</h4>
-                            <ul className="space-y-2 text-sm text-slate-500">
+                            <h4 className="font-semibold mb-4 text-slate-900 dark:text-white">Legal</h4>
+                            <ul className="space-y-2 text-sm text-slate-500 dark:text-slate-400">
                                 <li><Link href="/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Privacy Policies</Link></li>
                                 <li><Link href="/legal/terms-conditions" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Terms & Conditions</Link></li>
                                 <li><Link href="/legal/bug-reporting" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Bug Reporting & Security</Link></li>
                             </ul>
                         </div>
                         <div>
-                            <h4 className="font-semibold mb-4 text-slate-900">Support</h4>
-                            <ul className="space-y-2 text-sm text-slate-500">
+                            <h4 className="font-semibold mb-4 text-slate-900 dark:text-white">Support</h4>
+                            <ul className="space-y-2 text-sm text-slate-500 dark:text-slate-400">
                                 <li><a href="https://forms.gle/S6Gn7Aw6gR5bbyCU9" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Contact</a></li>
                                 <li>
                                     <a
@@ -843,7 +847,7 @@ export default function LandingPageClient() {
                             </ul>
                         </div>
                     </div>
-                    <div className="pt-8 border-t border-slate-200 text-center text-sm text-slate-500">
+                    <div className="pt-8 border-t border-slate-200 dark:border-slate-700 text-center text-sm text-slate-500 dark:text-slate-400">
                         © {new Date().getFullYear()} Jiroshi Inc. All rights reserved.
                     </div>
                 </div>

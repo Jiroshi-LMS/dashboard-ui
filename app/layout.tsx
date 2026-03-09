@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { Toaster } from 'react-hot-toast'
-import { ReduxProvider } from '@/store/ReduxProvider';
-import NextTopLoaderProvider from '@/app/components/providers/NextTopLoaderProvider';
+import { Toaster } from "react-hot-toast";
+import { ReduxProvider } from "@/store/ReduxProvider";
+import NextTopLoaderProvider from "@/app/components/providers/NextTopLoaderProvider";
+import { ThemeProvider, THEME_STORAGE_KEY } from "@/app/components/providers/ThemeProvider";
 
 export const metadata: Metadata = {
   title: "Jiroshi",
@@ -19,16 +20,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
-        {/* <!-- Font Awesome --> */}
-        {/* <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-            integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-            crossOrigin="anonymous"
-            referrerPolicy="no-referrer"
-          /> */}
+        {/* Blocking script: applies stored theme class before React hydrates to prevent flash */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var s=localStorage.getItem('${THEME_STORAGE_KEY}');var t=s==='dark'||s==='light'?s:window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.classList.add(t);})();`,
+          }}
+        />
 
         {/* <!-- Google Fonts --> */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -36,17 +35,19 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
       </head>
       <body
-        className="antialiased"
+        className="antialiased bg-background text-foreground"
       >
         <ReduxProvider>
-          <NextTopLoaderProvider />
-          <Toaster
-            position="top-right"
-            reverseOrder={false}
-          />
-          <SidebarProvider defaultOpen={false}>
-            {children}
-          </SidebarProvider>
+          <ThemeProvider>
+            <NextTopLoaderProvider />
+            <Toaster
+              position="top-right"
+              reverseOrder={false}
+            />
+            <SidebarProvider defaultOpen={false}>
+              {children}
+            </SidebarProvider>
+          </ThemeProvider>
         </ReduxProvider>
       </body>
     </html>

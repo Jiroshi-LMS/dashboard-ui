@@ -57,19 +57,19 @@ const DashboardKPI = () => {
             ].map((item, i) => (
                 <Card
                     key={i}
-                    className="border border-gray-200 shadow-sm hover:shadow-md transition-all rounded-xl"
+                    className="border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-all rounded-xl bg-card text-card-foreground"
                 >
                     <CardContent className="p-5">
                         <div className="flex justify-between items-center">
-                            <p className="font-medium text-gray-700">{item.title}</p>
+                            <p className="font-medium text-slate-700 dark:text-slate-300">{item.title}</p>
                             {item.icon}
                         </div>
-                        <p className="text-3xl font-bold mt-2 text-gray-900">
+                        <p className="text-3xl font-bold mt-2 text-slate-900 dark:text-slate-100">
                             {item.value}
                         </p>
                         {
                             item.change > 0 ? (
-                                <p className="text-sm text-gray-500 mt-1">+{item.change} in last 30 days</p>
+                                <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">+{item.change} in last 30 days</p>
                             ) : null
                         }
                     </CardContent>
