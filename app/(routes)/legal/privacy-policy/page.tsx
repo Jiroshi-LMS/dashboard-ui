@@ -8,9 +8,9 @@ export default function PrivacyPage() {
     const lastUpdated = "January 1, 2026";
 
     return (
-        <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-primary/20 selection:text-primary">
+        <div className="min-h-screen  font-sans selection:bg-primary/20 selection:text-primary">
             {/* Navigation */}
-            <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
+            <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-slate-100">
                 <div className="container mx-auto px-4 h-16 flex items-center justify-between">
                     <Link href="/" className="flex items-center gap-2 font-bold text-lg tracking-tight">
                         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-teal-600 flex items-center justify-center text-white shadow-md shadow-primary/20">
@@ -18,25 +18,25 @@ export default function PrivacyPage() {
                         </div>
                         <span>JIROSHI</span>
                     </Link>
-                    <Link href="/" className="text-sm font-medium text-slate-500 hover:text-primary flex items-center gap-2 transition-colors">
+                    <Link href="/" className="text-sm font-medium  hover:text-primary flex items-center gap-2 transition-colors">
                         <ArrowLeft size={16} />
                         Back to Home
                     </Link>
                 </div>
             </nav>
 
-            <main className="pt-32 pb-24 container mx-auto px-4 max-w-3xl">
+            <main className="pt-32 pb-24 container px-4">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <h1 className="text-4xl font-bold mb-4 text-slate-900 tracking-tight text-center">Privacy Policy</h1>
-                    <p className="text-slate-500 mb-12 text-center">Last Updated: {lastUpdated}</p>
+                    <h1 className="text-4xl font-bold mb-4  tracking-tight text-center">Privacy Policy</h1>
+                    <p className=" mb-12 text-center">Last Updated: {lastUpdated}</p>
 
-                    <div className="prose prose-slate max-w-none space-y-12 text-slate-600 leading-relaxed">
+                    <div className="prose prose-slate max-w-none space-y-12  leading-relaxed">
                         <section>
-                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">1. Introduction</h2>
+                            <h2 className="text-2xl font-bold  border-b border-slate-100 pb-2">1. Introduction</h2>
                             <p className="mt-4">
                                 Welcome to Jiroshi (“we”, “our”, “us”). Jiroshi is a software-as-a-service (SaaS) platform that helps educators, coaching institutes, and organizations create and manage online learning platforms.
                             </p>
@@ -46,12 +46,12 @@ export default function PrivacyPage() {
                         </section>
 
                         <section className="space-y-4">
-                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">2. Information We Collect</h2>
+                            <h2 className="text-2xl font-bold  border-b border-slate-100 pb-2">2. Information We Collect</h2>
                             <p>We collect information to provide and improve our services to you.</p>
 
                             <div className="space-y-4 mt-6">
                                 <div>
-                                    <h3 className="font-bold text-slate-800">2.1 Personal Information</h3>
+                                    <h3 className="font-bold ">2.1 Personal Information</h3>
                                     <p className="mb-2">We may collect personal identification information that strictly enables us to provide our services, such as:</p>
                                     <ul className="list-disc pl-6 space-y-1">
                                         <li>Name</li>
@@ -62,7 +62,7 @@ export default function PrivacyPage() {
                                 </div>
 
                                 <div>
-                                    <h3 className="font-bold text-slate-800">2.2 Account Information</h3>
+                                    <h3 className="font-bold ">2.2 Account Information</h3>
                                     <p className="mb-2">To manage your account, we store:</p>
                                     <ul className="list-disc pl-6 space-y-1">
                                         <li>Login credentials (securely encrypted)</li>
@@ -72,7 +72,7 @@ export default function PrivacyPage() {
                                 </div>
 
                                 <div>
-                                    <h3 className="font-bold text-slate-800">2.3 Usage Data</h3>
+                                    <h3 className="font-bold ">2.3 Usage Data</h3>
                                     <p className="mb-2">We automatically collect data on how the platform is accessed and used:</p>
                                     <ul className="list-disc pl-6 space-y-1">
                                         <li>Log data (IP address, browser type, device info)</li>
@@ -84,7 +84,7 @@ export default function PrivacyPage() {
                         </section>
 
                         <section className="space-y-4">
-                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">3. How We Use Your Information</h2>
+                            <h2 className="text-2xl font-bold  border-b border-slate-100 pb-2">3. How We Use Your Information</h2>
                             <p>We use the collected information for the following purposes:</p>
                             <ul className="list-disc pl-6 space-y-2">
                                 <li>To provide, operate, and maintain our SaaS platform</li>
@@ -97,9 +97,9 @@ export default function PrivacyPage() {
                         </section>
 
                         <section className="space-y-4">
-                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">4. Payment Information</h2>
-                            <div className="bg-slate-50 border border-slate-100 p-6 rounded-xl">
-                                <p className="font-medium text-slate-900 mb-2">We do not store your sensitive payment card details.</p>
+                            <h2 className="text-2xl font-bold  border-b border-slate-100 pb-2">4. Payment Information</h2>
+                            <div className="border border-slate-100 p-6 rounded-xl">
+                                <p className="font-medium  mb-2">We do not store your sensitive payment card details.</p>
                                 <p>
                                     Jiroshi is a paid subscription service. All payments are processed by third-party payment gateways (such as Razorpay, Stripe, or others).
                                 </p>
@@ -110,7 +110,7 @@ export default function PrivacyPage() {
                         </section>
 
                         <section className="space-y-4">
-                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">5. Data Storage and Security</h2>
+                            <h2 className="text-2xl font-bold  border-b border-slate-100 pb-2">5. Data Storage and Security</h2>
                             <p>
                                 We implement industry-standard security measures to protect your personal information from unauthorized access, alteration, disclosure, or destruction.
                             </p>
@@ -125,7 +125,7 @@ export default function PrivacyPage() {
                         </section>
 
                         <section className="space-y-4">
-                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">6. Cookies</h2>
+                            <h2 className="text-2xl font-bold  border-b border-slate-100 pb-2">6. Cookies</h2>
                             <p>
                                 We use cookies and similar tracking technologies to track activity on our service and hold certain information.
                             </p>
@@ -135,7 +135,7 @@ export default function PrivacyPage() {
                         </section>
 
                         <section className="space-y-4">
-                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">7. User Rights</h2>
+                            <h2 className="text-2xl font-bold  border-b border-slate-100 pb-2">7. User Rights</h2>
                             <p>As a user, you have rights regarding your personal data:</p>
                             <ul className="list-disc pl-6 space-y-1">
                                 <li><strong>Right to Access:</strong> You can request copies of your personal data.</li>
@@ -146,29 +146,29 @@ export default function PrivacyPage() {
                         </section>
 
                         <section className="space-y-4">
-                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">8. Data Retention</h2>
+                            <h2 className="text-2xl font-bold  border-b border-slate-100 pb-2">8. Data Retention</h2>
                             <p>
                                 We will retain your personal information only for as long as is necessary for the purposes set out in this Privacy Policy. We will retain and use your information to the extent necessary to comply with our legal obligations, resolve disputes, and enforce our legal agreements.
                             </p>
                         </section>
 
                         <section className="space-y-4">
-                            <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">9. Changes to This Policy</h2>
+                            <h2 className="text-2xl font-bold  border-b border-slate-100 pb-2">9. Changes to This Policy</h2>
                             <p>
                                 We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page. You are advised to review this Privacy Policy periodically for any changes.
                             </p>
                         </section>
 
                         <section className="pt-12 border-t border-slate-100">
-                            <h2 className="text-2xl font-bold text-slate-900 mb-6">10. Contact Us</h2>
-                            <div className="bg-slate-50 p-6 rounded-2xl space-y-4">
+                            <h2 className="text-2xl font-bold  mb-6">10. Contact Us</h2>
+                            <div className="p-6 rounded-2xl space-y-4">
                                 <p>If you have any questions about this Privacy Policy, please contact us:</p>
                                 <div>
-                                    <p className="font-bold text-slate-900">Email:</p>
+                                    <p className="font-bold ">Email:</p>
                                     <a href="mailto:app.jiroshi@gmail.com" className="text-primary hover:underline text-lg">app.jiroshi@gmail.com</a>
                                 </div>
                                 <div>
-                                    <p className="font-bold text-slate-900">Platform:</p>
+                                    <p className="font-bold ">Platform:</p>
                                     <p>Jiroshi</p>
                                 </div>
                             </div>
@@ -177,8 +177,8 @@ export default function PrivacyPage() {
                 </motion.div>
             </main>
 
-            <footer className="py-12 border-t border-slate-100 bg-slate-50/50">
-                <div className="container mx-auto px-4 text-center text-sm text-slate-400">
+            <footer className="py-12 border-t border-slate-100">
+                <div className="container mx-auto px-4 text-center text-sm ">
                     © {new Date().getFullYear()} Jiroshi Inc. All rights reserved.
                 </div>
             </footer>

@@ -151,13 +151,13 @@ export default function LandingPageClient() {
                             )}
                             {loggedIn ? (
                                 <Link href="/instructor/dashboard">
-                                    <Button size="sm" className="rounded-full bg-slate-900 text-white hover:bg-slate-800 font-semibold px-6 shadow-lg shadow-slate-900/20">
+                                    <Button size="sm" className="rounded-full bg-foreground text-background hover:bg-foreground/90 font-semibold px-6 shadow-lg shadow-foreground/10">
                                         Dashboard
                                     </Button>
                                 </Link>
                             ) : (
                                 <Link href="/auth/signup">
-                                    <Button size="sm" className="rounded-full bg-slate-900 text-white hover:bg-slate-800 font-semibold px-6 shadow-lg shadow-slate-900/20">
+                                    <Button size="sm" className="rounded-full bg-foreground text-background hover:bg-foreground/90 font-semibold px-6 shadow-lg shadow-foreground/10">
                                         Get Started
                                     </Button>
                                 </Link>
@@ -275,7 +275,7 @@ export default function LandingPageClient() {
                                 transition={{ duration: 0.7, delay: 0.3 }}
                             >
                                 <Link href="/instructor/dashboard">
-                                    <Button size="lg" className="h-14 px-8 text-base rounded-full bg-primary dark:bg-primary hover:bg-primary/90 dark:hover:bg-primary/90 text-white dark:text-white shadow-[0_0_20px_-5px_rgba(0,187,167,0.4)] hover:shadow-[0_0_30px_-5px_rgba(0,187,167,0.5)] transition-all duration-300">
+                                    <Button size="lg" className="h-14 px-8 text-base rounded-full bg-primary hover:bg-primary/90 text-white shadow-[0_0_20px_-5px_rgba(0,187,167,0.4)] hover:shadow-[0_0_30px_-5px_rgba(0,187,167,0.5)] transition-all duration-300">
                                         Start Building with APIs
                                         <ArrowRight className="ml-2 w-5 h-5" />
                                     </Button>
@@ -360,7 +360,7 @@ export default function LandingPageClient() {
                                                 <h3 className="text-xl font-bold text-slate-900 dark:text-white">Instructor Dashboard</h3>
                                                 <p className="text-xs text-slate-500 dark:text-slate-400">Welcome back, Instructor!</p>
                                             </div>
-                                            <Button size="sm" className="rounded-full bg-primary dark:bg-primary text-white text-xs h-8 px-4">
+                                            <Button size="sm" className="rounded-full bg-primary text-white text-xs h-8 px-4">
                                                 <Plus className="w-3 h-3 mr-1.5" />
                                                 Create Course
                                             </Button>
@@ -569,7 +569,7 @@ export default function LandingPageClient() {
 
                                     <div className="flex flex-col sm:flex-row gap-4">
                                         <a href="https://demo.jiroshi.com/" target="_blank" rel="noopener noreferrer">
-                                            <Button size="lg" className="h-14 px-8 rounded-full bg-primary dark:bg-primary hover:bg-primary/90 dark:hover:bg-primary/90 text-white font-bold w-full sm:w-auto shadow-lg shadow-primary/20 group">
+                                            <Button size="lg" className="h-14 px-8 rounded-full bg-primary hover:bg-primary/90 text-white font-bold w-full sm:w-auto shadow-lg shadow-primary/20 group">
                                                 Explore Live Demo
                                                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                                             </Button>
@@ -650,7 +650,7 @@ export default function LandingPageClient() {
                                     ))}
                                 </ul>
                                 <Link href="/instructor/dashboard">
-                                    <Button className="w-full h-12 rounded-full bg-slate-900 text-white hover:bg-slate-800">
+                                    <Button className="w-full h-12 rounded-full bg-foreground text-background hover:bg-foreground/90">
                                         {loggedIn ? "Go to Dashboard" : "Get Started"}
                                     </Button>
                                 </Link>
@@ -748,7 +748,7 @@ export default function LandingPageClient() {
                                             target="_blank"
                                             rel="noopener noreferrer"
                                         >
-                                            <Button size="sm" className="rounded-full bg-primary dark:bg-primary hover:bg-primary/90 dark:hover:bg-primary/90 text-white font-bold px-5 h-9 shadow-lg shadow-primary/20">
+                                            <Button size="sm" className="rounded-full bg-primary hover:bg-primary/90 text-white font-bold px-5 h-9 shadow-lg shadow-primary/20">
                                                 Apply for Free Pilot
                                             </Button>
                                         </a>
@@ -793,7 +793,7 @@ export default function LandingPageClient() {
                             Build your education platform without rebuilding the wheel.
                         </p>
                         <Link href="/instructor/dashboard">
-                            <Button size="lg" className="h-16 px-12 text-lg rounded-full bg-slate-900 text-white hover:bg-slate-800 font-bold shadow-2xl shadow-slate-900/20 hover:scale-105 transition-transform duration-300">
+                            <Button size="lg" className="h-16 px-12 text-lg rounded-full bg-foreground text-background hover:bg-foreground/90 font-bold shadow-2xl shadow-foreground/10 hover:scale-105 transition-transform duration-300">
                                 Generate API Keys
                             </Button>
                         </Link>
@@ -830,6 +830,7 @@ export default function LandingPageClient() {
                                 <li><Link href="/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Privacy Policies</Link></li>
                                 <li><Link href="/legal/terms-conditions" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Terms & Conditions</Link></li>
                                 <li><Link href="/legal/bug-reporting" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Bug Reporting & Security</Link></li>
+                                <li><Link href="/legal/refund-cancellation" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Refund & Cancellation</Link></li>
                             </ul>
                         </div>
                         <div>

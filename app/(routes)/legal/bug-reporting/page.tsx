@@ -8,42 +8,42 @@ export default function BugReportingPage() {
   const lastUpdated = "January 1, 2026";
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-primary/20 selection:text-primary">
+    <div className="min-h-screen bg-background text-foreground font-sans selection:bg-primary/20 selection:text-primary">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+        <div className="w-full px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 font-bold text-lg tracking-tight">
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-teal-600 flex items-center justify-center text-white shadow-md shadow-primary/20">
               <Turtle size={18} />
             </div>
             <span>JIROSHI</span>
           </Link>
-          <Link href="/" className="text-sm font-medium text-slate-500 hover:text-primary flex items-center gap-2 transition-colors">
+          <Link href="/" className="text-sm font-medium text-muted-foreground hover:text-primary flex items-center gap-2 transition-colors">
             <ArrowLeft size={16} />
             Back to Home
           </Link>
         </div>
       </nav>
 
-      <main className="pt-32 pb-24 container mx-auto px-4 max-w-3xl">
+      <main className="pt-32 pb-24 px-6 w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-4xl font-bold mb-4 text-slate-900 tracking-tight text-center">
+          <h1 className="text-4xl font-bold mb-4 text-foreground tracking-tight text-center">
             Bug Reporting & Security Disclosure
           </h1>
-          <p className="text-slate-500 mb-12 text-center">Last Updated: {lastUpdated}</p>
+          <p className="text-muted-foreground mb-12 text-center">Last Updated: {lastUpdated}</p>
 
-          <div className="prose prose-slate max-w-none space-y-10 text-slate-600 leading-relaxed">
+          <div className="prose max-w-none space-y-10 text-muted-foreground leading-relaxed">
             <section>
-              <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">
+              <h2 className="text-2xl font-bold text-foreground border-b border-border pb-2">
                 1. How to Report Bugs or Security Issues
               </h2>
               <p className="mt-4">
                 If you notice any bugs, issues, or potential security vulnerabilities while{" "}
-                <span className="font-medium text-slate-800">using Jiroshi in normal, intended use</span>, we truly
+                <span className="font-medium text-foreground">using Jiroshi in normal, intended use</span>, we truly
                 appreciate you taking the time to let us know.
               </p>
               <p className="mt-4">
@@ -57,17 +57,17 @@ export default function BugReportingPage() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">
+              <h2 className="text-2xl font-bold text-foreground border-b border-border pb-2">
                 2. Not a Bug Bounty Program
               </h2>
               <div className="mt-4 space-y-4">
                 <p>
                   It is important to understand that{" "}
-                  <span className="font-semibold text-slate-900">
+                  <span className="font-semibold text-foreground">
                     this is strictly not a bug bounty program
                   </span>
                   . While we value and appreciate responsible reports,{" "}
-                  <span className="font-semibold text-slate-900">
+                  <span className="font-semibold text-foreground">
                     there are no rewards, incentives, or monetary payouts of any kind
                   </span>{" "}
                   associated with reporting bugs or vulnerabilities.
@@ -80,18 +80,18 @@ export default function BugReportingPage() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">
+              <h2 className="text-2xl font-bold text-foreground border-b border-border pb-2">
                 3. MVP Status and Scope of Fixes
               </h2>
               <div className="mt-4 space-y-4">
                 <p>
                   Jiroshi is currently an{" "}
-                  <span className="font-semibold text-slate-900">MVP (Minimum Viable Product)</span> and not a
+                  <span className="font-semibold text-foreground">MVP (Minimum Viable Product)</span> and not a
                   full-fledged, production-grade platform yet.
                 </p>
                 <p>
                   This means our primary focus is on validating the core experience and critical flows. As a result,{" "}
-                  <span className="font-semibold text-slate-900">
+                  <span className="font-semibold text-foreground">
                     minor issues, cosmetic bugs, or smaller edge cases may be intentionally deprioritized
                   </span>{" "}
                   or not addressed immediately.
@@ -112,17 +112,17 @@ export default function BugReportingPage() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">
+              <h2 className="text-2xl font-bold text-foreground border-b border-border pb-2">
                 4. No Unauthorized Penetration Testing or Security Scanning
               </h2>
               <div className="mt-4 space-y-4">
                 <p>
-                  Jiroshi is an <span className="font-semibold text-slate-900">MVP</span>. The product has not yet been
+                  Jiroshi is an <span className="font-semibold text-foreground">MVP</span>. The product has not yet been
                   fully validated in the market, and we are not inviting or authorizing proactive security assessments
                   at this stage.
                 </p>
                 <p>
-                  <span className="font-semibold text-slate-900">We do not authorize</span> penetration testing,
+                  <span className="font-semibold text-foreground">We do not authorize</span> penetration testing,
                   vulnerability scanning, automated security probes, or any form of active security testing against our
                   systems, APIs, or infrastructure unless we have explicitly agreed in writing beforehand.
                 </p>
@@ -140,7 +140,7 @@ export default function BugReportingPage() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">
+              <h2 className="text-2xl font-bold text-foreground border-b border-border pb-2">
                 5. Responsible Behaviour
               </h2>
               <p className="mt-4">
@@ -155,13 +155,13 @@ export default function BugReportingPage() {
               </p>
             </section>
 
-            <section className="pt-6 border-t border-slate-100">
-              <h2 className="text-2xl font-bold text-slate-900 mb-4">6. Contact</h2>
-              <div className="bg-slate-50 p-6 rounded-2xl space-y-3">
-                <p className="text-slate-700">
+            <section className="pt-6 border-t border-border">
+              <h2 className="text-2xl font-bold text-foreground mb-4">6. Contact</h2>
+              <div className="bg-muted p-6 rounded-2xl space-y-3">
+                <p className="text-muted-foreground">
                   For all bug reports, security concerns, or questions about this page, please write to:
                 </p>
-                <p className="font-bold text-slate-900">Email:</p>
+                <p className="font-bold text-foreground">Email:</p>
                 <a href="mailto:app.jiroshi@gmail.com" className="text-primary hover:underline text-lg">
                   app.jiroshi@gmail.com
                 </a>
@@ -171,8 +171,8 @@ export default function BugReportingPage() {
         </motion.div>
       </main>
 
-      <footer className="py-12 border-t border-slate-100 bg-slate-50/50">
-        <div className="container mx-auto px-4 text-center text-sm text-slate-400">
+      <footer className="py-12 border-t border-border bg-muted/50">
+        <div className="w-full px-6 text-center text-sm text-muted-foreground">
           © {new Date().getFullYear()} Jiroshi Inc. All rights reserved.
         </div>
       </footer>
