@@ -100,7 +100,7 @@ const VideoTextResourcesStep: React.FC<VideoResourceSetupProps> = ({
       if (resp?.status) {
         toast.success("Textual resources updated successfully!");
         setTextResources({
-          notes: values.notes,
+          notes: values.notes ?? null,
           related_links: relatedLinks,
           file_resources: textResources?.file_resources || []
         });
