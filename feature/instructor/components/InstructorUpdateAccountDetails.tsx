@@ -41,8 +41,8 @@ const InstructorUpdateAccountDetails = ({
   }
 
   return (
-    <section className="max-w-4xl mx-auto bg-white rounded-xl border border-gray-200 shadow-sm p-8 mt-6">
-      <h2 className="text-xl font-bold text-gray-800 mb-8">Account Settings</h2>
+    <section className="max-w-4xl mx-auto bg-card text-card-foreground rounded-xl border border-border shadow-sm p-8 mt-6">
+      <h2 className="text-xl font-bold text-foreground mb-8">Account Settings</h2>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -104,7 +104,7 @@ const InstructorUpdateAccountDetails = ({
                       type="text"
                       value="+91"
                       disabled
-                      className="w-20 text-center bg-gray-100 text-gray-500"
+                      className="w-20 text-center bg-muted text-muted-foreground"
                     />
                     <FormControl>
                       <Input type="tel" placeholder="9876543210" {...field} />

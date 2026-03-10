@@ -21,9 +21,9 @@ const RegisterPage = () => {
         </aside>
 
         {/* Right Section */}
-        <section className="w-full lg:w-[60%] flex flex-col items-center justify-center p-6 lg:p-12 pt-24 lg:pt-12 bg-white">
+        <section className="w-full lg:w-[60%] flex flex-col items-center justify-center p-6 lg:p-12 pt-24 lg:pt-12 bg-background text-foreground">
           <div className="w-full max-w-md">
-            <h1 className="text-2xl lg:text-3xl font-bold text-center mb-8 text-slate-900">Register as an Instructor</h1>
+            <h1 className="text-2xl lg:text-3xl font-bold text-center mb-8 text-foreground">Register as an Instructor</h1>
             <InstructorRegistrationForm />
           </div>
         </section>

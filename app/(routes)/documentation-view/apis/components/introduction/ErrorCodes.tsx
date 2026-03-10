@@ -8,16 +8,16 @@ const ErrorCodes = () => {
                 Error Codes
             </ApiDoc.OverviewHeader>
 
-            <p className="text-slate-600 mb-6 leading-relaxed">
+            <p className="text-muted-foreground mb-6 leading-relaxed">
                 Jiroshi APIs use standardized error codes to help clients reliably identify
                 and handle different failure scenarios. Error codes are string literals
                 that remain consistent across API versions and environments, even if the
                 human-readable error message changes.
             </p>
 
-            <p className="text-slate-600 mb-8 leading-relaxed">
+            <p className="text-muted-foreground mb-8 leading-relaxed">
                 Whenever an error occurs, the response includes a non-null
-                <code className="mx-1 font-mono">error_code</code> field along with an
+                <code className="mx-1 font-mono bg-muted px-1 rounded">error_code</code> field along with an
                 appropriate HTTP status code and message.
             </p>
 
@@ -25,7 +25,7 @@ const ErrorCodes = () => {
                 Data & Validation Errors
             </ApiDoc.SubHeader>
 
-            <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-8">
+            <ul className="list-disc pl-6 text-muted-foreground space-y-2 mb-8">
                 <li>
                     <strong>INTEGRITY_ERR</strong> - Database integrity constraint violations,
                     such as foreign key or uniqueness mismatches.
@@ -62,7 +62,7 @@ const ErrorCodes = () => {
                 Authentication & Authorization Errors
             </ApiDoc.SubHeader>
 
-            <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-8">
+            <ul className="list-disc pl-6 text-muted-foreground space-y-2 mb-8">
                 <li>
                     <strong>API_KEY_ERR</strong> - Issues related to API key authentication,
                     including missing, invalid, malformed, or expired API keys.
@@ -114,7 +114,7 @@ const ErrorCodes = () => {
                 Resource State Errors
             </ApiDoc.SubHeader>
 
-            <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-8">
+            <ul className="list-disc pl-6 text-muted-foreground space-y-2 mb-8">
                 <li>
                     <strong>ALREADY_EXISTS_ERR</strong> - Attempt to create a resource that
                     already exists.
@@ -150,7 +150,7 @@ const ErrorCodes = () => {
                 Server Errors
             </ApiDoc.SubHeader>
 
-            <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-8">
+            <ul className="list-disc pl-6 text-muted-foreground space-y-2 mb-8">
                 <li>
                     <strong>INTERNAL_ERR</strong> - An unhandled server-side exception.
                     If this error is encountered, please report it with request details
@@ -169,15 +169,15 @@ const ErrorCodes = () => {
                 </li>
             </ul>
 
-            <p className="text-slate-600 leading-relaxed">
+            <p className="text-muted-foreground leading-relaxed">
                 Clients are strongly encouraged to rely on
-                <code className="mx-1 font-mono">error_code</code> values and HTTP Response
+                <code className="mx-1 font-mono bg-muted px-1 rounded">error_code</code> values and HTTP Response
                 codes for programmatic
                 error handling rather than parsing response messages, which are intended
                 primarily for human readability.
             </p>
 
-            <hr className="mt-12 border-slate-100" />
+            <hr className="mt-12 border-border" />
         </div>
 
     )

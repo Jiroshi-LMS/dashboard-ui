@@ -123,7 +123,7 @@ const LessonTextResourceUpdateStep: React.FC<LessonTextResourcesUpdateProps> = (
 
             <div>
               <h1 className="section-title">Add Reference URLs (Optional)</h1>
-              <p className="text-gray-600 text-[12px] mb-2 font-semibold">
+              <p className="text-[12px] mb-2 font-semibold">
                 Add multiple reference URLs for your lesson.
               </p>
 

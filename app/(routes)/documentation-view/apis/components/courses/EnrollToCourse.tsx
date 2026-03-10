@@ -30,7 +30,7 @@ const EnrollToCourse = () => {
                 <strong>Filters:</strong> Not supported
             </ApiDoc.Description>
 
-            <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
+            <h4 className="text-md font-semibold text-foreground mt-6 mb-2">
                 Authentication Requirements
             </h4>
 
@@ -47,7 +47,7 @@ const EnrollToCourse = () => {
                 </ul>
             </ApiDoc.Description>
 
-            <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
+            <h4 className="text-md font-semibold text-foreground mt-6 mb-2">
                 Request Body
             </h4>
 
@@ -64,7 +64,7 @@ const EnrollToCourse = () => {
             />
 
             <ApiDoc.Description>
-                The <code className="mx-1 font-mono text-slate-900 bg-slate-100 px-1.5 py-0.5 rounded">course_uuid</code> must reference an existing course under the
+                The <code className="mx-1 font-mono text-foreground bg-muted px-1.5 py-0.5 rounded">course_uuid</code> must reference an existing course under the
                 instructor tenant.
             </ApiDoc.Description>
 
@@ -100,7 +100,7 @@ const EnrollToCourse = () => {
                 <ul>
                     <li>
                         Re-enrolling an already enrolled student may result in an
-                        <code className="mx-1 font-mono text-slate-900 bg-slate-100 px-1.5 py-0.5 rounded">ALREADY_EXISTS_ERR</code>.
+                        <code className="mx-1 font-mono text-foreground bg-muted px-1.5 py-0.5 rounded">ALREADY_EXISTS_ERR</code>.
                     </li>
                     <li>
                         Enrollment logic will be extended in future versions to support

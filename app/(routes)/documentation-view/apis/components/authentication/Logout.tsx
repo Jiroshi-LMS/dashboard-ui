@@ -29,7 +29,7 @@ const Logout = () => {
                 <strong>Filters:</strong> Not supported
             </ApiDoc.Description>
 
-            <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
+            <h4 className="text-md font-semibold text-foreground mt-6 mb-2">
                 Authentication Requirements
             </h4>
 
@@ -39,7 +39,7 @@ const Logout = () => {
                 terminated.
             </ApiDoc.Description>
 
-            <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
+            <h4 className="text-md font-semibold text-foreground mt-6 mb-2">
                 Request Body
             </h4>
 
@@ -65,11 +65,11 @@ const Logout = () => {
                 )}
             />
 
-            <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
+            <h4 className="text-md font-semibold text-foreground mt-6 mb-2">
                 Client-Specific Behavior
             </h4>
 
-            <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-6">
+            <ul className="list-disc pl-6 text-muted-foreground space-y-2 mb-6">
                 <li>
                     <strong>Browser Clients:</strong> Calling this endpoint invalidates
                     the refresh token stored in the HTTP-only cookie. You must set <code> credentials: 'include'</code> (Fetch) or <code>withCredentials: true</code> (Axios)

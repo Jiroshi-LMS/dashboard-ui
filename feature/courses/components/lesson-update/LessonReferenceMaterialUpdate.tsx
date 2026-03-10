@@ -161,15 +161,15 @@ const LessonReferenceMaterialUpdate = ({
   return (
     <section className="w-[80%] mx-auto space-y-10">
       {
-        (referenceUploadProgress > 0) ? 
-        <div className="flex justify-center items-center border border-gray-200 bg-white rounded-2xl shadow-sm p-8 transition hover:shadow-md min-h-[50vh]">
+        (referenceUploadProgress > 0 || referenceMaterialForm.formState.isSubmitting) ? 
+        <div className="flex justify-center items-center border border-gray-200 rounded-2xl shadow-sm p-8 transition hover:shadow-md min-h-[50vh]">
           <Progress value={referenceUploadProgress} />
         </div> :
-      <div className="border border-gray-200 bg-white rounded-2xl shadow-sm p-8 transition hover:shadow-md">
-        <h1 className="section-title text-2xl font-semibold mb-2 text-gray-900">
+      <div className="border border-gray-200 rounded-2xl shadow-sm p-8 transition hover:shadow-md">
+        <h1 className="section-title text-2xl font-semibold mb-2">
           Add Reference Materials (Optional)
         </h1>
-        <p className="text-gray-600 text-[13px] mb-6 font-medium">
+        <p className="text-[13px] mb-6 font-medium">
           Upload PDFs, PPTX, DOCX, XLSX or images for your lesson. Enrolled learners
           will be able to download these resources.
         </p>
@@ -250,9 +250,14 @@ const LessonReferenceMaterialUpdate = ({
             <div className="flex justify-end">
               <Button
                 type="submit"
+                disabled={referenceMaterialForm.formState.isSubmitting}
                 className="bg-teal-600 text-white hover:bg-teal-700 flex items-center gap-2"
               >
-                <UploadIcon size={16} />
+                {referenceMaterialForm.formState.isSubmitting ? (
+                  <span className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full" />
+                ) : (
+                  <UploadIcon size={16} />
+                )}
                 Upload Reference
               </Button>
             </div>
@@ -290,7 +295,7 @@ const LessonReferenceMaterialUpdate = ({
                       </button>
                     }
                   </CardHeader>
-                  <CardContent className="flex flex-col gap-2 text-sm text-gray-700">
+                  <CardContent className="flex flex-col gap-2 text-sm ">
                     <div className="flex items-center gap-2">
                       <FileIcon size={16} className="text-teal-600" />
                       <span className="truncate">{item.file_name}</span>

@@ -8,7 +8,7 @@ const AuthTransport = () => {
                 Authentication Transport & Client Detection
             </ApiDoc.OverviewHeader>
 
-            <p className="text-slate-600 mb-6 leading-relaxed">
+            <p className="text-muted-foreground mb-6 leading-relaxed">
                 Jiroshi adapts its authentication token handling based on the detected
                 client environment to ensure maximum security while supporting multiple
                 application types.
@@ -18,7 +18,7 @@ const AuthTransport = () => {
                 Browser-Based Clients
             </ApiDoc.SubHeader>
 
-            <p className="text-slate-600 mb-6 leading-relaxed">
+            <p className="text-muted-foreground mb-6 leading-relaxed">
                 When a request is identified as originating from a browser environment,
                 refresh tokens are issued and stored exclusively via
                 <strong> HTTP-only cookies</strong>. These cookies are inaccessible to
@@ -26,7 +26,7 @@ const AuthTransport = () => {
                 refresh requests by the browser.
             </p>
 
-            <p className="text-slate-600 mb-8 leading-relaxed">
+            <p className="text-muted-foreground mb-8 leading-relaxed">
                 In this mode, refresh tokens are <strong>never exposed</strong> in API
                 responses or request payloads, significantly reducing the risk of token
                 theft via XSS or client-side compromise.
@@ -41,14 +41,14 @@ const AuthTransport = () => {
                 Non-Browser Clients
             </ApiDoc.SubHeader>
 
-            <p className="text-slate-600 mb-6 leading-relaxed">
+            <p className="text-muted-foreground mb-6 leading-relaxed">
                 For non-browser clients such as mobile applications, desktop clients,
                 or backend services, refresh tokens are returned directly in the API
                 response payload. Subsequent refresh requests must include the refresh
                 token explicitly in the request body.
             </p>
 
-            <p className="text-slate-600 mb-8 leading-relaxed">
+            <p className="text-muted-foreground mb-8 leading-relaxed">
                 This mode is intended only for environments where secure storage of
                 tokens is handled by the client platform itself.
             </p>
@@ -57,7 +57,7 @@ const AuthTransport = () => {
                 Development Mode
             </ApiDoc.SubHeader>
 
-            <p className="text-slate-600 mb-4 leading-relaxed">
+            <p className="text-muted-foreground mb-4 leading-relaxed">
                 During local development, strict cookie policies (SameSite, Secure) can sometimes
                 hinder testing on localhost. You can switch to a developer-friendly mode by
                 setting the following header:
@@ -69,7 +69,7 @@ const AuthTransport = () => {
                 code={`X-Client-Type: dev`}
             />
 
-            <p className="text-slate-600 mb-8 leading-relaxed">
+            <p className="text-muted-foreground mb-8 leading-relaxed">
                 <strong>Effect:</strong> In this mode, just like with non-browser clients,
                 the refresh token is transported via the <strong>request and response payloads </strong>
                 instead of cookies. This makes it easier to inspect and manage tokens manually
@@ -80,7 +80,7 @@ const AuthTransport = () => {
                 Forcing API Mode
             </ApiDoc.SubHeader>
 
-            <p className="text-slate-600 mb-4 leading-relaxed">
+            <p className="text-muted-foreground mb-4 leading-relaxed">
                 In certain edge cases-such as React Native or Electron-based
                 applications-the client may be incorrectly detected as a browser.
                 In such scenarios, token handling can be explicitly forced to API mode
@@ -101,12 +101,12 @@ const AuthTransport = () => {
                 compromise.
             </ApiDoc.Warning>
 
-            <p className="text-slate-600 leading-relaxed">
+            <p className="text-muted-foreground leading-relaxed">
                 Jiroshi reserves the right to introduce additional validation,
                 restrictions, or rate limits on forced API mode usage to prevent abuse.
             </p>
 
-            <hr className="mt-12 border-slate-100" />
+            <hr className="mt-12 border-border" />
         </div>
 
     )

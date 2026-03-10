@@ -143,7 +143,7 @@ const CourseUpdateForm = ({ courseId }: { courseId: string }) => {
         <>
           <div className="w-full">
             <h2 className="section-title mb-1">Course Thumbnail</h2>
-            <p className="text-gray-600 text-sm mb-3 font-medium">
+            <p className="text-sm mb-3 font-medium">
               You can update your course thumbnail here.
             </p>
 
@@ -170,7 +170,7 @@ const CourseUpdateForm = ({ courseId }: { courseId: string }) => {
                   }}
                   className={`relative w-full max-w-4xl mx-auto h-[40vh] rounded-lg overflow-hidden border-2
               border-dashed border-gray-300 hover:border-teal-600
-              bg-gray-100 transition-all duration-300 flex justify-center items-center group cursor-pointer`}
+              transition-all duration-300 flex justify-center items-center group cursor-pointer`}
                 >
                   {thumbnailFile ? (
                     <Image

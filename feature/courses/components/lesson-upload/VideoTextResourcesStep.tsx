@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,11 +19,12 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 
-import { LessonRelatedLink } from "../../courseTypes";
+import { LessonRelatedLink, LessonResourcesAll } from "../../courseTypes";
 import { textResourceFormSchema } from "../../courseSchemas";
 import { updateTextResourceRepository } from "../../courseRepositories";
 import { standardErrors } from "@/lib/constants/errors";
 import Loader from "@/app/components/atoms/Loader";
+import { FetchLessonResourcesService } from "../../courseServices";
 
 const relatedLinkFormSchema = z.object({
   title: z.string().min(2, "Please provide a valid title. Minimum length: 2"),
@@ -34,19 +35,46 @@ const relatedLinkFormSchema = z.object({
 
 type VideoResourceSetupProps = {
   lessonId: string | null;
+  textResources: LessonResourcesAll | null;
+  setTextResources: React.Dispatch<React.SetStateAction<LessonResourcesAll | null>>;
 };
 
-const VideoTextResourcesStep: React.FC<VideoResourceSetupProps> = ({ lessonId }) => {
+const VideoTextResourcesStep: React.FC<VideoResourceSetupProps> = ({ 
+  lessonId,
+  textResources,
+  setTextResources
+}) => {
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
-  const [relatedLinks, setRelatedLinks] = useState<Array<LessonRelatedLink>>([]);
+  const [initialLoading, setInitialLoading] = useState<boolean>(false);
+  const [relatedLinks, setRelatedLinks] = useState<Array<LessonRelatedLink>>(textResources?.related_links || []);
 
   const textResourceForm = useForm<z.infer<typeof textResourceFormSchema>>({
     resolver: zodResolver(textResourceFormSchema),
     defaultValues: {
-      notes: "",
+      notes: textResources?.notes || "",
       lesson_uuid: lessonId ?? "",
     },
   });
+
+  useEffect(() => {
+    if (lessonId && !textResources) {
+      const fetchResources = async () => {
+        setInitialLoading(true);
+        const setResourcesState = (data: LessonResourcesAll | null) => {
+          if (data) {
+            setTextResources(data);
+            textResourceForm.setValue("notes", data.notes || "");
+            if (data.related_links) {
+              setRelatedLinks(data.related_links);
+            }
+          }
+        };
+        await FetchLessonResourcesService(lessonId, (data) => setResourcesState(data as LessonResourcesAll | null));
+        setInitialLoading(false);
+      };
+      fetchResources();
+    }
+  }, [lessonId, textResources, setTextResources, textResourceForm]);
 
   const relatedLinkForm = useForm<z.infer<typeof relatedLinkFormSchema>>({
     resolver: zodResolver(relatedLinkFormSchema),
@@ -71,6 +99,11 @@ const VideoTextResourcesStep: React.FC<VideoResourceSetupProps> = ({ lessonId })
       const resp = await updateTextResourceRepository(values, relatedLinks);
       if (resp?.status) {
         toast.success("Textual resources updated successfully!");
+        setTextResources({
+          notes: values.notes,
+          related_links: relatedLinks,
+          file_resources: textResources?.file_resources || []
+        });
         setIsUpdating(false)
         return;
       }
@@ -83,7 +116,7 @@ const VideoTextResourcesStep: React.FC<VideoResourceSetupProps> = ({ lessonId })
   };
 
   if (!lessonId) return <Loader className="h-screen" />
-  if (isUpdating) return <Loader className="h-screen" />
+  if (isUpdating || initialLoading) return <Loader className="h-screen" />
 
   return (
     <main>

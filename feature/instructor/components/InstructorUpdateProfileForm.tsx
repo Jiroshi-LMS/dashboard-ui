@@ -113,8 +113,8 @@ const InstructorUpdateProfileForm = ({
   }
 
   return (
-    <section className="max-w-4xl mx-auto bg-white rounded-xl border border-gray-200 shadow-sm p-8 mt-6">
-      <h2 className="text-xl font-bold text-gray-800 mb-8">Profile Settings</h2>
+    <section className="max-w-4xl mx-auto bg-card text-card-foreground rounded-xl border border-border shadow-sm p-8 mt-6">
+      <h2 className="text-xl font-bold text-foreground mb-8">Profile Settings</h2>
 
       <div className="flex flex-col md:flex-row justify-between gap-10">
         {/* Profile Picture Section */}
@@ -131,10 +131,10 @@ const InstructorUpdateProfileForm = ({
             {/* Hover Upload Button */}
             <label
               htmlFor="profile-upload"
-              className="absolute bottom-2 right-2 bg-white rounded-full p-2 shadow-md text-teal-600 cursor-pointer hover:bg-teal-50 transition-opacity duration-200 opacity-0 group-hover:opacity-100"
+              className="absolute bottom-2 right-2 bg-background text-foreground rounded-full p-2 shadow-md cursor-pointer hover:bg-muted transition-opacity duration-200 opacity-0 group-hover:opacity-100"
               title="Upload Profile Picture"
             >
-              <UploadIcon size={16} />
+              <UploadIcon size={16} className="text-teal-600" />
               <input
                 type="file"
                 id="profile-upload"
@@ -153,14 +153,14 @@ const InstructorUpdateProfileForm = ({
                 </div>
                 : null
             }
-            <h4 className="font-semibold text-gray-800 text-sm">Profile Picture</h4>
-            <p className="text-gray-500 text-xs">PNG or JPEG under {allowedFileSize} MB</p>
+            <h4 className="font-semibold text-foreground text-sm">Profile Picture</h4>
+            <p className="text-muted-foreground text-xs">PNG or JPEG under {allowedFileSize} MB</p>
           </div>
           {
             (imageFile) ? 
             <Button
               variant="outline"
-              className={`text-sm font-medium flex items-center gap-1 border-red-500 text-red-600 hover:bg-red-50 transition-all duration-200 ${!imageFile ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className={`text-sm font-medium flex items-center gap-1 border-red-500 text-red-600 hover:bg-red-50 dark:hover:bg-red-950 transition-all duration-200 ${!imageFile ? 'opacity-50 cursor-not-allowed' : ''}`}
               onClick={handleDelete}
               disabled={profileUploadProgress > 0 || disableAction}
             >

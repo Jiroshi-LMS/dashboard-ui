@@ -34,12 +34,12 @@ const EnrollmentsListFilters = ({ enrollmentFilters, setEnrollmentFilters, setSe
                 <PopoverContent
                     side="bottom"
                     align="start"
-                    className=" z-30 w-80 bg-white border border-gray-200 rounded-md p-4 shadow-sm my-1"
+                    className=" z-30 w-80 border border-gray-200 rounded-md p-4 shadow-sm my-1"
                 >
                     <div className="flex flex-col gap-5">
                         {/* Date Range */}
                         <div className="space-y-2">
-                            <p className="text-sm font-semibold text-gray-700">
+                            <p className="text-sm font-semibold">
                                 Date Range
                             </p>
                             <DateRangePicker

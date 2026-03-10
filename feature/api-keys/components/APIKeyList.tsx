@@ -108,8 +108,8 @@ const APIKeyList = ({ keys, setKeys, shouldFetchKeyList, setShouldFetchKeyList }
   return (
     <div className="space-y-6">
       <Card className="border border-gray-200 gap-0">
-        <CardHeader className="border-b border-gray-100 bg-white">
-          <CardTitle className="text-lg font-semibold text-gray-900">
+        <CardHeader className="border-b border-gray-100">
+          <CardTitle className="text-lg font-semibold">
             Your Keys
           </CardTitle>
           {keys ? (
@@ -131,10 +131,10 @@ const APIKeyList = ({ keys, setKeys, shouldFetchKeyList, setShouldFetchKeyList }
             </div>
           </CardContent>
         ) : (
-          <CardContent className="p-0 bg-white">
+          <CardContent className="p-0">
             {keys.length === 0 ? (
               <div className="text-center py-20">
-                <Key className="w-12 h-12 text-gray-200 mx-auto mb-3" />
+                <Key className="w-12 h-12 mx-auto mb-3" />
                 <p className="text-gray-500 font-medium">No API Keys Yet</p>
                 <p className="text-gray-400 text-sm mt-1">
                   Create your first key to begin integrating.
@@ -145,7 +145,7 @@ const APIKeyList = ({ keys, setKeys, shouldFetchKeyList, setShouldFetchKeyList }
                 {keys.map((key) => (
                   <div
                     key={key.uuid}
-                    className="group flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 sm:p-5 hover:bg-gray-50 transition-colors gap-4"
+                    className="group flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 sm:p-5 transition-colors gap-4"
                   >
                     {/* Left Section */}
                     <div className="flex items-start gap-3 sm:gap-4 flex-1 w-full">
@@ -156,7 +156,7 @@ const APIKeyList = ({ keys, setKeys, shouldFetchKeyList, setShouldFetchKeyList }
                       <div className="space-y-1 min-w-0 flex-1">
                         {/* Name + Type + Status Badges */}
                         <div className="flex items-center flex-wrap gap-2">
-                          <h3 className="font-medium text-gray-900 truncate max-w-[150px] sm:max-w-none">
+                          <h3 className="font-medium truncate max-w-[150px] sm:max-w-none">
                             {key.key_name}
                           </h3>
 

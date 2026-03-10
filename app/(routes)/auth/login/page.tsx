@@ -23,7 +23,7 @@ const LoginPage = () => {
         </aside>
 
         {/* Right Section */}
-        <section className="w-full lg:w-[60%] flex flex-col items-center justify-center p-6 lg:p-12 pt-24 lg:pt-12 bg-white">
+        <section className="w-full lg:w-[60%] flex flex-col items-center justify-center p-6 lg:p-12 pt-24 lg:pt-12 bg-background text-foreground">
           <div className="w-full max-w-md">
             <InstructorLoginForm />
           </div>

@@ -26,7 +26,7 @@ const StudentUpdateDetails = () => {
                 <strong>Filters:</strong> Not supported
             </ApiDoc.Description>
 
-            <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
+            <h4 className="text-md font-semibold text-foreground mt-6 mb-2">
                 Authentication Requirements
             </h4>
 
@@ -36,11 +36,11 @@ const StudentUpdateDetails = () => {
             </ApiDoc.Description>
 
             <ApiDoc.Description>
-                <strong>Tip:</strong> You can use the <a href="#student-identifier-lookup" className="text-blue-600 hover:underline">Student Identifier Lookup</a> endpoint
+                <strong>Tip:</strong> You can use the <a href="#student-identifier-lookup" className="text-primary hover:underline font-medium">Student Identifier Lookup</a> endpoint
                 to perform real-time, debounced availability checks for the identifier during the identifier update flow.
             </ApiDoc.Description>
 
-            <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
+            <h4 className="text-md font-semibold text-foreground mt-6 mb-2">
                 Request Body
             </h4>
 
@@ -59,13 +59,13 @@ const StudentUpdateDetails = () => {
             />
 
             <ApiDoc.Warning title="Rules">
-                <ul className="list-disc pl-6">
+                <ul className="list-disc pl-6 text-muted-foreground">
                     <li className="mb-2">
-                        At least one of <code className="font-mono text-sm text-slate-900 bg-slate-100 px-1 py-0.5 rounded">identifier</code> or <code className="font-mono text-sm text-slate-900 bg-slate-100 px-1 py-0.5 rounded">password</code>
+                        At least one of <code className="font-mono text-sm text-foreground bg-muted px-1 py-0.5 rounded">identifier</code> or <code className="font-mono text-sm text-foreground bg-muted px-1 py-0.5 rounded">password</code>
                         must be provided.
                     </li>
                     <li className="mb-2">
-                        <code className="font-mono text-sm text-slate-900 bg-slate-100 px-1 py-0.5 rounded">current_password</code> is mandatory for all update requests
+                        <code className="font-mono text-sm text-foreground bg-muted px-1 py-0.5 rounded">current_password</code> is mandatory for all update requests
                         and is used to verify the authenticity of the request.
                     </li>
                     <li className="mb-2">

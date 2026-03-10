@@ -18,7 +18,7 @@ import VideoReferenceMaterialsStep from "@/feature/courses/components/lesson-upl
 import toast from "react-hot-toast";
 import { usePresignedUpload } from "@/hooks/usePresignedUpload";
 import { constantFilenames, fileUploadPrefixes, PRIVATE_UPLOAD } from "@/lib/constants/FileConstants";
-import { LessonMediaData } from "@/feature/courses/courseTypes";
+import { LessonMediaData, LessonReferenceMaterial, LessonResourcesAll } from "@/feature/courses/courseTypes";
 
 interface CreateLessonPageProps {
   params: Promise<{ courseId: string }>;
@@ -33,6 +33,11 @@ const addLessonPage = ({params}: CreateLessonPageProps) => {
         file: null,
         duration: 0
     })
+
+    // Persisted states for stepper
+    const [textResources, setTextResources] = useState<LessonResourcesAll | null>(null)
+    const [referenceMaterials, setReferenceMaterials] = useState<Array<LessonReferenceMaterial>>([])
+    const [existingVideoUrl, setExistingVideoUrl] = useState<string | null>(null)
 
     const {uploadFile: uploadLessonMedia, cancelUpload: cancelLessonMediaUpload} = usePresignedUpload(
         constantFilenames.LESSON_MEDIA,
@@ -87,12 +92,20 @@ const addLessonPage = ({params}: CreateLessonPageProps) => {
                 },
                 {
                     label: "Lesson Text Resources",
-                    content: <VideoTextResourcesStep lessonId={lessonId} />,
+                    content: <VideoTextResourcesStep 
+                                lessonId={lessonId} 
+                                textResources={textResources}
+                                setTextResources={setTextResources}
+                             />,
                     onNext: async () => true
                 },
                 {
                     label: "Lesson Reference Material",
-                    content: <VideoReferenceMaterialsStep lessonId={lessonId} />,
+                    content: <VideoReferenceMaterialsStep 
+                                lessonId={lessonId} 
+                                referenceMaterials={referenceMaterials}
+                                setReferenceMaterials={setReferenceMaterials}
+                             />,
                     onNext: async () => true
                 },
                 {
@@ -103,6 +116,8 @@ const addLessonPage = ({params}: CreateLessonPageProps) => {
                                 setFileData={setLessonMediaFile}
                                 uploadProgress={lessonMediaUploadProgress}
                                 cancelUpload={cancelLessonMediaUpload}
+                                existingVideoUrl={existingVideoUrl}
+                                setExistingVideoUrl={setExistingVideoUrl}
                             />,
                     onNext: async () => {
                         if (!lessonId) return false

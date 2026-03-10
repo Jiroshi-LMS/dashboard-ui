@@ -24,15 +24,15 @@ const CourseDetails = () => {
             <ApiDoc.Warning title='Authenticated Student Use-Case (Important)'>
                 If a valid student access token is provided (from authorization header), the response also indicates
                 whether the student is enrolled in each course or not via
-                <code className="mx-1 font-mono text-slate-900 bg-slate-100 px-1.5 py-0.5 rounded">is_enrolled</code> field.
+                <code className="mx-1 font-mono text-foreground bg-muted px-1.5 py-0.5 rounded">is_enrolled</code> field.
                 But if the student access token is expired or invalid, it will throw authentication error.
                 <br /><br />
                 Now, if the access token is not provided with the request, the
-                <code className='mx-1 font-mono text-slate-900 bg-slate-100 px-1.5 py-0.5 rounded'>
+                <code className='mx-1 font-mono text-foreground bg-muted px-1.5 py-0.5 rounded'>
                     is_enrolled
                 </code>
                 field will be set to
-                <code className='mx-1 font-mono text-slate-900 bg-slate-100 px-1.5 py-0.5 rounded'>
+                <code className='mx-1 font-mono text-foreground bg-muted px-1.5 py-0.5 rounded'>
                     false
                 </code> for every course in the list.
             </ApiDoc.Warning>
@@ -50,7 +50,7 @@ const CourseDetails = () => {
             />
 
             <ApiDoc.Description>
-                <strong>Note:</strong> The <code className="mx-1 font-mono text-slate-900 bg-slate-100 px-1.5 py-0.5 rounded">is_enrolled</code> field is always included
+                <strong>Note:</strong> The <code className="mx-1 font-mono text-foreground bg-muted px-1.5 py-0.5 rounded">is_enrolled</code> field is always included
                 in the response and cannot be excluded via selections. Check Response.
             </ApiDoc.Description>
 

@@ -111,22 +111,22 @@ const RefreshToken = () => {
             </ApiDoc.SubHeader>
 
             <div className="space-y-4 mb-6">
-                <div className="bg-slate-50 p-4 rounded-lg border border-slate-100">
-                    <h4 className="font-medium text-slate-800 mb-2">1. Token Lifetimes</h4>
-                    <ul className="list-disc list-inside text-slate-600 space-y-1 ml-2">
+                <div className="bg-muted p-4 rounded-lg border border-border">
+                    <h4 className="font-medium text-foreground mb-2">1. Token Lifetimes</h4>
+                    <ul className="list-disc list-inside text-muted-foreground space-y-1 ml-2">
                         <li>Access tokens: <strong>15 minutes</strong></li>
                         <li>Refresh tokens: <strong>7 days</strong> (sliding window)</li>
                     </ul>
                 </div>
 
-                <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
-                    <h4 className="font-medium text-blue-900 mb-2">2. Rotation Policy (Important)</h4>
-                    <p className="text-blue-800 mb-3 text-sm">
+                <div className="bg-sky-50 dark:bg-sky-950/20 p-4 rounded-lg border border-sky-100 dark:border-sky-900">
+                    <h4 className="font-medium text-sky-900 dark:text-sky-200 mb-2">2. Rotation Policy (Important)</h4>
+                    <p className="text-sky-800 dark:text-sky-300 mb-3 text-sm">
                         Jiroshi implements strict <strong>Refresh Token Rotation</strong>.
                         Every time a refresh token is used to get a new access token,
                         a <strong>new refresh token</strong> is issued in the response.
                     </p>
-                    <ul className="list-disc list-inside text-blue-800 space-y-1 ml-2 text-sm">
+                    <ul className="list-disc list-inside text-sky-800 dark:text-sky-300 space-y-1 ml-2 text-sm">
                         <li>You must replace the old refresh token with the new one immediately.</li>
                         <li>The old refresh token becomes <strong>instantly invalid</strong>.</li>
                     </ul>

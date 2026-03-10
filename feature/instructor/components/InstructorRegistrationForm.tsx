@@ -147,7 +147,7 @@ const InstructorRegistrationForm = () => {
                             <FormItem>
                                 <FormLabel>Code</FormLabel>
                                 <FormControl>
-                                    <Input value="+91" disabled className="bg-gray-100 text-gray-600" />
+                                    <Input value="+91" disabled className="bg-muted text-muted-foreground border-border" />
                                 </FormControl>
                             </FormItem>
                         </div>
@@ -169,10 +169,10 @@ const InstructorRegistrationForm = () => {
                     </div>
 
                     {/* Submit */}
-                    <Button type="submit" className="w-full bg-teal-600 hover:bg-teal-700 cursor-pointer text-white">
+                    <Button type="submit" className="w-full bg-primary hover:bg-teal-600 cursor-pointer text-white font-semibold">
                         Register
                     </Button>
-                    <p className="text-sm text-gray-500">Already have an account? <Link href="/auth/login" className="text-primary">Sign In</Link></p>
+                    <p className="text-sm text-muted-foreground font-medium">Already have an account? <Link href="/auth/login" className="text-primary font-bold hover:underline transition-all">Sign In</Link></p>
                 </form>
             </Form>
         </div>

@@ -24,23 +24,23 @@ const ApiCodeBlock: React.FC<ApiCodeBlockProps> = ({ code, language = 'json', ti
     };
 
     return (
-        <div className="mt-4 rounded-xl overflow-hidden border border-slate-800 bg-[#0f172a] shadow-xl group">
-            <div className="flex items-center justify-between px-4 py-2 bg-slate-800/50 border-b border-slate-800">
+        <div className="mt-4 rounded-xl overflow-hidden border border-zinc-800 bg-[#0f172a] shadow-xl group">
+            <div className="flex items-center justify-between px-4 py-2 bg-zinc-800/50 border-b border-zinc-800">
                 <div className="flex items-center gap-2">
                     {title && (
-                        <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                        <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
                             {title}
                         </span>
                     )}
                     {!title && (
-                        <span className="text-xs font-medium text-slate-500 lowercase">
+                        <span className="text-xs font-medium text-zinc-500 lowercase">
                             {language}
                         </span>
                     )}
                 </div>
                 <button
                     onClick={handleCopy}
-                    className="p-1.5 rounded-md hover:bg-slate-700 text-slate-400 hover:text-slate-100 transition-all flex items-center gap-1.5"
+                    className="p-1.5 rounded-md hover:bg-zinc-700 text-zinc-400 hover:text-zinc-100 transition-all flex items-center gap-1.5"
                     title="Copy code"
                 >
                     {copied ? (

@@ -27,16 +27,16 @@ const ApiDocSection: React.FC<ApiDocSectionProps> = ({
     return (
         <div id={id} className="mb-12 scroll-mt-24">
             <div className="flex items-center gap-3 mb-4">
-                <h2 className="text-2xl font-bold text-gray-900">{title}</h2>
+                <h2 className="text-2xl font-bold text-foreground">{title}</h2>
                 <ApiMethodBadge method={method} />
             </div>
 
-            <div className="bg-gray-50 p-3 rounded-md border border-gray-200 font-mono text-sm text-gray-700 mb-4 flex items-center">
-                <span className="font-bold mr-2 select-none text-gray-400">{method}</span>
+            <div className="bg-muted p-3 rounded-md border border-border font-mono text-sm text-foreground mb-4 flex items-center">
+                <span className="font-bold mr-2 select-none text-muted-foreground">{method}</span>
                 <span>{url}</span>
             </div>
 
-            <p className="text-gray-600 mb-6 leading-relaxed">
+            <p className="text-muted-foreground mb-6 leading-relaxed">
                 {description}
             </p>
 
@@ -58,7 +58,7 @@ const ApiDocSection: React.FC<ApiDocSectionProps> = ({
                 />
             )}
 
-            <hr className="mt-12 border-gray-100" />
+            <hr className="mt-12 border-border" />
         </div>
     );
 };

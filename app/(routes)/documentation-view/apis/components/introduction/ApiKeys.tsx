@@ -8,13 +8,13 @@ const ApiKeys = () => {
                 API Keys
             </ApiDoc.OverviewHeader>
 
-            <p className="text-slate-600 mb-4 leading-relaxed">
+            <p className="text-muted-foreground mb-4 leading-relaxed">
                 Jiroshi uses API keys to authenticate and authorize access to its REST API.
                 API keys are scoped to your account and must be included with every request
                 to protected endpoints.
             </p>
 
-            <p className="text-slate-600 mb-6 leading-relaxed">
+            <p className="text-muted-foreground mb-6 leading-relaxed">
                 You can create and manage API keys from the Jiroshi Dashboard. Each key
                 pair consists of a <strong>Public Key (pk)</strong> and a
                 <strong> Secret Key (sk)</strong>, each intended for different security
@@ -25,13 +25,13 @@ const ApiKeys = () => {
                 Creating an API Key
             </ApiDoc.SubHeader>
 
-            <p className="text-slate-600 mb-4 leading-relaxed">
+            <p className="text-muted-foreground mb-4 leading-relaxed">
                 To generate a new API key, navigate to the
                 <strong> Manage API Keys</strong> section from the dashboard sidebar.
                 On the Manage API Keys page:
             </p>
 
-            <ul className="list-disc pl-6 text-slate-600 mb-6 space-y-2">
+            <ul className="list-disc pl-6 text-muted-foreground mb-6 space-y-2">
                 <li>Enter a meaningful name for the API key to identify its purpose.</li>
                 <li>
                     Select an expiration period. Available options include
@@ -41,7 +41,7 @@ const ApiKeys = () => {
                 <li>Generate the API key.</li>
             </ul>
 
-            <div className="bg-amber-50 border border-amber-100 rounded-lg p-4 text-amber-900 text-sm mb-6">
+            <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-100 dark:border-amber-900 rounded-lg p-4 text-amber-900 dark:text-amber-300 text-sm mb-6">
                 <p className="font-semibold mb-1">Important</p>
                 <p>
                     The Public Key and Secret Key are displayed <strong>only once</strong>
@@ -54,12 +54,12 @@ const ApiKeys = () => {
                 Public vs Secret Keys
             </ApiDoc.SubHeader>
 
-            <p className="text-slate-600 mb-4 leading-relaxed">
+            <p className="text-muted-foreground mb-4 leading-relaxed">
                 Jiroshi distinguishes between public and secret API keys to enforce
                 proper security boundaries:
             </p>
 
-            <ul className="list-disc pl-6 text-slate-600 mb-6 space-y-2">
+            <ul className="list-disc pl-6 text-muted-foreground mb-6 space-y-2">
                 <li>
                     <strong>Public Key (pk)</strong> - Safe to use in client-side
                     applications such as web or mobile frontends. Required for all
@@ -84,7 +84,7 @@ const ApiKeys = () => {
                 </li>
             </ul>
 
-            <div className="bg-red-50 border border-red-100 rounded-lg p-4 text-red-900 text-sm mb-6">
+            <div className="bg-red-50 dark:bg-red-950/20 border border-red-100 dark:border-red-900 rounded-lg p-4 text-red-900 dark:text-red-300 text-sm mb-6">
                 <p className="font-semibold mb-1">Security Warning</p>
                 <p>
                     Do not store or transmit secret keys in frontend code, public
@@ -97,20 +97,20 @@ const ApiKeys = () => {
                 Current Usage
             </ApiDoc.SubHeader>
 
-            <p className="text-slate-600 mb-6 leading-relaxed">
+            <p className="text-muted-foreground mb-6 leading-relaxed">
                 At present, all documented API endpoints require only the use of the
                 <strong> Public Key (pk)</strong>. While Secret Keys are not actively
                 used in the current API surface, they are reserved for upcoming features
                 and enhanced security-sensitive workflows.
             </p>
 
-            <p className="text-slate-600 mb-6 leading-relaxed">
+            <p className="text-muted-foreground mb-6 leading-relaxed">
                 Each API endpoint in this documentation is explicitly tagged to indicate
                 whether it requires a <strong>pk</strong> or <strong>sk</strong>, allowing
                 you to clearly distinguish frontend-safe and server-only operations.
             </p>
 
-            <div className="bg-amber-50 border border-amber-100 rounded-lg p-4 text-amber-900 text-sm mb-6">
+            <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-100 dark:border-amber-900 rounded-lg p-4 text-amber-900 dark:text-amber-300 text-sm mb-6">
                 <p className="font-semibold mb-1">Key Rotation Policy</p>
                 <p>
                     Jiroshi does not enforce a key rotation policy. However, it is
@@ -123,18 +123,18 @@ const ApiKeys = () => {
                 Key Revocation Behavior
             </ApiDoc.SubHeader>
 
-            <p className="text-slate-600 mb-6 leading-relaxed">
+            <p className="text-muted-foreground mb-6 leading-relaxed">
                 API keys are revokable. When a key is revoked, it is no longer valid and
                 cannot be used to access the API. This ensures that compromised keys are
                 quickly rendered ineffective.
             </p>
 
-            <p className="text-slate-600 mb-6 leading-relaxed">
+            <p className="text-muted-foreground mb-6 leading-relaxed">
                 API keys can be revoked from the Jiroshi Dashboard by simply deleting a particular key.
                 It also gets revoked on expiration.
             </p>
 
-            <div className="bg-red-50 border border-red-100 rounded-lg p-4 text-red-900 text-sm mb-6">
+            <div className="bg-red-50 dark:bg-red-950/20 border border-red-100 dark:border-red-900 rounded-lg p-4 text-red-900 dark:text-red-300 text-sm mb-6">
                 <p className="font-semibold mb-1">API Abuse policy</p>
                 <p>
                     If API abuse is suspected, Jiroshi reserves the right to revoke API keys
@@ -142,7 +142,7 @@ const ApiKeys = () => {
                 </p>
             </div>
 
-            <hr className="mt-12 border-slate-100" />
+            <hr className="mt-12 border-border" />
         </div>
 
     )

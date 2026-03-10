@@ -133,7 +133,7 @@ const InstructorSetupProfileForm = () => {
                                             <button
                                                 type="button"
                                                 onClick={() => profileImageInput?.current?.click()}
-                                                className="absolute bottom-1 right-1 bg-teal-700 text-white p-2.5 rounded-full shadow-lg hover:bg-teal-800 transition-all transform hover:scale-110 active:scale-95 z-10 border-2 border-white"
+                                                className="absolute bottom-1 right-1 bg-primary text-white p-2.5 rounded-full shadow-lg hover:bg-teal-600 transition-all transform hover:scale-110 active:scale-95 z-10 border-2 border-background"
                                                 title="Upload Profile Picture"
                                             >
                                                 <Camera size={20} />
@@ -147,8 +147,8 @@ const InstructorSetupProfileForm = () => {
                                                     </div>
                                                     : null
                                             }
-                                            <h4 className="font-bold text-black text-[14px]">Profile Picture</h4>
-                                            <span className="font-medium text-gray-500 text-[12px]">PNG, JPEG under {allowedFileSize} MB</span>
+                                            <h4 className="font-bold text-foreground text-[14px]">Profile Picture</h4>
+                                            <span className="font-medium text-muted-foreground text-[12px]">PNG, JPEG under {allowedFileSize} MB</span>
                                         </div>
                                     </div>
                                 </div>
@@ -186,7 +186,7 @@ const InstructorSetupProfileForm = () => {
                                                 )}
                                             />
                                             <div className="flex justify-center lg:justify-end items-center w-full my-6">
-                                                <Button className='bg-primary text-white hover:bg-teal-600 hover:text-white cursor-pointer my-4 w-full lg:w-auto transition-all'>Set Profile</Button>
+                                                <Button className='bg-primary text-white hover:bg-teal-600 cursor-pointer my-4 w-full lg:w-auto transition-all'>Set Profile</Button>
                                             </div>
                                         </form>
                                     </Form>
@@ -195,7 +195,7 @@ const InstructorSetupProfileForm = () => {
                             <div className="flex justify-center lg:justify-end items-center w-full my-6">
                                 <Button
                                     onClick={form.handleSubmit(onSubmit)}
-                                    className='bg-gray-100 text-gray-600 hover:bg-gray-200 cursor-pointer my-4 w-full lg:w-auto transition-all'>Skip for now</Button>
+                                    className='bg-muted text-muted-foreground hover:bg-muted/80 cursor-pointer my-4 w-full lg:w-auto transition-all border border-border'>Skip for now</Button>
                             </div>
                         </div>
                     </div>

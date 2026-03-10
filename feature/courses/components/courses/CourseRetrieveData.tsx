@@ -52,7 +52,7 @@ const CourseRetrieveData = ({ courseId }: { courseId: string }) => {
 
   if (isLoading) return <Loader className="h-[30vh]" />;
   return (
-    <aside className="flex flex-col lg:flex-row gap-6 bg-gray-50 w-full p-4 rounded-xl shadow-sm">
+    <aside className="flex flex-col lg:flex-row gap-6 w-full p-4 rounded-xl shadow-sm">
       {!course ? (
         <div className="flex justify-center items-center min-h-[40vh] w-full">
           <h1 className="text-red-500 font-semibold text-lg text-center max-w-md">
@@ -74,7 +74,7 @@ const CourseRetrieveData = ({ courseId }: { courseId: string }) => {
 
           {/* Course Details */}
           <div className="flex flex-col justify-start w-full lg:w-1/2 space-y-4">
-            <h2 className="text-2xl font-bold text-gray-800 tracking-tight">{course.title}</h2>
+            <h2 className="text-2xl font-bold tracking-tight">{course.title}</h2>
 
             <div className="flex flex-wrap items-center justify-between gap-4 py-2 border-y border-gray-100">
               <div className="flex items-center gap-3">
@@ -88,7 +88,7 @@ const CourseRetrieveData = ({ courseId }: { courseId: string }) => {
                 </Badge>
 
                 {course.access_status !== "draft" && (
-                  <div className="flex items-center gap-2 px-3 py-1 bg-white rounded-full border border-gray-100 shadow-sm transition-all hover:bg-gray-50 group">
+                  <div className="flex items-center gap-2 px-3 py-1 rounded-full border border-gray-100 shadow-sm transition-all hover:bg-gray-50 group">
                     <span className={cn(
                       "text-[10px] font-black uppercase tracking-tight transition-all",
                       course.access_status === 'inactive' ? "text-red-600" : "text-gray-300"
@@ -135,7 +135,7 @@ const CourseRetrieveData = ({ courseId }: { courseId: string }) => {
               <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">
                 Course Description
               </h4>
-              <p className="text-slate-600 text-sm leading-relaxed text-left max-h-[120px] overflow-auto pr-2 custom-scrollbar font-medium">
+              <p className="text-sm leading-relaxed text-left max-h-[120px] overflow-auto pr-2 custom-scrollbar font-medium">
                 {course.description || "No description provided."}
               </p>
             </div>

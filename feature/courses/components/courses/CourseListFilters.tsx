@@ -34,12 +34,12 @@ const CourseListFilters = ({courseFilters, setCourseFilters, setSearch, handleFi
         <PopoverContent
             side="bottom"
             align="start"
-            className=" z-30 w-80 bg-white border border-gray-200 rounded-md p-4 shadow-sm my-1"
+            className=" z-30 w-80 color-background border border-gray-200 rounded-md p-4 shadow-sm my-1"
         >
             <div className="flex flex-col gap-5">
             {/* Date Range */}
             <div className="space-y-2">
-                <p className="text-sm font-semibold text-gray-700">
+                <p className="text-sm font-semibold">
                 Date Range
                 </p>
                 <DateRangePicker
@@ -74,7 +74,7 @@ const CourseListFilters = ({courseFilters, setCourseFilters, setSearch, handleFi
                 />
             </div>
             <div className="space-y-2">
-                <p className="text-sm font-semibold text-gray-700">Status</p>
+                <p className="text-sm font-semibold">Status</p>
                 <Select
                 onValueChange={(statusValue: string) => {
                     if (statusValue === "all")

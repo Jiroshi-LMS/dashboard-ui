@@ -8,7 +8,7 @@ const ResponseFormat = () => {
                 Response Format
             </ApiDoc.OverviewHeader>
 
-            <p className="text-slate-600 mb-6 leading-relaxed">
+            <p className="text-muted-foreground mb-6 leading-relaxed">
                 All Jiroshi API responses follow a consistent, envelope-based JSON structure.
                 This applies to both successful and failed requests, allowing clients to
                 reliably parse and handle responses across all endpoints.
@@ -31,14 +31,14 @@ const ResponseFormat = () => {
                 language="json"
             />
 
-            <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-8">
+            <ul className="list-disc pl-6 text-muted-foreground space-y-2 mb-8">
                 <li>
                     <strong>status</strong> - Indicates whether the request was successfully
                     processed (<code>true</code>) or failed (<code>false</code>).
                 </li>
                 <li>
                     <strong>results</strong> - Indicates whether the
-                    <code className="mx-1 font-mono">data</code> field is non-null.
+                    <code className="mx-1 font-mono bg-muted px-1 rounded">data</code> field is non-null.
                 </li>
                 <li>
                     <strong>message</strong> - A human-readable success or error message.
@@ -48,7 +48,7 @@ const ResponseFormat = () => {
                 </li>
                 <li>
                     <strong>error_code</strong> - A machine-readable error identifier, or
-                    <code className="mx-1 font-mono">null</code> for successful responses.
+                    <code className="mx-1 font-mono bg-muted px-1 rounded">null</code> for successful responses.
                 </li>
             </ul>
 
@@ -56,7 +56,7 @@ const ResponseFormat = () => {
                 Paginated Response Structure
             </ApiDoc.SubHeader>
 
-            <p className="text-slate-600 mb-4 leading-relaxed">
+            <p className="text-muted-foreground mb-4 leading-relaxed">
                 Endpoints that return collections use a paginated response format.
                 Pagination metadata is included alongside the result set.
             </p>
@@ -110,7 +110,7 @@ const ResponseFormat = () => {
                 language="json"
             />
 
-            <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-8">
+            <ul className="list-disc pl-6 text-muted-foreground space-y-2 mb-8">
                 <li>
                     <strong>results</strong> - A list of resource objects for the current page.
                 </li>
@@ -123,15 +123,15 @@ const ResponseFormat = () => {
                 Error Response Structure
             </ApiDoc.SubHeader>
 
-            <p className="text-slate-600 leading-relaxed">
+            <p className="text-muted-foreground leading-relaxed">
                 Error responses use the same envelope structure, with
-                <code className="mx-1 font-mono">status</code> and
-                <code className="mx-1 font-mono">results</code> set to
-                <code className="mx-1 font-mono">false</code>,
-                <code className="mx-1 font-mono">data</code> set to
-                <code className="mx-1 font-mono">null</code>
+                <code className="mx-1 font-mono bg-muted px-1 rounded">status</code> and
+                <code className="mx-1 font-mono bg-muted px-1 rounded">results</code> set to
+                <code className="mx-1 font-mono bg-muted px-1 rounded">false</code>,
+                <code className="mx-1 font-mono bg-muted px-1 rounded">data</code> set to
+                <code className="mx-1 font-mono bg-muted px-1 rounded">null</code>
                 or maybe some structured error, and a non-null
-                <code className="mx-1 font-mono">error_code</code>.
+                <code className="mx-1 font-mono bg-muted px-1 rounded">error_code</code>.
             </p>
 
             {/* Placeholder: Add full error response examples */}
@@ -150,7 +150,7 @@ const ResponseFormat = () => {
             {/* Placeholder: Add HTTP status code to error_code mapping */}
             {/* Placeholder: Add empty-state pagination behavior */}
 
-            <hr className="mt-12 border-slate-100" />
+            <hr className="mt-12 border-border" />
         </div>
 
     )

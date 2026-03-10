@@ -92,7 +92,7 @@ const EnrollmentsListData = ({ studentUUID, courseUUID }: EnrollmentsListDataPro
 
     return (
         <>
-            <section className="flex flex-wrap justify-between items-center gap-3 bg-white/60 backdrop-blur-sm p-3 rounded-xl border border-gray-200 shadow-sm">
+            <section className="flex flex-wrap justify-between items-center gap-3 backdrop-blur-sm p-3 rounded-xl border border-gray-200 shadow-sm">
 
                 <EnrollmentsListFilters
                     enrollmentFilters={enrollmentDataFilters}

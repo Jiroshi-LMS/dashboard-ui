@@ -83,7 +83,7 @@ const LessonResourceRetrieveView = ({lessonId}: {lessonId: string}) => {
                 (lessonResources?.notes) ?
                 <TabsContent
                 value="notes"
-                className="text-gray-700 text-sm leading-relaxed min-h-[20vh]"
+                className="text-sm leading-relaxed min-h-[20vh]"
                 >
                     {lessonResources.notes}
                 </TabsContent>
@@ -102,7 +102,7 @@ const LessonResourceRetrieveView = ({lessonId}: {lessonId: string}) => {
                 <div className="space-y-3">
                     {lessonResources?.related_links?.map((link, idx) => (
                     <div key={idx} className="border-b pb-2">
-                        <h4 className="font-semibold text-gray-800">
+                        <h4 className="font-semibold">
                         {link.title}
                         </h4>
                         <Link
@@ -137,7 +137,7 @@ const LessonResourceRetrieveView = ({lessonId}: {lessonId: string}) => {
                         <CardContent className="flex items-center gap-3 px-4 py-1">
                         <FileIcon className='w-10 h-16 text-teal-500' />
                         <div className="flex-1">
-                            <p className="font-medium text-gray-800 text-sm">
+                            <p className="font-medium text-sm">
                             {file.title}
                             </p>
                             <p className="text-gray-500 text-xs">

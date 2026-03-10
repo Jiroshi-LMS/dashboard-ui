@@ -104,7 +104,7 @@ const LessonVideoUpdateStep = ({
       <section>
         <div>
           <h2 className="section-title">Lesson Video Upload</h2>
-          <p className="text-gray-600 text-[12px] mb-2 text-justify font-semibold">
+          <p className="text-[12px] mb-2 text-justify font-semibold">
             Upload the lesson video. It will be served to enrolled course members.
           </p>
 
@@ -150,7 +150,7 @@ const LessonVideoUpdateStep = ({
 
           {/* Preview Section */}
           {previewURL && (
-            <div className="mt-8 w-[80%] mx-auto border border-gray-200 rounded-xl shadow-sm p-4 relative bg-white">
+            <div className="mt-8 w-[80%] mx-auto border border-gray-200 rounded-xl shadow-sm p-4 relative">
               <button
                 onClick={clearVideo}
                 className="absolute top-3 right-3 text-gray-400 hover:text-red-500 transition"

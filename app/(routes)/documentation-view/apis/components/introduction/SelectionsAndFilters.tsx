@@ -8,7 +8,7 @@ const SelectionsAndFilters = () => {
                 Selections & Filters
             </ApiDoc.OverviewHeader>
 
-            <p className="text-slate-600 mb-6 leading-relaxed">
+            <p className="text-muted-foreground mb-6 leading-relaxed">
                 Jiroshi APIs provide selection and filtering mechanisms to optimize data
                 retrieval, reduce response payload size, and improve performance for
                 data-intensive endpoints.
@@ -20,13 +20,13 @@ const SelectionsAndFilters = () => {
                 Selections
             </ApiDoc.SubHeader>
 
-            <p className="text-slate-600 mb-4 leading-relaxed">
+            <p className="text-muted-foreground mb-4 leading-relaxed">
                 Selections allow clients to explicitly specify which fields should be
                 returned in the response. This is particularly useful for list and
                 retrieve APIs where returning the full object is unnecessary.
             </p>
 
-            <p className="text-slate-600 mb-4 leading-relaxed">
+            <p className="text-muted-foreground mb-4 leading-relaxed">
                 For example, when displaying a list of lessons where only the
                 <strong> title</strong> and <strong> description</strong> are required,
                 selections can be used to fetch only those fields.
@@ -38,9 +38,9 @@ const SelectionsAndFilters = () => {
                 code={`GET /courses/<course_id>/lessons/?selections=title,description`}
             />
 
-            <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-8">
+            <ul className="list-disc pl-6 text-muted-foreground space-y-2 mb-8">
                 <li>
-                    Only fields included in <code className="font-mono">selections</code>
+                    Only fields included in <code className="font-mono bg-muted px-1 rounded">selections</code>
                     are returned in the response.
                 </li>
                 <li>
@@ -55,7 +55,7 @@ const SelectionsAndFilters = () => {
                 </li>
             </ul>
 
-            <p className="text-slate-600 mb-8 leading-relaxed">
+            <p className="text-muted-foreground mb-8 leading-relaxed">
                 Not all APIs support selections. Wherever supported, the list of allowed
                 selectable fields is documented explicitly for that endpoint.
             </p>
@@ -66,7 +66,7 @@ const SelectionsAndFilters = () => {
                 Filters (Listing APIs Only)
             </ApiDoc.SubHeader>
 
-            <p className="text-slate-600 mb-6 leading-relaxed">
+            <p className="text-muted-foreground mb-6 leading-relaxed">
                 Listing APIs support a set of generic filters that allow clients to
                 narrow down results based on search terms, ordering, and date ranges.
             </p>
@@ -77,9 +77,9 @@ const SelectionsAndFilters = () => {
                 Search
             </ApiDoc.SubHeader>
 
-            <p className="text-slate-600 mb-4 leading-relaxed">
+            <p className="text-muted-foreground mb-4 leading-relaxed">
                 To perform a generic search across all searchable fields, use the
-                <code className="mx-1 font-mono">search</code> query parameter.
+                <code className="mx-1 font-mono bg-muted px-1 rounded">search</code> query parameter.
             </p>
 
             <ApiDoc.Body
@@ -88,7 +88,7 @@ const SelectionsAndFilters = () => {
                 code={`GET /courses/?search=backend`}
             />
 
-            <p className="text-slate-600 mb-4 leading-relaxed">
+            <p className="text-muted-foreground mb-4 leading-relaxed">
                 Field-specific searches can also be performed by using the field name
                 directly as a query parameter.
             </p>
@@ -99,7 +99,7 @@ const SelectionsAndFilters = () => {
                 code={`GET /courses/?title=django`}
             />
 
-            <p className="text-slate-600 mb-8 leading-relaxed">
+            <p className="text-muted-foreground mb-8 leading-relaxed">
                 Searchable fields vary by API and are documented individually for each
                 endpoint.
             </p>
@@ -110,15 +110,15 @@ const SelectionsAndFilters = () => {
                 Ordering
             </ApiDoc.SubHeader>
 
-            <p className="text-slate-600 mb-4 leading-relaxed">
+            <p className="text-muted-foreground mb-4 leading-relaxed">
                 All listing APIs apply a default ordering of
-                <code className="mx-1 font-mono">-created_at</code>
+                <code className="mx-1 font-mono bg-muted px-1 rounded">-created_at</code>
                 (descending by creation time).
             </p>
 
-            <p className="text-slate-600 mb-4 leading-relaxed">
+            <p className="text-muted-foreground mb-4 leading-relaxed">
                 This behavior can be overridden using the
-                <code className="mx-1 font-mono">ordering</code> query parameter.
+                <code className="mx-1 font-mono bg-muted px-1 rounded">ordering</code> query parameter.
             </p>
 
             <ApiDoc.Body
@@ -137,18 +137,18 @@ GET /courses/?ordering=-duration`}
                 Date Range Filters
             </ApiDoc.SubHeader>
 
-            <p className="text-slate-600 mb-4 leading-relaxed">
+            <p className="text-muted-foreground mb-4 leading-relaxed">
                 Date range filtering follows a consistent naming convention for all
                 supported date fields.
             </p>
 
-            <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-6">
+            <ul className="list-disc pl-6 text-muted-foreground space-y-2 mb-6">
                 <li>
-                    <code className="font-mono">&lt;field&gt;_after</code> - Filters records
+                    <code className="font-mono bg-muted px-1 rounded">&lt;field&gt;_after</code> - Filters records
                     after the specified date.
                 </li>
                 <li>
-                    <code className="font-mono">&lt;field&gt;_before</code> - Filters records
+                    <code className="font-mono bg-muted px-1 rounded">&lt;field&gt;_before</code> - Filters records
                     before the specified date.
                 </li>
             </ul>
@@ -159,7 +159,7 @@ GET /courses/?ordering=-duration`}
                 code={`GET /courses/?created_at_after=2025-01-01T00:00:00Z&created_at_before=2025-01-31T23:59:59Z`}
             />
 
-            <div className="bg-amber-50 border-l-4 border-amber-400 p-4 my-6">
+            <div className="bg-amber-50 dark:bg-amber-950/20 border-l-4 border-amber-400 p-4 my-6">
                 <div className="flex">
                     <div className="flex-shrink-0">
                         <svg className="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
@@ -167,14 +167,14 @@ GET /courses/?ordering=-duration`}
                         </svg>
                     </div>
                     <div className="ml-3">
-                        <p className="text-sm text-amber-800">
+                        <p className="text-sm text-amber-800 dark:text-amber-300">
                             <strong>Important:</strong> All date values must be provided in UTC format.
                         </p>
                     </div>
                 </div>
             </div>
 
-            <hr className="mt-12 border-slate-100" />
+            <hr className="mt-12 border-border" />
         </div>
 
     )

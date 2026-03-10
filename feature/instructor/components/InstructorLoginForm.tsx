@@ -91,11 +91,10 @@ const InstructorLoginForm = () => {
                 )}
             />
 
-            {/* Submit */}
-            <Button type="submit" className="w-full bg-teal-600 hover:bg-teal-700 cursor-pointer text-white">
+            <Button type="submit" className="w-full bg-primary hover:bg-teal-600 cursor-pointer text-white">
                 Sign In
             </Button>
-            <p className="text-sm text-gray-500">Don't have an account? <Link href="/auth/signup" className="text-primary">Register</Link></p>
+            <p className="text-sm text-muted-foreground">Don't have an account? <Link href="/auth/signup" className="text-primary font-semibold hover:underline">Register</Link></p>
             </form>
         </Form>
     </div>

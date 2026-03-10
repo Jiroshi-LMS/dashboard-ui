@@ -27,7 +27,7 @@ const StudentProfileDetails = () => {
                 <strong>Filters:</strong> Not supported
             </ApiDoc.Description>
 
-            <h4 className="text-md font-semibold text-slate-900 mt-6 mb-2">
+            <h4 className="text-md font-semibold text-foreground mt-6 mb-2">
                 Authentication Requirements
             </h4>
 

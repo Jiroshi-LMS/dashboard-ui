@@ -12,24 +12,28 @@ import {
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { UploadIcon, FileTextIcon, FileIcon, XIcon } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z, { object } from "zod";
 import { referenceMaterialResourceFormSchema } from "../../courseSchemas";
-import { LessonReferenceMaterial } from "../../courseTypes";
+import { LessonReferenceMaterial, LessonResourcesAll } from "../../courseTypes";
 import toast from "react-hot-toast";
 import { usePresignedUpload } from "@/hooks/usePresignedUpload";
 import { constantFilenames, fileContentTypes, fileUploadPrefixes, PRIVATE_UPLOAD } from "@/lib/constants/FileConstants";
 import { units } from "@/lib/constants/common";
-import { CreateLessonReferenceMaterialService, RemoveLessonReferenceMaterialService } from "../../courseServices";
+import { CreateLessonReferenceMaterialService, FetchLessonResourcesService, RemoveLessonReferenceMaterialService } from "../../courseServices";
 import Loader from "@/app/components/atoms/Loader";
 import { Progress } from "@/components/ui/progress";
 
 const VideoReferenceMaterialsStep = ({
   lessonId,
+  referenceMaterials,
+  setReferenceMaterials,
 }: {
   lessonId: string | null;
+  referenceMaterials: Array<LessonReferenceMaterial>;
+  setReferenceMaterials: React.Dispatch<React.SetStateAction<Array<LessonReferenceMaterial>>>;
 }) => {
   const allowedFileSize = 20; // MBs
   const {uploadFile, setPresignedData} = usePresignedUpload(
@@ -39,9 +43,33 @@ const VideoReferenceMaterialsStep = ({
       lessonId
   )
 
-  const [referenceMaterialList, setReferenceMaterialList] = useState<Array<LessonReferenceMaterial>>([])
+  const [initialLoading, setInitialLoading] = useState<boolean>(false);
   const [referenceUploadProgress, setReferenceUploadProgress] = useState<number>(0)
   const [referenceCardLoaders, setReferenceCardLoaders] = useState<Record<number, boolean>>({})
+
+  useEffect(() => {
+    if (lessonId && referenceMaterials.length === 0) {
+      const fetchResources = async () => {
+        setInitialLoading(true);
+        const setResourcesState = (data: LessonResourcesAll | null) => {
+          if (data && data.file_resources) {
+            const formattedResources = data.file_resources.map(res => ({
+              title: res.title,
+              file_name: res.file_name,
+              file_size: res.file_size,
+              file_type: res.file_type,
+              file_key: res.file_key,
+              resource_id: res.uuid
+            }));
+            setReferenceMaterials(formattedResources);
+          }
+        };
+        await FetchLessonResourcesService(lessonId, (data) => setResourcesState(data as LessonResourcesAll | null));
+        setInitialLoading(false);
+      };
+      fetchResources();
+    }
+  }, [lessonId, referenceMaterials.length, setReferenceMaterials]);
 
   const referenceMaterialForm = useForm<
     z.infer<typeof referenceMaterialResourceFormSchema>
@@ -85,7 +113,7 @@ const VideoReferenceMaterialsStep = ({
       const creationResponse = await CreateLessonReferenceMaterialService(material, lessonId)
       if (creationResponse.success && creationResponse.response?.resource_id) {
         material.resource_id = creationResponse.response.resource_id
-        setReferenceMaterialList(prev => [...prev, material])
+        setReferenceMaterials(prev => [...prev, material])
         toast.success("Reference material added successfully!");
         referenceMaterialForm.reset();
       }
@@ -100,7 +128,7 @@ const VideoReferenceMaterialsStep = ({
   };
 
   const removeReferenceMaterial = async (index: number) => {
-    const resource = referenceMaterialList[index];
+    const resource = referenceMaterials[index];
     if (!resource) return;
 
     setReferenceCardLoaders((prev) => ({ ...prev, [index]: true }));
@@ -108,7 +136,7 @@ const VideoReferenceMaterialsStep = ({
       const deletionResponse = await RemoveLessonReferenceMaterialService(resource.resource_id as string);
 
       if (deletionResponse) {
-        setReferenceMaterialList((prev) => prev.filter((_, i) => i !== index));
+        setReferenceMaterials((prev) => prev.filter((_, i) => i !== index));
         toast.success("Lesson Reference Material Deleted Successfully!")
       } else {
         toast.error("Failed to remove reference.");
@@ -133,16 +161,17 @@ const VideoReferenceMaterialsStep = ({
   };
 
   if (!lessonId) return <Loader className="h-screen" />
+  if (initialLoading) return <Loader className="h-screen" />
 
   return (
     <section className="w-[80%] mx-auto space-y-10">
       {
-        (referenceUploadProgress > 0) ? 
-        <div className="flex justify-center items-center border border-gray-200 bg-white rounded-2xl shadow-sm p-8 transition hover:shadow-md min-h-[50vh]">
+        (referenceUploadProgress > 0 || referenceMaterialForm.formState.isSubmitting) ? 
+        <div className="flex justify-center items-center border border-gray-200 rounded-2xl shadow-sm p-8 transition hover:shadow-md min-h-[50vh]">
           <Progress value={referenceUploadProgress} />
         </div> :
-      <div className="border border-gray-200 bg-white rounded-2xl shadow-sm p-8 transition hover:shadow-md">
-        <h1 className="section-title text-2xl font-semibold mb-2 text-gray-900">
+      <div className="border border-gray-200 rounded-2xl shadow-sm p-8 transition hover:shadow-md">
+        <h1 className="section-title text-2xl font-semibold mb-2">
           Add Reference Materials (Optional)
         </h1>
         <p className="text-gray-600 text-[13px] mb-6 font-medium">
@@ -226,9 +255,14 @@ const VideoReferenceMaterialsStep = ({
             <div className="flex justify-end">
               <Button
                 type="submit"
+                disabled={referenceMaterialForm.formState.isSubmitting}
                 className="bg-teal-600 text-white hover:bg-teal-700 flex items-center gap-2"
               >
-                <UploadIcon size={16} />
+                {referenceMaterialForm.formState.isSubmitting ? (
+                  <span className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full" />
+                ) : (
+                  <UploadIcon size={16} />
+                )}
                 Upload Reference
               </Button>
             </div>
@@ -237,11 +271,11 @@ const VideoReferenceMaterialsStep = ({
       </div>
       }
       {/* Uploaded Materials Grid */}
-      {referenceMaterialList.length > 0 && (
+      {referenceMaterials.length > 0 && (
         <div>
           <h2 className="text-lg font-semibold mb-4">Uploaded Materials</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {referenceMaterialList.map((item, index) => {
+            {referenceMaterials.map((item, index) => {
               const IsDeleting = referenceCardLoaders[index]
               return (
                 <Card
@@ -266,7 +300,7 @@ const VideoReferenceMaterialsStep = ({
                       </button>
                     }
                   </CardHeader>
-                  <CardContent className="flex flex-col gap-2 text-sm text-gray-700">
+                  <CardContent className="flex flex-col gap-2 text-sm">
                     <div className="flex items-center gap-2">
                       <FileIcon size={16} className="text-teal-600" />
                       <span className="truncate">{item.file_name}</span>

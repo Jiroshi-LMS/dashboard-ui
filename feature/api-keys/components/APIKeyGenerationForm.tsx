@@ -52,14 +52,14 @@ const APIKeyGenerationForm = (
 
   return (
     <Card className="border border-gray-200">
-      <CardHeader className="border-b border-gray-100 bg-white">
-        <CardTitle className="text-lg font-semibold text-gray-900">Create New Key</CardTitle>
+      <CardHeader className="border-b border-gray-100">
+        <CardTitle className="text-lg font-semibold">Create New Key</CardTitle>
         <CardDescription>
           Generate a new public and private key pair for API access
         </CardDescription>
       </CardHeader>
 
-      <CardContent className="p-6 bg-white">
+      <CardContent className="p-6">
         <Form {...form}>
           <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-end">
             <FormField
@@ -67,7 +67,7 @@ const APIKeyGenerationForm = (
               name="key_name"
               render={({ field }) => (
                 <FormItem className="flex-1">
-                  <FormLabel className="text-sm font-medium text-gray-700">Key Name</FormLabel>
+                  <FormLabel className="text-sm font-medium">Key Name</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="e.g. Production API"
@@ -85,7 +85,7 @@ const APIKeyGenerationForm = (
               name="expires_at_days"
               render={({ field }) => (
                 <FormItem className="w-full sm:w-48">
-                  <FormLabel className="text-sm font-medium text-gray-700">Expiration</FormLabel>
+                  <FormLabel className="text-sm font-medium">Expiration</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger className="h-10">

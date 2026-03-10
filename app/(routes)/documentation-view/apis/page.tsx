@@ -6,6 +6,7 @@ import ApiSidebar, { ApiSectionLink } from '@/app/components/api-docs/ApiSidebar
 import { AlertCircle, Info, Menu, Turtle } from 'lucide-react';
 import Link from 'next/link';
 import { SidebarInset } from "@/components/ui/sidebar";
+import { ThemeToggle } from '@/app/components/atoms/ThemeToggle';
 import Introduction from './components/introduction/Introduction';
 import ApiKeys from './components/introduction/ApiKeys';
 import ApiKeyUsage from './components/introduction/ApiKeyUsage';
@@ -86,34 +87,37 @@ const ApiDocumentationPage = () => {
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
 
   return (
-    <div className="w-full min-h-screen bg-white font-sans text-slate-900 selection:bg-teal-100 selection:text-teal-900">
+    <div className="w-full min-h-screen font-sans bg-background text-foreground selection:bg-teal-100 dark:selection:bg-teal-900 selection:text-teal-900 dark:selection:text-teal-100">
       {/* Mobile/Tablet Header */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-[80] bg-white/90 backdrop-blur-xl border-b border-slate-200/60 px-6 h-16 flex items-center justify-between shadow-[0_1px_10px_-5px_rgba(0,0,0,0.1)]">
+      <div className="md:hidden fixed top-0 left-0 right-0 z-[80] backdrop-blur-xl bg-background/80 border-b border-border px-6 h-16 flex items-center justify-between shadow-sm">
         <Link className="flex items-center gap-2" href="/instructor/dashboard">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-white shadow-md shadow-teal-500/20">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-primary-foreground shadow-md shadow-teal-500/20">
             <Turtle size={16} />
           </div>
-          <span className="font-black text-slate-800 tracking-tight">Jiroshi Docs</span>
+          <span className="font-black text-foreground tracking-tight">Jiroshi Docs</span>
         </Link>
-        <button
-          onClick={() => setIsSidebarOpen(true)}
-          className="p-2 -mr-2 text-slate-500 hover:text-teal-600 bg-slate-50 rounded-lg transition-all"
-        >
-          <Menu size={20} />
-        </button>
+        <div className="flex items-center gap-2">
+          <ThemeToggle iconOnly />
+          <button
+            onClick={() => setIsSidebarOpen(true)}
+            className="p-2 -mr-2 text-muted-foreground hover:text-primary bg-muted rounded-lg transition-all"
+          >
+            <Menu size={20} />
+          </button>
+        </div>
       </div>
-      <SidebarInset className="w-full max-w-full bg-white">
+      <SidebarInset className="w-full max-w-full bg-background">
         {/* Hero Header Section */}
-        <div className="bg-[#fafafa] border-b border-slate-200/60 pt-28 md:pt-20 pb-12 overflow-x-hidden relative">
+        <div className="border-b border-border pt-28 md:pt-20 pb-12 overflow-x-hidden relative">
           <div className="w-full max-w-7xl mx-auto px-6 md:px-10 lg:px-12 relative z-10">
             <div className="max-w-3xl">
               <div className="flex items-center gap-2 mb-4">
-                <span className="px-2 py-0.5 rounded-full bg-teal-50 text-teal-600 text-[10px] font-bold uppercase tracking-widest border border-teal-100 italic">V1.0 Stable</span>
+                <span className="px-2 py-0.5 rounded-full text-teal-600 dark:text-teal-400 text-[10px] font-bold uppercase tracking-widest border border-teal-100 dark:border-teal-900 italic">V1.0 Stable</span>
               </div>
-              <h1 className="text-3xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight break-words leading-tight">
-                API <span className="text-teal-600 underline decoration-teal-200 underline-offset-8">Reference</span>
+              <h1 className="text-3xl md:text-5xl font-black text-foreground mb-6 tracking-tight break-words leading-tight">
+                API <span className="text-teal-600 dark:text-teal-400 underline decoration-teal-200 dark:decoration-teal-800 underline-offset-8">Reference</span>
               </h1>
-              <p className="text-sm md:text-base text-slate-500 leading-relaxed font-medium max-w-2xl">
+              <p className="text-sm md:text-base text-muted-foreground leading-relaxed font-medium max-w-2xl">
                 Build powerful integrations with Jiroshi's professional LMS engine.
                 Our REST API is designed for reliability, speed, and seamless multi-tenant operations.
               </p>

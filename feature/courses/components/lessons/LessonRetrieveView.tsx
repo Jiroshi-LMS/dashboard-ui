@@ -77,7 +77,7 @@ const LessonRetrieveView = ({courseId, lessonId}: {courseId: string, lessonId: s
         }
 
           {/* Meta Info */}
-          <div className="flex flex-wrap justify-between items-center text-sm text-gray-600">
+          <div className="flex flex-wrap justify-between items-center text-sm">
             <div className="flex gap-4">
               <Badge
                 className={`${badgeColor} text-white capitalize flex items-center gap-1`}
@@ -99,7 +99,7 @@ const LessonRetrieveView = ({courseId, lessonId}: {courseId: string, lessonId: s
           </div>
 
           {/* Description */}
-          <div className="text-gray-700 text-sm leading-relaxed border-t pt-3 max-h-40 overflow-y-auto">
+          <div className="text-sm leading-relaxed border-t pt-3 max-h-40 overflow-y-auto">
             <p>
               {lesson?.description as string}
             </p>

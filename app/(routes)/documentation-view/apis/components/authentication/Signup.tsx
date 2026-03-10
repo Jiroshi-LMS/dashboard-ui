@@ -52,7 +52,7 @@ const Signup = () => {
             </ApiDoc.Description>
 
             <ApiDoc.Description>
-                <strong>Tip:</strong> You can use the <a href="#student-identifier-lookup" className="text-blue-600 hover:underline">Student Identifier Lookup</a> endpoint
+                <strong>Tip:</strong> You can use the <a href="#student-identifier-lookup" className="text-primary hover:underline font-medium">Student Identifier Lookup</a> endpoint
                 to perform real-time, debounced availability checks for the identifier during the signup flow.
             </ApiDoc.Description>
 
@@ -64,14 +64,14 @@ const Signup = () => {
                 The server performs only minimal validation during signup:
                 <ul className="list-disc list-inside">
                     <li className="mt-1">
-                        The <code className='font-mono text-slate-900 bg-slate-100 p-1'>identifier</code> must be unique within the instructor
+                        The <code className='font-mono text-foreground bg-muted p-1 rounded'>identifier</code> must be unique within the instructor
                         tenant.
                     </li>
                     <li className="mt-1">
-                        <code className='font-mono text-slate-900 bg-slate-100 p-1'>identifier</code> length must be between 1 and 255 characters.
+                        <code className='font-mono text-foreground bg-muted p-1 rounded'>identifier</code> length must be between 1 and 255 characters.
                     </li>
                     <li className="mt-1">
-                        <code className='font-mono text-slate-900 bg-slate-100 p-1'>password</code> length must be between 8 and 72 characters.
+                        <code className='font-mono text-foreground bg-muted p-1 rounded'>password</code> length must be between 8 and 72 characters.
                     </li>
                 </ul>
                 <br />

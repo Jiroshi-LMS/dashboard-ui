@@ -56,20 +56,20 @@ const profilePage = () => {
               <InstructorUpdatePasswordForm setIsUpdatingProfile={setLoading} />
               <div className="flex justify-end items-center w-full">
                 <AlertDialog>
-                  <AlertDialogTrigger className="flex justify-center items-center gap-2 bg-red-400 hover:bg-red-500 cursor-pointer
+                  <AlertDialogTrigger className="flex justify-center items-center gap-2 bg-red-500 hover:bg-red-600 cursor-pointer
                   text-white px-4 py-2 font-semibold text-[13px] rounded-md mt-10 mx-8">Logout <LogOutIcon className="w-4" /></AlertDialogTrigger>
-                  <AlertDialogContent>
+                  <AlertDialogContent className="bg-card text-card-foreground border-border">
                     <AlertDialogHeader>
-                      <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                      <AlertDialogDescription>
+                      <AlertDialogTitle className="text-foreground">Are you absolutely sure?</AlertDialogTitle>
+                      <AlertDialogDescription className="text-muted-foreground">
                         Are you sure, you want to log out ?
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogCancel className="bg-background text-foreground border-border hover:bg-muted">Cancel</AlertDialogCancel>
                       <AlertDialogAction
                         onClick={handleLogout}
-                        className="bg-red-400 hover:bg-red-500 cursor-pointer text-white">
+                        className="bg-red-500 hover:bg-red-600 cursor-pointer text-white border-none">
                         Continue
                       </AlertDialogAction>
                     </AlertDialogFooter>

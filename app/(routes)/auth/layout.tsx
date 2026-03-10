@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ThemeToggle } from "@/app/components/atoms/ThemeToggle";
 
 export default function AuthLayout({
   children,
@@ -13,6 +14,9 @@ export default function AuthLayout({
             Jiroshi
           </span>
         </Link>
+        <div className="flex items-center">
+          <ThemeToggle compact />
+        </div>
       </nav>
       {children}
     </>

@@ -2,11 +2,13 @@
 
 import Loader from "@/app/components/atoms/Loader";
 import { UploadIcon, XIcon, VideoIcon, BanIcon } from "lucide-react";
-import { SetStateAction, useRef, useState } from "react";
+import { SetStateAction, useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
-import { LessonMediaData } from "../../courseTypes";
+import { Lesson, LessonMediaData } from "../../courseTypes";
 import { formatFileSize, validateMP4File } from "@/lib/utils";
 import { Progress } from "@/components/ui/progress";
+import { FetchLessonByIdService } from "../../courseServices";
 
 type VideoUploadStepProps = {
   lessonId: string | null;
@@ -14,6 +16,8 @@ type VideoUploadStepProps = {
   setFileData: React.Dispatch<SetStateAction<LessonMediaData>>;
   uploadProgress: number;
   cancelUpload: () => void;
+  existingVideoUrl: string | null;
+  setExistingVideoUrl: React.Dispatch<SetStateAction<string | null>>;
 };
 
 const VideoUploadStep = ({
@@ -22,15 +26,31 @@ const VideoUploadStep = ({
   setFileData,
   uploadProgress,
   cancelUpload,
+  existingVideoUrl,
+  setExistingVideoUrl,
 }: VideoUploadStepProps) => {
   const allowedFileSize = 2; // GB
   const videoUploadRef = useRef<HTMLInputElement | null>(null);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [isValidatingVideoFile, setIsValidatingVideoFile] = useState<boolean>(false);
   const [previewURL, setPreviewURL] = useState<string | null>(null);
+  const [initialLoading, setInitialLoading] = useState<boolean>(false);
 
-  
-
+  useEffect(() => {
+    if (lessonId && !fileData.file && !existingVideoUrl) {
+      const fetchLesson = async () => {
+        setInitialLoading(true);
+        const setLessonState = (data: Lesson | null) => {
+          if (data?.video_url) {
+            setExistingVideoUrl(data.video_url);
+          }
+        };
+        await FetchLessonByIdService(lessonId, (data) => setLessonState(data as Lesson | null));
+        setInitialLoading(false);
+      };
+      fetchLesson();
+    }
+  }, [lessonId, fileData.file, existingVideoUrl, setExistingVideoUrl]);
   const videoFileChange = async (file: File | undefined) => {
     if (!file) return;
 
@@ -62,18 +82,19 @@ const VideoUploadStep = ({
   };
 
   if (!lessonId) return <Loader className="h-screen" />;
+  if (initialLoading) return <Loader className="h-screen" />;
 
   return (
     <main className="w-[80%] mx-auto">
       <section>
         <div>
           <h2 className="section-title">Lesson Video Upload</h2>
-          <p className="text-gray-600 text-[12px] mb-2 text-justify font-semibold">
+          <p className=" text-[12px] mb-2 text-justify font-semibold">
             Upload the lesson video. It will be securely served to enrolled course members.
           </p>
 
           {/* Upload Area */}
-          {!previewURL && (
+          {!previewURL && !existingVideoUrl && (
             <div
               onClick={() => videoUploadRef.current?.click()}
               onDragOver={(e) => {
@@ -91,9 +112,9 @@ const VideoUploadStep = ({
               }}
               className={`flex justify-center items-center h-[40vh] w-[80%] mx-auto
                 border-2 border-dashed ${
-                  isDragging ? "border-teal-500 bg-teal-50" : "border-gray-200"
-                } rounded-md gap-3 font-semibold text-[14px] text-gray-600
-                transition cursor-pointer hover:border-teal-400 hover:bg-teal-50`}
+                  isDragging ? "border-teal-500" : "border-gray-200"
+                } rounded-md gap-3 font-semibold text-[14px]
+                transition cursor-pointer hover:border-teal-400`}
             >
               {isDragging
                 ? "Drop your video file here ..."
@@ -112,12 +133,42 @@ const VideoUploadStep = ({
             onChange={(e) => videoFileChange(e?.target?.files?.[0])}
           />
 
+          {/* Existing Video Section */}
+          {existingVideoUrl && !fileData.file && (
+            <div className="mt-8 w-[80%] mx-auto border border-gray-200 rounded-xl shadow-sm p-4 relative ">
+              <div className="flex items-center gap-3 mb-3">
+                <VideoIcon className="text-teal-600" size={20} />
+                <div>
+                  <p className="font-semibold text-[14px]">Already Uploaded Video</p>
+                  <p className="text-xs text-gray-500">
+                    A video already exists for this lesson. You can upload a new one to replace it.
+                  </p>
+                </div>
+                <Button 
+                    size="sm" 
+                    variant="outline" 
+                    className="ml-auto"
+                    onClick={() => videoUploadRef.current?.click()}
+                >
+                    Change Video
+                </Button>
+              </div>
+
+              {/* Video Preview */}
+              <video
+                src={existingVideoUrl}
+                controls
+                className="rounded-lg w-full max-h-[400px] border border-gray-100 mt-2"
+              ></video>
+            </div>
+          )}
+
           {/* Preview Section */}
           {previewURL && fileData.file && (
-            <div className="mt-8 w-[80%] mx-auto border border-gray-200 rounded-xl shadow-sm p-4 relative bg-white">
+            <div className="mt-8 w-[80%] mx-auto border border-gray-200 rounded-xl shadow-sm p-4 relative ">
               <button
                 onClick={clearVideo}
-                className="absolute top-3 right-3 text-gray-400 hover:text-red-500 transition"
+                className="absolute top-3 right-3 hover:text-red-500 transition"
               >
                 <XIcon size={18} />
               </button>

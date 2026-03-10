@@ -43,8 +43,8 @@ export default function InstructorUpdatePasswordForm({ setIsUpdatingProfile }: P
   }
 
   return (
-    <section className="max-w-4xl mx-auto bg-white rounded-xl border border-gray-200 shadow-sm mt-6">
-      <Card className="w-full border border-gray-200 shadow-sm rounded-2xl p-4 md:p-6 bg-white">
+    <section className="max-w-4xl mx-auto bg-card text-card-foreground rounded-xl border border-border shadow-sm mt-6">
+      <Card className="w-full border-none shadow-none rounded-2xl p-4 md:p-6 bg-transparent">
         <CardHeader className="pb-4">
           <CardTitle className="text-xl font-semibold">Password Settings</CardTitle>
           <CardDescription className="text-sm text-muted-foreground">

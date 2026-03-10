@@ -116,11 +116,11 @@ const LessonListView = ({ courseId }: { courseId: string }) => {
                             return (
                                 <div
                                     key={index}
-                                    className="group relative flex flex-col justify-center items-start w-full p-5 bg-white border border-slate-200 rounded-xl my-3 transition-all duration-300 hover:shadow-lg hover:shadow-slate-100 hover:border-teal-100 hover:-translate-y-0.5"
+                                    className="group relative flex flex-col justify-center items-start w-full p-5 border border-slate-200 rounded-xl my-3 transition-all duration-300 hover:shadow-lg hover:shadow-slate-100 hover:border-teal-100 hover:-translate-y-0.5"
                                 >
                                     <div className="flex justify-between items-start w-full gap-4">
                                         <div className="flex-1 space-y-1">
-                                            <h4 className="font-black text-slate-800 tracking-tight leading-snug">
+                                            <h4 className="font-black tracking-tight leading-snug">
                                                 <Link
                                                     href={(data.access_status === 'draft') ?
                                                         page.EDIT_LESSON(courseId, data.uuid) :

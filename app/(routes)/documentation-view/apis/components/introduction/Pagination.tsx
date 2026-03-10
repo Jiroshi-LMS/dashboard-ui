@@ -8,16 +8,16 @@ const Pagination = () => {
                 Pagination Usage
             </ApiDoc.OverviewHeader>
 
-            <p className="text-slate-600 mb-6 leading-relaxed">
+            <p className="text-muted-foreground mb-6 leading-relaxed">
                 Pagination is applied to all listing APIs in Jiroshi. By default, the API
                 uses <strong>cursor-based pagination</strong> to ensure faster response
                 times and better performance on large datasets.
             </p>
 
-            <div className="text-slate-600 mb-6 leading-relaxed">
+            <div className="text-muted-foreground mb-6 leading-relaxed">
                 <p className="mb-4">
                     Tenants may override this behavior and use page-offset based pagination by
-                    explicitly passing the query parameter <code className="ml-1 bg-slate-100 px-1.5 py-0.5 rounded font-mono">pagination:page</code>:
+                    explicitly passing the query parameter <code className="ml-1 bg-muted px-1.5 py-0.5 rounded font-mono">pagination:page</code>:
                 </p>
                 <ApiDoc.Body
                     title="Override Default Pagination to Page Offset Pagination"
@@ -26,7 +26,7 @@ const Pagination = () => {
                 />
                 <p className="mt-4">
                     Cursor-based pagination can also be explicitly enforced using
-                    <code className="ml-1 bg-slate-100 px-1.5 py-0.5 rounded font-mono">pagination=cursor</code>, although this
+                    <code className="ml-1 bg-muted px-1.5 py-0.5 rounded font-mono">pagination=cursor</code>, although this
                     is the default behavior and does not need to be specified.
                 </p>
             </div>
@@ -41,7 +41,7 @@ const Pagination = () => {
                 Cursor-Based Pagination Response
             </ApiDoc.SubHeader>
 
-            <p className="text-slate-600 mb-4 leading-relaxed">
+            <p className="text-muted-foreground mb-4 leading-relaxed">
                 When using cursor-based pagination, the response includes navigation URLs
                 and encoded cursor values that can be used to fetch the next or previous
                 set of results.
@@ -87,7 +87,7 @@ const Pagination = () => {
                 language='json'
             />
 
-            <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-8">
+            <ul className="list-disc pl-6 text-muted-foreground space-y-2 mb-8">
                 <li>
                     <strong>next</strong> - Fully constructed URL to fetch the next page
                     of results, if available.
@@ -106,7 +106,7 @@ const Pagination = () => {
                 </li>
             </ul>
 
-            <p className="text-slate-600 leading-relaxed">
+            <p className="text-muted-foreground leading-relaxed">
                 Clients may either follow the provided pagination URLs directly or extract
                 and reuse cursor values as query parameters in subsequent requests.
             </p>
@@ -116,17 +116,17 @@ const Pagination = () => {
                     Using Cursor Parameters
                 </ApiDoc.SubHeader>
 
-                <p className="text-slate-600 mb-6 leading-relaxed">
+                <p className="text-muted-foreground mb-6 leading-relaxed">
                     Cursor-based pagination uses encoded cursor values to determine the
                     starting point for the next or previous set of results. These cursor
                     values are returned in the
-                    <code className="mx-1 font-mono">pagination</code> object of a paginated
+                    <code className="mx-1 font-mono bg-muted px-1 rounded">pagination</code> object of a paginated
                     response.
                 </p>
 
-                <p className="text-slate-600 mb-4 leading-relaxed">
+                <p className="text-muted-foreground mb-4 leading-relaxed">
                     To fetch the next or previous page, include the
-                    <code className="mx-1 font-mono">cursor</code> query parameter in your
+                    <code className="mx-1 font-mono bg-muted px-1 rounded">cursor</code> query parameter in your
                     request using the corresponding cursor value.
                 </p>
 
@@ -140,11 +140,11 @@ const Pagination = () => {
                     code={`GET /courses/?cursor=<NEXT_CURSOR_VALUE>`}
                 />
 
-                <p className="text-slate-600 mb-6 leading-relaxed">
+                <p className="text-muted-foreground mb-6 leading-relaxed">
                     The <code className="font-mono">next_cursor</code> value is used to retrieve
                     the next set of results relative to the current response. If
-                    <code className="mx-1 font-mono">next_cursor</code> is
-                    <code className="mx-1 font-mono">null</code>, no further pages are available.
+                    <code className="mx-1 font-mono bg-muted px-1 rounded">next_cursor</code> is
+                    <code className="mx-1 font-mono bg-muted px-1 rounded">null</code>, no further pages are available.
                 </p>
 
                 <ApiDoc.SubHeader>
@@ -157,11 +157,11 @@ const Pagination = () => {
                     code={`GET /courses/?cursor=<PREVIOUS_CURSOR_VALUE>`}
                 />
 
-                <p className="text-slate-600 mb-6 leading-relaxed">
+                <p className="text-muted-foreground mb-6 leading-relaxed">
                     The <code className="font-mono">previous_cursor</code> value allows navigating
                     backward through the result set. If
-                    <code className="mx-1 font-mono">previous_cursor</code> is
-                    <code className="mx-1 font-mono">null</code>, the current page is the first
+                    <code className="mx-1 font-mono bg-muted px-1 rounded">previous_cursor</code> is
+                    <code className="mx-1 font-mono bg-muted px-1 rounded">null</code>, the current page is the first
                     page.
                 </p>
 
@@ -169,7 +169,7 @@ const Pagination = () => {
                     Important Notes
                 </ApiDoc.SubHeader>
 
-                <ul className="list-disc pl-6 text-slate-600 space-y-2">
+                <ul className="list-disc pl-6 text-muted-foreground space-y-2">
                     <li>
                         Cursor values are opaque and should not be decoded or modified by
                         clients.
@@ -201,14 +201,14 @@ const Pagination = () => {
                     Page-Based (Offset) Pagination
                 </ApiDoc.SubHeader>
 
-                <p className="text-slate-600 mb-6 leading-relaxed">
+                <p className="text-muted-foreground mb-6 leading-relaxed">
                     In addition to cursor-based pagination, Jiroshi APIs support traditional
                     page-offset based pagination. This pagination strategy must be explicitly
                     enabled by passing the
-                    <code className="mx-1 font-mono">pagination=page</code> query parameter.
+                    <code className="mx-1 font-mono bg-muted px-1 rounded">pagination=page</code> query parameter.
                 </p>
 
-                <p className="text-slate-600 mb-6 leading-relaxed">
+                <p className="text-muted-foreground mb-6 leading-relaxed">
                     Page-based pagination allows clients to request a specific page number and
                     control the number of items returned per page. This approach is useful for
                     simple navigation and UI-driven pagination but comes with performance
@@ -225,10 +225,10 @@ const Pagination = () => {
                     code={`GET /courses/?pagination=page&page=1&page_size=10`}
                 />
 
-                <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-8">
+                <ul className="list-disc pl-6 text-muted-foreground space-y-2 mb-8">
                     <li>
                         <strong>pagination</strong> - Must be set to
-                        <code className="mx-1 font-mono">page</code> to enable page-based
+                        <code className="mx-1 font-mono bg-muted px-1 rounded">page</code> to enable page-based
                         pagination.
                     </li>
                     <li>
@@ -278,30 +278,30 @@ const Pagination = () => {
                     Pagination Fields
                 </ApiDoc.SubHeader>
 
-                <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-8">
+                <ul className="list-disc pl-6 text-muted-foreground space-y-2 mb-8">
                     <li>
                         <strong>count</strong> - Total number of items available.
                     </li>
                     <li>
                         <strong>total_pages</strong> - Total number of pages based on the
-                        current <code className="ml-1 bg-slate-100 px-1.5 py-0.5 rounded font-mono">page_size</code>.
+                        current <code className="ml-1 bg-muted px-1.5 py-0.5 rounded font-mono">page_size</code>.
                     </li>
                     <li>
                         <strong>current_page</strong> - The currently requested page number.
                     </li>
                     <li>
                         <strong>next</strong> - URL to fetch the next page, or
-                        <code className="mx-1 font-mono">null</code> if no further pages exist.
+                        <code className="mx-1 font-mono bg-muted px-1 rounded">null</code> if no further pages exist.
                     </li>
                     <li>
                         <strong>previous</strong> - URL to fetch the previous page, or
-                        <code className="mx-1 font-mono">null</code> if the current page is the
+                        <code className="mx-1 font-mono bg-muted px-1 rounded">null</code> if the current page is the
                         first page.
                     </li>
                 </ul>
 
                 <ApiDoc.Warning title="Page-Offset Based Pagination Limitations">
-                    <ul className="list-disc pl-6 text-slate-600 space-y-2">
+                    <ul className="list-disc pl-6 text-muted-foreground space-y-2">
                         <li>
                             With page-offset based pagination, fetching data becomes slower as page numbers increase due to
                             database offset scans.
@@ -319,7 +319,7 @@ const Pagination = () => {
                     When to Use Page-Based Pagination
                 </ApiDoc.SubHeader>
 
-                <ul className="list-disc pl-6 text-slate-600 space-y-2">
+                <ul className="list-disc pl-6 text-muted-foreground space-y-2">
                     <li>
                         When building simple, UI-driven pagination controls.
                     </li>
@@ -331,14 +331,14 @@ const Pagination = () => {
                     </li>
                 </ul>
 
-                <p className="text-slate-600 mt-6 leading-relaxed">
+                <p className="text-muted-foreground mt-6 leading-relaxed">
                     For most production use cases, cursor-based pagination remains the
                     recommended and default approach in Jiroshi APIs.
                 </p>
             </div>
 
 
-            <hr className="mt-12 border-slate-100" />
+            <hr className="mt-12 border-border" />
         </div>
 
     )

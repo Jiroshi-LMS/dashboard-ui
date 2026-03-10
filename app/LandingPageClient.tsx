@@ -195,6 +195,11 @@ export default function LandingPageClient() {
                                 </Link>
                             ))}
                             <div className="h-px bg-slate-100 dark:bg-slate-800 my-2" />
+                            <div className="flex items-center justify-between">
+                                <span className="text-lg font-medium text-slate-600 dark:text-slate-300">Appearance</span>
+                                <ThemeToggle compact />
+                            </div>
+                            <div className="h-px bg-slate-100 dark:bg-slate-800 my-2" />
                             {!loggedIn ? (
                                 <Link
                                     href="/auth/login"

@@ -96,13 +96,13 @@ const LessonList = () => {
                     it is important to note that, if you want to order the results in descending order, prefix the field name with a minus sign (-).
                     <br /> <br />
                     For example, to order the results by created_at in descending order, use
-                    <code className="mx-1 font-mono text-slate-900 bg-slate-100 px-1.5 py-0.5 rounded">ordering=-created_at</code> .
+                    <code className="mx-1 font-mono text-foreground bg-muted px-1.5 py-0.5 rounded">ordering=-created_at</code> .
                 </p>
             </ApiDoc.Info>
 
             <ApiDoc.Description>
                 <strong>Note:</strong>
-                <p>The default ordering is <code className="mx-1 font-mono text-slate-900 bg-slate-100 px-1.5 py-0.5 rounded">-created_at</code>.</p>
+                <p>The default ordering is <code className="mx-1 font-mono text-foreground bg-muted px-1.5 py-0.5 rounded">-created_at</code>.</p>
             </ApiDoc.Description>
 
             <ApiDoc.Parameters
@@ -132,7 +132,7 @@ const LessonList = () => {
             <ApiDoc.Description>
                 Pagination is supported and defaults to cursor-based pagination. Page-based
                 pagination can be enabled explicitly using
-                <code className="mx-1 font-mono text-slate-900 bg-slate-100 px-1.5 py-0.5 rounded">
+                <code className="mx-1 font-mono text-foreground bg-muted px-1.5 py-0.5 rounded">
                     pagination=page
                 </code>in query params.
             </ApiDoc.Description>
