@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import { ReduxProvider } from "@/store/ReduxProvider";
 import NextTopLoaderProvider from "@/app/components/providers/NextTopLoaderProvider";
 import { ThemeProvider, THEME_STORAGE_KEY } from "@/app/components/providers/ThemeProvider";
+import { HammerIcon } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Jiroshi",
@@ -19,6 +20,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const MAINTENANCE_MODE = true;
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -37,18 +40,30 @@ export default function RootLayout({
       <body
         className="antialiased bg-background text-foreground"
       >
-        <ReduxProvider>
-          <ThemeProvider>
-            <NextTopLoaderProvider />
-            <Toaster
-              position="top-right"
-              reverseOrder={false}
-            />
-            <SidebarProvider defaultOpen={false}>
-              {children}
-            </SidebarProvider>
-          </ThemeProvider>
-        </ReduxProvider>
+        {MAINTENANCE_MODE ? (
+          <div className="flex flex-col items-center justify-center min-h-screen bg-background text-foreground p-6 text-center">
+            <div className="w-16 h-16 rounded-2xl bg-teal-500/10 flex items-center justify-center text-teal-600 mb-6">
+              <HammerIcon size={24} />
+            </div>
+            <h1 className="text-3xl font-bold tracking-tight mb-4">Temporarily unavailable for maintenance</h1>
+            <p className="text-muted-foreground max-w-md mx-auto leading-relaxed">
+              We&apos;re currently performing some scheduled updates. We&apos;ll be back online shortly.
+            </p>
+          </div>
+        ) : (
+          <ReduxProvider>
+            <ThemeProvider>
+              <NextTopLoaderProvider />
+              <Toaster
+                position="top-right"
+                reverseOrder={false}
+              />
+              <SidebarProvider defaultOpen={false}>
+                {children}
+              </SidebarProvider>
+            </ThemeProvider>
+          </ReduxProvider>
+        )}
       </body>
     </html>
   );
