@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import { ReduxProvider } from "@/store/ReduxProvider";
 import NextTopLoaderProvider from "@/app/components/providers/NextTopLoaderProvider";
 import { ThemeProvider, THEME_STORAGE_KEY } from "@/app/components/providers/ThemeProvider";
+import ServerStatusProvider from "@/app/components/providers/ServerStatusProvider";
 import { HammerIcon } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -58,9 +59,11 @@ export default function RootLayout({
                 position="top-right"
                 reverseOrder={false}
               />
-              <SidebarProvider defaultOpen={false}>
-                {children}
-              </SidebarProvider>
+              <ServerStatusProvider>
+                <SidebarProvider defaultOpen={false}>
+                  {children}
+                </SidebarProvider>
+              </ServerStatusProvider>
             </ThemeProvider>
           </ReduxProvider>
         )}
